@@ -1,5 +1,4 @@
-﻿#region MIT License
-/*Copyright (c) 2012 Robert Rouhani, robert.rouhani@gmail.com
+Copyright (c) 2012 Robert Rouhani, robert.rouhani@gmail.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -17,38 +16,4 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.*/
-#endregion
-
-using System;
-using System.Runtime.InteropServices;
-
-namespace SharpFont
-{
-	/// <summary>
-	/// A structure used to hold an outline's bounding box, i.e., the coordinates of its extrema in the horizontal and vertical directions.
-	/// </summary>
-	[StructLayout(LayoutKind.Sequential)]
-	public struct BBox
-	{
-		/// <summary>
-		/// The horizontal minimum (left-most).
-		/// </summary>
-		public int Left;
-
-		/// <summary>
-		/// The vertical minimum (bottom-most).
-		/// </summary>
-		public int Bottom;
-
-		/// <summary>
-		/// The horizontal maximum (right-most).
-		/// </summary>
-		public int Right;
-
-		/// <summary>
-		/// The vertical maximum (top-most).
-		/// </summary>
-		public int Top;
-	}
-}
+SOFTWARE.

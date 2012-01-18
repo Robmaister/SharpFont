@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012 Robert Rouhani, robert.rouhani@gmail.com
+/*Copyright (c) 2012 Robert Rouhani <robert.rouhani@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -41,7 +41,7 @@ namespace SharpFont
 		/// <summary>
 		/// Corresponds to the Microsoft Symbol encoding, used to encode mathematical symbols in the 32..255 character code range.
 		/// </summary>
-		/// <see cref="http://www.ceviz.net/symbol.htm"/>
+		/// <see href="http://www.ceviz.net/symbol.htm"/>
 		MicrosoftSymbol =	('s' << 24 | 'y' << 16 | 'm' << 8 | 'b'),
 
 		/// <summary>
@@ -53,7 +53,7 @@ namespace SharpFont
 		/// <summary>
 		/// Corresponds to Japanese SJIS encoding.
 		/// </summary>
-		/// <see cref="http://langsupport.japanreference.com/encoding.shtml"/>
+		/// <see href="http://langsupport.japanreference.com/encoding.shtml"/>
 		SJIS =				('s' << 24 | 'j' << 16 | 'i' << 8 | 's'),
 
 		/// <summary>
@@ -69,7 +69,7 @@ namespace SharpFont
 		/// <summary>
 		/// Corresponds to the Korean encoding system known as Wansung.
 		/// </summary>
-		/// <see cref="http://www.microsoft.com/typography/unicode/949.txt"/>
+		/// <see href="http://www.microsoft.com/typography/unicode/949.txt"/>
 		Wansung =			('w' << 24 | 'a' << 16 | 'n' << 8 | 's'),
 
 		/// <summary>

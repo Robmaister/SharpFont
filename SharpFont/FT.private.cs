@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012 Robert Rouhani, robert.rouhani@gmail.com
+/*Copyright (c) 2012 Robert Rouhani <robert.rouhani@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
@@ -27,85 +27,45 @@ namespace SharpFont
 {
 	public partial class FT
 	{
-		//TODO make "freetype.dll"?
-		const string freeTypeDll = "freetype.dll";
+		#region FreeType Version
 
-		#region Base Interface
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern void FT_Library_Version(IntPtr library, out int amajor, out int aminor, out int apatch);
 
-		/// <summary>
-		/// Initialize a new FreeType library object. The set of modules that are registered by this function is determined at build time.
-		/// </summary>
-		/// <param name="alibrary">A handle to a new library object.</param>
-		/// <returns>FreeType error code. 0 means success.</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Init_FreeType(out IntPtr alibrary);
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern bool FT_Face_CheckTrueTypePatents(ref Face face);
 
-		/// <summary>
-		/// Destroy a given FreeType library object and all of its children, including resources, drivers, faces, sizes, etc.
-		/// </summary>
-		/// <param name="library">A handle to the target library object.</param>
-		/// <returns>FreeType error code. 0 means success.</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Done_FreeType(IntPtr library);
-
-		/// <summary>
-		/// This function calls FT_Open_Face to open a font by its pathname.
-		/// </summary>
-		/// <param name="library">A handle to the library resource.</param>
-		/// <param name="filepathname">A path to the font file</param>
-		/// <param name="face_index">The index of the face within the font. The first face has index 0</param>
-		/// <param name="aface"> A handle to a new face object. If ‘face_index’ is greater than or equal to zero, it must be non-NULL. See FT_Open_Face for more details.</param>
-		/// <returns>FreeType error code. 0 means success.</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_New_Face(IntPtr library, string filepathname, int face_index, out Face aface);
-
-		/// <summary>
-		/// This function calls FT_Open_Face to open a font which has been loaded into memory.
-		/// You must not deallocate the memory before calling FT_Done_Face.
-		/// </summary>
-		/// <param name="library">A handle to the library resource</param>
-		/// <param name="file_base">A pointer to the beginning of the font data</param>
-		/// <param name="file_size">The size of the memory chunk used by the font data</param>
-		/// <param name="face_index">The index of the face within the font. The first face has index 0</param>
-		/// <param name="aface">A handle to a new face object. If ‘face_index’ is greater than or equal to zero, it must be non-NULL. See FT_Open_Face for more details.</param>
-		/// <returns>FreeType error code. 0 means success.</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_New_Memory_Face(IntPtr library, [In] byte[] file_base, int file_size, int face_index, out Face aface);
-
-		/// <summary>
-		/// Create a face object from a given resource described by FT_Open_Args.
-		/// Unlike FreeType 1.x, this function automatically creates a glyph slot for the face object which can be accessed directly through ‘face->glyph’.
-		/// FT_Open_Face can be used to quickly check whether the font format of a given font resource is supported by FreeType. If the ‘face_index’ field is negative, the function's return value is 0 if the font format is recognized, or non-zero otherwise; the function returns a more or less empty face handle in ‘*aface’ (if ‘aface’ isn't NULL). The only useful field in this special case is ‘face->num_faces’ which gives the number of faces within the font file. After examination, the returned FT_Face structure should be deallocated with a call to FT_Done_Face.
-		/// Each new face object created with this function also owns a default FT_Size object, accessible as ‘face->size’.
-		/// </summary>
-		/// <param name="library">A handle to the library resource</param>
-		/// <param name="args">A pointer to an ‘FT_Open_Args’ structure which must be filled by the caller.</param>
-		/// <param name="face_index">The index of the face within the font. The first face has index 0</param>
-		/// <param name="aface">A handle to a new face object. If ‘face_index’ is greater than or equal to zero, it must be non-NULL. See note below</param>
-		/// <returns>FreeType error code. 0 means success</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Open_Face(IntPtr library, ref OpenArgs args, int face_index, out Face aface);
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern bool FT_Face_SetUnpatentedHinting(ref Face face, bool value);
 
 		#endregion
 
-		/// <summary>
-		/// Return the version of the FreeType library being used. This is useful when dynamically linking to the library, since one cannot use the macros FREETYPE_MAJOR, FREETYPE_MINOR, and FREETYPE_PATCH.
-		/// </summary>
-		/// <param name="library">A source library handle.</param>
-		/// <param name="amajor">The major version number.</param>
-		/// <param name="aminor">The minor version number.</param>
-		/// <param name="apatch">The patch version number.</param>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern void FT_Library_Version(IntPtr library, out int amajor, out int aminor, out int apatch);
+		#region Base Interface
+		
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Init_FreeType(out IntPtr alibrary);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Done_FreeType(IntPtr library);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_New_Face(IntPtr library, string filepathname, int face_index, out Face aface);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_New_Memory_Face(IntPtr library, [In] byte[] file_base, int file_size, int face_index, out Face aface);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Open_Face(IntPtr library, ref OpenArgs args, int face_index, out Face aface);
+
+		#endregion
 
 		/// <summary>
 		/// This function calls FT_Attach_Stream to attach a file.
 		/// </summary>
 		/// <param name="face">The target face object.</param>
 		/// <param name="filepathname">The pathname</param>
-		/// <returns>FreeType error code. 0 means success</returns>
-		/*[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Attach_File(IntPtr face, string filepathname);*/
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Attach_File(ref Face face, string filepathname);
 
 		/// <summary>
 		/// ‘Attach’ data to a face object. Normally, this is used to read additional information for the face object. For example, you can attach an AFM file that comes with a Type 1 font to get the kerning values and other metrics
@@ -113,16 +73,25 @@ namespace SharpFont
 		/// <param name="face">The target face object</param>
 		/// <param name="parameters">A pointer to FT_Open_Args which must be filled by the caller</param>
 		/// <returns>FreeType error code. 0 means success</returns>
-		/*[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Attach_Stream(IntPtr face, ref FT_Open_Args parameters);*/
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Attach_Stream(ref Face face, ref OpenArgs parameters);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Reference_Face(ref Face face);
 
 		/// <summary>
 		/// Discard a given face object, as well as all of its child slots and sizes.
 		/// </summary>
 		/// <param name="face">A handle to a target face object.</param>
 		/// <returns>FreeType error code. 0 means success</returns>
-		/*[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Done_Face(IntPtr face);*/
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Done_Face(ref Face face);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Select_Size(ref Face face, int strike_index);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Request_Size(ref Face face, ref SizeRequest req);
 
 		/// <summary>
 		/// This function calls FT_Request_Size to request the nominal size (in points).
@@ -136,8 +105,8 @@ namespace SharpFont
 		/// <param name="horz_resolution">The horizontal resolution in dpi</param>
 		/// <param name="vert_resolution">The vertical resolution in dpi</param>
 		/// <returns>FreeType error code. 0 means success</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Set_Char_Size(IntPtr /*FaceRec*/ face, int char_width, int char_height, uint horz_resolution, uint vert_resolution);
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Set_Char_Size(ref Face face, int char_width, int char_height, uint horz_resolution, uint vert_resolution);
 
 		/// <summary>
 		/// This function calls FT_Request_Size to request the nominal size (in pixels).
@@ -146,8 +115,8 @@ namespace SharpFont
 		/// <param name="pixel_width">The nominal width, in pixels.</param>
 		/// <param name="pixel_height">The nominal height, in pixels</param>
 		/// <returns>FreeType error code. 0 means success</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Set_Pixel_Sizes(IntPtr /*FaceRec*/ face, uint pixel_width, uint pixel_height);
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Set_Pixel_Sizes(ref Face face, uint pixel_width, uint pixel_height);
 
 		/// <summary>
 		/// A function used to load a single glyph into the glyph slot of a face object.
@@ -157,8 +126,8 @@ namespace SharpFont
 		/// <param name="glyph_index">The index of the glyph in the font file. For CID-keyed fonts (either in PS or in CFF format) this argument specifies the CID value.</param>
 		/// <param name="load_flags">A flag indicating what to load for this glyph. The FT_LOAD_XXX constants can be used to control the glyph loading process (e.g., whether the outline should be scaled, whether to load bitmaps or not, whether to hint the outline, etc).</param>
 		/// <returns>FreeType error code. 0 means success.</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Load_Glyph(IntPtr /*FaceRec*/ face, uint glyph_index, int load_flags);
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Load_Glyph(ref Face face, uint glyph_index, int load_flags);
 
 		/// <summary>
 		/// A function used to load a single glyph into the glyph slot of a face object, according to its character code.
@@ -168,8 +137,8 @@ namespace SharpFont
 		/// <param name="char_code">The glyph's character code, according to the current charmap used in the face</param>
 		/// <param name="load_flags">A flag indicating what to load for this glyph. The FT_LOAD_XXX constants can be used to control the glyph loading process (e.g., whether the outline should be scaled, whether to load bitmaps or not, whether to hint the outline, etc).</param>
 		/// <returns>FreeType error code. 0 means success</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Load_Char(IntPtr /*FaceRec*/ face, uint char_code, int load_flags);
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Load_Char(ref Face face, uint char_code, int load_flags);
 
 		/// <summary>
 		/// A function used to set the transformation that is applied to glyph images when they are loaded into a glyph slot through FT_Load_Glyph.
@@ -179,8 +148,8 @@ namespace SharpFont
 		/// <param name="face">A handle to the source face object</param>
 		/// <param name="matrix">A pointer to the transformation's 2x2 matrix. Use 0 for the identity matrix</param>
 		/// <param name="delta">A pointer to the translation vector. Use 0 for the null vector</param>
-		/*[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern void FT_Set_Transform(IntPtr face, ref FT_Matrix matrix, ref Vector2i delta);*/
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern void FT_Set_Transform(ref Face face, ref Matrix2i matrix, ref Vector2i delta);
 
 		/// <summary>
 		/// Convert a given glyph image to a bitmap. It does so by inspecting the glyph image format, finding the relevant renderer, and invoking it
@@ -188,7 +157,7 @@ namespace SharpFont
 		/// <param name="slot">A handle to the glyph slot containing the image to convert</param>
 		/// <param name="render_mode">This is the render mode used to render the glyph image into a bitmap. See FT_Render_Mode for a list of possible values</param>
 		/// <returns>FreeType error code. 0 means success</returns>
-		/*[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		/*[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Render_Glyph(ref FT_GlyphSlotRec slot, FT_Render_Mode render_mode);*/
 
 		/// <summary>
@@ -200,8 +169,8 @@ namespace SharpFont
 		/// <param name="kern_mode">See FT_Kerning_Mode for more information. Determines the scale and dimension of the returned kerning vector</param>
 		/// <param name="akerning">The kerning vector. This is either in font units or in pixels (26.6 format) for scalable formats, and in pixels for fixed-sizes formats</param>
 		/// <returns>FreeType error code. 0 means success</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Get_Kerning(IntPtr /*FaceRec*/ face, uint left_glyph, uint right_glyph, uint kern_mode, out Vector2i akerning);
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Get_Kerning(ref Face face, uint left_glyph, uint right_glyph, uint kern_mode, out Vector2i akerning);
 
 		/// <summary>
 		/// Retrieve the ASCII name of a given glyph in a face. This only works for those faces where FT_HAS_GLYPH_NAMES(face) returns 1
@@ -214,7 +183,7 @@ namespace SharpFont
 		/// <param name="buffer">A pointer to a target buffer where the name is copied to</param>
 		/// <param name="buffer_max">The maximal number of bytes available in the buffer</param>
 		/// <returns>FreeType error code. 0 means success</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Get_Glyph_Name(IntPtr /*FaceRec*/ face, uint glyph_index, IntPtr buffer, uint buffer_max);
 
 		/// <summary>
@@ -223,7 +192,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">A handle to the source face object</param>
 		/// <returns>A pointer to the face's Postscript name. NULL if unavailable</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern IntPtr /*sbyte*/ FT_Get_Postscript_Name(IntPtr /*FaceRec*/ face);
 
 		/// <summary>
@@ -234,7 +203,7 @@ namespace SharpFont
 		/// <param name="face">A handle to the source face object</param>
 		/// <param name="encoding">A handle to the selected encoding</param>
 		/// <returns>FreeType error code. 0 means success</returns>
-		/*[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		/*[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Select_Charmap(IntPtr face, FT_Encoding encoding);*/
 
 		/// <summary>
@@ -244,7 +213,7 @@ namespace SharpFont
 		/// <param name="face">A handle to the source face object</param>
 		/// <param name="charmap">A handle to the selected charmap</param>
 		/// <returns>FreeType error code. 0 means success</returns>
-		/*[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		/*[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Set_Charmap(IntPtr face, ref FT_CharMapRec charmap);*/
 
 		/// <summary>
@@ -252,7 +221,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="charmap">A handle to a charmap</param>
 		/// <returns>The index into the array of character maps within the face to which ‘charmap’ belongs</returns>
-		/*[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		/*[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern int FT_Get_Charmap_Index(ref FT_CharMapRec charmap);*/
 
 		/// <summary>
@@ -262,7 +231,7 @@ namespace SharpFont
 		/// <param name="face">A handle to the source face object</param>
 		/// <param name="charcode">The character code</param>
 		/// <returns>The glyph index. 0 means ‘undefined character code’</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern uint FT_Get_Char_Index(IntPtr /*FaceRec*/ face, uint charcode);
 
 		/// <summary>
@@ -273,7 +242,7 @@ namespace SharpFont
 		/// <param name="face">A handle to the source face object</param>
 		/// <param name="agindex">Glyph index of first character code. 0 if charmap is empty</param>
 		/// <returns>The charmap's first character code</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern uint FT_Get_First_Char(IntPtr /*FaceRec*/ face, [In, Out] uint[] agindex);
 
 		/// <summary>
@@ -285,7 +254,7 @@ namespace SharpFont
 		/// <param name="char_code">The starting character code</param>
 		/// <param name="agindex">Glyph index of first character code. 0 if charmap is empty</param>
 		/// <returns>The charmap's next character code</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern uint FT_Get_Next_Char(IntPtr /*FaceRec*/ face, uint char_code, [In, Out] uint[] agindex);
 
 		/// <summary>
@@ -294,7 +263,7 @@ namespace SharpFont
 		/// <param name="face">A handle to the source face object</param>
 		/// <param name="glyph_name">The glyph name</param>
 		/// <returns>The glyph index. 0 means ‘undefined character code’</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern uint FT_Name_Index(IntPtr /*FaceRec*/ face, [In, Out] sbyte[] glyph_name);
 
 		/// <summary>
@@ -305,7 +274,7 @@ namespace SharpFont
 		/// <param name="b">The second multiplier</param>
 		/// <param name="c">The divisor</param>
 		/// <returns>The result of ‘(a*b)/c’. This function never traps when trying to divide by zero; it simply returns ‘MaxInt’ or ‘MinInt’ depending on the signs of ‘a’ and ‘b’</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern int FT_MulDiv(int a, int b, int c);
 
 		/// <summary>
@@ -316,7 +285,7 @@ namespace SharpFont
 		/// <param name="a">The first multiplier</param>
 		/// <param name="b">The second multiplier. Use a 16.16 factor here whenever possible</param>
 		/// <returns>The result of ‘(a*b)/0x10000’</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern int FT_MulFix(int a, int b);
 
 		/// <summary>
@@ -326,7 +295,7 @@ namespace SharpFont
 		/// <param name="a">The first multiplier</param>
 		/// <param name="b">The second multiplier. Use a 16.16 factor here whenever possible</param>
 		/// <returns>The result of ‘(a*0x10000)/b’</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern int FT_DivFix(int a, int b);
 
 		/// <summary>
@@ -334,7 +303,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="a">The number to be rounded</param>
 		/// <returns>The result of ‘(a + 0x8000) &amp; -0x10000’</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern int FT_RoundFix(int a);
 
 		/// <summary>
@@ -342,7 +311,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="a">The number for which the ceiling function is to be computed</param>
 		/// <returns>The result of ‘(a + 0x10000 - 1) &amp;-0x10000’</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern int FT_CeilFix(int a);
 
 		/// <summary>
@@ -350,7 +319,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="a">The number for which the floor function is to be computed</param>
 		/// <returns>The result of ‘a &amp; -0x10000’</returns>
-		[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern int FT_FloorFix(int a);
 
 		/// <summary>
@@ -359,7 +328,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="vec">The target vector to transform</param>
 		/// <param name="matrix">A pointer to the source 2x2 matrix</param>
-		/*[DllImport(freeTypeDll, CallingConvention = CallingConvention.Cdecl)]
-		private static extern void FT_Vector_Transform(ref Vector2i vec, ref FT_Matrix matrix);*/
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern void FT_Vector_Transform(ref Vector2i vec, ref Matrix2i matrix);
 	}
 }

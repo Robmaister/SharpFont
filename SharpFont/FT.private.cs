@@ -102,91 +102,35 @@ namespace SharpFont
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Get_Glyph_Name(ref Face face, uint glyph_index, IntPtr buffer, uint buffer_max);
 
-		/// <summary>
-		/// Retrieve the ASCII Postscript name of a given face, if available. This only works with Postscript and TrueType fonts
-		/// The returned pointer is owned by the face and is destroyed with it
-		/// </summary>
-		/// <param name="face">A handle to the source face object</param>
-		/// <returns>A pointer to the face's Postscript name. NULL if unavailable</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern IntPtr FT_Get_Postscript_Name(ref Face face);
 
-		/// <summary>
-		/// Select a given charmap by its encoding tag (as listed in ‘freetype.h’).
-		/// This function returns an error if no charmap in the face corresponds to the encoding queried here.
-		/// Because many fonts contain more than a single cmap for Unicode encoding, this function has some special code to select the one which covers Unicode best. It is thus preferable to FT_Set_Charmap in this case
-		/// </summary>
-		/// <param name="face">A handle to the source face object</param>
-		/// <param name="encoding">A handle to the selected encoding</param>
-		/// <returns>FreeType error code. 0 means success</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Select_Charmap(ref Face face, Encoding encoding);
 
-		/// <summary>
-		/// Select a given charmap for character code to glyph index mapping
-		/// This function returns an error if the charmap is not part of the face (i.e., if it is not listed in the ‘face->charmaps’ table)
-		/// </summary>
-		/// <param name="face">A handle to the source face object</param>
-		/// <param name="charmap">A handle to the selected charmap</param>
-		/// <returns>FreeType error code. 0 means success</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Set_Charmap(ref Face face, ref CharMap charmap);
 
-		/// <summary>
-		/// Retrieve index of a given charmap
-		/// </summary>
-		/// <param name="charmap">A handle to a charmap</param>
-		/// <returns>The index into the array of character maps within the face to which ‘charmap’ belongs</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern int FT_Get_Charmap_Index(ref CharMap charmap);
 
-		/// <summary>
-		/// Return the glyph index of a given character code. This function uses a charmap object to do the mapping
-		/// If you use FreeType to manipulate the contents of font files directly, be aware that the glyph index returned by this function doesn't always correspond to the internal indices used within the file. This is done to ensure that value 0 always corresponds to the ‘missing glyph’.
-		/// </summary>
-		/// <param name="face">A handle to the source face object</param>
-		/// <param name="charcode">The character code</param>
-		/// <returns>The glyph index. 0 means ‘undefined character code’</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern uint FT_Get_Char_Index(ref Face face, uint charcode);
 
-		/// <summary>
-		/// This function is used to return the first character code in the current charmap of a given face. It also returns the corresponding glyph index.
-		/// You should use this function with FT_Get_Next_Char to be able to parse all character codes available in a given charmap.
-		/// Note that ‘agindex’ is set to 0 if the charmap is empty. The result itself can be 0 in two cases: if the charmap is empty or when the value 0 is the first valid character code
-		/// </summary>
-		/// <param name="face">A handle to the source face object</param>
-		/// <param name="agindex">Glyph index of first character code. 0 if charmap is empty</param>
-		/// <returns>The charmap's first character code</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern uint FT_Get_First_Char(ref Face face, out uint agindex);
 
-		/// <summary>
-		/// This function is used to return the next character code in the current charmap of a given face following the value ‘char_code’, as well as the corresponding glyph index.
-		/// You should use this function with FT_Get_First_Char to walk over all character codes available in a given charmap. See the note for this function for a simple code example.
-		/// Note that ‘*agindex’ is set to 0 when there are no more codes in the charmap.
-		/// </summary>
-		/// <param name="face">A handle to the source face object</param>
-		/// <param name="char_code">The starting character code</param>
-		/// <param name="agindex">Glyph index of first character code. 0 if charmap is empty</param>
-		/// <returns>The charmap's next character code</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern uint FT_Get_Next_Char(ref Face face, uint char_code, out uint agindex);
 
-		/// <summary>
-		/// Return the glyph index of a given glyph name. This function uses driver specific objects to do the translation
-		/// </summary>
-		/// <param name="face">A handle to the source face object</param>
-		/// <param name="glyph_name">The glyph name</param>
-		/// <returns>The glyph index. 0 means ‘undefined character code’</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern uint FT_Get_Name_Index(ref Face face, out IntPtr glyph_name);
+		private static extern uint FT_Get_Name_Index(ref Face face, IntPtr glyph_name);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Get_SubGlyph_Info(ref GlyphSlot glyph, uint sub_index, out int p_index, out SubGlyphFlags p_flags, out int p_arg1, out int p_arg2, out Matrix2i p_transform);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern uint FT_Get_FSType_Flags(ref Face face);
+		private static extern FSTypeFlags FT_Get_FSType_Flags(ref Face face);
 
 		#endregion
 

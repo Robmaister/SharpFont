@@ -16,7 +16,7 @@ namespace SharpFont
 	/// </remarks>
 	/// <see href="http://www.adobe.com/devnet/acrobat/pdfs/FontPolicies.pdf"/>
 	[Flags]
-	public enum FSTypeFlags
+	public enum FSTypeFlags : ushort
 	{
 		/// <summary>
 		/// Fonts with no fsType bit set may be embedded and permanently

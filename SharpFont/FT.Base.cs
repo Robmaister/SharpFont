@@ -21,6 +21,7 @@ SOFTWARE.*/
 #endregion
 
 using System;
+using System.Runtime.InteropServices;
 
 namespace SharpFont
 {
@@ -721,11 +722,227 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="face">A handle to a source face object.</param>
 		/// <param name="glyphIndex">The glyph index.</param>
+		/// <param name="bufferSize">The maximal number of bytes available in the buffer.</param>
 		/// <returns>The ASCII name of a given glyph in a face.</returns>
-		public static string GetGlyphName(ref Face face, uint glyphIndex)
+		public static string GetGlyphName(ref Face face, uint glyphIndex, int bufferSize)
 		{
-			//TODO implement this method
-			return string.Empty;
+			return GetGlyphName(ref face, glyphIndex, new byte[bufferSize]);
+		}
+
+		/// <summary>
+		/// Retrieve the ASCII name of a given glyph in a face. This only works
+		/// for those faces where FT_HAS_GLYPH_NAMES(face) returns 1.
+		/// </summary>
+		/// <remarks>
+		/// An error is returned if the face doesn't provide glyph names or if
+		/// the glyph index is invalid. In all cases of failure, the first byte
+		/// of ‘buffer’ is set to 0 to indicate an empty name.
+		/// 
+		/// The glyph name is truncated to fit within the buffer if it is too
+		/// long. The returned string is always zero-terminated.
+		/// 
+		/// Be aware that FreeType reorders glyph indices internally so that
+		/// glyph index 0 always corresponds to the ‘missing glyph’ (called
+		/// ‘.notdef’).
+		/// 
+		/// This function is not compiled within the library if the config
+		/// macro ‘FT_CONFIG_OPTION_NO_GLYPH_NAMES’ is defined in
+		/// ‘include/freetype/config/ftoptions.h’.
+		/// </remarks>
+		/// <param name="face">A handle to a source face object.</param>
+		/// <param name="glyphIndex">The glyph index.</param>
+		/// <param name="buffer">The target buffer where the name is copied to.</param>
+		/// <returns>The ASCII name of a given glyph in a face.</returns>
+		public static unsafe string GetGlyphName(ref Face face, uint glyphIndex, byte[] buffer)
+		{
+			fixed (byte* ptr = buffer)
+			{
+				IntPtr intptr = new IntPtr(ptr);
+				Error err = FT_Get_Glyph_Name(ref face, glyphIndex, intptr, (uint)buffer.Length);
+
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+
+				return Marshal.PtrToStringAuto(intptr);
+			}
+		}
+
+		/// <summary>
+		/// Retrieve the ASCII Postscript name of a given face, if available.
+		/// This only works with Postscript and TrueType fonts.
+		/// </summary>
+		/// <remarks>
+		/// The returned pointer is owned by the face and is destroyed with it.
+		/// </remarks>
+		/// <param name="face">A handle to the source face object.</param>
+		/// <returns>A pointer to the face's Postscript name. NULL if unavailable.</returns>
+		public static string GetPostscriptName(ref Face face)
+		{
+			return Marshal.PtrToStringAuto(FT_Get_Postscript_Name(ref face));
+		}
+
+		/// <summary>
+		/// Select a given charmap by its encoding tag (as listed in
+		/// ‘freetype.h’).
+		/// </summary>
+		/// <remarks>
+		/// This function returns an error if no charmap in the face
+		/// corresponds to the encoding queried here.
+		/// 
+		/// Because many fonts contain more than a single cmap for Unicode
+		/// encoding, this function has some special code to select the one
+		/// which covers Unicode best. It is thus preferable to FT_Set_Charmap
+		/// in this case.
+		/// </remarks>
+		/// <param name="face">A handle to the source face object.</param>
+		/// <param name="encoding">A handle to the selected encoding.</param>
+		public static void SelectCharmap(ref Face face, Encoding encoding)
+		{
+			Error err = FT_Select_Charmap(ref face, encoding);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Select a given charmap for character code to glyph index mapping.
+		/// </summary>
+		/// <remarks>
+		/// This function returns an error if the charmap is not part of the
+		/// face (i.e., if it is not listed in the ‘face->charmaps’ table).
+		/// </remarks>
+		/// <param name="face">A handle to the source face object.</param>
+		/// <param name="charmap">A handle to the selected charmap.</param>
+		public static void SetCharmap(ref Face face, ref CharMap charmap)
+		{
+			Error err = FT_Set_Charmap(ref face, ref charmap);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Retrieve index of a given charmap.
+		/// </summary>
+		/// <param name="charmap">A handle to a charmap.</param>
+		/// <returns>The index into the array of character maps within the face to which ‘charmap’ belongs.</returns>
+		public static int GetCharmapIndex(ref CharMap charmap)
+		{
+			return FT_Get_Charmap_Index(ref charmap);
+		}
+
+		/// <summary>
+		/// Return the glyph index of a given character code. This function
+		/// uses a charmap object to do the mapping.
+		/// </summary>
+		/// <remarks>
+		/// If you use FreeType to manipulate the contents of font files
+		/// directly, be aware that the glyph index returned by this function
+		/// doesn't always correspond to the internal indices used within the
+		/// file. This is done to ensure that value 0 always corresponds to the
+		/// ‘missing glyph’.
+		/// </remarks>
+		/// <param name="face">A handle to the source face object.</param>
+		/// <param name="charcode">The character code.</param>
+		/// <returns>The glyph index. 0 means ‘undefined character code’.</returns>
+		public static uint GetCharIndex(ref Face face, uint charCode)
+		{
+			return FT_Get_Char_Index(ref face, charCode);
+		}
+
+		/// <summary>
+		/// This function is used to return the first character code in the
+		/// current charmap of a given face. It also returns the corresponding
+		/// glyph index.
+		/// </summary>
+		/// <remarks>
+		/// You should use this function with FT_Get_Next_Char to be able to
+		/// parse all character codes available in a given charmap.
+		/// 
+		/// Note that ‘agindex’ is set to 0 if the charmap is empty. The result
+		/// itself can be 0 in two cases: if the charmap is empty or when the
+		/// value 0 is the first valid character code.
+		/// </remarks>
+		/// <param name="face">A handle to the source face object.</param>
+		/// <param name="agindex">Glyph index of first character code. 0 if charmap is empty.</param>
+		/// <returns>The charmap's first character code.</returns>
+		public static uint GetFirstChar(ref Face face, out uint glyphIndex)
+		{
+			return FT_Get_First_Char(ref face, out glyphIndex);
+		}
+
+		/// <summary>
+		/// This function is used to return the next character code in the
+		/// current charmap of a given face following the value ‘char_code’, as
+		/// well as the corresponding glyph index.
+		/// </summary>
+		/// <remarks>
+		/// You should use this function with FT_Get_First_Char to walk over
+		/// all character codes available in a given charmap. See the note for
+		/// this function for a simple code example.
+		/// 
+		/// Note that ‘*agindex’ is set to 0 when there are no more codes in
+		/// the charmap.
+		/// </remarks>
+		/// <param name="face">A handle to the source face object.</param>
+		/// <param name="char_code">The starting character code.</param>
+		/// <param name="agindex">Glyph index of first character code. 0 if charmap is empty.</param>
+		/// <returns>The charmap's next character code.</returns>
+		public static uint GetNextChar(ref Face face, uint charCode, out uint glyphIndex)
+		{
+			return FT_Get_Next_Char(ref face, charCode, out glyphIndex);
+		}
+
+		/// <summary>
+		/// Return the glyph index of a given glyph name. This function uses
+		/// driver specific objects to do the translation.
+		/// </summary>
+		/// <param name="face">A handle to the source face object.</param>
+		/// <param name="glyph_name">The glyph name.</param>
+		/// <returns>The glyph index. 0 means ‘undefined character code’.</returns>
+		public static uint GetNameIndex(ref Face face, string name)
+		{
+			return FT_Get_Name_Index(ref face, Marshal.StringToHGlobalAuto(name));
+		}
+
+		/// <summary>
+		/// Retrieve a description of a given subglyph. Only use it if
+		/// ‘glyph->format’ is FT_GLYPH_FORMAT_COMPOSITE; an error is returned
+		/// otherwise.
+		/// </summary>
+		/// <remarks>
+		/// The values of ‘*p_arg1’, ‘*p_arg2’, and ‘*p_transform’ must be
+		/// interpreted depending on the flags returned in ‘*p_flags’. See the
+		/// TrueType specification for details.
+		/// </remarks>
+		/// <param name="glyph">The source glyph slot.</param>
+		/// <param name="subIndex">The index of the subglyph. Must be less than ‘glyph->num_subglyphs’.</param>
+		/// <param name="index">The glyph index of the subglyph.</param>
+		/// <param name="flags">The subglyph flags, see FT_SUBGLYPH_FLAG_XXX.</param>
+		/// <param name="arg1">The subglyph's first argument (if any).</param>
+		/// <param name="arg2">The subglyph's second argument (if any).</param>
+		/// <param name="transform">The subglyph transformation (if any).</param>
+		public static void GetSubGlyphInfo(ref GlyphSlot glyph, uint subIndex, out int index, out SubGlyphFlags flags, out int arg1, out int arg2, out Matrix2i transform)
+		{
+			Error err = FT_Get_SubGlyph_Info(ref glyph, subIndex, out index, out flags, out arg1, out arg2, out transform);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Return the fsType flags for a font.
+		/// </summary>
+		/// <remarks>
+		/// Use this function rather than directly reading the ‘fs_type’ field in the
+		/// PS_FontInfoRec structure which is only guaranteed to return the correct
+		/// results for Type 1 fonts.
+		/// </remarks>
+		/// <param name="face">A handle to the source face object.</param>
+		/// <returns>The fsType flags, FT_FSTYPE_XXX.</returns>
+		public static FSTypeFlags GetFSTypeFlags(ref Face face)
+		{
+			return FT_Get_FSType_Flags(ref face);
 		}
 	}
 }

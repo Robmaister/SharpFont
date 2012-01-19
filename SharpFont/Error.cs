@@ -108,6 +108,5 @@ namespace SharpFont
 		MissingStartcharField = 0xB4,
 		MissingEncodingField = 0xB5,
 		MissingBbxField = 0xB6,
-		Max
 	}
 }

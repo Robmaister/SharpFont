@@ -31,7 +31,7 @@ namespace SharpFont
 	/// The ‘FT_OPEN_MEMORY’, ‘FT_OPEN_STREAM’, and ‘FT_OPEN_PATHNAME’ flags are mutually exclusive.
 	/// </remarks>
 	[Flags]
-	public enum OpenFlags : uint
+	public enum OpenFlags
 	{
 		/// <summary>
 		/// This is a memory-based stream.

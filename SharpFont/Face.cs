@@ -25,46 +25,166 @@ using System.Runtime.InteropServices;
 
 namespace SharpFont
 {
+	/// <summary>
+	/// FreeType root face class structure. A face object models a typeface in
+	/// a font file.
+	/// </summary>
+	/// <remarks>
+	/// Fields may be changed after a call to FT_Attach_File or
+	/// FT_Attach_Stream.
+	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	public struct Face
+	public unsafe struct Face
 	{
+		/// <summary>
+		/// The number of faces in the font file. Some font formats can have
+		/// multiple faces in a font file.
+		/// </summary>
 		public int FaceCount;
+
+		/// <summary>
+		/// The index of the face in the font file. It is set to 0 if there is
+		/// only one face in the font file.
+		/// </summary>
 		public int FaceIndex;
+
+		/// <summary>
+		/// A set of bit flags that give important information about the face;
+		/// see FT_FACE_FLAG_XXX for the details.
+		/// </summary>
 		public FaceFlags FaceFlags;
+
+		/// <summary>
+		/// A set of bit flags indicating the style of the face; see
+		/// FT_STYLE_FLAG_XXX for the details.
+		/// </summary>
 		public StyleFlags StyleFlags;
 
+		/// <summary>
+		/// The number of glyphs in the face. If the face is scalable and has
+		/// sbits (see ‘num_fixed_sizes’), it is set to the number of outline
+		/// glyphs.
+		/// 
+		/// For CID-keyed fonts, this value gives the highest CID used in the
+		/// font.
+		/// </summary>
 		public int GlyphCount;
 
-		[MarshalAs(UnmanagedType.LPWStr)]
-		public string FamilyName;
+		private IntPtr familyName;
+		private IntPtr styleName;
 
-		[MarshalAs(UnmanagedType.LPWStr)]
-		public string StyleName;
-
+		/// <summary>
+		/// The number of bitmap strikes in the face. Even if the face is
+		/// scalable, there might still be bitmap strikes, which are called
+		/// ‘sbits’ in that case.
+		/// </summary>
 		public int FixedSizesCount;
-		public BitmapSize[] AvailableSizes;
 
+		/// <summary>
+		/// An array of FT_Bitmap_Size for all bitmap strikes in the face. It
+		/// is set to NULL if there is no bitmap strike.
+		/// </summary>
+		public BitmapSize *AvailableSizes;
+
+		/// <summary>
+		/// The number of charmaps in the face.
+		/// </summary>
 		public int CharmapsCount;
-		public IntPtr Charmaps;
 
-		public IntPtr Generic;
+		/// <summary>
+		/// An array of the charmaps of the face.
+		/// </summary>
+		public CharMap *CharMaps;
 
+		/// <summary>
+		/// A field reserved for client uses. See the FT_Generic type
+		/// description.
+		/// </summary>
+		public Generic Generic;
+
+		/// <summary>
+		/// The font bounding box. Coordinates are expressed in font units (see
+		/// ‘units_per_EM’). The box is large enough to contain any glyph from
+		/// the font. Thus, ‘bbox.yMax’ can be seen as the ‘maximal ascender’,
+		/// and ‘bbox.yMin’ as the ‘minimal descender’. Only relevant for
+		/// scalable formats.
+		/// 
+		/// Note that the bounding box might be off by (at least) one pixel for
+		/// hinted fonts. See FT_Size_Metrics for further discussion.
+		/// </summary>
 		public BBox BBox;
 
+		/// <summary>
+		/// The number of font units per EM square for this face. This is
+		/// typically 2048 for TrueType fonts, and 1000 for Type 1 fonts. Only
+		/// relevant for scalable formats.
+		/// </summary>
 		public ushort UnitsPerEM;
+
+		/// <summary>
+		/// The typographic ascender of the face, expressed in font units. For
+		/// font formats not having this information, it is set to ‘bbox.yMax’.
+		/// Only relevant for scalable formats.
+		/// </summary>
 		public short Ascender;
+
+		/// <summary>
+		/// The typographic descender of the face, expressed in font units. For
+		/// font formats not having this information, it is set to ‘bbox.yMin’.
+		/// Note that this field is usually negative. Only relevant for
+		/// scalable formats.
+		/// </summary>
 		public short Descender;
+
+		/// <summary>
+		/// The height is the vertical distance between two consecutive
+		/// baselines, expressed in font units. It is always positive. Only
+		/// relevant for scalable formats.
+		/// </summary>
 		public short Height;
 
+		/// <summary>
+		/// The maximal advance width, in font units, for all glyphs in this
+		/// face. This can be used to make word wrapping computations faster.
+		/// Only relevant for scalable formats.
+		/// </summary>
 		public short MaxAdvanceWidth;
+
+		/// <summary>
+		/// The maximal advance height, in font units, for all glyphs in this
+		/// face. This is only relevant for vertical layouts, and is set to
+		/// ‘height’ for fonts that do not provide vertical metrics. Only
+		/// relevant for scalable formats.
+		/// </summary>
 		public short MaxAdvanceHeight;
 
+		/// <summary>
+		/// The position, in font units, of the underline line for this face.
+		/// It is the center of the underlining stem. Only relevant for
+		/// scalable formats.
+		/// </summary>
 		public short UnderlinePosition;
+
+		/// <summary>
+		/// The thickness, in font units, of the underline for this face. Only
+		/// relevant for scalable formats.
+		/// </summary>
 		public short UnderlineThickness;
 
-		public IntPtr Glyph;
-		public IntPtr Size;
-		public IntPtr Charmap;
+		/// <summary>
+		/// The face's associated glyph slot(s).
+		/// </summary>
+		public GlyphSlot *Glyph;
+
+		/// <summary>
+		/// The current active size for this face.
+		/// </summary>
+		public Size *Size;
+
+		/// <summary>
+		/// The current active charmap for this face.
+		/// </summary>
+		public CharMap *CharMap;
 
 		private IntPtr driver;
 		private IntPtr memory;
@@ -73,5 +193,39 @@ namespace SharpFont
 		private IntPtr autoHint;
 		private IntPtr extensions;
 		private IntPtr @internal;
+
+		/// <summary>
+		/// The face's family name. This is an ASCII string, usually in
+		/// English, which describes the typeface's family (like ‘Times New
+		/// Roman’, ‘Bodoni’, ‘Garamond’, etc). This is a least common
+		/// denominator used to list fonts. Some formats (TrueType & OpenType)
+		/// provide localized and Unicode versions of this string. Applications
+		/// should use the format specific interface to access them. Can be
+		/// NULL (e.g., in fonts embedded in a PDF file).
+		/// </summary>
+		public string FamilyName
+		{
+			get
+			{
+				return Marshal.PtrToStringAuto(familyName);
+			}
+		}
+
+		/// <summary>
+		/// The face's style name. This is an ASCII string, usually in
+		/// English, which describes the typeface's style (like ‘Italic’,
+		/// ‘Bold’, ‘Condensed’, etc). Not all font formats provide a style
+		/// name, so this field is optional, and can be set to NULL. As for
+		/// ‘family_name’, some formats provide localized and Unicode versions
+		/// of this string. Applications should use the format specific
+		/// interface to access them.
+		/// </summary>
+		public string StyleName
+		{
+			get
+			{
+				return Marshal.PtrToStringAuto(styleName);
+			}
+		}
 	}
 }

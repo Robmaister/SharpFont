@@ -57,8 +57,6 @@ namespace SharpFont
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Open_Face(IntPtr library, ref OpenArgs args, int face_index, out Face aface);
 
-		#endregion
-
 		/// <summary>
 		/// This function calls FT_Attach_Stream to attach a file.
 		/// </summary>
@@ -157,8 +155,8 @@ namespace SharpFont
 		/// <param name="slot">A handle to the glyph slot containing the image to convert</param>
 		/// <param name="render_mode">This is the render mode used to render the glyph image into a bitmap. See FT_Render_Mode for a list of possible values</param>
 		/// <returns>FreeType error code. 0 means success</returns>
-		/*[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Render_Glyph(ref FT_GlyphSlotRec slot, FT_Render_Mode render_mode);*/
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Render_Glyph(ref GlyphSlot slot, RenderMode render_mode);
 
 		/// <summary>
 		/// Return the kerning vector between two glyphs of a same face
@@ -172,6 +170,9 @@ namespace SharpFont
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Get_Kerning(ref Face face, uint left_glyph, uint right_glyph, uint kern_mode, out Vector2i akerning);
 
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Get_Track_Kerning(ref Face face, int point_size, int degree, out int akerning);
+
 		/// <summary>
 		/// Retrieve the ASCII name of a given glyph in a face. This only works for those faces where FT_HAS_GLYPH_NAMES(face) returns 1
 		/// An error is returned if the face doesn't provide glyph names or if the glyph index is invalid. In all cases of failure, the first byte of ‘buffer’ is set to 0 to indicate an empty name.
@@ -184,7 +185,7 @@ namespace SharpFont
 		/// <param name="buffer_max">The maximal number of bytes available in the buffer</param>
 		/// <returns>FreeType error code. 0 means success</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Get_Glyph_Name(IntPtr /*FaceRec*/ face, uint glyph_index, IntPtr buffer, uint buffer_max);
+		private static extern Error FT_Get_Glyph_Name(ref Face face, uint glyph_index, IntPtr buffer, uint buffer_max);
 
 		/// <summary>
 		/// Retrieve the ASCII Postscript name of a given face, if available. This only works with Postscript and TrueType fonts
@@ -193,7 +194,7 @@ namespace SharpFont
 		/// <param name="face">A handle to the source face object</param>
 		/// <returns>A pointer to the face's Postscript name. NULL if unavailable</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern IntPtr /*sbyte*/ FT_Get_Postscript_Name(IntPtr /*FaceRec*/ face);
+		private static extern IntPtr FT_Get_Postscript_Name(ref Face face);
 
 		/// <summary>
 		/// Select a given charmap by its encoding tag (as listed in ‘freetype.h’).
@@ -203,8 +204,8 @@ namespace SharpFont
 		/// <param name="face">A handle to the source face object</param>
 		/// <param name="encoding">A handle to the selected encoding</param>
 		/// <returns>FreeType error code. 0 means success</returns>
-		/*[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Select_Charmap(IntPtr face, FT_Encoding encoding);*/
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Select_Charmap(ref Face face, Encoding encoding);
 
 		/// <summary>
 		/// Select a given charmap for character code to glyph index mapping
@@ -213,16 +214,16 @@ namespace SharpFont
 		/// <param name="face">A handle to the source face object</param>
 		/// <param name="charmap">A handle to the selected charmap</param>
 		/// <returns>FreeType error code. 0 means success</returns>
-		/*[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Set_Charmap(IntPtr face, ref FT_CharMapRec charmap);*/
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Set_Charmap(ref Face face, ref CharMap charmap);
 
 		/// <summary>
 		/// Retrieve index of a given charmap
 		/// </summary>
 		/// <param name="charmap">A handle to a charmap</param>
 		/// <returns>The index into the array of character maps within the face to which ‘charmap’ belongs</returns>
-		/*[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern int FT_Get_Charmap_Index(ref FT_CharMapRec charmap);*/
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Get_Charmap_Index(ref CharMap charmap);
 
 		/// <summary>
 		/// Return the glyph index of a given character code. This function uses a charmap object to do the mapping
@@ -232,7 +233,7 @@ namespace SharpFont
 		/// <param name="charcode">The character code</param>
 		/// <returns>The glyph index. 0 means ‘undefined character code’</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern uint FT_Get_Char_Index(IntPtr /*FaceRec*/ face, uint charcode);
+		private static extern uint FT_Get_Char_Index(ref Face face, uint charcode);
 
 		/// <summary>
 		/// This function is used to return the first character code in the current charmap of a given face. It also returns the corresponding glyph index.
@@ -243,7 +244,7 @@ namespace SharpFont
 		/// <param name="agindex">Glyph index of first character code. 0 if charmap is empty</param>
 		/// <returns>The charmap's first character code</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern uint FT_Get_First_Char(IntPtr /*FaceRec*/ face, [In, Out] uint[] agindex);
+		private static extern uint FT_Get_First_Char(ref Face face, out uint agindex);
 
 		/// <summary>
 		/// This function is used to return the next character code in the current charmap of a given face following the value ‘char_code’, as well as the corresponding glyph index.
@@ -255,7 +256,7 @@ namespace SharpFont
 		/// <param name="agindex">Glyph index of first character code. 0 if charmap is empty</param>
 		/// <returns>The charmap's next character code</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern uint FT_Get_Next_Char(IntPtr /*FaceRec*/ face, uint char_code, [In, Out] uint[] agindex);
+		private static extern uint FT_Get_Next_Char(ref Face face, uint char_code, out uint agindex);
 
 		/// <summary>
 		/// Return the glyph index of a given glyph name. This function uses driver specific objects to do the translation
@@ -264,7 +265,15 @@ namespace SharpFont
 		/// <param name="glyph_name">The glyph name</param>
 		/// <returns>The glyph index. 0 means ‘undefined character code’</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern uint FT_Name_Index(IntPtr /*FaceRec*/ face, [In, Out] sbyte[] glyph_name);
+		private static extern uint FT_Get_Name_Index(ref Face face, out IntPtr glyph_name);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern Error FT_Get_SubGlyph_Info(ref GlyphSlot glyph, uint sub_index, out int p_index, out SubGlyphFlags p_flags, out int p_arg1, out int p_arg2, out Matrix2i p_transform);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern uint FT_Get_FSType_Flags(ref Face face);
+
+		#endregion
 
 		/// <summary>
 		/// A very simple function used to perform the computation ‘(a*b)/c’ with maximal accuracy (it uses a 64-bit intermediate integer whenever necessary).

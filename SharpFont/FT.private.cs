@@ -49,7 +49,7 @@ namespace SharpFont
 		private static extern Error FT_Done_FreeType(IntPtr library);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_New_Face(IntPtr library, string filepathname, int face_index, out Face aface);
+		private static extern Error FT_New_Face(IntPtr library, [MarshalAs(UnmanagedType.LPStr)] string filepathname, int face_index, out Face aface);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_New_Memory_Face(IntPtr library, [In] byte[] file_base, int file_size, int face_index, out Face aface);
@@ -57,31 +57,15 @@ namespace SharpFont
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Open_Face(IntPtr library, ref OpenArgs args, int face_index, out Face aface);
 
-		/// <summary>
-		/// This function calls FT_Attach_Stream to attach a file.
-		/// </summary>
-		/// <param name="face">The target face object.</param>
-		/// <param name="filepathname">The pathname</param>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Attach_File(ref Face face, string filepathname);
+		private static extern Error FT_Attach_File(ref Face face, [MarshalAs(UnmanagedType.LPStr)] string filepathname);
 
-		/// <summary>
-		/// ‘Attach’ data to a face object. Normally, this is used to read additional information for the face object. For example, you can attach an AFM file that comes with a Type 1 font to get the kerning values and other metrics
-		/// </summary>
-		/// <param name="face">The target face object</param>
-		/// <param name="parameters">A pointer to FT_Open_Args which must be filled by the caller</param>
-		/// <returns>FreeType error code. 0 means success</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Attach_Stream(ref Face face, ref OpenArgs parameters);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Reference_Face(ref Face face);
 
-		/// <summary>
-		/// Discard a given face object, as well as all of its child slots and sizes.
-		/// </summary>
-		/// <param name="face">A handle to a target face object.</param>
-		/// <returns>FreeType error code. 0 means success</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Done_Face(ref Face face);
 
@@ -91,99 +75,30 @@ namespace SharpFont
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Request_Size(ref Face face, ref SizeRequest req);
 
-		/// <summary>
-		/// This function calls FT_Request_Size to request the nominal size (in points).
-		/// If either the character width or height is zero, it is set equal to the other value.
-		/// If either the horizontal or vertical resolution is zero, it is set equal to the other value.
-		/// A character width or height smaller than 1pt is set to 1pt; if both resolution values are zero, they are set to 72dpi.
-		/// </summary>
-		/// <param name="face">A handle to a target face object</param>
-		/// <param name="char_width">The nominal width, in 26.6 fractional points</param>
-		/// <param name="char_height">The nominal height, in 26.6 fractional points</param>
-		/// <param name="horz_resolution">The horizontal resolution in dpi</param>
-		/// <param name="vert_resolution">The vertical resolution in dpi</param>
-		/// <returns>FreeType error code. 0 means success</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Set_Char_Size(ref Face face, int char_width, int char_height, uint horz_resolution, uint vert_resolution);
 
-		/// <summary>
-		/// This function calls FT_Request_Size to request the nominal size (in pixels).
-		/// </summary>
-		/// <param name="face">A handle to the target face object.</param>
-		/// <param name="pixel_width">The nominal width, in pixels.</param>
-		/// <param name="pixel_height">The nominal height, in pixels</param>
-		/// <returns>FreeType error code. 0 means success</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Set_Pixel_Sizes(ref Face face, uint pixel_width, uint pixel_height);
 
-		/// <summary>
-		/// A function used to load a single glyph into the glyph slot of a face object.
-		/// The loaded glyph may be transformed. See FT_Set_Transform for the details.
-		/// </summary>
-		/// <param name="face">A handle to the target face object where the glyph is loaded.</param>
-		/// <param name="glyph_index">The index of the glyph in the font file. For CID-keyed fonts (either in PS or in CFF format) this argument specifies the CID value.</param>
-		/// <param name="load_flags">A flag indicating what to load for this glyph. The FT_LOAD_XXX constants can be used to control the glyph loading process (e.g., whether the outline should be scaled, whether to load bitmaps or not, whether to hint the outline, etc).</param>
-		/// <returns>FreeType error code. 0 means success.</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Load_Glyph(ref Face face, uint glyph_index, int load_flags);
 
-		/// <summary>
-		/// A function used to load a single glyph into the glyph slot of a face object, according to its character code.
-		/// This function simply calls FT_Get_Char_Index and FT_Load_Glyph.
-		/// </summary>
-		/// <param name="face">A handle to a target face object where the glyph is loaded.</param>
-		/// <param name="char_code">The glyph's character code, according to the current charmap used in the face</param>
-		/// <param name="load_flags">A flag indicating what to load for this glyph. The FT_LOAD_XXX constants can be used to control the glyph loading process (e.g., whether the outline should be scaled, whether to load bitmaps or not, whether to hint the outline, etc).</param>
-		/// <returns>FreeType error code. 0 means success</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Load_Char(ref Face face, uint char_code, int load_flags);
 
-		/// <summary>
-		/// A function used to set the transformation that is applied to glyph images when they are loaded into a glyph slot through FT_Load_Glyph.
-		/// The transformation is only applied to scalable image formats after the glyph has been loaded. It means that hinting is unaltered by the transformation and is performed on the character size given in the last call to FT_Set_Char_Size or FT_Set_Pixel_Sizes.
-		/// Note that this also transforms the ‘face.glyph.advance’ field, but not the values in ‘face.glyph.metrics’
-		/// </summary>
-		/// <param name="face">A handle to the source face object</param>
-		/// <param name="matrix">A pointer to the transformation's 2x2 matrix. Use 0 for the identity matrix</param>
-		/// <param name="delta">A pointer to the translation vector. Use 0 for the null vector</param>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern void FT_Set_Transform(ref Face face, ref Matrix2i matrix, ref Vector2i delta);
 
-		/// <summary>
-		/// Convert a given glyph image to a bitmap. It does so by inspecting the glyph image format, finding the relevant renderer, and invoking it
-		/// </summary>
-		/// <param name="slot">A handle to the glyph slot containing the image to convert</param>
-		/// <param name="render_mode">This is the render mode used to render the glyph image into a bitmap. See FT_Render_Mode for a list of possible values</param>
-		/// <returns>FreeType error code. 0 means success</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Render_Glyph(ref GlyphSlot slot, RenderMode render_mode);
 
-		/// <summary>
-		/// Return the kerning vector between two glyphs of a same face
-		/// </summary>
-		/// <param name="face">A handle to a source face object</param>
-		/// <param name="left_glyph">The index of the left glyph in the kern pair</param>
-		/// <param name="right_glyph">The index of the right glyph in the kern pair</param>
-		/// <param name="kern_mode">See FT_Kerning_Mode for more information. Determines the scale and dimension of the returned kerning vector</param>
-		/// <param name="akerning">The kerning vector. This is either in font units or in pixels (26.6 format) for scalable formats, and in pixels for fixed-sizes formats</param>
-		/// <returns>FreeType error code. 0 means success</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Get_Kerning(ref Face face, uint left_glyph, uint right_glyph, uint kern_mode, out Vector2i akerning);
+		private static extern Error FT_Get_Kerning(ref Face face, uint left_glyph, uint right_glyph, KerningMode kern_mode, out Vector2i akerning);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Get_Track_Kerning(ref Face face, int point_size, int degree, out int akerning);
 
-		/// <summary>
-		/// Retrieve the ASCII name of a given glyph in a face. This only works for those faces where FT_HAS_GLYPH_NAMES(face) returns 1
-		/// An error is returned if the face doesn't provide glyph names or if the glyph index is invalid. In all cases of failure, the first byte of ‘buffer’ is set to 0 to indicate an empty name.
-		/// The glyph name is truncated to fit within the buffer if it is too long. The returned string is always zero-terminated.
-		/// This function is not compiled within the library if the config macro ‘FT_CONFIG_OPTION_NO_GLYPH_NAMES’ is defined in ‘include/freetype/config/ftoptions.h’
-		/// </summary>
-		/// <param name="face">A handle to a source face object</param>
-		/// <param name="glyph_index">The glyph index</param>
-		/// <param name="buffer">A pointer to a target buffer where the name is copied to</param>
-		/// <param name="buffer_max">The maximal number of bytes available in the buffer</param>
-		/// <returns>FreeType error code. 0 means success</returns>
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Get_Glyph_Name(ref Face face, uint glyph_index, IntPtr buffer, uint buffer_max);
 

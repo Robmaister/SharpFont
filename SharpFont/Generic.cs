@@ -35,13 +35,19 @@ namespace SharpFont
 		public IntPtr Data;
 
 		/// <summary>
-		/// A pointer to a ‘generic finalizer’ function, which will be called
-		/// when the object is destroyed. If this field is set to NULL, no code
-		/// will be called.
+		/// A pointer to a <see cref="GenericFinalizer"/> function, which will
+		/// be called when the object is destroyed. If this field is set to
+		/// NULL, no code will be called.
 		/// </summary>
 		[MarshalAs(UnmanagedType.FunctionPtr)]
 		public IntPtr Finalizer;
 
+		/// <summary>
+		/// Initializes a new instance of the Generic struct. Useful for
+		/// creating proper <see cref="Finalizer"/> function pointers.
+		/// </summary>
+		/// <param name="data">A typeless pointer to any client-specified data.</param>
+		/// <param name="finalizer">A function pointer to be called when the containing object is destroyed.</param>
 		public Generic(IntPtr data, GenericFinalizer finalizer)
 			: this()
 		{

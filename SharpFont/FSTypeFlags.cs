@@ -33,17 +33,17 @@ namespace SharpFont
 
 		/// <summary>
 		/// If this bit is set, the font may be embedded and temporarily loaded
-		/// on the remote system. Documents containing Preview & Print fonts
-		/// must be opened ‘read-only’; no edits can be applied to the
+		/// on the remote system. Documents containing Preview &amp; Print
+		/// fonts must be opened ‘read-only’; no edits can be applied to the
 		/// document.
 		/// </summary>
 		PreviewAndPrintEmbedding =		0x0004,
 
 		/// <summary>
 		/// If this bit is set, the font may be embedded but must only be
-		/// installed temporarily on other systems. In contrast to Preview &
-		/// Print fonts, documents containing editable fonts may be opened for
-		/// reading, editing is permitted, and changes may be saved.
+		/// installed temporarily on other systems. In contrast to Preview
+		/// &amp; Print fonts, documents containing editable fonts may be
+		/// opened for reading, editing is permitted, and changes may be saved.
 		/// </summary>
 		EditableEmbedding =				0x0008,
 

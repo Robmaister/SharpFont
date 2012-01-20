@@ -198,10 +198,10 @@ namespace SharpFont
 		/// The face's family name. This is an ASCII string, usually in
 		/// English, which describes the typeface's family (like ‘Times New
 		/// Roman’, ‘Bodoni’, ‘Garamond’, etc). This is a least common
-		/// denominator used to list fonts. Some formats (TrueType & OpenType)
-		/// provide localized and Unicode versions of this string. Applications
-		/// should use the format specific interface to access them. Can be
-		/// NULL (e.g., in fonts embedded in a PDF file).
+		/// denominator used to list fonts. Some formats (TrueType &amp;
+		/// OpenType) provide localized and Unicode versions of this string.
+		/// Applications should use the format specific interface to access
+		/// them. Can be NULL (e.g., in fonts embedded in a PDF file).
 		/// </summary>
 		public string FamilyName
 		{

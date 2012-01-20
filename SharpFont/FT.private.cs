@@ -52,7 +52,7 @@ namespace SharpFont
 		private static extern Error FT_New_Face(IntPtr library, [MarshalAs(UnmanagedType.LPStr)] string filepathname, int face_index, out Face aface);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_New_Memory_Face(IntPtr library, [In] byte[] file_base, int file_size, int face_index, out Face aface);
+		private static extern Error FT_New_Memory_Face(IntPtr library, IntPtr file_base, int file_size, int face_index, out Face aface);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern Error FT_Open_Face(IntPtr library, ref OpenArgs args, int face_index, out Face aface);

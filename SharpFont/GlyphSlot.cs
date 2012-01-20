@@ -194,6 +194,6 @@ namespace SharpFont
 		/// </summary>
 		public IntPtr Other;
 
-		public IntPtr Internal;
+		private IntPtr Internal;
 	}
 }

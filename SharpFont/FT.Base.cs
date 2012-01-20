@@ -347,7 +347,7 @@ namespace SharpFont
 		/// Initialize a new FreeType library object. The set of modules that
 		/// are registered by this function is determined at build time.
 		/// </summary>
-		/// <param name="alibrary">A handle to a new library object.</param>
+		/// <param name="library">A handle to a new library object.</param>
 		public static void InitFreeType(out IntPtr library)
 		{
 			Error err = FT_Init_FreeType(out library);
@@ -376,7 +376,7 @@ namespace SharpFont
 		/// <param name="library">A handle to the library resource.</param>
 		/// <param name="filepathname">A path to the font file.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
-		/// <param name="aface"> A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.</param>
+		/// <param name="face"> A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.</param>
 		/// <see cref="OpenFace"/>
 		public static void NewFace(IntPtr library, string filepathname, int faceIndex, out Face face)
 		{
@@ -396,16 +396,18 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="library">A handle to the library resource</param>
 		/// <param name="fileBase">A pointer to the beginning of the font data</param>
-		/// <param name="fileSize">The size of the memory chunk used by the font data</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0</param>
-		/// <param name="aface">A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.</param>
+		/// <param name="face">A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.</param>
 		/// <see cref="OpenFace"/>
-		public static void NewMemoryFace(IntPtr library, ref byte[] fileBase, int fileSize, int faceIndex, out Face face)
+		public unsafe static void NewMemoryFace(IntPtr library, ref byte[] fileBase, int faceIndex, out Face face)
 		{
-			Error err = FT_New_Memory_Face(library, fileBase, fileSize, faceIndex, out face);
+			fixed (byte* ptr = fileBase)
+			{
+				Error err = FT_New_Memory_Face(library, new IntPtr(ptr), fileBase.Length, faceIndex, out face);
 
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+			}
 		}
 
 		/// <summary>
@@ -436,7 +438,7 @@ namespace SharpFont
 		/// <param name="library">A handle to the library resource</param>
 		/// <param name="args">A pointer to an <see cref="OpenArgs"/> structure which must be filled by the caller.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
-		/// <param name="aface">A handle to a new face object. If ‘face_index’ is greater than or equal to zero, it must be non-NULL.</param>
+		/// <param name="face">A handle to a new face object. If ‘face_index’ is greater than or equal to zero, it must be non-NULL.</param>
 		public static void OpenFace(IntPtr library, ref OpenArgs args, int faceIndex, out Face face)
 		{
 			Error err = FT_Open_Face(library, ref args, faceIndex, out face);
@@ -449,7 +451,7 @@ namespace SharpFont
 		/// This function calls <see cref="AttachStream"/> to attach a file.
 		/// </summary>
 		/// <param name="face">The target face object.</param>
-		/// <param name="filepathname">The pathname.</param>
+		/// <param name="path">The pathname.</param>
 		public static void AttachFile(ref Face face, string path)
 		{
 			Error err = FT_Attach_File(ref face, path);
@@ -554,10 +556,10 @@ namespace SharpFont
 		/// resolution values are zero, they are set to 72dpi.
 		/// </remarks>
 		/// <param name="face">A handle to a target face object</param>
-		/// <param name="char_width">The nominal width, in 26.6 fractional points.</param>
-		/// <param name="char_height">The nominal height, in 26.6 fractional points.</param>
-		/// <param name="horz_resolution">The horizontal resolution in dpi.</param>
-		/// <param name="vert_resolution">The vertical resolution in dpi.</param>
+		/// <param name="charWidth">The nominal width, in 26.6 fractional points.</param>
+		/// <param name="charHeight">The nominal height, in 26.6 fractional points.</param>
+		/// <param name="horizontalRes">The horizontal resolution in dpi.</param>
+		/// <param name="verticalRes">The vertical resolution in dpi.</param>
 		public static void SetCharSize(ref Face face, int charWidth, int charHeight, uint horizontalRes, uint verticalRes)
 		{
 			Error err = FT_Set_Char_Size(ref face, charWidth, charHeight, horizontalRes, verticalRes);
@@ -571,8 +573,8 @@ namespace SharpFont
 		/// nominal size (in pixels).
 		/// </summary>
 		/// <param name="face">A handle to the target face object.</param>
-		/// <param name="pixel_width">The nominal width, in pixels.</param>
-		/// <param name="pixel_height">The nominal height, in pixels</param>
+		/// <param name="pixelWidth">The nominal width, in pixels.</param>
+		/// <param name="pixelHeight">The nominal height, in pixels</param>
 		public static void SetPixelSizes(ref Face face, uint pixelWidth, uint pixelHeight)
 		{
 			Error err = FT_Set_Pixel_Sizes(ref face, pixelWidth, pixelHeight);
@@ -667,7 +669,7 @@ namespace SharpFont
 		/// Return the kerning vector between two glyphs of a same face.
 		/// </summary>
 		/// <remarks>
-		/// Only horizontal layouts (left-to-right & right-to-left) are
+		/// Only horizontal layouts (left-to-right &amp; right-to-left) are
 		/// supported by this method. Other layouts, or more sophisticated
 		/// kernings, are out of the scope of this API function -- they can be
 		/// implemented through format-specific interfaces.
@@ -843,7 +845,7 @@ namespace SharpFont
 		/// ‘missing glyph’.
 		/// </remarks>
 		/// <param name="face">A handle to the source face object.</param>
-		/// <param name="charcode">The character code.</param>
+		/// <param name="charCode">The character code.</param>
 		/// <returns>The glyph index. 0 means ‘undefined character code’.</returns>
 		public static uint GetCharIndex(ref Face face, uint charCode)
 		{
@@ -864,7 +866,7 @@ namespace SharpFont
 		/// value 0 is the first valid character code.
 		/// </remarks>
 		/// <param name="face">A handle to the source face object.</param>
-		/// <param name="agindex">Glyph index of first character code. 0 if charmap is empty.</param>
+		/// <param name="glyphIndex">Glyph index of first character code. 0 if charmap is empty.</param>
 		/// <returns>The charmap's first character code.</returns>
 		public static uint GetFirstChar(ref Face face, out uint glyphIndex)
 		{
@@ -885,8 +887,8 @@ namespace SharpFont
 		/// the charmap.
 		/// </remarks>
 		/// <param name="face">A handle to the source face object.</param>
-		/// <param name="char_code">The starting character code.</param>
-		/// <param name="agindex">Glyph index of first character code. 0 if charmap is empty.</param>
+		/// <param name="charCode">The starting character code.</param>
+		/// <param name="glyphIndex">Glyph index of first character code. 0 if charmap is empty.</param>
 		/// <returns>The charmap's next character code.</returns>
 		public static uint GetNextChar(ref Face face, uint charCode, out uint glyphIndex)
 		{
@@ -898,7 +900,7 @@ namespace SharpFont
 		/// driver specific objects to do the translation.
 		/// </summary>
 		/// <param name="face">A handle to the source face object.</param>
-		/// <param name="glyph_name">The glyph name.</param>
+		/// <param name="name">The glyph name.</param>
 		/// <returns>The glyph index. 0 means ‘undefined character code’.</returns>
 		public static uint GetNameIndex(ref Face face, string name)
 		{

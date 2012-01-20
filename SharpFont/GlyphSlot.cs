@@ -60,14 +60,14 @@ namespace SharpFont
 		/// <summary>
 		/// A handle to the parent face object.
 		/// </summary>
-		public Face *Face;
+		public Face Face;
 
 		/// <summary>
 		/// In some cases (like some font tools), several glyph slots per face
 		/// object can be a good thing. As this is rare, the glyph slots are
 		/// listed through a direct, single-linked list using its ‘next’ field.
 		/// </summary>
-		public GlyphSlot *Next;
+		//public GlyphSlot* Next;
 
 		private uint reserved;
 

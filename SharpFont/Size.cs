@@ -13,7 +13,7 @@ namespace SharpFont
 		/// <summary>
 		/// Handle to the parent face object.
 		/// </summary>
-		public Face *Face;
+		public Face Face;
 
 		/// <summary>
 		/// A typeless pointer, which is unused by the FreeType library or any

@@ -43,7 +43,7 @@ namespace SharpFont
 		/// <summary>
 		/// Indicates that the face contains fixed-width characters (like Courier, Lucido, MonoType, etc.).
 		/// </summary>
-		FixedWidth =		0x0003,
+		FixedWidth =		0x0004,
 
 		/// <summary>
 		/// Indicates that the face uses the ‘sfnt’ storage scheme. For now, this means TrueType and OpenType.

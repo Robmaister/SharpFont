@@ -29,9 +29,9 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="face">A <see cref="Face"/> handle.</param>
 		/// <returns>True if this is a TrueType font that uses one of the patented opcodes, false otherwise.</returns>
-		public bool FaceCheckTrueTypePatents(ref Face face)
+		public bool FaceCheckTrueTypePatents(Face face)
 		{
-			return FT_Face_CheckTrueTypePatents(ref face);
+			return FT_Face_CheckTrueTypePatents(face.Reference);
 		}
 
 		/// <summary>
@@ -44,9 +44,9 @@ namespace SharpFont
 		/// <param name="value">New boolean setting.</param>
 		/// <returns>The old setting value. This will always be false if this is not an SFNT font, or if the unpatented hinter is not compiled in this instance of the library.</returns>
 		/// <see cref="FaceCheckTrueTypePatents"/>
-		public bool FaceSetUnpatentedHinting(ref Face face, bool value)
+		public bool FaceSetUnpatentedHinting(Face face, bool value)
 		{
-			return FT_Face_SetUnpatentedHinting(ref face, value);
+			return FT_Face_SetUnpatentedHinting(face.Reference, value);
 		}
 	}
 }

@@ -17,7 +17,8 @@ namespace Examples
 			{
 				FT.InitFreeType(out library);
 				Face regular = FT.NewFace(library, @"Fonts/Cousine-Regular-Latin.ttf", 0);
-				FT.DoneFace(ref regular);
+				Console.Write(regular.FaceFlags);
+				FT.DoneFace(regular);
 				FT.DoneFreeType(library);
 			}
 			catch (FreeTypeException e)

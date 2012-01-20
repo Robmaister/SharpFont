@@ -15,10 +15,12 @@ namespace SharpFont
 			this.reference = reference;
 		}
 
+		public IntPtr Reference { get { return reference; } }
+
 		/// <summary>
 		/// A handle to the parent face object.
 		/// </summary>
-		Face Face
+		public Face Face
 		{
 			get
 			{
@@ -30,7 +32,7 @@ namespace SharpFont
 		/// An <see cref="Encoding"/> tag identifying the charmap. Use this
 		/// with <see cref="FT.SelectCharmap"/>.
 		/// </summary>
-		Encoding Encoding
+		public Encoding Encoding
 		{
 			get
 			{
@@ -43,7 +45,7 @@ namespace SharpFont
 		/// This comes directly from the TrueType specification and should be
 		/// emulated for other formats.
 		/// </summary>
-		PlatformID PlatformID
+		public PlatformID PlatformID
 		{
 			get
 			{
@@ -55,7 +57,7 @@ namespace SharpFont
 		/// A platform specific encoding number. This also comes from the
 		/// TrueType specification and should be emulated similarly.
 		/// </summary>
-		EncodingID EncodingID
+		public EncodingID EncodingID
 		{
 			get
 			{

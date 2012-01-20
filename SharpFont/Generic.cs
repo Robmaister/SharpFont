@@ -39,7 +39,6 @@ namespace SharpFont
 		/// be called when the object is destroyed. If this field is set to
 		/// NULL, no code will be called.
 		/// </summary>
-		[MarshalAs(UnmanagedType.FunctionPtr)]
 		public IntPtr Finalizer;
 
 		/// <summary>

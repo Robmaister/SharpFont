@@ -33,32 +33,64 @@ namespace SharpFont
 	/// Fields may be changed after a call to FT_Attach_File or
 	/// FT_Attach_Stream.
 	/// </remarks>
-	[StructLayout(LayoutKind.Sequential)]
-	public unsafe struct Face
+	public class Face
 	{
+		private IntPtr reference;
+
+		public Face(IntPtr reference)
+		{
+			this.reference = reference;
+		}
+
+		public IntPtr Reference { get { return reference; } }
+
 		/// <summary>
 		/// The number of faces in the font file. Some font formats can have
 		/// multiple faces in a font file.
 		/// </summary>
-		public int FaceCount;
+		public int FaceCount
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference);
+			}
+		}
 
 		/// <summary>
 		/// The index of the face in the font file. It is set to 0 if there is
 		/// only one face in the font file.
 		/// </summary>
-		public int FaceIndex;
+		public int FaceIndex
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + sizeof(int) * 1);
+			}
+		}
 
 		/// <summary>
 		/// A set of bit flags that give important information about the face;
 		/// see FT_FACE_FLAG_XXX for the details.
 		/// </summary>
-		public FaceFlags FaceFlags;
+		public FaceFlags FaceFlags
+		{
+			get
+			{
+				return (FaceFlags)Marshal.ReadInt32(reference + sizeof(int) * 2);
+			}
+		}
 
 		/// <summary>
 		/// A set of bit flags indicating the style of the face; see
 		/// FT_STYLE_FLAG_XXX for the details.
 		/// </summary>
-		public StyleFlags StyleFlags;
+		public StyleFlags StyleFlags
+		{
+			get
+			{
+				return (StyleFlags)Marshal.ReadInt32(reference + sizeof(int) * 3);
+			}
+		}
 
 		/// <summary>
 		/// The number of glyphs in the face. If the face is scalable and has
@@ -68,33 +100,120 @@ namespace SharpFont
 		/// For CID-keyed fonts, this value gives the highest CID used in the
 		/// font.
 		/// </summary>
-		public int GlyphCount;
+		public int GlyphCount
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + sizeof(int) * 4);
+			}
+		}
 
-		private IntPtr familyName;
-		private IntPtr styleName;
+		/// <summary>
+		/// The face's family name. This is an ASCII string, usually in
+		/// English, which describes the typeface's family (like ‘Times New
+		/// Roman’, ‘Bodoni’, ‘Garamond’, etc). This is a least common
+		/// denominator used to list fonts. Some formats (TrueType &amp;
+		/// OpenType) provide localized and Unicode versions of this string.
+		/// Applications should use the format specific interface to access
+		/// them. Can be NULL (e.g., in fonts embedded in a PDF file).
+		/// </summary>
+		public string FamilyName
+		{
+			get
+			{
+				return Marshal.PtrToStringAuto(reference + sizeof(int) * 5);
+			}
+		}
+
+		/// <summary>
+		/// The face's style name. This is an ASCII string, usually in
+		/// English, which describes the typeface's style (like ‘Italic’,
+		/// ‘Bold’, ‘Condensed’, etc). Not all font formats provide a style
+		/// name, so this field is optional, and can be set to NULL. As for
+		/// ‘family_name’, some formats provide localized and Unicode versions
+		/// of this string. Applications should use the format specific
+		/// interface to access them.
+		/// </summary>
+		public string StyleName
+		{
+			get
+			{
+				return Marshal.PtrToStringAuto(reference + sizeof(int) * 6);
+			}
+		}
 
 		/// <summary>
 		/// The number of bitmap strikes in the face. Even if the face is
 		/// scalable, there might still be bitmap strikes, which are called
 		/// ‘sbits’ in that case.
 		/// </summary>
-		public int FixedSizesCount;
+		public int FixedSizesCount
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + sizeof(int) * 7);
+			}
+		}
 
 		/// <summary>
 		/// An array of FT_Bitmap_Size for all bitmap strikes in the face. It
 		/// is set to NULL if there is no bitmap strike.
 		/// </summary>
-		public BitmapSize *AvailableSizes;
+		public BitmapSize[] AvailableSizes
+		{
+			get
+			{
+				int count = FixedSizesCount;
+
+				if (count == 0)
+					return null;
+
+				BitmapSize[] sizes = new BitmapSize[count];
+				IntPtr array = Marshal.ReadIntPtr(reference + sizeof(int) * 8);
+
+				for (int i = 0; i < count; i++)
+				{
+					sizes[i] = new BitmapSize(array + sizeof(int) * i);
+				}
+
+				return sizes;
+			}
+		}
 
 		/// <summary>
 		/// The number of charmaps in the face.
 		/// </summary>
-		public int CharmapsCount;
+		public int CharmapsCount
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + sizeof(int) * 9);
+			}
+		}
 
 		/// <summary>
 		/// An array of the charmaps of the face.
 		/// </summary>
-		public CharMap *CharMaps;
+		public CharMap[] CharMaps
+		{
+			get
+			{
+				int count = CharmapsCount;
+
+				if (count == 0)
+					return null;
+
+				CharMap[] charmaps = new CharMap[count];
+				IntPtr array = Marshal.ReadIntPtr(reference + sizeof(int) * 10);
+
+				for (int i = 0; i < count; i++)
+				{
+					charmaps[i] = new CharMap(array + sizeof(int) * i);
+				}
+
+				return charmaps;
+			}
+		}
 
 		/// <summary>
 		/// A field reserved for client uses. See the FT_Generic type
@@ -174,17 +293,17 @@ namespace SharpFont
 		/// <summary>
 		/// The face's associated glyph slot(s).
 		/// </summary>
-		public GlyphSlot *Glyph;
+		public GlyphSlot Glyph;
 
 		/// <summary>
 		/// The current active size for this face.
 		/// </summary>
-		public Size *Size;
+		public Size Size;
 
 		/// <summary>
 		/// The current active charmap for this face.
 		/// </summary>
-		public CharMap *CharMap;
+		public CharMap CharMap;
 
 		private IntPtr driver;
 		private IntPtr memory;
@@ -193,39 +312,5 @@ namespace SharpFont
 		private IntPtr autoHint;
 		private IntPtr extensions;
 		private IntPtr @internal;
-
-		/// <summary>
-		/// The face's family name. This is an ASCII string, usually in
-		/// English, which describes the typeface's family (like ‘Times New
-		/// Roman’, ‘Bodoni’, ‘Garamond’, etc). This is a least common
-		/// denominator used to list fonts. Some formats (TrueType &amp;
-		/// OpenType) provide localized and Unicode versions of this string.
-		/// Applications should use the format specific interface to access
-		/// them. Can be NULL (e.g., in fonts embedded in a PDF file).
-		/// </summary>
-		public string FamilyName
-		{
-			get
-			{
-				return Marshal.PtrToStringAuto(familyName);
-			}
-		}
-
-		/// <summary>
-		/// The face's style name. This is an ASCII string, usually in
-		/// English, which describes the typeface's style (like ‘Italic’,
-		/// ‘Bold’, ‘Condensed’, etc). Not all font formats provide a style
-		/// name, so this field is optional, and can be set to NULL. As for
-		/// ‘family_name’, some formats provide localized and Unicode versions
-		/// of this string. Applications should use the format specific
-		/// interface to access them.
-		/// </summary>
-		public string StyleName
-		{
-			get
-			{
-				return Marshal.PtrToStringAuto(styleName);
-			}
-		}
 	}
 }

@@ -33,10 +33,10 @@ namespace SharpFont
 		private static extern void FT_Library_Version(IntPtr library, out int amajor, out int aminor, out int apatch);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern bool FT_Face_CheckTrueTypePatents(ref Face face);
+		private static extern bool FT_Face_CheckTrueTypePatents(IntPtr face);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern bool FT_Face_SetUnpatentedHinting(ref Face face, bool value);
+		private static extern bool FT_Face_SetUnpatentedHinting(IntPtr face, bool value);
 
 		#endregion
 
@@ -49,88 +49,88 @@ namespace SharpFont
 		private static extern Error FT_Done_FreeType(IntPtr library);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_New_Face(IntPtr library, [MarshalAs(UnmanagedType.LPStr)] string filepathname, int face_index, out Face aface);
+		private static extern Error FT_New_Face(IntPtr library, [MarshalAs(UnmanagedType.LPStr)] string filepathname, int face_index, out IntPtr aface);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_New_Memory_Face(IntPtr library, IntPtr file_base, int file_size, int face_index, out Face aface);
+		private static extern Error FT_New_Memory_Face(IntPtr library, IntPtr file_base, int file_size, int face_index, out IntPtr aface);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Open_Face(IntPtr library, ref OpenArgs args, int face_index, out Face aface);
+		private static extern Error FT_Open_Face(IntPtr library, IntPtr args, int face_index, out IntPtr aface);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Attach_File(ref Face face, [MarshalAs(UnmanagedType.LPStr)] string filepathname);
+		private static extern Error FT_Attach_File(IntPtr face, [MarshalAs(UnmanagedType.LPStr)] string filepathname);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Attach_Stream(ref Face face, ref OpenArgs parameters);
+		private static extern Error FT_Attach_Stream(IntPtr face, IntPtr parameters);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Reference_Face(ref Face face);
+		private static extern Error FT_Reference_Face(IntPtr face);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Done_Face(ref Face face);
+		private static extern Error FT_Done_Face(IntPtr face);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Select_Size(ref Face face, int strike_index);
+		private static extern Error FT_Select_Size(IntPtr face, int strike_index);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Request_Size(ref Face face, ref SizeRequest req);
+		private static extern Error FT_Request_Size(IntPtr face, IntPtr req);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Set_Char_Size(ref Face face, int char_width, int char_height, uint horz_resolution, uint vert_resolution);
+		private static extern Error FT_Set_Char_Size(IntPtr face, int char_width, int char_height, uint horz_resolution, uint vert_resolution);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Set_Pixel_Sizes(ref Face face, uint pixel_width, uint pixel_height);
+		private static extern Error FT_Set_Pixel_Sizes(IntPtr face, uint pixel_width, uint pixel_height);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Load_Glyph(ref Face face, uint glyph_index, int load_flags);
+		private static extern Error FT_Load_Glyph(IntPtr face, uint glyph_index, int load_flags);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Load_Char(ref Face face, uint char_code, int load_flags);
+		private static extern Error FT_Load_Char(IntPtr face, uint char_code, int load_flags);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern void FT_Set_Transform(ref Face face, ref Matrix2i matrix, ref Vector2i delta);
+		private static extern void FT_Set_Transform(IntPtr face, IntPtr matrix, IntPtr delta);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Render_Glyph(ref GlyphSlot slot, RenderMode render_mode);
+		private static extern Error FT_Render_Glyph(IntPtr slot, RenderMode render_mode);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Get_Kerning(ref Face face, uint left_glyph, uint right_glyph, KerningMode kern_mode, out Vector2i akerning);
+		private static extern Error FT_Get_Kerning(IntPtr face, uint left_glyph, uint right_glyph, KerningMode kern_mode, out IntPtr akerning);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Get_Track_Kerning(ref Face face, int point_size, int degree, out int akerning);
+		private static extern Error FT_Get_Track_Kerning(IntPtr face, int point_size, int degree, out int akerning);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Get_Glyph_Name(ref Face face, uint glyph_index, IntPtr buffer, uint buffer_max);
+		private static extern Error FT_Get_Glyph_Name(IntPtr face, uint glyph_index, IntPtr buffer, uint buffer_max);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern IntPtr FT_Get_Postscript_Name(ref Face face);
+		private static extern IntPtr FT_Get_Postscript_Name(IntPtr face);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Select_Charmap(ref Face face, Encoding encoding);
+		private static extern Error FT_Select_Charmap(IntPtr face, Encoding encoding);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Set_Charmap(ref Face face, ref CharMap charmap);
+		private static extern Error FT_Set_Charmap(IntPtr face, IntPtr charmap);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern int FT_Get_Charmap_Index(ref CharMap charmap);
+		private static extern int FT_Get_Charmap_Index(IntPtr charmap);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern uint FT_Get_Char_Index(ref Face face, uint charcode);
+		private static extern uint FT_Get_Char_Index(IntPtr face, uint charcode);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern uint FT_Get_First_Char(ref Face face, out uint agindex);
+		private static extern uint FT_Get_First_Char(IntPtr face, out uint agindex);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern uint FT_Get_Next_Char(ref Face face, uint char_code, out uint agindex);
+		private static extern uint FT_Get_Next_Char(IntPtr face, uint char_code, out uint agindex);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern uint FT_Get_Name_Index(ref Face face, IntPtr glyph_name);
+		private static extern uint FT_Get_Name_Index(IntPtr face, IntPtr glyph_name);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern Error FT_Get_SubGlyph_Info(ref GlyphSlot glyph, uint sub_index, out int p_index, out SubGlyphFlags p_flags, out int p_arg1, out int p_arg2, out Matrix2i p_transform);
+		private static extern Error FT_Get_SubGlyph_Info(IntPtr glyph, uint sub_index, out int p_index, out SubGlyphFlags p_flags, out int p_arg1, out int p_arg2, out IntPtr p_transform);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		private static extern FSTypeFlags FT_Get_FSType_Flags(ref Face face);
+		private static extern FSTypeFlags FT_Get_FSType_Flags(IntPtr face);
 
 		#endregion
 

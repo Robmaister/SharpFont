@@ -41,34 +41,70 @@ namespace SharpFont
 	/// contained in the bitmap strike itself. They are computed from the
 	/// global font parameters.
 	/// </remarks>
-	[StructLayout(LayoutKind.Sequential)]
-	public struct BitmapSize
+	public class BitmapSize
 	{
+		private IntPtr reference;
+
+		public BitmapSize(IntPtr reference)
+		{
+			this.reference = reference;
+		}
+
 		/// <summary>
 		/// The vertical distance, in pixels, between two consecutive
 		/// baselines. It is always positive.
 		/// </summary>
-		public short Height;
+		public short Height
+		{
+			get
+			{
+				return Marshal.ReadInt16(reference + sizeof(short) * 0);
+			}
+		}
 
 		/// <summary>
 		/// The average width, in pixels, of all glyphs in the strike.
 		/// </summary>
-		public short Width;
+		public short Width
+		{
+			get
+			{
+				return Marshal.ReadInt16(reference + sizeof(short) * 1);
+			}
+		}
 
 		/// <summary>
 		/// The nominal size of the strike in 26.6 fractional points. This
 		/// field is not very useful.
 		/// </summary>
-		public int Size;
+		public int Size
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + sizeof(short) * 2 + sizeof(int) * 0);
+			}
+		}
 
 		/// <summary>
 		/// The horizontal ppem (nominal width) in 26.6 fractional pixels.
 		/// </summary>
-		public int NominalWidth;
+		public int NominalWidth
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + sizeof(short) * 2 + sizeof(int) * 1);
+			}
+		}
 
 		/// <summary>
 		/// The vertical ppem (nominal height) in 26.6 fractional pixels.
 		/// </summary>
-		public int NominalHeight;
+		public int NominalHeight
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + sizeof(short) * 2 + sizeof(int) * 2);
+			}
+		}
 	}
 }

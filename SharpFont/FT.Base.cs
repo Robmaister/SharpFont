@@ -347,13 +347,16 @@ namespace SharpFont
 		/// Initialize a new FreeType library object. The set of modules that
 		/// are registered by this function is determined at build time.
 		/// </summary>
-		/// <param name="library">A handle to a new library object.</param>
-		public static void InitFreeType(out IntPtr library)
+		/// <returns>A handle to a new library object.</returns>
+		public static Library InitFreeType()
 		{
-			Error err = FT_Init_FreeType(out library);
+			IntPtr libraryRef;
+			Error err = FT_Init_FreeType(out libraryRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
+
+			return new Library(libraryRef);
 		}
 
 		/// <summary>
@@ -361,12 +364,14 @@ namespace SharpFont
 		/// including resources, drivers, faces, sizes, etc.
 		/// </summary>
 		/// <param name="library">A handle to the target library object.</param>
-		public static void DoneFreeType(IntPtr library)
+		public static void DoneFreeType(Library library)
 		{
-			Error err = FT_Done_FreeType(library);
+			Error err = FT_Done_FreeType(library.reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
+
+			library.reference = IntPtr.Zero;
 		}
 
 		/// <summary>
@@ -376,12 +381,12 @@ namespace SharpFont
 		/// <param name="library">A handle to the library resource.</param>
 		/// <param name="filepathname">A path to the font file.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
-		/// <param name="face"> A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.</param>
+		/// <returns> A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.</returns>
 		/// <see cref="OpenFace"/>
-		public static Face NewFace(IntPtr library, string filepathname, int faceIndex)
+		public static Face NewFace(Library library, string filepathname, int faceIndex)
 		{
 			IntPtr faceRef;
-			Error err = FT_New_Face(library, filepathname, faceIndex, out faceRef);
+			Error err = FT_New_Face(library.reference, filepathname, faceIndex, out faceRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -400,15 +405,15 @@ namespace SharpFont
 		/// <param name="library">A handle to the library resource</param>
 		/// <param name="fileBase">A pointer to the beginning of the font data</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0</param>
-		/// <param name="face">A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.</param>
+		/// <returns>A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.</returns>
 		/// <see cref="OpenFace"/>
-		public unsafe static Face NewMemoryFace(IntPtr library, ref byte[] fileBase, int faceIndex)
+		public unsafe static Face NewMemoryFace(Library library, ref byte[] fileBase, int faceIndex)
 		{
 			fixed (byte* ptr = fileBase)
 			{
 				IntPtr faceRef;
 
-				Error err = FT_New_Memory_Face(library, new IntPtr(ptr), fileBase.Length, faceIndex, out faceRef);
+				Error err = FT_New_Memory_Face(library.reference, new IntPtr(ptr), fileBase.Length, faceIndex, out faceRef);
 
 				if (err != Error.Ok)
 					throw new FreeTypeException(err);
@@ -445,18 +450,17 @@ namespace SharpFont
 		/// <param name="library">A handle to the library resource</param>
 		/// <param name="args">A pointer to an <see cref="OpenArgs"/> structure which must be filled by the caller.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
-		/// <param name="face">A handle to a new face object. If ‘face_index’ is greater than or equal to zero, it must be non-NULL.</param>
-		public static Face OpenFace(IntPtr library, OpenArgs args, int faceIndex)
+		/// <returns>A handle to a new face object. If ‘face_index’ is greater than or equal to zero, it must be non-NULL.</returns>
+		public static Face OpenFace(Library library, OpenArgs args, int faceIndex)
 		{
 			IntPtr faceRef;
-			//HACK uncomment
-			return null;
-			/*Error err = FT_Open_Face(library, args.Reference, faceIndex, out faceRef);
+
+			Error err = FT_Open_Face(library.reference, args.reference, faceIndex, out faceRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new Face(faceRef);*/
+			return new Face(faceRef);
 		}
 
 		/// <summary>
@@ -466,7 +470,7 @@ namespace SharpFont
 		/// <param name="path">The pathname.</param>
 		public static void AttachFile(Face face, string path)
 		{
-			Error err = FT_Attach_File(face.Reference, path);
+			Error err = FT_Attach_File(face.reference, path);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -491,11 +495,10 @@ namespace SharpFont
 		/// <param name="parameters">A pointer to <see cref="OpenArgs"/> which must be filled by the caller.</param>
 		public static void AttachStream(Face face, OpenArgs parameters)
 		{
-			//HACK uncomment
-			/*Error err = FT_Attach_Stream(face.Reference, ref parameters);
+			Error err = FT_Attach_Stream(face.reference, parameters.reference);
 
 			if (err != Error.Ok)
-				throw new FreeTypeException(err);*/
+				throw new FreeTypeException(err);
 		}
 
 		/// <summary>
@@ -510,7 +513,7 @@ namespace SharpFont
 		/// <param name="face">A handle to a target face object.</param>
 		public static void ReferenceFace(Face face)
 		{
-			Error err = FT_Reference_Face(face.Reference);
+			Error err = FT_Reference_Face(face.reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -522,10 +525,12 @@ namespace SharpFont
 		/// <param name="face">A handle to a target face object.</param>
 		public static void DoneFace(Face face)
 		{
-			Error err = FT_Done_Face(face.Reference);
+			Error err = FT_Done_Face(face.reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
+
+			face.reference = IntPtr.Zero;
 		}
 
 		/// <summary>
@@ -535,7 +540,7 @@ namespace SharpFont
 		/// <param name="strikeIndex">The index of the bitmap strike in the <see cref="Face.AvailableSizes"/> field of <see cref="Face"/> structure.</param>
 		public static void SelectSize(Face face, int strikeIndex)
 		{
-			Error err = FT_Select_Size(face.Reference, strikeIndex);
+			Error err = FT_Select_Size(face.reference, strikeIndex);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -546,13 +551,12 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">A handle to a target face object.</param>
 		/// <param name="request">A pointer to a <see cref="SizeRequest"/>.</param>
-		public static void RequestSize(Face face, ref SizeRequest request)
+		public static void RequestSize(Face face, SizeRequest request)
 		{
-			//HACK uncomment
-			/*Error err = FT_Request_Size(face.Reference, ref request);
+			Error err = FT_Request_Size(face.reference, request.reference);
 
 			if (err != Error.Ok)
-				throw new FreeTypeException(err);*/
+				throw new FreeTypeException(err);
 		}
 
 		/// <summary>
@@ -576,7 +580,7 @@ namespace SharpFont
 		/// <param name="verticalRes">The vertical resolution in dpi.</param>
 		public static void SetCharSize(Face face, int charWidth, int charHeight, uint horizontalRes, uint verticalRes)
 		{
-			Error err = FT_Set_Char_Size(face.Reference, charWidth, charHeight, horizontalRes, verticalRes);
+			Error err = FT_Set_Char_Size(face.reference, charWidth, charHeight, horizontalRes, verticalRes);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -591,7 +595,7 @@ namespace SharpFont
 		/// <param name="pixelHeight">The nominal height, in pixels</param>
 		public static void SetPixelSizes(Face face, uint pixelWidth, uint pixelHeight)
 		{
-			Error err = FT_Set_Pixel_Sizes(face.Reference, pixelWidth, pixelHeight);
+			Error err = FT_Set_Pixel_Sizes(face.reference, pixelWidth, pixelHeight);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -616,7 +620,7 @@ namespace SharpFont
 		/// <param name="target">The target to OR with the flags.</param>
 		public static void LoadGlyph(Face face, uint glyphIndex, LoadFlags flags, LoadTarget target)
 		{
-			Error err = FT_Load_Glyph(face.Reference, glyphIndex, (int)flags | (int)target);
+			Error err = FT_Load_Glyph(face.reference, glyphIndex, (int)flags | (int)target);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -636,7 +640,7 @@ namespace SharpFont
 		/// <param name="target">The target to OR with the flags.</param>
 		public static void LoadChar(Face face, uint charCode, LoadFlags flags, LoadTarget target)
 		{
-			Error err = FT_Load_Char(face.Reference, charCode, (int)flags | (int)target);
+			Error err = FT_Load_Char(face.reference, charCode, (int)flags | (int)target);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -661,7 +665,7 @@ namespace SharpFont
 		/// <param name="delta">A pointer to the translation vector. Use 0 for the null vector.</param>
 		public static void SetTransform(Face face, Matrix2i matrix, Vector2i delta)
 		{
-			//FT_Set_Transform(face.Reference, ref matrix, ref delta);
+			FT_Set_Transform(face.reference, matrix.reference, delta.reference);
 		}
 
 		/// <summary>
@@ -693,15 +697,16 @@ namespace SharpFont
 		/// <param name="leftGlyph">The index of the left glyph in the kern pair.</param>
 		/// <param name="rightGlyph">The index of the right glyph in the kern pair.</param>
 		/// <param name="mode">Determines the scale and dimension of the returned kerning vector.</param>
-		/// <param name="kerning">The kerning vector. This is either in font units or in pixels (26.6 format) for scalable formats, and in pixels for fixed-sizes formats.</param>
+		/// <returns>The kerning vector. This is either in font units or in pixels (26.6 format) for scalable formats, and in pixels for fixed-sizes formats.</returns>
 		public static Vector2i GetKerning(Face face, uint leftGlyph, uint rightGlyph, KerningMode mode)
 		{
-			//HACK uncomment
-			return new Vector2i();
-			/*Error err = FT_Get_Kerning(face.Reference, leftGlyph, rightGlyph, mode, out kerning);
+			IntPtr kernRef;
+			Error err = FT_Get_Kerning(face.reference, leftGlyph, rightGlyph, mode, out kernRef);
 
 			if (err != Error.Ok)
-				throw new FreeTypeException(err);*/
+				throw new FreeTypeException(err);
+
+			return new Vector2i(kernRef);
 		}
 
 		/// <summary>
@@ -713,7 +718,7 @@ namespace SharpFont
 		/// <param name="kerning">The kerning in 16.16 fractional points.</param>
 		public static void GetTrackKerning(Face face, int pointSize, int degree, out int kerning)
 		{
-			Error err = FT_Get_Track_Kerning(face.Reference, pointSize, degree, out kerning);
+			Error err = FT_Get_Track_Kerning(face.reference, pointSize, degree, out kerning);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -777,7 +782,7 @@ namespace SharpFont
 			fixed (byte* ptr = buffer)
 			{
 				IntPtr intptr = new IntPtr(ptr);
-				Error err = FT_Get_Glyph_Name(face.Reference, glyphIndex, intptr, (uint)buffer.Length);
+				Error err = FT_Get_Glyph_Name(face.reference, glyphIndex, intptr, (uint)buffer.Length);
 
 				if (err != Error.Ok)
 					throw new FreeTypeException(err);
@@ -797,7 +802,7 @@ namespace SharpFont
 		/// <returns>A pointer to the face's Postscript name. NULL if unavailable.</returns>
 		public static string GetPostscriptName(Face face)
 		{
-			return Marshal.PtrToStringAuto(FT_Get_Postscript_Name(face.Reference));
+			return Marshal.PtrToStringAuto(FT_Get_Postscript_Name(face.reference));
 		}
 
 		/// <summary>
@@ -817,7 +822,7 @@ namespace SharpFont
 		/// <param name="encoding">A handle to the selected encoding.</param>
 		public static void SelectCharmap(Face face, Encoding encoding)
 		{
-			Error err = FT_Select_Charmap(face.Reference, encoding);
+			Error err = FT_Select_Charmap(face.reference, encoding);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -834,7 +839,7 @@ namespace SharpFont
 		/// <param name="charmap">A handle to the selected charmap.</param>
 		public static void SetCharmap(Face face, CharMap charmap)
 		{
-			Error err = FT_Set_Charmap(face.Reference, charmap.Reference);
+			Error err = FT_Set_Charmap(face.reference, charmap.reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -847,7 +852,7 @@ namespace SharpFont
 		/// <returns>The index into the array of character maps within the face to which ‘charmap’ belongs.</returns>
 		public static int GetCharmapIndex(CharMap charmap)
 		{
-			return FT_Get_Charmap_Index(charmap.Reference);
+			return FT_Get_Charmap_Index(charmap.reference);
 		}
 
 		/// <summary>
@@ -866,7 +871,7 @@ namespace SharpFont
 		/// <returns>The glyph index. 0 means ‘undefined character code’.</returns>
 		public static uint GetCharIndex(Face face, uint charCode)
 		{
-			return FT_Get_Char_Index(face.Reference, charCode);
+			return FT_Get_Char_Index(face.reference, charCode);
 		}
 
 		/// <summary>
@@ -887,7 +892,7 @@ namespace SharpFont
 		/// <returns>The charmap's first character code.</returns>
 		public static uint GetFirstChar(Face face, out uint glyphIndex)
 		{
-			return FT_Get_First_Char(face.Reference, out glyphIndex);
+			return FT_Get_First_Char(face.reference, out glyphIndex);
 		}
 
 		/// <summary>
@@ -909,7 +914,7 @@ namespace SharpFont
 		/// <returns>The charmap's next character code.</returns>
 		public static uint GetNextChar(Face face, uint charCode, out uint glyphIndex)
 		{
-			return FT_Get_Next_Char(face.Reference, charCode, out glyphIndex);
+			return FT_Get_Next_Char(face.reference, charCode, out glyphIndex);
 		}
 
 		/// <summary>
@@ -921,7 +926,7 @@ namespace SharpFont
 		/// <returns>The glyph index. 0 means ‘undefined character code’.</returns>
 		public static uint GetNameIndex(Face face, string name)
 		{
-			return FT_Get_Name_Index(face.Reference, Marshal.StringToHGlobalAuto(name));
+			return FT_Get_Name_Index(face.reference, Marshal.StringToHGlobalAuto(name));
 		}
 
 		/// <summary>
@@ -948,7 +953,7 @@ namespace SharpFont
 			flags = SubGlyphFlags.ArgsAreWords;
 			arg1 = 0;
 			arg2 = 0;
-			transform = new Matrix2i();
+			transform = new Matrix2i(IntPtr.Zero);
 			/*Error err = FT_Get_SubGlyph_Info(ref glyph, subIndex, out index, out flags, out arg1, out arg2, out transform);
 
 			if (err != Error.Ok)
@@ -967,7 +972,7 @@ namespace SharpFont
 		/// <returns>The fsType flags, FT_FSTYPE_XXX.</returns>
 		public static FSTypeFlags GetFSTypeFlags(Face face)
 		{
-			return FT_Get_FSType_Flags(face.Reference);
+			return FT_Get_FSType_Flags(face.reference);
 		}
 	}
 }

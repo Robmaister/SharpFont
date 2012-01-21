@@ -1,4 +1,26 @@
-﻿using System;
+﻿#region MIT License
+/*Copyright (c) 2012 Robert Rouhani <robert.rouhani@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.*/
+#endregion
+
+using System;
 
 namespace SharpFont
 {
@@ -15,9 +37,9 @@ namespace SharpFont
 		/// <param name="amajor">The major version number.</param>
 		/// <param name="aminor">The minor version number.</param>
 		/// <param name="apatch">The patch version number.</param>
-		public void LibraryVersion(IntPtr library, out int amajor, out int aminor, out int apatch)
+		public void LibraryVersion(Library library, out int amajor, out int aminor, out int apatch)
 		{
-			FT_Library_Version(library, out amajor, out aminor, out apatch);
+			FT_Library_Version(library.reference, out amajor, out aminor, out apatch);
 		}
 
 		/// <summary>
@@ -31,7 +53,7 @@ namespace SharpFont
 		/// <returns>True if this is a TrueType font that uses one of the patented opcodes, false otherwise.</returns>
 		public bool FaceCheckTrueTypePatents(Face face)
 		{
-			return FT_Face_CheckTrueTypePatents(face.Reference);
+			return FT_Face_CheckTrueTypePatents(face.reference);
 		}
 
 		/// <summary>
@@ -46,7 +68,7 @@ namespace SharpFont
 		/// <see cref="FaceCheckTrueTypePatents"/>
 		public bool FaceSetUnpatentedHinting(Face face, bool value)
 		{
-			return FT_Face_SetUnpatentedHinting(face.Reference, value);
+			return FT_Face_SetUnpatentedHinting(face.reference, value);
 		}
 	}
 }

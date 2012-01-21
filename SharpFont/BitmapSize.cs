@@ -41,9 +41,9 @@ namespace SharpFont
 	/// contained in the bitmap strike itself. They are computed from the
 	/// global font parameters.
 	/// </remarks>
-	public class BitmapSize
+	public sealed class BitmapSize
 	{
-		private IntPtr reference;
+		internal IntPtr reference;
 
 		public BitmapSize(IntPtr reference)
 		{
@@ -58,7 +58,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference + sizeof(short) * 0);
+				return Marshal.ReadInt16(reference + 0);
 			}
 		}
 
@@ -69,7 +69,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference + sizeof(short) * 1);
+				return Marshal.ReadInt16(reference + 2);
 			}
 		}
 
@@ -81,7 +81,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + sizeof(short) * 2 + sizeof(int) * 0);
+				return Marshal.ReadInt32(reference + 4);
 			}
 		}
 
@@ -92,7 +92,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + sizeof(short) * 2 + sizeof(int) * 1);
+				return Marshal.ReadInt32(reference + 8);
 			}
 		}
 
@@ -103,7 +103,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + sizeof(short) * 2 + sizeof(int) * 2);
+				return Marshal.ReadInt32(reference + 12);
 			}
 		}
 	}

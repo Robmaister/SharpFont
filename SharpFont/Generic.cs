@@ -1,8 +1,33 @@
-﻿using System;
+﻿#region MIT License
+/*Copyright (c) 2012 Robert Rouhani <robert.rouhani@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.*/
+#endregion
+
+using System;
 using System.Runtime.InteropServices;
 
 namespace SharpFont
 {
+
+	//TODO clean up this class, not fully moved over from the old struct system.
+
 	/// <summary>
 	/// Describe a function used to destroy the ‘client’ data of any FreeType
 	/// object. See the description of the <see cref="Generic"/> type for 
@@ -25,9 +50,15 @@ namespace SharpFont
 	/// would put the address of the glyph cache destructor in the ‘finalizer’
 	/// field).
 	/// </summary>
-	[StructLayout(LayoutKind.Sequential)]
-	public unsafe struct Generic
+	public sealed class Generic
 	{
+		internal IntPtr reference;
+
+		public Generic(IntPtr reference)
+		{
+			this.reference = reference;
+		}
+
 		/// <summary>
 		/// A typeless pointer to any client-specified data. This field is 
 		/// completely ignored by the FreeType library.
@@ -48,7 +79,6 @@ namespace SharpFont
 		/// <param name="data">A typeless pointer to any client-specified data.</param>
 		/// <param name="finalizer">A function pointer to be called when the containing object is destroyed.</param>
 		public Generic(IntPtr data, GenericFinalizer finalizer)
-			: this()
 		{
 			Data = data;
 			Finalizer = Marshal.GetFunctionPointerForDelegate(finalizer);

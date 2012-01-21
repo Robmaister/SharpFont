@@ -24,61 +24,162 @@ using System;
 
 namespace SharpFont
 {
-	public enum EncodingID : ushort
+	/// <summary>
+	/// A list of valid values for the ‘encoding_id’ for
+	/// TT_PLATFORM_APPLE_UNICODE charmaps and name entries.
+	/// </summary>
+	public enum AppleEncodingID : ushort
 	{
-		AppleDefault = 0,
-		AppleUnicode11 = 1,
-		AppleUnicode20 = 3,
-		AppleUnicode32 = 4,
-		AppleVariantSelector = 5,
+		/// <summary>
+		/// Unicode version 1.0.
+		/// </summary>
+		Default = 0,
 
-		MacRoman = 0,
-		MacJapanese = 1,
-		MacTraditionalChinese = 2,
-		MacKorean = 3,
-		MacArabic = 4,
-		MacHebrew = 5,
-		MacGreek = 6,
-		MacRussian = 7,
-		MacRSymbol = 8,
-		MacDevanagari = 9,
-		MacGurmukhi = 10,
-		MacGujarati = 11,
-		MacOriya = 12,
-		MacBengali = 13,
-		MacTamil = 14,
-		MacTelugu = 15,
-		MacKannada = 16,
-		MacMalayalam = 17,
-		MacSinhalese = 18,
-		MacBurmese = 19,
-		MacKhmer = 20,
-		MacThai = 21,
-		MacLaotian = 22,
-		MacGeorgian = 23,
-		MacArmenian = 24,
-		MacMaldivian = 25,
-		MacSimplifiedChinese = 25,
-		MacTibetan = 26,
-		MacMongolian = 27,
-		MacGeez = 28,
-		MacSlavic = 29,
-		MacVietnamese = 30,
-		MacSindhi = 31,
-		MacUninterp = 32,
+		/// <summary>
+		/// Unicode 1.1; specifies Hangul characters starting at U+34xx.
+		/// </summary>
+		Unicode11,
 
-		MicrosoftSymbol = 0,
-		MicrosoftUnicode = 1,
-		MicrosoftSJIS = 2,
-		MicrosoftGB2312 = 3,
-		MicrosoftBig5 = 4,
-		MicrosoftWansung = 5,
-		MicrosoftJohab = 6,
-		MicrosoftUCS4 = 10,
+		/// <summary>
+		/// Deprecated (identical to preceding).
+		/// </summary>
+		ISO10646,
 
-		AdobeStandard = 0,
-		AdobeExpert = 1,
-		AdobeCustom = 2,
-		AdobeLatin1 = 3
+		/// <summary>
+		/// Unicode 2.0 and beyond (UTF-16 BMP only).
+		/// </summary>
+		Unicode20,
+
+		/// <summary>
+		/// Unicode 3.1 and beyond, using UTF-32.
+		/// </summary>
+		Unicode32,
+
+		/// <summary>
+		/// From Adobe, not Apple. Not a normal cmap. Specifies variations on a
+		/// real cmap.
+		/// </summary>
+		VariantSelector,
+	}
+
+	/// <summary>
+	/// A list of valid values for the ‘encoding_id’ for TT_PLATFORM_MACINTOSH
+	/// charmaps and name entries.
+	/// </summary>
+	public enum MacEncodingID : ushort
+	{
+		Roman = 0,
+		Japanese = 1,
+		TraditionalChinese = 2,
+		Korean = 3,
+		Arabic = 4,
+		Hebrew = 5,
+		Greek = 6,
+		Russian = 7,
+		RSymbol = 8,
+		Devanagari = 9,
+		Gurmukhi = 10,
+		Gujarati = 11,
+		Oriya = 12,
+		Bengali = 13,
+		Tamil = 14,
+		Telugu = 15,
+		Kannada = 16,
+		Malayalam = 17,
+		Sinhalese = 18,
+		Burmese = 19,
+		Khmer = 20,
+		Thai = 21,
+		Laotian = 22,
+		Georgian = 23,
+		Armenian = 24,
+		Maldivian = 25,
+		SimplifiedChinese = 25,
+		Tibetan = 26,
+		Mongolian = 27,
+		Geez = 28,
+		Slavic = 29,
+		Vietnamese = 30,
+		Sindhi = 31,
+		Uninterpreted = 32,
+	}
+
+	/// <summary>
+	/// A list of valid values for the ‘encoding_id’ for TT_PLATFORM_MICROSOFT
+	/// charmaps and name entries.
+	/// </summary>
+	public enum MicrosoftEncodingID : ushort
+	{
+		/// <summary>
+		/// Corresponds to Microsoft symbol encoding. See
+		/// FT_ENCODING_MS_SYMBOL.
+		/// </summary>
+		Symbol = 0,
+
+		/// <summary>
+		/// Corresponds to a Microsoft WGL4 charmap, matching Unicode. See
+		/// FT_ENCODING_UNICODE.
+		/// </summary>
+		Unicode = 1,
+
+		/// <summary>
+		/// Corresponds to SJIS Japanese encoding. See FT_ENCODING_SJIS.
+		/// </summary>
+		SJIS = 2,
+
+		/// <summary>
+		/// Corresponds to Simplified Chinese as used in Mainland China. See
+		/// FT_ENCODING_GB2312.
+		/// </summary>
+		GB2312 = 3,
+
+		/// <summary>
+		/// Corresponds to Traditional Chinese as used in Taiwan and Hong Kong.
+		/// See FT_ENCODING_BIG5.
+		/// </summary>
+		Big5 = 4,
+
+		/// <summary>
+		/// Corresponds to Korean Wansung encoding. See FT_ENCODING_WANSUNG.
+		/// </summary>
+		Wansung = 5,
+
+		/// <summary>
+		/// Corresponds to Johab encoding. See FT_ENCODING_JOHAB.
+		/// </summary>
+		Johab = 6,
+
+		/// <summary>
+		/// Corresponds to UCS-4 or UTF-32 charmaps. This has been added to the
+		/// OpenType specification version 1.4 (mid-2001.)
+		/// </summary>
+		UCS4 = 10,
+	}
+
+	/// <summary>
+	/// A list of valid values for the ‘encoding_id’ for TT_PLATFORM_ADOBE
+	/// charmaps. This is a FreeType-specific extension!
+	/// </summary>
+	public enum AdobeEncodingID : ushort
+	{
+		/// <summary>
+		/// Adobe standard encoding.
+		/// </summary>
+		Standard = 0,
+
+		/// <summary>
+		/// Adobe expert encoding.
+		/// </summary>
+		Expert = 1,
+
+		/// <summary>
+		/// Adobe custom encoding.
+		/// </summary>
+		Custom = 2,
+
+		/// <summary>
+		/// Adobe Latin 1 encoding.
+		/// </summary>
+		Latin1 = 3
 	}
 }

@@ -28,27 +28,57 @@ namespace SharpFont
 	/// <summary>
 	/// A structure used to hold an outline's bounding box, i.e., the coordinates of its extrema in the horizontal and vertical directions.
 	/// </summary>
-	[StructLayout(LayoutKind.Sequential)]
-	public struct BBox
+	public sealed class BBox
 	{
+		internal IntPtr reference;
+
+		public BBox(IntPtr reference)
+		{
+			this.reference = reference;
+		}
+
 		/// <summary>
 		/// The horizontal minimum (left-most).
 		/// </summary>
-		public int Left;
+		public int Left
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 0);
+			}
+		}
 
 		/// <summary>
 		/// The vertical minimum (bottom-most).
 		/// </summary>
-		public int Bottom;
+		public int Bottom
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 4);
+			}
+		}
 
 		/// <summary>
 		/// The horizontal maximum (right-most).
 		/// </summary>
-		public int Right;
+		public int Right
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 8);
+			}
+		}
 
 		/// <summary>
 		/// The vertical maximum (top-most).
 		/// </summary>
-		public int Top;
+		public int Top
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 12);
+			}
+		}
 	}
 }

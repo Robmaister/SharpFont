@@ -24,8 +24,24 @@ using System;
 
 namespace SharpFont
 {
-	//TODO find a way to use this instead of IntPtrs
-	public struct Library
+	/// <summary>
+	/// A handle to a FreeType library instance. Each ‘library’ is completely
+	/// independent from the others; it is the ‘root’ of a set of objects like
+	/// fonts, faces, sizes, etc.
+	/// 
+	/// It also embeds a memory manager (see FT_Memory), as well as a scan-line
+	/// converter object (see FT_Raster).
+	/// 
+	/// For multi-threading applications each thread should have its own
+	/// FT_Library object.
+	/// </summary>
+	public sealed class Library
 	{
+		internal IntPtr reference;
+
+		public Library(IntPtr reference)
+		{
+			this.reference = reference;
+		}
 	}
 }

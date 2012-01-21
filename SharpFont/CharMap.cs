@@ -1,4 +1,26 @@
-﻿using System;
+﻿#region MIT License
+/*Copyright (c) 2012 Robert Rouhani <robert.rouhani@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.*/
+#endregion
+
+using System;
 using System.Runtime.InteropServices;
 
 namespace SharpFont
@@ -6,16 +28,14 @@ namespace SharpFont
 	/// <summary>
 	/// The base charmap structure.
 	/// </summary>
-	public class CharMap
+	public sealed class CharMap
 	{
-		private IntPtr reference;
+		internal IntPtr reference;
 
 		public CharMap(IntPtr reference)
 		{
 			this.reference = reference;
 		}
-
-		public IntPtr Reference { get { return reference; } }
 
 		/// <summary>
 		/// A handle to the parent face object.
@@ -24,7 +44,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Face(Marshal.ReadIntPtr(reference + sizeof(int) * 0));
+				return new Face(Marshal.ReadIntPtr(reference + 0));
 			}
 		}
 
@@ -36,7 +56,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (Encoding)Marshal.ReadInt32(reference + sizeof(int) * 1);
+				return (Encoding)Marshal.ReadInt32(reference + IntPtr.Size);
 			}
 		}
 
@@ -49,7 +69,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (PlatformID)Marshal.ReadInt32(reference + sizeof(int) * 2);
+				return (PlatformID)Marshal.ReadInt32(reference + 4 + IntPtr.Size);
 			}
 		}
 
@@ -57,11 +77,11 @@ namespace SharpFont
 		/// A platform specific encoding number. This also comes from the
 		/// TrueType specification and should be emulated similarly.
 		/// </summary>
-		public EncodingID EncodingID
+		public ushort EncodingID
 		{
 			get
 			{
-				return (EncodingID)Marshal.ReadInt32(reference + sizeof(int) * 3);
+				return (ushort)Marshal.ReadInt16(reference + 8 + IntPtr.Size);
 			}
 		}
 	}

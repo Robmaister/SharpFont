@@ -28,17 +28,35 @@ namespace SharpFont
 	/// <summary>
 	/// A simple structure used to store a 2D vector.
 	/// </summary>
-	[StructLayout(LayoutKind.Sequential)]
-	public struct Vector2i
+	public sealed class Vector2i
 	{
+		internal IntPtr reference;
+
+		public Vector2i(IntPtr reference)
+		{
+			this.reference = reference;
+		}
+
 		/// <summary>
 		/// The horizontal coordinate.
 		/// </summary>
-		public int X;
+		public int X
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 0);
+			}
+		}
 
 		/// <summary>
 		/// The vertical coordinate.
 		/// </summary>
-		public int Y;
+		public int Y
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 4);
+			}
+		}
 	}
 }

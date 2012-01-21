@@ -32,27 +32,57 @@ namespace SharpFont
 	///     y' = x*yx + y*yy
 	///     </code>
 	/// </summary>
-	[StructLayout(LayoutKind.Sequential)]
-	public struct Matrix2i
+	public sealed class Matrix2i
 	{
-		/// <summary>
-		/// Matrix coefficient.
-		/// </summary>
-		public int XX;
+		internal IntPtr reference;
+
+		public Matrix2i(IntPtr reference)
+		{
+			this.reference = reference;
+		}
 
 		/// <summary>
 		/// Matrix coefficient.
 		/// </summary>
-		public int XY;
+		public int XX
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 0);
+			}
+		}
 
 		/// <summary>
 		/// Matrix coefficient.
 		/// </summary>
-		public int YX;
+		public int XY
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 4);
+			}
+		}
 
 		/// <summary>
 		/// Matrix coefficient.
 		/// </summary>
-		public int YY;
+		public int YX
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 8);
+			}
+		}
+
+		/// <summary>
+		/// Matrix coefficient.
+		/// </summary>
+		public int YY
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 12);
+			}
+		}
 	}
 }

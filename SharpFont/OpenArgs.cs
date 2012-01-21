@@ -23,8 +23,6 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-//TODO replace IntPtr with proper struct references.
-
 namespace SharpFont
 {
 	/// <summary>
@@ -67,9 +65,15 @@ namespace SharpFont
 	/// compatibility. In other words, applications should treat them as
 	/// read-only.
 	/// </remarks>
-	[StructLayout(LayoutKind.Sequential)]
-	public struct OpenArgs
+	public sealed class OpenArgs
 	{
+		internal IntPtr reference;
+
+		public OpenArgs(IntPtr reference)
+		{
+			this.reference = reference;
+		}
+
 		/// <summary>
 		/// A set of bit flags indicating how to use the structure.
 		/// </summary>

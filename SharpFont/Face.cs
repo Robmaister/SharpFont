@@ -35,14 +35,12 @@ namespace SharpFont
 	/// </remarks>
 	public class Face
 	{
-		private IntPtr reference;
+		internal IntPtr reference;
 
 		public Face(IntPtr reference)
 		{
 			this.reference = reference;
 		}
-
-		public IntPtr Reference { get { return reference; } }
 
 		/// <summary>
 		/// The number of faces in the font file. Some font formats can have
@@ -64,7 +62,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + sizeof(int) * 1);
+				return Marshal.ReadInt32(reference + 4);
 			}
 		}
 
@@ -76,7 +74,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (FaceFlags)Marshal.ReadInt32(reference + sizeof(int) * 2);
+				return (FaceFlags)Marshal.ReadInt32(reference + 8);
 			}
 		}
 
@@ -88,7 +86,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (StyleFlags)Marshal.ReadInt32(reference + sizeof(int) * 3);
+				return (StyleFlags)Marshal.ReadInt32(reference + 12);
 			}
 		}
 
@@ -104,7 +102,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + sizeof(int) * 4);
+				return Marshal.ReadInt32(reference + 16);
 			}
 		}
 
@@ -121,7 +119,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.PtrToStringAuto(reference + sizeof(int) * 5);
+				return Marshal.PtrToStringAuto(Marshal.ReadIntPtr(reference + 20));
 			}
 		}
 
@@ -138,7 +136,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.PtrToStringAuto(reference + sizeof(int) * 6);
+				return Marshal.PtrToStringAuto(Marshal.ReadIntPtr(reference + 20 + IntPtr.Size));
 			}
 		}
 
@@ -151,7 +149,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + sizeof(int) * 7);
+				return Marshal.ReadInt32(reference + 20 + IntPtr.Size * 2);
 			}
 		}
 
@@ -169,7 +167,7 @@ namespace SharpFont
 					return null;
 
 				BitmapSize[] sizes = new BitmapSize[count];
-				IntPtr array = Marshal.ReadIntPtr(reference + sizeof(int) * 8);
+				IntPtr array = Marshal.ReadIntPtr(reference + 24 + IntPtr.Size * 2);
 
 				for (int i = 0; i < count; i++)
 				{
@@ -187,7 +185,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + sizeof(int) * 9);
+				return Marshal.ReadInt32(reference + 24 + IntPtr.Size * 3);
 			}
 		}
 
@@ -204,7 +202,7 @@ namespace SharpFont
 					return null;
 
 				CharMap[] charmaps = new CharMap[count];
-				IntPtr array = Marshal.ReadIntPtr(reference + sizeof(int) * 10);
+				IntPtr array = Marshal.ReadIntPtr(reference + 28 + IntPtr.Size * 3);
 
 				for (int i = 0; i < count; i++)
 				{
@@ -305,12 +303,12 @@ namespace SharpFont
 		/// </summary>
 		public CharMap CharMap;
 
-		private IntPtr driver;
+		/*private IntPtr driver;
 		private IntPtr memory;
 		private IntPtr stream;
 		private IntPtr sizesList;
 		private IntPtr autoHint;
 		private IntPtr extensions;
-		private IntPtr @internal;
+		private IntPtr @internal;*/
 	}
 }

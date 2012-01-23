@@ -134,6 +134,25 @@ namespace SharpFont
 
 		#endregion
 
+		#region Glyph Variants
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern uint FT_Face_GetCharVariantIndex(IntPtr face, uint charcode, uint variantSelector);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Face_GetCharVariantIsDefault(IntPtr face, uint charcode, uint variantSelector);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern IntPtr FT_Face_GetVariantSelectors(IntPtr face, uint charcode, uint variantSelector);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern IntPtr FT_Face_GetVariantsOfChar(IntPtr face, uint charcode);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern IntPtr FT_Face_GetCharsOfVariant(IntPtr face, uint variantSelector);
+
+		#endregion
+
 		/// <summary>
 		/// A very simple function used to perform the computation ‘(a*b)/c’ with maximal accuracy (it uses a 64-bit intermediate integer whenever necessary).
 		/// This function isn't necessarily as fast as some processor specific operations, but is at least completely portable.

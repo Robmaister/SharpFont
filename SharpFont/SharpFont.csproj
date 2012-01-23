@@ -50,9 +50,8 @@
     <Compile Include="FaceFlags.cs" />
     <Compile Include="FreeTypeException.cs" />
     <Compile Include="FSTypeFlags.cs" />
-    <Compile Include="FT.Base.cs" />
+    <Compile Include="FT.Core.cs" />
     <Compile Include="FT.Private.cs" />
-    <Compile Include="FT.Version.cs" />
     <Compile Include="Generic.cs" />
     <Compile Include="GlyphFormat.cs" />
     <Compile Include="GlyphMetrics.cs" />

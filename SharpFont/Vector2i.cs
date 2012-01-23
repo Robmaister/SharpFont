@@ -32,9 +32,41 @@ namespace SharpFont
 	{
 		internal IntPtr reference;
 
-		public Vector2i(IntPtr reference)
+		internal Vector2i(IntPtr reference)
 		{
 			this.reference = reference;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the Vector2i class. X and Y default
+		/// to 0.
+		/// </summary>
+		public Vector2i()
+		{
+			reference = Marshal.AllocHGlobal(SizeInBytes);
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the Vector2i class.
+		/// </summary>
+		/// <param name="x">The X component of the vector.</param>
+		/// <param name="y">The Y component of the vector.</param>
+		public Vector2i(int x, int y)
+			: this()
+		{
+			X = x;
+			Y = y;
+		}
+
+		/// <summary>
+		/// Gets the size of the vector in bytes.
+		/// </summary>
+		public static int SizeInBytes
+		{
+			get
+			{
+				return 8;
+			}
 		}
 
 		/// <summary>
@@ -46,6 +78,11 @@ namespace SharpFont
 			{
 				return Marshal.ReadInt32(reference + 0);
 			}
+
+			set
+			{
+				Marshal.WriteInt32(reference + 0, value);
+			}
 		}
 
 		/// <summary>
@@ -56,6 +93,11 @@ namespace SharpFont
 			get
 			{
 				return Marshal.ReadInt32(reference + 4);
+			}
+
+			set
+			{
+				Marshal.WriteInt32(reference + 4, value);
 			}
 		}
 	}

@@ -31,47 +31,112 @@ namespace SharpFont
 	/// <remarks>
 	/// If not disabled with FT_LOAD_NO_HINTING, the values represent dimensions of the hinted glyph (in case hinting is applicable).
 	/// </remarks>
-	[StructLayout(LayoutKind.Sequential)]
-	public struct GlyphMetrics
+	public sealed class GlyphMetrics
 	{
+		internal IntPtr reference;
+
+		internal GlyphMetrics(IntPtr reference)
+		{
+			this.reference = reference;
+		}
+
+		/// <summary>
+		/// Gets the size of a GlyphMetrics, in bytes.
+		/// </summary>
+		public static int SizeInBytes
+		{
+			get
+			{
+				return 32;
+			}
+		}
+
 		/// <summary>
 		/// The glyph's width.
 		/// </summary>
-		public int Width;
+		public int Width
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 0);
+			}
+		}
 
 		/// <summary>
 		/// The glyph's height.
 		/// </summary>
-		public int Height;
+		public int Height
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 4);
+			}
+		}
 
 		/// <summary>
 		/// Left side bearing for horizontal layout.
 		/// </summary>
-		public int HorizontalBearingX;
+		public int HorizontalBearingX
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 8);
+			}
+		}
 
 		/// <summary>
 		/// Top side bearing for horizontal layout.
 		/// </summary>
-		public int HorizontalBearingY;
+		public int HorizontalBearingY
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 12);
+			}
+		}
 
 		/// <summary>
 		/// Advance width for horizontal layout.
 		/// </summary>
-		public int HorizontalAdvance;
+		public int HorizontalAdvance
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 16);
+			}
+		}
 
 		/// <summary>
 		/// Left side bearing for vertical layout.
 		/// </summary>
-		public int VerticalBearingX;
+		public int VerticalBearingX
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 20);
+			}
+		}
 
 		/// <summary>
 		/// Top side bearing for vertical layout. Larger positive values mean further below the vertical glyph origin.
 		/// </summary>
-		public int VerticalBearingY;
+		public int VerticalBearingY
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 24);
+			}
+		}
 
 		/// <summary>
 		/// Advance height for vertical layout. Positive values mean the glyph has a positive advance downward.
 		/// </summary>
-		public int VerticalAdvance;
+		public int VerticalAdvance
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 28);
+			}
+		}
 	}
 }

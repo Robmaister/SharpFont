@@ -21,75 +21,38 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Runtime.InteropServices;
 
 namespace SharpFont
 {
-	/// <summary>
-	/// A structure used to hold an outline's bounding box, i.e., the coordinates of its extrema in the horizontal and vertical directions.
-	/// </summary>
-	public sealed class BBox
+	public enum ParamTag : uint
 	{
-		internal IntPtr reference;
-
-		internal BBox(IntPtr reference)
-		{
-			this.reference = reference;
-		}
+		/// <summary>
+		/// A constant used as the tag of FT_Parameter structures to make
+		/// FT_Open_Face() ignore preferred family subfamily names in ‘name’
+		/// table since OpenType version 1.4. For backwards compatibility with
+		/// legacy systems which has 4-face-per-family restriction.
+		/// </summary>
+		IgnorePreferredFamily =		('i' << 24 | 'g' << 16 | 'p' << 8 | 'f'),
 
 		/// <summary>
-		/// Gets the size of the class, in bytes.
+		/// A constant used as the tag of FT_Parameter structures to make
+		/// FT_Open_Face() ignore preferred subfamily names in ‘name’ table
+		/// since OpenType version 1.4. For backwards compatibility with legacy
+		/// systems which has 4-face-per-family restriction.
 		/// </summary>
-		public static int SizeInBytes
-		{
-			get
-			{
-				return 16;
-			}
-		}
+		IgnorePreferredSubfamily =	('i' << 24 | 'g' << 16 | 'p' << 8 | 's'),
 
 		/// <summary>
-		/// The horizontal minimum (left-most).
+		/// A constant used as the tag of FT_Parameter structures to indicate
+		/// an incremental loading object to be used by FreeType.
 		/// </summary>
-		public int Left
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference + 0);
-			}
-		}
+		Incremental =				('i' << 24 | 'n' << 16 | 'c' << 8 | 'r'),
 
 		/// <summary>
-		/// The vertical minimum (bottom-most).
+		/// A constant used as the tag of an FT_Parameter structure to indicate
+		/// that unpatented methods only should be used by the TrueType
+		/// bytecode interpreter for a typeface opened by FT_Open_Face.
 		/// </summary>
-		public int Bottom
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference + 4);
-			}
-		}
-
-		/// <summary>
-		/// The horizontal maximum (right-most).
-		/// </summary>
-		public int Right
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference + 8);
-			}
-		}
-
-		/// <summary>
-		/// The vertical maximum (top-most).
-		/// </summary>
-		public int Top
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference + 12);
-			}
-		}
+		UnpatentedHinting =			('u' << 24 | 'n' << 16 | 'p' << 8 | 'a')
 	}
 }

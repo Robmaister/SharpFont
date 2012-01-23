@@ -36,9 +36,20 @@ namespace SharpFont
 	{
 		internal IntPtr reference;
 
-		public Matrix2i(IntPtr reference)
+		internal Matrix2i(IntPtr reference)
 		{
 			this.reference = reference;
+		}
+
+		/// <summary>
+		/// Gets the size of a Matrix2i, in bytes.
+		/// </summary>
+		public static int SizeInBytes
+		{
+			get
+			{
+				return 16;
+			}
 		}
 
 		/// <summary>
@@ -49,6 +60,11 @@ namespace SharpFont
 			get
 			{
 				return Marshal.ReadInt32(reference + 0);
+			}
+
+			set
+			{
+				Marshal.WriteInt32(reference + 0, value);
 			}
 		}
 
@@ -61,6 +77,11 @@ namespace SharpFont
 			{
 				return Marshal.ReadInt32(reference + 4);
 			}
+
+			set
+			{
+				Marshal.WriteInt32(reference + 4, value);
+			}
 		}
 
 		/// <summary>
@@ -72,6 +93,11 @@ namespace SharpFont
 			{
 				return Marshal.ReadInt32(reference + 8);
 			}
+
+			set
+			{
+				Marshal.WriteInt32(reference + 8, value);
+			}
 		}
 
 		/// <summary>
@@ -82,6 +108,11 @@ namespace SharpFont
 			get
 			{
 				return Marshal.ReadInt32(reference + 12);
+			}
+
+			set
+			{
+				Marshal.WriteInt32(reference + 12, value);
 			}
 		}
 	}

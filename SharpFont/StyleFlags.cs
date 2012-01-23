@@ -34,6 +34,11 @@ namespace SharpFont
 	public enum StyleFlags
 	{
 		/// <summary>
+		/// No style flags.
+		/// </summary>
+		None =		0x00,
+
+		/// <summary>
 		/// Indicates that a given face style is italic or oblique.
 		/// </summary>
 		Italic =	0x01,

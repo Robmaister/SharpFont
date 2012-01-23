@@ -37,7 +37,14 @@ namespace Examples
 			{
 				Library lib = FT.InitFreeType();
 				Face regular = FT.NewFace(lib, @"Fonts/Cousine-Regular-Latin.ttf", 0);
-				Console.Write(regular.FaceFlags);
+
+				Console.WriteLine("Information for font " + regular.FamilyName);
+				Console.WriteLine("====================================");
+				Console.WriteLine("Number of faces: " + regular.FaceCount);
+				Console.WriteLine("Face flags: " + regular.FaceFlags);
+				Console.WriteLine("Style: " + regular.StyleName);
+				Console.WriteLine("Style flags: " + regular.StyleFlags);
+
 				FT.DoneFace(regular);
 				FT.DoneFreeType(lib);
 			}

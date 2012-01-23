@@ -26,70 +26,17 @@ using System.Runtime.InteropServices;
 namespace SharpFont
 {
 	/// <summary>
-	/// A structure used to hold an outline's bounding box, i.e., the coordinates of its extrema in the horizontal and vertical directions.
+	/// A handle to a given FreeType module object. Each module can be a font
+	/// driver, a renderer, or anything else that provides services to the
+	/// formers.
 	/// </summary>
-	public sealed class BBox
+	public sealed class Module
 	{
 		internal IntPtr reference;
 
-		internal BBox(IntPtr reference)
+		internal Module(IntPtr reference)
 		{
 			this.reference = reference;
-		}
-
-		/// <summary>
-		/// Gets the size of the class, in bytes.
-		/// </summary>
-		public static int SizeInBytes
-		{
-			get
-			{
-				return 16;
-			}
-		}
-
-		/// <summary>
-		/// The horizontal minimum (left-most).
-		/// </summary>
-		public int Left
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference + 0);
-			}
-		}
-
-		/// <summary>
-		/// The vertical minimum (bottom-most).
-		/// </summary>
-		public int Bottom
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference + 4);
-			}
-		}
-
-		/// <summary>
-		/// The horizontal maximum (right-most).
-		/// </summary>
-		public int Right
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference + 8);
-			}
-		}
-
-		/// <summary>
-		/// The vertical maximum (top-most).
-		/// </summary>
-		public int Top
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference + 12);
-			}
 		}
 	}
 }

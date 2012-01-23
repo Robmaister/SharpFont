@@ -25,9 +25,6 @@ using System.Runtime.InteropServices;
 
 namespace SharpFont
 {
-
-	//TODO clean up this class, not fully moved over from the old struct system.
-
 	/// <summary>
 	/// Describe a function used to destroy the ‘client’ data of any FreeType
 	/// object. See the description of the <see cref="Generic"/> type for 
@@ -54,23 +51,58 @@ namespace SharpFont
 	{
 		internal IntPtr reference;
 
-		public Generic(IntPtr reference)
+		internal Generic(IntPtr reference)
 		{
 			this.reference = reference;
+		}
+
+		/// <summary>
+		/// Gets the size of a Generic, in bytes.
+		/// </summary>
+		public static int SizeInBytes
+		{
+			get
+			{
+				return IntPtr.Size * 2;
+			}
 		}
 
 		/// <summary>
 		/// A typeless pointer to any client-specified data. This field is 
 		/// completely ignored by the FreeType library.
 		/// </summary>
-		public IntPtr Data;
+		public IntPtr Data
+		{
+			get
+			{
+				return Marshal.ReadIntPtr(reference + 0);
+			}
+
+			set
+			{
+				Marshal.WriteIntPtr(reference + 0, value);
+			}
+		}
 
 		/// <summary>
 		/// A pointer to a <see cref="GenericFinalizer"/> function, which will
 		/// be called when the object is destroyed. If this field is set to
 		/// NULL, no code will be called.
 		/// </summary>
-		public IntPtr Finalizer;
+		public IntPtr Finalizer
+		{
+			get
+			{
+				return Marshal.ReadIntPtr(reference + IntPtr.Size);
+			}
+
+			set
+			{
+				Marshal.WriteIntPtr(reference + IntPtr.Size, value);
+			}
+		}
+
+		//TODO overload constructor for different data types.
 
 		/// <summary>
 		/// Initializes a new instance of the Generic struct. Useful for

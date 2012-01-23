@@ -71,34 +71,68 @@ namespace SharpFont
 	/// origin_x += face-&gt;glyph-&gt;advance.x;
 	/// endfor  
 	/// </example>
-	[StructLayout(LayoutKind.Sequential)]
-	public unsafe struct GlyphSlot
+	public sealed class GlyphSlot
 	{
+		internal IntPtr reference;
+
+		internal GlyphSlot(IntPtr reference)
+		{
+			this.reference = reference;
+		}
+
 		/// <summary>
 		/// A handle to the FreeType library instance this slot belongs to.
 		/// </summary>
-		public IntPtr Library;
+		public Library Library
+		{
+			get
+			{
+				return new Library(Marshal.ReadIntPtr(reference + 0));
+			}
+		}
 
 		/// <summary>
 		/// A handle to the parent face object.
 		/// </summary>
-		public Face Face;
+		public Face Face
+		{
+			get
+			{
+				return new Face(Marshal.ReadIntPtr(reference + 0
+					+ IntPtr.Size));
+			}
+		}
 
 		/// <summary>
 		/// In some cases (like some font tools), several glyph slots per face
 		/// object can be a good thing. As this is rare, the glyph slots are
 		/// listed through a direct, single-linked list using its ‘next’ field.
 		/// </summary>
-		//public GlyphSlot* Next;
+		public GlyphSlot Next
+		{
+			get
+			{
+				return new GlyphSlot(Marshal.ReadIntPtr(reference + 0
+					+ IntPtr.Size * 2));
+			}
+		}
 
-		private uint reserved;
+		//private uint reserved;
 
 		/// <summary>
 		/// A typeless pointer which is unused by the FreeType library or any
 		/// of its drivers. It can be used by client applications to link
 		/// their own data to each glyph slot object.
 		/// </summary>
-		public Generic Generic;
+		public Generic Generic
+		{
+			get
+			{
+				//add 4 because of a private "reserved" field between next and generic.
+				return new Generic(reference + 4 
+					+ IntPtr.Size * 3);
+			}
+		}
 
 		/// <summary>
 		/// The metrics of the last loaded glyph in the slot. The returned
@@ -109,7 +143,15 @@ namespace SharpFont
 		/// Note that even when the glyph image is transformed, the metrics are
 		/// not.
 		/// </summary>
-		public GlyphMetrics Metrics;
+		public GlyphMetrics Metrics
+		{
+			get
+			{
+				return new GlyphMetrics(reference + 4 
+					+ IntPtr.Size * 3 
+					+ Generic.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The advance width of the unhinted glyph. Its value is expressed in
@@ -117,7 +159,16 @@ namespace SharpFont
 		/// loading the glyph. This field can be important to perform correct
 		/// WYSIWYG layout. Only relevant for outline glyphs.
 		/// </summary>
-		public int LinearHorizontalAdvance;
+		public int LinearHorizontalAdvance
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 4 
+					+ IntPtr.Size * 3 
+					+ Generic.SizeInBytes 
+					+ GlyphMetrics.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The advance height of the unhinted glyph. Its value is expressed in
@@ -125,7 +176,16 @@ namespace SharpFont
 		/// loading the glyph. This field can be important to perform correct
 		/// WYSIWYG layout. Only relevant for outline glyphs.
 		/// </summary>
-		public int LinearVerticalAdvance;
+		public int LinearVerticalAdvance
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 8 
+					+ IntPtr.Size * 3 
+					+ Generic.SizeInBytes 
+					+ GlyphMetrics.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// This shorthand is, depending on FT_LOAD_IGNORE_TRANSFORM, the
@@ -133,14 +193,33 @@ namespace SharpFont
 		/// format). As specified with FT_LOAD_VERTICAL_LAYOUT, it uses either
 		/// the ‘horiAdvance’ or the ‘vertAdvance’ value of ‘metrics’ field.
 		/// </summary>
-		public Vector2i Advance;
+		public Vector2i Advance
+		{
+			get
+			{
+				return new Vector2i(reference + 12 
+					+ IntPtr.Size * 3 
+					+ Generic.SizeInBytes 
+					+ GlyphMetrics.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// This field indicates the format of the image contained in the glyph
 		/// slot. Typically FT_GLYPH_FORMAT_BITMAP, FT_GLYPH_FORMAT_OUTLINE, or
 		/// FT_GLYPH_FORMAT_COMPOSITE, but others are possible.
 		/// </summary>
-		public GlyphFormat Format;
+		public GlyphFormat Format
+		{
+			get
+			{
+				return (GlyphFormat)Marshal.ReadInt32(reference + 12 
+					+ IntPtr.Size * 3 
+					+ Generic.SizeInBytes 
+					+ GlyphMetrics.SizeInBytes 
+					+ Vector2i.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// This field is used as a bitmap descriptor when the slot format is
@@ -148,20 +227,52 @@ namespace SharpFont
 		/// bitmap buffer can change between calls of FT_Load_Glyph and a few
 		/// other functions.
 		/// </summary>
-		public Bitmap Bitmap;
+		public Bitmap Bitmap
+		{
+			get
+			{
+				return new Bitmap(reference + 16 
+					+ IntPtr.Size * 3 
+					+ Generic.SizeInBytes 
+					+ GlyphMetrics.SizeInBytes 
+					+ Vector2i.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// This is the bitmap's left bearing expressed in integer pixels. Of
 		/// course, this is only valid if the format is FT_GLYPH_FORMAT_BITMAP.
 		/// </summary>
-		public int BitmapLeft;
+		public int BitmapLeft
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 16 
+					+ IntPtr.Size * 3 
+					+ Generic.SizeInBytes 
+					+ GlyphMetrics.SizeInBytes 
+					+ Vector2i.SizeInBytes 
+					+ Bitmap.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// This is the bitmap's top bearing expressed in integer pixels.
 		/// Remember that this is the distance from the baseline to the
 		/// top-most glyph scanline, upwards y coordinates being positive.
 		/// </summary>
-		public int BitmapTop;
+		public int BitmapTop
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 20 
+					+ IntPtr.Size * 3 
+					+ Generic.SizeInBytes 
+					+ GlyphMetrics.SizeInBytes 
+					+ Vector2i.SizeInBytes 
+					+ Bitmap.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The outline descriptor for the current glyph image if its format is
@@ -169,7 +280,18 @@ namespace SharpFont
 		/// transformed, distorted, embolded, etc. However, it must not be
 		/// freed.
 		/// </summary>
-		public Outline Outline;
+		public Outline Outline
+		{
+			get
+			{
+				return new Outline(reference + 24 
+					+ IntPtr.Size * 3 
+					+ Generic.SizeInBytes 
+					+ GlyphMetrics.SizeInBytes 
+					+ Vector2i.SizeInBytes 
+					+ Bitmap.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The number of subglyphs in a composite glyph. This field is only
@@ -177,45 +299,140 @@ namespace SharpFont
 		/// loaded with the FT_LOAD_NO_RECURSE flag. For now this is internal
 		/// to FreeType.
 		/// </summary>
-		public uint SubglyphsCount;
+		public uint SubglyphsCount
+		{
+			get
+			{
+				return (uint)Marshal.ReadInt32(reference + 24 
+					+ IntPtr.Size * 3 
+					+ Generic.SizeInBytes 
+					+ GlyphMetrics.SizeInBytes 
+					+ Vector2i.SizeInBytes 
+					+ Bitmap.SizeInBytes 
+					+ Outline.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// An array of subglyph descriptors for composite glyphs. There are
 		/// ‘num_subglyphs’ elements in there. Currently internal to FreeType.
 		/// </summary>
-		public IntPtr Subglyphs;
+		public SubGlyph[] Subglyphs
+		{
+			get
+			{
+				int count = (int)SubglyphsCount;
+
+				if (count == 0)
+					return null;
+
+				SubGlyph[] subglyphs = new SubGlyph[count];
+				IntPtr array = Marshal.ReadIntPtr(reference + 28
+					+ IntPtr.Size * 3
+					+ Generic.SizeInBytes
+					+ GlyphMetrics.SizeInBytes
+					+ Vector2i.SizeInBytes
+					+ Bitmap.SizeInBytes
+					+ Outline.SizeInBytes);
+
+				for (int i = 0; i < count; i++)
+				{
+					subglyphs[i] = new SubGlyph(array + IntPtr.Size * i);
+				}
+
+				return subglyphs;
+			}
+		}
 
 		/// <summary>
 		/// Certain font drivers can also return the control data for a given
 		/// glyph image (e.g. TrueType bytecode, Type 1 charstrings, etc.).
 		/// This field is a pointer to such data.
 		/// </summary>
-		public IntPtr ControlData;
+		public IntPtr ControlData
+		{
+			get
+			{
+				return Marshal.ReadIntPtr(reference + 28
+					+ IntPtr.Size * 4
+					+ Generic.SizeInBytes
+					+ GlyphMetrics.SizeInBytes
+					+ Vector2i.SizeInBytes
+					+ Bitmap.SizeInBytes
+					+ Outline.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// This is the length in bytes of the control data.
 		/// </summary>
-		public int ControlLength;
+		public int ControlLength
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 28
+					+ IntPtr.Size * 5
+					+ Generic.SizeInBytes
+					+ GlyphMetrics.SizeInBytes
+					+ Vector2i.SizeInBytes
+					+ Bitmap.SizeInBytes
+					+ Outline.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The difference between hinted and unhinted left side bearing while
 		/// autohinting is active. Zero otherwise.
 		/// </summary>
-		public int DeltaLSB;
+		public int DeltaLSB
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 32
+					+ IntPtr.Size * 5
+					+ Generic.SizeInBytes
+					+ GlyphMetrics.SizeInBytes
+					+ Vector2i.SizeInBytes
+					+ Bitmap.SizeInBytes
+					+ Outline.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The difference between hinted and unhinted right side bearing while
 		/// autohinting is active. Zero otherwise.
 		/// </summary>
-		public int DeltaRSB;
+		public int DeltaRSB
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 36
+					+ IntPtr.Size * 5
+					+ Generic.SizeInBytes
+					+ GlyphMetrics.SizeInBytes
+					+ Vector2i.SizeInBytes
+					+ Bitmap.SizeInBytes
+					+ Outline.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// Really wicked formats can use this pointer to present their own
 		/// glyph image to client applications. Note that the application needs
 		/// to know about the image format.
 		/// </summary>
-		public IntPtr Other;
-
-		private IntPtr Internal;
+		public IntPtr Other
+		{
+			get
+			{
+				return Marshal.ReadIntPtr(reference + 40
+					+ IntPtr.Size * 5
+					+ Generic.SizeInBytes
+					+ GlyphMetrics.SizeInBytes
+					+ Vector2i.SizeInBytes
+					+ Bitmap.SizeInBytes
+					+ Outline.SizeInBytes);
+			}
+		}
 	}
 }

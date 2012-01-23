@@ -25,10 +25,12 @@ using System;
 namespace SharpFont
 {
 	/// <summary>
-	/// A list of bit-field constants used within the ‘flags’ field of the FT_Open_Args structure.
+	/// A list of bit-field constants used within the ‘flags’ field of the
+	/// FT_Open_Args structure.
 	/// </summary>
 	/// <remarks>
-	/// The ‘FT_OPEN_MEMORY’, ‘FT_OPEN_STREAM’, and ‘FT_OPEN_PATHNAME’ flags are mutually exclusive.
+	/// The ‘FT_OPEN_MEMORY’, ‘FT_OPEN_STREAM’, and ‘FT_OPEN_PATHNAME’ flags
+	/// are mutually exclusive.
 	/// </remarks>
 	[Flags]
 	public enum OpenFlags

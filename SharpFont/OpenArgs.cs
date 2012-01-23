@@ -69,7 +69,7 @@ namespace SharpFont
 	{
 		internal IntPtr reference;
 
-		public OpenArgs(IntPtr reference)
+		internal OpenArgs(IntPtr reference)
 		{
 			this.reference = reference;
 		}
@@ -77,27 +77,60 @@ namespace SharpFont
 		/// <summary>
 		/// A set of bit flags indicating how to use the structure.
 		/// </summary>
-		public OpenFlags Flags;
+		public OpenFlags Flags
+		{
+			get
+			{
+				return (OpenFlags)Marshal.ReadInt32(reference + 0);
+			}
+		}
 
 		/// <summary>
 		/// The first byte of the file in memory.
 		/// </summary>
-		public IntPtr MemoryBase;
+		public IntPtr MemoryBase
+		{
+			get
+			{
+				return Marshal.ReadIntPtr(reference + 4);
+			}
+		}
 
 		/// <summary>
 		/// The size in bytes of the file in memory.
 		/// </summary>
-		public int MemorySize;
+		public int MemorySize
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 4 
+					+ IntPtr.Size);
+			}
+		}
 
 		/// <summary>
 		/// A pointer to an 8-bit file pathname.
 		/// </summary>
-		public string Pathname;
+		public string Pathname
+		{
+			get
+			{
+				return Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(reference + 8
+					+ IntPtr.Size));
+			}
+		}
 
 		/// <summary>
 		/// A handle to a source stream object.
 		/// </summary>
-		public IntPtr Stream;
+		public Stream Stream
+		{
+			get
+			{
+				return new Stream(Marshal.ReadIntPtr(reference + 8
+					+ IntPtr.Size * 2));
+			}
+		}
 
 		/// <summary>
 		/// This field is exclusively used by <see cref="FT.OpenFace"/>; it
@@ -105,12 +138,26 @@ namespace SharpFont
 		/// 0, FreeType tries to load the face with each one of the drivers in
 		/// its list.
 		/// </summary>
-		public IntPtr Driver;
+		public Module Driver
+		{
+			get
+			{
+				return new Module(Marshal.ReadIntPtr(reference + 8
+					+ IntPtr.Size * 3));
+			}
+		}
 
 		/// <summary>
 		/// The number of extra parameters.
 		/// </summary>
-		public int ParamsCount;
+		public int ParamsCount
+		{
+			get
+			{
+				return Marshal.ReadInt32(reference + 8
+					+ IntPtr.Size * 4);
+			}
+		}
 
 		/// <summary>
 		/// Extra parameters passed to the font driver when opening a new face.

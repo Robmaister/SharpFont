@@ -26,69 +26,62 @@ using System.Runtime.InteropServices;
 namespace SharpFont
 {
 	/// <summary>
-	/// A structure used to hold an outline's bounding box, i.e., the coordinates of its extrema in the horizontal and vertical directions.
+	/// A simple structure used to pass more or less generic parameters to
+	/// FT_Open_Face.
 	/// </summary>
-	public sealed class BBox
+	/// <remarks>
+	/// The ID and function of parameters are driver-specific. See the various
+	/// FT_PARAM_TAG_XXX flags for more information.
+	/// </remarks>
+	public sealed class Parameter
 	{
 		internal IntPtr reference;
 
-		internal BBox(IntPtr reference)
+		internal Parameter(IntPtr reference)
 		{
 			this.reference = reference;
 		}
 
 		/// <summary>
-		/// Gets the size of the class, in bytes.
+		/// Gets the size of this class, in bytes.
 		/// </summary>
 		public static int SizeInBytes
 		{
 			get
 			{
-				return 16;
+				return 4 + IntPtr.Size;
 			}
 		}
 
 		/// <summary>
-		/// The horizontal minimum (left-most).
+		/// A four-byte identification tag.
 		/// </summary>
-		public int Left
+		public ParamTag Tag
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 0);
+				return (ParamTag)Marshal.ReadInt32(reference + 0);
+			}
+
+			set
+			{
+				Marshal.WriteInt32(reference + 0, (int)value);
 			}
 		}
 
 		/// <summary>
-		/// The vertical minimum (bottom-most).
+		/// A pointer to the parameter data.
 		/// </summary>
-		public int Bottom
+		public IntPtr Data
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 4);
+				return Marshal.ReadIntPtr(reference + 4);
 			}
-		}
 
-		/// <summary>
-		/// The horizontal maximum (right-most).
-		/// </summary>
-		public int Right
-		{
-			get
+			set
 			{
-				return Marshal.ReadInt32(reference + 8);
-			}
-		}
-
-		/// <summary>
-		/// The vertical maximum (top-most).
-		/// </summary>
-		public int Top
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference + 12);
+				Marshal.WriteIntPtr(reference + 4, value);
 			}
 		}
 	}

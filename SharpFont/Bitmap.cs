@@ -35,9 +35,20 @@ namespace SharpFont
 	{
 		internal IntPtr reference;
 
-		public Bitmap(IntPtr reference)
+		internal Bitmap(IntPtr reference)
 		{
 			this.reference = reference;
+		}
+
+		/// <summary>
+		/// Gets the size of a Bitmap, in bytes.
+		/// </summary>
+		public static int SizeInBytes
+		{
+			get
+			{
+				return 16 + IntPtr.Size * 2;
+			}
 		}
 
 		/// <summary>

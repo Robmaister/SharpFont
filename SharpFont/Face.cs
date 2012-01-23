@@ -37,7 +37,7 @@ namespace SharpFont
 	{
 		internal IntPtr reference;
 
-		public Face(IntPtr reference)
+		internal Face(IntPtr reference)
 		{
 			this.reference = reference;
 		}
@@ -50,7 +50,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference);
+				return Marshal.ReadInt32(reference + 0);
 			}
 		}
 
@@ -119,7 +119,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.PtrToStringAuto(Marshal.ReadIntPtr(reference + 20));
+				return Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(reference + 20));
 			}
 		}
 
@@ -136,7 +136,8 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.PtrToStringAuto(Marshal.ReadIntPtr(reference + 20 + IntPtr.Size));
+				return Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(reference + 20 
+					+ IntPtr.Size));
 			}
 		}
 
@@ -149,7 +150,8 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 20 + IntPtr.Size * 2);
+				return Marshal.ReadInt32(reference + 20 
+					+ IntPtr.Size * 2);
 			}
 		}
 
@@ -167,11 +169,12 @@ namespace SharpFont
 					return null;
 
 				BitmapSize[] sizes = new BitmapSize[count];
-				IntPtr array = Marshal.ReadIntPtr(reference + 24 + IntPtr.Size * 2);
+				IntPtr array = Marshal.ReadIntPtr(reference + 24 
+					+ IntPtr.Size * 2);
 
 				for (int i = 0; i < count; i++)
 				{
-					sizes[i] = new BitmapSize(array + sizeof(int) * i);
+					sizes[i] = new BitmapSize(array + IntPtr.Size * i);
 				}
 
 				return sizes;
@@ -185,7 +188,8 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 24 + IntPtr.Size * 3);
+				return Marshal.ReadInt32(reference + 24 
+					+ IntPtr.Size * 3);
 			}
 		}
 
@@ -202,11 +206,12 @@ namespace SharpFont
 					return null;
 
 				CharMap[] charmaps = new CharMap[count];
-				IntPtr array = Marshal.ReadIntPtr(reference + 28 + IntPtr.Size * 3);
+				IntPtr array = Marshal.ReadIntPtr(reference + 28 
+					+ IntPtr.Size * 3);
 
 				for (int i = 0; i < count; i++)
 				{
-					charmaps[i] = new CharMap(array + sizeof(int) * i);
+					charmaps[i] = new CharMap(array + IntPtr.Size * i);
 				}
 
 				return charmaps;
@@ -217,7 +222,14 @@ namespace SharpFont
 		/// A field reserved for client uses. See the FT_Generic type
 		/// description.
 		/// </summary>
-		public Generic Generic;
+		public Generic Generic
+		{
+			get
+			{
+				return new Generic(reference + 28 
+					+ IntPtr.Size * 4);
+			}
+		}
 
 		/// <summary>
 		/// The font bounding box. Coordinates are expressed in font units (see
@@ -229,21 +241,47 @@ namespace SharpFont
 		/// Note that the bounding box might be off by (at least) one pixel for
 		/// hinted fonts. See FT_Size_Metrics for further discussion.
 		/// </summary>
-		public BBox BBox;
+		public BBox BBox
+		{
+			get
+			{
+				return new BBox(reference + 28 
+					+ IntPtr.Size * 4 
+					+ Generic.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The number of font units per EM square for this face. This is
 		/// typically 2048 for TrueType fonts, and 1000 for Type 1 fonts. Only
 		/// relevant for scalable formats.
 		/// </summary>
-		public ushort UnitsPerEM;
+		public ushort UnitsPerEM
+		{
+			get
+			{
+				return (ushort)Marshal.ReadInt16(reference + 28 
+					+ IntPtr.Size * 4 
+					+ Generic.SizeInBytes 
+					+ BBox.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The typographic ascender of the face, expressed in font units. For
 		/// font formats not having this information, it is set to ‘bbox.yMax’.
 		/// Only relevant for scalable formats.
 		/// </summary>
-		public short Ascender;
+		public short Ascender
+		{
+			get
+			{
+				return Marshal.ReadInt16(reference + 30 
+					+ IntPtr.Size * 4 
+					+ Generic.SizeInBytes 
+					+ BBox.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The typographic descender of the face, expressed in font units. For
@@ -251,21 +289,48 @@ namespace SharpFont
 		/// Note that this field is usually negative. Only relevant for
 		/// scalable formats.
 		/// </summary>
-		public short Descender;
+		public short Descender
+		{
+			get
+			{
+				return Marshal.ReadInt16(reference + 32 
+					+ IntPtr.Size * 4 
+					+ Generic.SizeInBytes 
+					+ BBox.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The height is the vertical distance between two consecutive
 		/// baselines, expressed in font units. It is always positive. Only
 		/// relevant for scalable formats.
 		/// </summary>
-		public short Height;
+		public short Height
+		{
+			get
+			{
+				return Marshal.ReadInt16(reference + 34 
+					+ IntPtr.Size * 4 
+					+ Generic.SizeInBytes 
+					+ BBox.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The maximal advance width, in font units, for all glyphs in this
 		/// face. This can be used to make word wrapping computations faster.
 		/// Only relevant for scalable formats.
 		/// </summary>
-		public short MaxAdvanceWidth;
+		public short MaxAdvanceWidth
+		{
+			get
+			{
+				return Marshal.ReadInt16(reference + 36 
+					+ IntPtr.Size * 4 
+					+ Generic.SizeInBytes 
+					+ BBox.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The maximal advance height, in font units, for all glyphs in this
@@ -273,35 +338,89 @@ namespace SharpFont
 		/// ‘height’ for fonts that do not provide vertical metrics. Only
 		/// relevant for scalable formats.
 		/// </summary>
-		public short MaxAdvanceHeight;
+		public short MaxAdvanceHeight
+		{
+			get
+			{
+				return Marshal.ReadInt16(reference + 38 
+					+ IntPtr.Size * 4 
+					+ Generic.SizeInBytes 
+					+ BBox.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The position, in font units, of the underline line for this face.
 		/// It is the center of the underlining stem. Only relevant for
 		/// scalable formats.
 		/// </summary>
-		public short UnderlinePosition;
+		public short UnderlinePosition
+		{
+			get
+			{
+				return Marshal.ReadInt16(reference + 40 
+					+ IntPtr.Size * 4 
+					+ Generic.SizeInBytes 
+					+ BBox.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The thickness, in font units, of the underline for this face. Only
 		/// relevant for scalable formats.
 		/// </summary>
-		public short UnderlineThickness;
+		public short UnderlineThickness
+		{
+			get
+			{
+				return Marshal.ReadInt16(reference + 42 
+					+ IntPtr.Size * 4 
+					+ Generic.SizeInBytes 
+					+ BBox.SizeInBytes);
+			}
+		}
 
 		/// <summary>
 		/// The face's associated glyph slot(s).
 		/// </summary>
-		public GlyphSlot Glyph;
+		public GlyphSlot Glyph
+		{
+			get
+			{
+				return new GlyphSlot(Marshal.ReadIntPtr(reference + 44 
+					+ IntPtr.Size * 4 
+					+ Generic.SizeInBytes 
+					+ BBox.SizeInBytes));
+			}
+		}
 
 		/// <summary>
 		/// The current active size for this face.
 		/// </summary>
-		public Size Size;
+		public Size Size
+		{
+			get
+			{
+				return new Size(Marshal.ReadIntPtr(reference + 44 
+					+ IntPtr.Size * 5 
+					+ Generic.SizeInBytes 
+					+ BBox.SizeInBytes));
+			}
+		}
 
 		/// <summary>
 		/// The current active charmap for this face.
 		/// </summary>
-		public CharMap CharMap;
+		public CharMap CharMap
+		{
+			get
+			{
+				return new CharMap(Marshal.ReadIntPtr(reference + 44 
+					+ IntPtr.Size * 6 
+					+ Generic.SizeInBytes 
+					+ BBox.SizeInBytes));
+			}
+		}
 
 		/*private IntPtr driver;
 		private IntPtr memory;

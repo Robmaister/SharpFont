@@ -32,7 +32,7 @@ namespace SharpFont
 	{
 		internal IntPtr reference;
 
-		public Data(IntPtr reference)
+		internal Data(IntPtr reference)
 		{
 			this.reference = reference;
 		}

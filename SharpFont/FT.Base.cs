@@ -677,11 +677,10 @@ namespace SharpFont
 		/// <param name="mode">This is the render mode used to render the glyph image into a bitmap.</param>
 		public static void RenderGlyph(GlyphSlot slot, RenderMode mode)
 		{
-			//HACK uncomment
-			/*Error err = FT_Render_Glyph(ref slot, mode);
+			Error err = FT_Render_Glyph(slot.reference, mode);
 
 			if (err != Error.Ok)
-				throw new FreeTypeException(err);*/
+				throw new FreeTypeException(err);
 		}
 
 		/// <summary>
@@ -787,7 +786,7 @@ namespace SharpFont
 				if (err != Error.Ok)
 					throw new FreeTypeException(err);
 
-				return Marshal.PtrToStringAuto(intptr);
+				return Marshal.PtrToStringAnsi(intptr);
 			}
 		}
 
@@ -802,7 +801,7 @@ namespace SharpFont
 		/// <returns>A pointer to the face's Postscript name. NULL if unavailable.</returns>
 		public static string GetPostscriptName(Face face)
 		{
-			return Marshal.PtrToStringAuto(FT_Get_Postscript_Name(face.reference));
+			return Marshal.PtrToStringAnsi(FT_Get_Postscript_Name(face.reference));
 		}
 
 		/// <summary>
@@ -946,18 +945,15 @@ namespace SharpFont
 		/// <param name="arg1">The subglyph's first argument (if any).</param>
 		/// <param name="arg2">The subglyph's second argument (if any).</param>
 		/// <param name="transform">The subglyph transformation (if any).</param>
-		public static void GetSubGlyphInfo(ref GlyphSlot glyph, uint subIndex, out int index, out SubGlyphFlags flags, out int arg1, out int arg2, out Matrix2i transform)
+		public static void GetSubGlyphInfo(GlyphSlot glyph, uint subIndex, out int index, out SubGlyphFlags flags, out int arg1, out int arg2, out Matrix2i transform)
 		{
-			//HACK uncomment
-			index = 0;
-			flags = SubGlyphFlags.ArgsAreWords;
-			arg1 = 0;
-			arg2 = 0;
-			transform = new Matrix2i(IntPtr.Zero);
-			/*Error err = FT_Get_SubGlyph_Info(ref glyph, subIndex, out index, out flags, out arg1, out arg2, out transform);
+			IntPtr matrixRef;
+			Error err = FT_Get_SubGlyph_Info(glyph.reference, subIndex, out index, out flags, out arg1, out arg2, out matrixRef);
 
 			if (err != Error.Ok)
-				throw new FreeTypeException(err);*/
+				throw new FreeTypeException(err);
+
+			transform = new Matrix2i(matrixRef);
 		}
 
 		/// <summary>

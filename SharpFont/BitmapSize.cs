@@ -45,7 +45,7 @@ namespace SharpFont
 	{
 		internal IntPtr reference;
 
-		public BitmapSize(IntPtr reference)
+		internal BitmapSize(IntPtr reference)
 		{
 			this.reference = reference;
 		}

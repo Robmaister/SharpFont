@@ -33,7 +33,7 @@ namespace SharpFont
 	{
 		internal IntPtr reference;
 
-		public Size(IntPtr reference)
+		internal Size(IntPtr reference)
 		{
 			this.reference = reference;
 		}
@@ -69,8 +69,7 @@ namespace SharpFont
 		{
 			get
 			{
-				//TODO incorrect, need to implement SizeInBytes for all classes and offset by Generic.SizeInBytes()
-				return new SizeMetrics(reference + IntPtr.Size * 2);
+				return new SizeMetrics(reference + IntPtr.Size + Generic.SizeInBytes);
 			}
 		}
 	}

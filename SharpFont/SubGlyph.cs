@@ -26,70 +26,23 @@ using System.Runtime.InteropServices;
 namespace SharpFont
 {
 	/// <summary>
-	/// A structure used to hold an outline's bounding box, i.e., the coordinates of its extrema in the horizontal and vertical directions.
+	/// The subglyph structure is an internal object used to describe subglyphs
+	/// (for example, in the case of composites).
 	/// </summary>
-	public sealed class BBox
+	/// <remarks>
+	/// The subglyph implementation is not part of the high-level API, hence
+	/// the forward structure declaration.
+	/// 
+	/// You can however retrieve subglyph information with
+	/// FT_Get_SubGlyph_Info.
+	/// </remarks>
+	public sealed class SubGlyph
 	{
 		internal IntPtr reference;
 
-		internal BBox(IntPtr reference)
+		internal SubGlyph(IntPtr reference)
 		{
 			this.reference = reference;
-		}
-
-		/// <summary>
-		/// Gets the size of the class, in bytes.
-		/// </summary>
-		public static int SizeInBytes
-		{
-			get
-			{
-				return 16;
-			}
-		}
-
-		/// <summary>
-		/// The horizontal minimum (left-most).
-		/// </summary>
-		public int Left
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference + 0);
-			}
-		}
-
-		/// <summary>
-		/// The vertical minimum (bottom-most).
-		/// </summary>
-		public int Bottom
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference + 4);
-			}
-		}
-
-		/// <summary>
-		/// The horizontal maximum (right-most).
-		/// </summary>
-		public int Right
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference + 8);
-			}
-		}
-
-		/// <summary>
-		/// The vertical maximum (top-most).
-		/// </summary>
-		public int Top
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference + 12);
-			}
 		}
 	}
 }

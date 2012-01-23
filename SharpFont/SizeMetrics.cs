@@ -48,7 +48,7 @@ namespace SharpFont
 	{
 		internal IntPtr reference;
 
-		public SizeMetrics(IntPtr reference)
+		internal SizeMetrics(IntPtr reference)
 		{
 			this.reference = reference;
 		}

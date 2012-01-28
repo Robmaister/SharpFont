@@ -52,8 +52,8 @@ namespace Examples
 
 				//render 'A'
 				uint capitalA = FT.GetCharIndex(regular, 'A');
-				FT.LoadGlyph(regular, capitalA, LoadFlags.Default, LoadTarget.Normal);
 				FT.SetCharSize(regular, 0, 32 * 64, 0, 96);
+				FT.LoadGlyph(regular, capitalA, LoadFlags.Default, LoadTarget.Normal);
 				FT.RenderGlyph(regular.Glyph, RenderMode.Normal);
 
 				SharpFont.Bitmap sBitmap = regular.Glyph.Bitmap;

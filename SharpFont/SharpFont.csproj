@@ -41,10 +41,11 @@
     <Compile Include="BBox.cs" />
     <Compile Include="Bitmap.cs" />
     <Compile Include="BitmapSize.cs" />
+    <Compile Include="Cache\FTC.cs" />
     <Compile Include="CharMap.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="Encoding.cs" />
-    <Compile Include="EncodingID.cs" />
+    <Compile Include="TrueType\EncodingID.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="Face.cs" />
     <Compile Include="FaceFlags.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="FSTypeFlags.cs" />
     <Compile Include="FT.Core.cs" />
     <Compile Include="FT.Private.cs" />
+    <Compile Include="Gasp.cs" />
     <Compile Include="Generic.cs" />
     <Compile Include="Glyph.cs" />
     <Compile Include="GlyphBBoxMode.cs" />
@@ -74,6 +76,7 @@
     <Compile Include="PixelMode.cs" />
     <Compile Include="PlatformID.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PSDictionaryKeys.cs" />
     <Compile Include="RenderMode.cs" />
     <Compile Include="SfntTag.cs" />
     <Compile Include="Size.cs" />
@@ -85,7 +88,11 @@
     <Compile Include="StyleFlags.cs" />
     <Compile Include="SubGlyph.cs" />
     <Compile Include="SubGlyphFlags.cs" />
+    <Compile Include="TrueType\EngineType.cs" />
+    <Compile Include="Type1\BlendFlags.cs" />
+    <Compile Include="Type1\EncodingType.cs" />
     <Compile Include="Vector2i.cs" />
+    <Compile Include="WinFNTID.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -27,6 +27,8 @@ namespace SharpFont
 {
 	public partial class FT
 	{
+		#region Core API
+
 		#region FreeType Version
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -150,6 +152,111 @@ namespace SharpFont
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		private static extern IntPtr FT_Face_GetCharsOfVariant(IntPtr face, uint variantSelector);
+
+		#endregion
+
+		#region Glyph Management
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Get_Glyph(IntPtr slot, out IntPtr aglyph);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Glyph_Copy(IntPtr source, out IntPtr target);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Glyph_Transform(IntPtr glyph, IntPtr matrix, IntPtr delta);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Glyph_Get_CBox(IntPtr glyph, uint bbox_mode, out IntPtr acbox);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Glyph_To_Bitmap(IntPtr the_glyph, RenderMode render_mode, IntPtr origin, bool destroy);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Done_Glyph(IntPtr glyph);
+
+		#endregion
+
+		#region Mac Specific Interface
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_New_Face_From_FOND(IntPtr library, IntPtr fond, int face_index, out IntPtr aface);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_GetFile_From_Mac_Name([MarshalAs(UnmanagedType.LPStr)] string fontName, out IntPtr pathSpec, out int face_index);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_GetFile_From_Mac_ATS_Name([MarshalAs(UnmanagedType.LPStr)] string fontName, out IntPtr pathSpec, out int face_index);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_GetFilePath_From_Mac_ATS_Name([MarshalAs(UnmanagedType.LPStr)] string fontName, out IntPtr path, out int maxPathSize, out int face_index);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_New_Face_From_FSSpec(IntPtr library, IntPtr spec, int face_index, out IntPtr aface);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_New_Face_From_FSRef(IntPtr library, IntPtr @ref, int face_index, out IntPtr aface);
+
+		#endregion
+
+		#region Size Management
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_New_Size(IntPtr face, out IntPtr size);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Done_Size(IntPtr size);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Activate_Size(IntPtr size);
+
+		#endregion
+
+		#endregion
+
+		#region Format-Specific API
+
+		#region Multiple Masters
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Get_Multi_Master(IntPtr face, IntPtr amaster);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Get_MM_Var(IntPtr face, IntPtr amaster);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Set_MM_Design_Coordinates(IntPtr face, uint num_coords, IntPtr coords);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Set_Var_Design_Coordinates(IntPtr face, uint num_coords, IntPtr coords);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Set_MM_Blend_Coordinates(IntPtr face, uint num_coords, IntPtr coords);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Set_Var_Blend_Coordinates(IntPtr face, uint num_coords, IntPtr coords);
+
+		#endregion
+
+		#region TrueType Tables
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern IntPtr FT_Get_Sfnt_Table(IntPtr face, SfntTag tag);
+
+		//TODO find FT_TRUETYPE_TAGS_H and create an enum for "tag"
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Load_Sfnt_Table(IntPtr face, uint tag, int offset, IntPtr buffer, out uint length);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Sfnt_Table_Info(IntPtr face, uint table_index, ref uint tag, out uint length);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern uint FT_Get_CMap_Language_ID(IntPtr charmap);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		private static extern int FT_Get_CMap_Format(IntPtr charmap);
+
+		#endregion
 
 		#endregion
 

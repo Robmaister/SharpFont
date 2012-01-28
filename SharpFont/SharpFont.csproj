@@ -53,6 +53,8 @@
     <Compile Include="FT.Core.cs" />
     <Compile Include="FT.Private.cs" />
     <Compile Include="Generic.cs" />
+    <Compile Include="Glyph.cs" />
+    <Compile Include="GlyphBBoxMode.cs" />
     <Compile Include="GlyphFormat.cs" />
     <Compile Include="GlyphMetrics.cs" />
     <Compile Include="GlyphSlot.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="PlatformID.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RenderMode.cs" />
+    <Compile Include="SfntTag.cs" />
     <Compile Include="Size.cs" />
     <Compile Include="SizeMetrics.cs" />
     <Compile Include="SizeRequest.cs" />

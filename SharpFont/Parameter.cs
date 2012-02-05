@@ -60,12 +60,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return (ParamTag)Marshal.ReadInt32(reference + 0);
+				return (ParamTag)Marshal.ReadInt32(reference, 0);
 			}
 
 			set
 			{
-				Marshal.WriteInt32(reference + 0, (int)value);
+				Marshal.WriteInt32(reference, 0, (int)value);
 			}
 		}
 
@@ -76,12 +76,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference + 4);
+				return Marshal.ReadIntPtr(reference, 4);
 			}
 
 			set
 			{
-				Marshal.WriteIntPtr(reference + 4, value);
+				Marshal.WriteIntPtr(reference, 4, value);
 			}
 		}
 	}

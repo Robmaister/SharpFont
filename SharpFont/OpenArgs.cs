@@ -81,7 +81,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (OpenFlags)Marshal.ReadInt32(reference + 0);
+				return (OpenFlags)Marshal.ReadInt32(reference, 0);
 			}
 		}
 
@@ -92,7 +92,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference + 4);
+				return Marshal.ReadIntPtr(reference, 4);
 			}
 		}
 
@@ -103,7 +103,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 4 
+				return Marshal.ReadInt32(reference, 4
 					+ IntPtr.Size);
 			}
 		}
@@ -115,7 +115,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(reference + 8
+				return Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(reference, 8
 					+ IntPtr.Size));
 			}
 		}
@@ -127,7 +127,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Stream(Marshal.ReadIntPtr(reference + 8
+				return new Stream(Marshal.ReadIntPtr(reference, 8
 					+ IntPtr.Size * 2));
 			}
 		}
@@ -142,7 +142,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Module(Marshal.ReadIntPtr(reference + 8
+				return new Module(Marshal.ReadIntPtr(reference, 8
 					+ IntPtr.Size * 3));
 			}
 		}
@@ -154,7 +154,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 8
+				return Marshal.ReadInt32(reference, 8
 					+ IntPtr.Size * 4);
 			}
 		}

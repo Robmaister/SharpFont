@@ -44,5 +44,10 @@ namespace SharpFont
 		{
 			this.reference = reference;
 		}
+
+		internal SubGlyph(IntPtr reference, int offset)
+		{
+			this.reference = new IntPtr(reference.ToInt64() + offset);
+		}
 	}
 }

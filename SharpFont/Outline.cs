@@ -44,6 +44,11 @@ namespace SharpFont
 			this.reference = reference;
 		}
 
+		internal Outline(IntPtr reference, int offset)
+		{
+			this.reference = new IntPtr(reference.ToInt64() + offset);
+		}
+
 		/// <summary>
 		/// Gets the size of the class, in bytes.
 		/// </summary>
@@ -62,7 +67,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference + 0);
+				return Marshal.ReadInt16(reference, 0);
 			}
 		}
 
@@ -73,7 +78,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference + 2);
+				return Marshal.ReadInt16(reference, 2);
 			}
 		}
 
@@ -91,11 +96,11 @@ namespace SharpFont
 					return null;
 
 				Vector2i[] points = new Vector2i[count];
-				IntPtr array = Marshal.ReadIntPtr(reference + 4);
+				IntPtr array = Marshal.ReadIntPtr(reference, 4);
 
 				for (int i = 0; i < count; i++)
 				{
-					points[i] = new Vector2i(array + IntPtr.Size * i);
+					points[i] = new Vector2i(array, IntPtr.Size * i);
 				}
 
 				return points;
@@ -129,11 +134,11 @@ namespace SharpFont
 					return null;
 
 				byte[] tags = new byte[count];
-				IntPtr array = Marshal.ReadIntPtr(reference + 4 + IntPtr.Size);
+				IntPtr array = Marshal.ReadIntPtr(reference, 4 + IntPtr.Size);
 
 				for (int i = 0; i < count; i++)
 				{
-					tags[i] = Marshal.ReadByte(array + IntPtr.Size * i);
+					tags[i] = Marshal.ReadByte(array, IntPtr.Size * i);
 				}
 
 				return tags;
@@ -156,11 +161,11 @@ namespace SharpFont
 					return null;
 
 				short[] contours = new short[count];
-				IntPtr array = Marshal.ReadIntPtr(reference + 4 + IntPtr.Size * 2);
+				IntPtr array = Marshal.ReadIntPtr(reference, 4 + IntPtr.Size * 2);
 
 				for (int i = 0; i < count; i++)
 				{
-					contours[i] = Marshal.ReadInt16(array + IntPtr.Size * i);
+					contours[i] = Marshal.ReadInt16(array, IntPtr.Size * i);
 				}
 
 				return contours;
@@ -176,7 +181,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (OutlineFlags)Marshal.ReadInt32(reference + 4 + IntPtr.Size * 3);
+				return (OutlineFlags)Marshal.ReadInt32(reference, 4 + IntPtr.Size * 3);
 			}
 		}
 	}

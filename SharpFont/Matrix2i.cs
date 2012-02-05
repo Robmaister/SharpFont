@@ -59,12 +59,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 0);
+				return Marshal.ReadInt32(reference, 0);
 			}
 
 			set
 			{
-				Marshal.WriteInt32(reference + 0, value);
+				Marshal.WriteInt32(reference, 0, value);
 			}
 		}
 
@@ -75,12 +75,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 4);
+				return Marshal.ReadInt32(reference, 4);
 			}
 
 			set
 			{
-				Marshal.WriteInt32(reference + 4, value);
+				Marshal.WriteInt32(reference, 4, value);
 			}
 		}
 
@@ -91,12 +91,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 8);
+				return Marshal.ReadInt32(reference, 8);
 			}
 
 			set
 			{
-				Marshal.WriteInt32(reference + 8, value);
+				Marshal.WriteInt32(reference, 8, value);
 			}
 		}
 
@@ -107,12 +107,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 12);
+				return Marshal.ReadInt32(reference, 12);
 			}
 
 			set
 			{
-				Marshal.WriteInt32(reference + 12, value);
+				Marshal.WriteInt32(reference, 12, value);
 			}
 		}
 	}

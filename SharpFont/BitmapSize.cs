@@ -50,6 +50,11 @@ namespace SharpFont
 			this.reference = reference;
 		}
 
+		internal BitmapSize(IntPtr reference, int offset)
+		{
+			this.reference = new IntPtr(reference.ToInt64() + offset);
+		}
+
 		/// <summary>
 		/// The vertical distance, in pixels, between two consecutive
 		/// baselines. It is always positive.
@@ -58,7 +63,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference + 0);
+				return Marshal.ReadInt16(reference, 0);
 			}
 		}
 
@@ -69,7 +74,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference + 2);
+				return Marshal.ReadInt16(reference, 2);
 			}
 		}
 
@@ -81,7 +86,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 4);
+				return Marshal.ReadInt32(reference, 4);
 			}
 		}
 
@@ -92,7 +97,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 8);
+				return Marshal.ReadInt32(reference, 8);
 			}
 		}
 
@@ -103,7 +108,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 12);
+				return Marshal.ReadInt32(reference, 12);
 			}
 		}
 	}

@@ -51,7 +51,7 @@ namespace Examples
 				Console.WriteLine("Style flags: " + regular.StyleFlags);
 
 				//render 'A'
-				uint capitalA = FT.GetCharIndex(regular, 'A');
+				uint capitalA = FT.GetCharIndex(regular, 'D');
 				FT.SetCharSize(regular, 0, 32 * 64, 0, 96);
 				FT.LoadGlyph(regular, capitalA, LoadFlags.Default, LoadTarget.Normal);
 				FT.RenderGlyph(regular.Glyph, RenderMode.Normal);
@@ -63,7 +63,7 @@ namespace Examples
 				byte[] data = new byte[sBitmap.Rows * sBitmap.Width * 4];
 				for (int i = 0; i < data.Length; i += 4)
 				{
-					data[i] = (byte)(Marshal.ReadByte(sBitmap.Buffer + (i / 4)));
+					data[i] = (byte)(Marshal.ReadByte(sBitmap.Buffer, (i / 4)));
 					data[i + 1] = data[i];
 					data[i + 2] = data[i];
 					data[i + 3] = 255; //no transparency

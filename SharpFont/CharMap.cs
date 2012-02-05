@@ -37,6 +37,11 @@ namespace SharpFont
 			this.reference = reference;
 		}
 
+		internal CharMap(IntPtr reference, int offset)
+		{
+			this.reference = new IntPtr(reference.ToInt64() + offset);
+		}
+
 		/// <summary>
 		/// A handle to the parent face object.
 		/// </summary>
@@ -44,7 +49,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Face(Marshal.ReadIntPtr(reference + 0));
+				return new Face(Marshal.ReadIntPtr(reference, 0));
 			}
 		}
 
@@ -56,7 +61,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (Encoding)Marshal.ReadInt32(reference + IntPtr.Size);
+				return (Encoding)Marshal.ReadInt32(reference, IntPtr.Size);
 			}
 		}
 
@@ -69,7 +74,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (PlatformID)Marshal.ReadInt32(reference + 4 + IntPtr.Size);
+				return (PlatformID)Marshal.ReadInt32(reference, 4 + IntPtr.Size);
 			}
 		}
 
@@ -81,7 +86,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (ushort)Marshal.ReadInt16(reference + 8 + IntPtr.Size);
+				return (ushort)Marshal.ReadInt16(reference, 8 + IntPtr.Size);
 			}
 		}
 	}

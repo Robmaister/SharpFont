@@ -56,6 +56,11 @@ namespace SharpFont
 			this.reference = reference;
 		}
 
+		internal Generic(IntPtr reference, int offset)
+		{
+			this.reference = new IntPtr(reference.ToInt64() + offset);
+		}
+
 		/// <summary>
 		/// Gets the size of a Generic, in bytes.
 		/// </summary>
@@ -75,12 +80,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference + 0);
+				return Marshal.ReadIntPtr(reference, 0);
 			}
 
 			set
 			{
-				Marshal.WriteIntPtr(reference + 0, value);
+				Marshal.WriteIntPtr(reference, 0, value);
 			}
 		}
 
@@ -93,12 +98,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference + IntPtr.Size);
+				return Marshal.ReadIntPtr(reference,  IntPtr.Size);
 			}
 
 			set
 			{
-				Marshal.WriteIntPtr(reference + IntPtr.Size, value);
+				Marshal.WriteIntPtr(reference,  IntPtr.Size, value);
 			}
 		}
 

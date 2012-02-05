@@ -37,6 +37,11 @@ namespace SharpFont
 			this.reference = reference;
 		}
 
+		internal BBox(IntPtr reference, int offset)
+		{
+			this.reference = new IntPtr(reference.ToInt64() + offset);
+		}
+
 		/// <summary>
 		/// Gets the size of the class, in bytes.
 		/// </summary>
@@ -55,7 +60,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 0);
+				return Marshal.ReadInt32(reference, 0);
 			}
 		}
 
@@ -66,7 +71,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 4);
+				return Marshal.ReadInt32(reference, 4);
 			}
 		}
 
@@ -77,7 +82,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 8);
+				return Marshal.ReadInt32(reference, 8);
 			}
 		}
 
@@ -88,7 +93,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 12);
+				return Marshal.ReadInt32(reference, 12);
 			}
 		}
 	}

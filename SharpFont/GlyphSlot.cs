@@ -87,7 +87,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Library(Marshal.ReadIntPtr(reference + 0));
+				return new Library(Marshal.ReadIntPtr(reference, 0));
 			}
 		}
 
@@ -98,7 +98,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Face(Marshal.ReadIntPtr(reference + 0
+				return new Face(Marshal.ReadIntPtr(reference, 0
 					+ IntPtr.Size));
 			}
 		}
@@ -112,7 +112,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new GlyphSlot(Marshal.ReadIntPtr(reference + 0
+				return new GlyphSlot(Marshal.ReadIntPtr(reference, 0
 					+ IntPtr.Size * 2));
 			}
 		}
@@ -129,7 +129,7 @@ namespace SharpFont
 			get
 			{
 				//add 4 because of a private "reserved" field between next and generic.
-				return new Generic(reference + 4 
+				return new Generic(reference, 4 
 					+ IntPtr.Size * 3);
 			}
 		}
@@ -147,7 +147,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new GlyphMetrics(reference + 4 
+				return new GlyphMetrics(reference, 4 
 					+ IntPtr.Size * 3 
 					+ Generic.SizeInBytes);
 			}
@@ -163,7 +163,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 4 
+				return Marshal.ReadInt32(reference, 4 
 					+ IntPtr.Size * 3 
 					+ Generic.SizeInBytes 
 					+ GlyphMetrics.SizeInBytes);
@@ -180,7 +180,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 8 
+				return Marshal.ReadInt32(reference, 8 
 					+ IntPtr.Size * 3 
 					+ Generic.SizeInBytes 
 					+ GlyphMetrics.SizeInBytes);
@@ -197,7 +197,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Vector2i(reference + 12 
+				return new Vector2i(reference, 12 
 					+ IntPtr.Size * 3 
 					+ Generic.SizeInBytes 
 					+ GlyphMetrics.SizeInBytes);
@@ -213,7 +213,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (GlyphFormat)Marshal.ReadInt32(reference + 12 
+				return (GlyphFormat)Marshal.ReadInt32(reference, 12 
 					+ IntPtr.Size * 3 
 					+ Generic.SizeInBytes 
 					+ GlyphMetrics.SizeInBytes 
@@ -231,7 +231,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Bitmap(reference + 16 
+				return new Bitmap(reference, 16 
 					+ IntPtr.Size * 3 
 					+ Generic.SizeInBytes 
 					+ GlyphMetrics.SizeInBytes 
@@ -247,7 +247,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 16 
+				return Marshal.ReadInt32(reference, 16 
 					+ IntPtr.Size * 3 
 					+ Generic.SizeInBytes 
 					+ GlyphMetrics.SizeInBytes 
@@ -265,7 +265,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 20 
+				return Marshal.ReadInt32(reference, 20 
 					+ IntPtr.Size * 3 
 					+ Generic.SizeInBytes 
 					+ GlyphMetrics.SizeInBytes 
@@ -284,7 +284,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Outline(reference + 24 
+				return new Outline(reference, 24 
 					+ IntPtr.Size * 3 
 					+ Generic.SizeInBytes 
 					+ GlyphMetrics.SizeInBytes 
@@ -303,7 +303,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (uint)Marshal.ReadInt32(reference + 24 
+				return (uint)Marshal.ReadInt32(reference, 24 
 					+ IntPtr.Size * 3 
 					+ Generic.SizeInBytes 
 					+ GlyphMetrics.SizeInBytes 
@@ -327,7 +327,7 @@ namespace SharpFont
 					return null;
 
 				SubGlyph[] subglyphs = new SubGlyph[count];
-				IntPtr array = Marshal.ReadIntPtr(reference + 28
+				IntPtr array = Marshal.ReadIntPtr(reference, 28
 					+ IntPtr.Size * 3
 					+ Generic.SizeInBytes
 					+ GlyphMetrics.SizeInBytes
@@ -337,7 +337,7 @@ namespace SharpFont
 
 				for (int i = 0; i < count; i++)
 				{
-					subglyphs[i] = new SubGlyph(array + IntPtr.Size * i);
+					subglyphs[i] = new SubGlyph(array, IntPtr.Size * i);
 				}
 
 				return subglyphs;
@@ -353,7 +353,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference + 28
+				return Marshal.ReadIntPtr(reference, 28
 					+ IntPtr.Size * 4
 					+ Generic.SizeInBytes
 					+ GlyphMetrics.SizeInBytes
@@ -370,7 +370,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 28
+				return Marshal.ReadInt32(reference, 28
 					+ IntPtr.Size * 5
 					+ Generic.SizeInBytes
 					+ GlyphMetrics.SizeInBytes
@@ -388,7 +388,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 32
+				return Marshal.ReadInt32(reference, 32
 					+ IntPtr.Size * 5
 					+ Generic.SizeInBytes
 					+ GlyphMetrics.SizeInBytes
@@ -406,7 +406,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 36
+				return Marshal.ReadInt32(reference, 36
 					+ IntPtr.Size * 5
 					+ Generic.SizeInBytes
 					+ GlyphMetrics.SizeInBytes
@@ -425,7 +425,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference + 40
+				return Marshal.ReadIntPtr(reference, 40
 					+ IntPtr.Size * 5
 					+ Generic.SizeInBytes
 					+ GlyphMetrics.SizeInBytes

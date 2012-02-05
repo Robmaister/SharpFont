@@ -1048,7 +1048,7 @@ namespace SharpFont
 
 			for (int i = 0; curValue != 0; i++)
 			{
-				curValue = (uint)Marshal.ReadInt32(face.reference + sizeof(uint) * i);
+				curValue = (uint)Marshal.ReadInt32(face.reference, sizeof(uint) * i);
 				list.Add(curValue);
 			}
 
@@ -1066,7 +1066,7 @@ namespace SharpFont
 
 			for (int i = 0; curValue != 0; i++)
 			{
-				curValue = (uint)Marshal.ReadInt32(face.reference + sizeof(uint) * i);
+				curValue = (uint)Marshal.ReadInt32(face.reference, sizeof(uint) * i);
 				list.Add(curValue);
 			}
 
@@ -1084,7 +1084,7 @@ namespace SharpFont
 
 			for (int i = 0; curValue != 0; i++)
 			{
-				curValue = (uint)Marshal.ReadInt32(face.reference + sizeof(uint) * i);
+				curValue = (uint)Marshal.ReadInt32(face.reference, sizeof(uint) * i);
 				list.Add(curValue);
 			}
 

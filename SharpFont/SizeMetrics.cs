@@ -53,6 +53,11 @@ namespace SharpFont
 			this.reference = reference;
 		}
 
+		internal SizeMetrics(IntPtr reference, int offset)
+		{
+			this.reference = new IntPtr(reference.ToInt64() + offset);
+		}
+
 		/// <summary>
 		/// The width of the scaled EM square in pixels, hence the term ‘ppem’
 		/// (pixels per EM). It is also referred to as ‘nominal width’.
@@ -61,7 +66,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (ushort)Marshal.ReadInt16(reference + 0);
+				return (ushort)Marshal.ReadInt16(reference, 0);
 			}
 		}
 
@@ -73,7 +78,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (ushort)Marshal.ReadInt16(reference + 2);
+				return (ushort)Marshal.ReadInt16(reference, 2);
 			}
 		}
 
@@ -86,7 +91,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 4);
+				return Marshal.ReadInt32(reference, 4);
 			}
 		}
 
@@ -99,7 +104,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 8);
+				return Marshal.ReadInt32(reference, 8);
 			}
 		}
 
@@ -111,7 +116,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 12);
+				return Marshal.ReadInt32(reference, 12);
 			}
 		}
 
@@ -123,7 +128,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 16);
+				return Marshal.ReadInt32(reference, 16);
 			}
 		}
 
@@ -135,7 +140,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 20);
+				return Marshal.ReadInt32(reference, 20);
 			}
 		}
 
@@ -147,7 +152,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 24);
+				return Marshal.ReadInt32(reference, 24);
 			}
 		}
 	}

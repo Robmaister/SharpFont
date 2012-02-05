@@ -37,6 +37,11 @@ namespace SharpFont
 			this.reference = reference;
 		}
 
+		internal Vector2i(IntPtr reference, int offset)
+		{
+			this.reference = new IntPtr(reference.ToInt64() + offset);
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the Vector2i class. X and Y default
 		/// to 0.
@@ -76,12 +81,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 0);
+				return Marshal.ReadInt32(reference, 0);
 			}
 
 			set
 			{
-				Marshal.WriteInt32(reference + 0, value);
+				Marshal.WriteInt32(reference, 0, value);
 			}
 		}
 
@@ -92,12 +97,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 4);
+				return Marshal.ReadInt32(reference, 4);
 			}
 
 			set
 			{
-				Marshal.WriteInt32(reference + 4, value);
+				Marshal.WriteInt32(reference, 4, value);
 			}
 		}
 	}

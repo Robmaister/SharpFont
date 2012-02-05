@@ -44,7 +44,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference + 0);
+				return Marshal.ReadIntPtr(reference, 0);
 			}
 		}
 
@@ -55,7 +55,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + IntPtr.Size);
+				return Marshal.ReadInt32(reference, IntPtr.Size);
 			}
 		}
 	}

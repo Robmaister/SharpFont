@@ -40,6 +40,11 @@ namespace SharpFont
 			this.reference = reference;
 		}
 
+		internal Bitmap(IntPtr reference, int offset)
+		{
+			this.reference = new IntPtr(reference.ToInt64() + offset);
+		}
+
 		/// <summary>
 		/// Gets the size of a Bitmap, in bytes.
 		/// </summary>
@@ -58,7 +63,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 0);
+				return Marshal.ReadInt32(reference, 0);
 			}
 		}
 
@@ -69,7 +74,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 4);
+				return Marshal.ReadInt32(reference, 4);
 			}
 		}
 
@@ -83,7 +88,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference + 8);
+				return Marshal.ReadInt32(reference, 8);
 			}
 		}
 
@@ -94,7 +99,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference + 12);
+				return Marshal.ReadIntPtr(reference, 12);
 			}
 		}
 
@@ -105,7 +110,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference + 12 + IntPtr.Size);
+				return Marshal.ReadInt16(reference, 12 + IntPtr.Size);
 			}
 		}
 
@@ -116,7 +121,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (PixelMode)Marshal.ReadByte(reference + 14 + IntPtr.Size);
+				return (PixelMode)Marshal.ReadByte(reference, 14 + IntPtr.Size);
 			}
 		}
 
@@ -128,7 +133,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadByte(reference + 15 + IntPtr.Size);
+				return Marshal.ReadByte(reference, 15 + IntPtr.Size);
 			}
 		}
 
@@ -140,7 +145,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference + 16 + IntPtr.Size);
+				return Marshal.ReadIntPtr(reference, 16 + IntPtr.Size);
 			}
 		}
 	}

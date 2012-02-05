@@ -30,7 +30,7 @@ namespace SharpFont
 	/// corresponding face.
 	/// </summary>
 	[Flags]
-	public enum FaceFlags
+	public enum FaceFlags : long
 	{
 		/// <summary>
 		/// No style flags.

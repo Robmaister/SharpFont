@@ -36,11 +36,28 @@ namespace Examples
 		public unsafe static void Main(string[] args)
 		{
 			//TODO have some sort of browser?
-
+			
 			try
 			{
 				Library lib = FT.InitFreeType();
-				Face regular = FT.NewFace(lib, @"Fonts/Cousine-Regular-Latin.ttf", 0);
+				int min, maj, rev;
+				FT.LibraryVersion(lib, out maj, out min, out rev);
+				Console.WriteLine("FreeType version: " + maj + "." + min + "." + rev + '\n');
+				
+				Face regular;
+				
+				using (FileStream f = File.OpenRead(@"Fonts/Cousine-Regular-Latin.ttf"))
+				{
+					using (BinaryReader reader = new BinaryReader(f))
+					{
+						byte[] fontData = new byte[reader.BaseStream.Length];
+						reader.Read(fontData, 0, fontData.Length);
+						regular = FT.NewMemoryFace(lib, ref fontData, 0);
+					}
+				}
+				
+				//Face regular = FT.NewFace(lib, @"Fonts/Cousine-Regular-Latin.ttf", 0);
+				//Face regular = FT.NewFace(lib, "/usr/share/fonts/comic.ttf", 0);
 
 				//write out some basic font information
 				Console.WriteLine("Information for font " + regular.FamilyName);
@@ -70,7 +87,6 @@ namespace Examples
 				}
 
 				//save a bitmap of the data.
-				MemoryStream s = new MemoryStream(data);
 				using (System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(sBitmap.Width, sBitmap.Rows, PixelFormat.Format32bppArgb))
 				{
 					BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);

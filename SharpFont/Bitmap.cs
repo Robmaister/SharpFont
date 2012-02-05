@@ -52,7 +52,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return 16 + IntPtr.Size * 2;
+				return IntPtr.Size * 8;
 			}
 		}
 
@@ -74,7 +74,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 4);
+				return Marshal.ReadInt32(reference, IntPtr.Size);
 			}
 		}
 
@@ -88,7 +88,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 8);
+				return Marshal.ReadInt32(reference, IntPtr.Size * 2);
 			}
 		}
 
@@ -99,7 +99,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference, 12);
+				return Marshal.ReadIntPtr(reference, IntPtr.Size * 3);
 			}
 		}
 
@@ -110,7 +110,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference, 12 + IntPtr.Size);
+				return Marshal.ReadInt16(reference, IntPtr.Size * 4);
 			}
 		}
 
@@ -121,7 +121,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (PixelMode)Marshal.ReadByte(reference, 14 + IntPtr.Size);
+				return (PixelMode)Marshal.ReadByte(reference, IntPtr.Size * 5);
 			}
 		}
 
@@ -133,7 +133,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadByte(reference, 15 + IntPtr.Size);
+				return Marshal.ReadByte(reference, IntPtr.Size * 6);
 			}
 		}
 
@@ -145,7 +145,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference, 16 + IntPtr.Size);
+				return Marshal.ReadIntPtr(reference, IntPtr.Size * 7);
 			}
 		}
 	}

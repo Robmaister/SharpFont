@@ -26,7 +26,7 @@ using System.Collections.Generic;
 
 namespace SharpFont
 {
-	public partial class FT
+	public static partial class FT
 	{
 		#region FaceFlags flag checks
 
@@ -38,7 +38,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The flags for a face.</param>
 		/// <returns>True if the face has the horizontal flag set, false otherwise.</returns>
-		public bool HasHorizontal(FaceFlags face)
+		public static bool HasHorizontal(FaceFlags face)
 		{
 			return (face & FaceFlags.Horizontal) == FaceFlags.Horizontal;
 		}
@@ -49,7 +49,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The face object to test.</param>
 		/// <returns>True if the face has the horizontal flag set, false otherwise.</returns>
-		public bool HasHorizontal(Face face)
+		public static bool HasHorizontal(Face face)
 		{
 			return HasHorizontal(face.FaceFlags);
 		}
@@ -64,7 +64,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The flags for a face.</param>
 		/// <returns>True if the face has the vertical flag set, false otherwise.</returns>
-		public bool HasVertical(FaceFlags face)
+		public static bool HasVertical(FaceFlags face)
 		{
 			return (face & FaceFlags.Vertical) == FaceFlags.Vertical;
 		}
@@ -75,7 +75,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The face object to test.</param>
 		/// <returns>True if the face has the vertical flag set, false otherwise.</returns>
-		public bool HasVertical(Face face)
+		public static bool HasVertical(Face face)
 		{
 			return HasVertical(face.FaceFlags);
 		}
@@ -90,7 +90,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The flags for a face.</param>
 		/// <returns>True if the face has the kerning flag set, false otherwise.</returns>
-		public bool HasKerning(FaceFlags face)
+		public static bool HasKerning(FaceFlags face)
 		{
 			return (face & FaceFlags.Kerning) == FaceFlags.Kerning;
 		}
@@ -101,7 +101,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The face object to test.</param>
 		/// <returns>True if the face has the kerning flag set, false otherwise.</returns>
-		public bool HasKerning(Face face)
+		public static bool HasKerning(Face face)
 		{
 			return HasKerning(face.FaceFlags);
 		}
@@ -117,7 +117,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The flags for a face.</param>
 		/// <returns>True if the face has the scalable flag set, false otherwise.</returns>
-		public bool IsScalable(FaceFlags face)
+		public static bool IsScalable(FaceFlags face)
 		{
 			return (face & FaceFlags.Scalable) == FaceFlags.Scalable;
 		}
@@ -129,7 +129,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The face object to test.</param>
 		/// <returns>True if the face has the scalable flag set, false otherwise.</returns>
-		public bool IsScalable(Face face)
+		public static bool IsScalable(Face face)
 		{
 			return IsScalable(face.FaceFlags);
 		}
@@ -149,7 +149,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The flags for a face.</param>
 		/// <returns>True if the face has the SFNT flag set, false otherwise.</returns>
-		public bool IsSFNT(FaceFlags face)
+		public static bool IsSFNT(FaceFlags face)
 		{
 			return (face & FaceFlags.SFNT) == FaceFlags.SFNT;
 		}
@@ -165,7 +165,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The face object to test.</param>
 		/// <returns>True if the face has the SFNT flag set, false otherwise.</returns>
-		public bool IsSFNT(Face face)
+		public static bool IsSFNT(Face face)
 		{
 			return IsSFNT(face.FaceFlags);
 		}
@@ -181,7 +181,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The flags for a face.</param>
 		/// <returns>True if the face has the fixed width flag set, false otherwise.</returns>
-		public bool IsFixedWidth(FaceFlags face)
+		public static bool IsFixedWidth(FaceFlags face)
 		{
 			return (face & FaceFlags.FixedWidth) == FaceFlags.FixedWidth;
 		}
@@ -193,7 +193,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The face object to test.</param>
 		/// <returns>True if the face has the fixed width flag set, false otherwise.</returns>
-		public bool IsFixedWidth(Face face)
+		public static bool IsFixedWidth(Face face)
 		{
 			return IsFixedWidth(face.FaceFlags);
 		}
@@ -209,7 +209,7 @@ namespace SharpFont
 		/// <param name="face">The flags for a face.</param>
 		/// <returns>True if the face has the fixed sizes flag set, false otherwise.</returns>
 		/// <see cref="Face.AvailableSizes"/>
-		public bool HasFixedSizes(FaceFlags face)
+		public static bool HasFixedSizes(FaceFlags face)
 		{
 			return (face & FaceFlags.FixedSizes) == FaceFlags.FixedSizes;
 		}
@@ -221,7 +221,7 @@ namespace SharpFont
 		/// <param name="face">The face object to test.</param>
 		/// <returns>True if the face has the fixed sizes flag set, false otherwise.</returns>
 		/// <see cref="Face.AvailableSizes"/>
-		public bool HasFixedSizes(Face face)
+		public static bool HasFixedSizes(Face face)
 		{
 			return HasFixedSizes(face.FaceFlags);
 		}
@@ -237,7 +237,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The flags for a face.</param>
 		/// <returns>True if the face has the glyph names flag set, false otherwise.</returns>
-		public bool HasGlyphNames(FaceFlags face)
+		public static bool HasGlyphNames(FaceFlags face)
 		{
 			return (face & FaceFlags.GlyphNames) == FaceFlags.GlyphNames;
 		}
@@ -249,7 +249,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The face object to test.</param>
 		/// <returns>True if the face has the glyph names flag set, false otherwise.</returns>
-		public bool HasGlyphNames(Face face)
+		public static bool HasGlyphNames(Face face)
 		{
 			return HasGlyphNames(face.FaceFlags);
 		}
@@ -265,7 +265,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The flags for a face.</param>
 		/// <returns>True if the face has the multiple masters flag set, false otherwise.</returns>
-		public bool HasMultipleMasters(FaceFlags face)
+		public static bool HasMultipleMasters(FaceFlags face)
 		{
 			return (face & FaceFlags.MultipleMasters) == FaceFlags.MultipleMasters;
 		}
@@ -277,7 +277,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The face object to test.</param>
 		/// <returns>True if the face has the multiple masters flag set, false otherwise.</returns>
-		public bool HasMultipleMasters(Face face)
+		public static bool HasMultipleMasters(Face face)
 		{
 			return HasMultipleMasters(face.FaceFlags);
 		}
@@ -296,7 +296,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The flags for a face.</param>
 		/// <returns>True if the face has the CID-keyed flag set, false otherwise.</returns>
-		public bool IsCIDKeyed(FaceFlags face)
+		public static bool IsCIDKeyed(FaceFlags face)
 		{
 			return (face & FaceFlags.CIDKeyed) == FaceFlags.CIDKeyed;
 		}
@@ -311,7 +311,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The face object to test.</param>
 		/// <returns>True if the face has the CID-keyed flag set, false otherwise.</returns>
-		public bool IsCIDKeyed(Face face)
+		public static bool IsCIDKeyed(Face face)
 		{
 			return IsCIDKeyed(face.FaceFlags);
 		}
@@ -325,7 +325,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The flags for a face.</param>
 		/// <returns>True if the face has the tricky flag set, false otherwise.</returns>
-		public bool IsTricky(FaceFlags face)
+		public static bool IsTricky(FaceFlags face)
 		{
 			return (face & FaceFlags.Tricky) == FaceFlags.Tricky;
 		}
@@ -335,7 +335,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The face object to test.</param>
 		/// <returns>True if the face has the tricky flag set, false otherwise.</returns>
-		public bool IsTricky(Face face)
+		public static bool IsTricky(Face face)
 		{
 			return IsTricky(face.FaceFlags);
 		}
@@ -357,7 +357,7 @@ namespace SharpFont
 		/// <param name="amajor">The major version number.</param>
 		/// <param name="aminor">The minor version number.</param>
 		/// <param name="apatch">The patch version number.</param>
-		public void LibraryVersion(Library library, out int amajor, out int aminor, out int apatch)
+		public static void LibraryVersion(Library library, out int amajor, out int aminor, out int apatch)
 		{
 			FT_Library_Version(library.reference, out amajor, out aminor, out apatch);
 		}
@@ -371,7 +371,7 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="face">A <see cref="Face"/> handle.</param>
 		/// <returns>True if this is a TrueType font that uses one of the patented opcodes, false otherwise.</returns>
-		public bool FaceCheckTrueTypePatents(Face face)
+		public static bool FaceCheckTrueTypePatents(Face face)
 		{
 			return FT_Face_CheckTrueTypePatents(face.reference);
 		}
@@ -386,7 +386,7 @@ namespace SharpFont
 		/// <param name="value">New boolean setting.</param>
 		/// <returns>The old setting value. This will always be false if this is not an SFNT font, or if the unpatented hinter is not compiled in this instance of the library.</returns>
 		/// <see cref="FaceCheckTrueTypePatents"/>
-		public bool FaceSetUnpatentedHinting(Face face, bool value)
+		public static bool FaceSetUnpatentedHinting(Face face, bool value)
 		{
 			return FT_Face_SetUnpatentedHinting(face.reference, value);
 		}
@@ -1027,17 +1027,17 @@ namespace SharpFont
 
 		#region Glyph Variants
 
-		public uint FaceGetCharVariantIndex(Face face, uint charCode, uint variantSelector)
+		public static uint FaceGetCharVariantIndex(Face face, uint charCode, uint variantSelector)
 		{
 			return FT_Face_GetCharVariantIndex(face.reference, charCode, variantSelector);
 		}
 
-		public int FaceGetCharVariantIsDefault(Face face, uint charCode, uint variantSelector)
+		public static int FaceGetCharVariantIsDefault(Face face, uint charCode, uint variantSelector)
 		{
 			return FT_Face_GetCharVariantIsDefault(face.reference, charCode, variantSelector);
 		}
 
-		public uint[] FaceGetVariantSelectors(Face face, uint charCode, uint variantSelector)
+		public static uint[] FaceGetVariantSelectors(Face face, uint charCode, uint variantSelector)
 		{
 			IntPtr ptr = FT_Face_GetVariantSelectors(face.reference, charCode, variantSelector);
 
@@ -1055,7 +1055,7 @@ namespace SharpFont
 			return list.ToArray();
 		}
 
-		public uint[] FaceGetVariantsOfChar(Face face, uint charCode)
+		public static uint[] FaceGetVariantsOfChar(Face face, uint charCode)
 		{
 			IntPtr ptr = FT_Face_GetVariantsOfChar(face.reference, charCode);
 
@@ -1073,7 +1073,7 @@ namespace SharpFont
 			return list.ToArray();
 		}
 
-		public uint[] FaceGetCharsOfVariant(Face face, uint variantSelector)
+		public static uint[] FaceGetCharsOfVariant(Face face, uint variantSelector)
 		{
 			IntPtr ptr = FT_Face_GetCharsOfVariant(face.reference, variantSelector);
 

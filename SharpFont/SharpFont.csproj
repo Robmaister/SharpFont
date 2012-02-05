@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -12,7 +12,6 @@
     <AssemblyName>SharpFont</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,7 +52,6 @@
     <Compile Include="FreeTypeException.cs" />
     <Compile Include="FSTypeFlags.cs" />
     <Compile Include="FT.Core.cs" />
-    <Compile Include="FT.Private.cs" />
     <Compile Include="Gasp.cs" />
     <Compile Include="Generic.cs" />
     <Compile Include="Glyph.cs" />
@@ -94,6 +92,7 @@
     <Compile Include="Type1\EncodingType.cs" />
     <Compile Include="Vector2i.cs" />
     <Compile Include="WinFNTID.cs" />
+    <Compile Include="FT.private.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SharpFont.dll.config">

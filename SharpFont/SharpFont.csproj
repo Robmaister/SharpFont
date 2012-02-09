@@ -69,6 +69,8 @@
     <Compile Include="CharMap.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="Encoding.cs" />
+    <Compile Include="Internal\BBoxInternal.cs" />
+    <Compile Include="Internal\BitmapInternal.cs" />
     <Compile Include="Internal\FaceRec.cs" />
     <Compile Include="TrueType\EncodingID.cs" />
     <Compile Include="Error.cs" />

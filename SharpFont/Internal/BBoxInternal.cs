@@ -23,8 +23,6 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.Internal;
-
 #if FT64
 using FT_Long = System.Int64;
 using FT_ULong = System.UInt64;
@@ -39,81 +37,18 @@ using FT_Pos = System.Int32;
 using FT_26Dot6 = System.Int32;
 #endif
 
-namespace SharpFont
+namespace SharpFont.Internal
 {
 	/// <summary>
-	/// A structure used to hold an outline's bounding box, i.e., the
-	/// coordinates of its extrema in the horizontal and vertical directions.
+	/// Internally represents a BBox.
 	/// </summary>
-	public sealed class BBox
+	/// <remarks>
+	/// Refer to <see cref="BBox"/> for FreeType documentation.
+	/// </remarks>
+	[StructLayout(LayoutKind.Sequential)]
+	internal struct BBoxInternal
 	{
-		internal IntPtr reference;
-		internal BBoxInternal bboxInternal;
-
-		internal BBox(IntPtr reference)
-		{
-			this.reference = reference;
-			this.bboxInternal = (BBoxInternal)Marshal.PtrToStructure(reference, typeof(BBoxInternal));
-		}
-
-		internal BBox(BBoxInternal bboxInt)
-		{
-			this.bboxInternal = bboxInt;
-		}
-
-		/*/// <summary>
-		/// Gets the size of the class, in bytes.
-		/// </summary>
-		public static int SizeInBytes
-		{
-			get
-			{
-				return IntPtr.Size * 4;
-			}
-		}*/
-
-		/// <summary>
-		/// The horizontal minimum (left-most).
-		/// </summary>
-		public int Left
-		{
-			get
-			{
-				return bboxInternal.xMin;
-			}
-		}
-
-		/// <summary>
-		/// The vertical minimum (bottom-most).
-		/// </summary>
-		public int Bottom
-		{
-			get
-			{
-				return bboxInternal.yMin;
-			}
-		}
-
-		/// <summary>
-		/// The horizontal maximum (right-most).
-		/// </summary>
-		public int Right
-		{
-			get
-			{
-				return bboxInternal.xMax;
-			}
-		}
-
-		/// <summary>
-		/// The vertical maximum (top-most).
-		/// </summary>
-		public int Top
-		{
-			get
-			{
-				return bboxInternal.yMax;
-			}
-		}
+		internal FT_Pos xMin, yMin;
+		internal FT_Pos xMax, yMax;
 	}
 }

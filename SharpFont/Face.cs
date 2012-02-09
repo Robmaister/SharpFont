@@ -35,7 +35,7 @@ namespace SharpFont
 	/// Fields may be changed after a call to FT_Attach_File or
 	/// FT_Attach_Stream.
 	/// </remarks>
-	public class Face
+	public sealed class Face
 	{
 		internal IntPtr reference;
 		internal FaceRec rec;
@@ -244,9 +244,7 @@ namespace SharpFont
 		{
 			get
 			{
-				//HACK fix this later.
-				return new BBox(reference, IntPtr.Size * 12
-					+ Generic.SizeInBytes);
+				return new BBox(rec.bbox);
 			}
 		}
 

@@ -23,6 +23,8 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
+using SharpFont.Internal;
+
 namespace SharpFont
 {
 	/// <summary>
@@ -34,18 +36,15 @@ namespace SharpFont
 	public sealed class Bitmap
 	{
 		internal IntPtr reference;
+		internal BitmapInternal bmpInternal;
 
 		internal Bitmap(IntPtr reference)
 		{
 			this.reference = reference;
+			this.bmpInternal = (BitmapInternal)Marshal.PtrToStructure(reference, typeof(BitmapInternal));
 		}
 
-		internal Bitmap(IntPtr reference, int offset)
-		{
-			this.reference = new IntPtr(reference.ToInt64() + offset);
-		}
-
-		/// <summary>
+		/*/// <summary>
 		/// Gets the size of a Bitmap, in bytes.
 		/// </summary>
 		public static int SizeInBytes
@@ -54,7 +53,7 @@ namespace SharpFont
 			{
 				return IntPtr.Size * 8;
 			}
-		}
+		}*/
 
 		/// <summary>
 		/// The number of bitmap rows.
@@ -63,7 +62,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 0);
+				return bmpInternal.rows;
 			}
 		}
 
@@ -74,7 +73,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, IntPtr.Size);
+				return bmpInternal.width;
 			}
 		}
 
@@ -88,7 +87,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, IntPtr.Size * 2);
+				return bmpInternal.pitch;
 			}
 		}
 
@@ -99,7 +98,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference, IntPtr.Size * 3);
+				return bmpInternal.buffer;
 			}
 		}
 
@@ -110,7 +109,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference, IntPtr.Size * 4);
+				return bmpInternal.num_grays;
 			}
 		}
 
@@ -121,7 +120,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (PixelMode)Marshal.ReadByte(reference, IntPtr.Size * 5);
+				return bmpInternal.pixel_mode;
 			}
 		}
 
@@ -133,7 +132,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadByte(reference, IntPtr.Size * 6);
+				return bmpInternal.palette_mode;
 			}
 		}
 
@@ -145,7 +144,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference, IntPtr.Size * 7);
+				return bmpInternal.palette;
 			}
 		}
 	}

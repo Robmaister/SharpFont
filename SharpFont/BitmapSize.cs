@@ -41,6 +41,7 @@ namespace SharpFont
 	/// contained in the bitmap strike itself. They are computed from the
 	/// global font parameters.
 	/// </remarks>
+	[StructLayout(LayoutKind.Sequential)]
 	public sealed class BitmapSize
 	{
 		internal IntPtr reference;

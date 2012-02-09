@@ -23,6 +23,8 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
+using SharpFont.Internal;
+
 namespace SharpFont
 {
 	/// <summary>
@@ -36,10 +38,12 @@ namespace SharpFont
 	public class Face
 	{
 		internal IntPtr reference;
+		internal FaceRec rec;
 
 		internal Face(IntPtr reference)
 		{
 			this.reference = reference;
+			this.rec = (FaceRec)Marshal.PtrToStructure(reference, typeof(FaceRec));
 		}
 
 		/// <summary>
@@ -50,7 +54,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 0);
+				return rec.num_faces;
 			}
 		}
 
@@ -62,7 +66,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, IntPtr.Size);
+				return rec.face_index;
 			}
 		}
 
@@ -74,7 +78,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (FaceFlags)Marshal.ReadInt32(reference, IntPtr.Size * 2);
+				return (FaceFlags)rec.face_flags;
 			}
 		}
 
@@ -86,7 +90,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (StyleFlags)Marshal.ReadInt32(reference, IntPtr.Size * 3);
+				return (StyleFlags)rec.style_flags;
 			}
 		}
 
@@ -102,7 +106,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, IntPtr.Size * 4);
+				return rec.num_glyphs;
 			}
 		}
 
@@ -119,7 +123,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(reference, IntPtr.Size * 5));
+				return rec.family_name;
 			}
 		}
 
@@ -136,7 +140,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(reference, IntPtr.Size * 6));
+				return rec.style_name;
 			}
 		}
 
@@ -149,7 +153,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, IntPtr.Size * 7);
+				return rec.num_fixed_sizes;
 			}
 		}
 
@@ -167,7 +171,7 @@ namespace SharpFont
 					return null;
 
 				BitmapSize[] sizes = new BitmapSize[count];
-				IntPtr array = Marshal.ReadIntPtr(reference, IntPtr.Size * 8);
+				IntPtr array = rec.available_sizes;
 
 				for (int i = 0; i < count; i++)
 				{
@@ -185,7 +189,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, IntPtr.Size * 9);
+				return rec.num_charmaps;
 			}
 		}
 
@@ -202,7 +206,7 @@ namespace SharpFont
 					return null;
 
 				CharMap[] charmaps = new CharMap[count];
-				IntPtr array = Marshal.ReadIntPtr(reference, IntPtr.Size * 10);
+				IntPtr array = rec.charmaps;
 
 				for (int i = 0; i < count; i++)
 				{
@@ -221,6 +225,7 @@ namespace SharpFont
 		{
 			get
 			{
+				//HACK fix this later.
 				return new Generic(reference, IntPtr.Size * 11);
 			}
 		}
@@ -239,6 +244,7 @@ namespace SharpFont
 		{
 			get
 			{
+				//HACK fix this later.
 				return new BBox(reference, IntPtr.Size * 12
 					+ Generic.SizeInBytes);
 			}
@@ -253,9 +259,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (ushort)Marshal.ReadInt16(reference, IntPtr.Size * 13
-					+ Generic.SizeInBytes
-					+ BBox.SizeInBytes);
+				return rec.units_per_EM;
 			}
 		}
 
@@ -268,9 +272,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference, IntPtr.Size * 14
-					+ Generic.SizeInBytes
-					+ BBox.SizeInBytes);
+				return rec.ascender;
 			}
 		}
 
@@ -284,9 +286,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference, IntPtr.Size * 15
-					+ Generic.SizeInBytes
-					+ BBox.SizeInBytes);
+				return rec.descender;
 			}
 		}
 
@@ -299,9 +299,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference, IntPtr.Size * 16
-					+ Generic.SizeInBytes
-					+ BBox.SizeInBytes);
+				return rec.height;
 			}
 		}
 
@@ -314,9 +312,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference, IntPtr.Size * 17
-					+ Generic.SizeInBytes
-					+ BBox.SizeInBytes);
+				return rec.max_advance_width;
 			}
 		}
 
@@ -330,9 +326,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference, IntPtr.Size * 18
-					+ Generic.SizeInBytes
-					+ BBox.SizeInBytes);
+				return rec.max_advance_height;
 			}
 		}
 
@@ -345,9 +339,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference, IntPtr.Size * 19
-					+ Generic.SizeInBytes
-					+ BBox.SizeInBytes);
+				return rec.underline_position;
 			}
 		}
 
@@ -359,9 +351,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference, IntPtr.Size * 20
-					+ Generic.SizeInBytes
-					+ BBox.SizeInBytes);
+				return rec.underline_thickness;
 			}
 		}
 
@@ -372,9 +362,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new GlyphSlot(Marshal.ReadIntPtr(reference, IntPtr.Size * 21
-					+ Generic.SizeInBytes
-					+ BBox.SizeInBytes));
+				return new GlyphSlot(rec.glyph);
 			}
 		}
 
@@ -385,9 +373,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Size(Marshal.ReadIntPtr(reference, IntPtr.Size * 22
-					+ Generic.SizeInBytes
-					+ BBox.SizeInBytes));
+				return new Size(rec.size);
 			}
 		}
 
@@ -398,18 +384,8 @@ namespace SharpFont
 		{
 			get
 			{
-				return new CharMap(Marshal.ReadIntPtr(reference, IntPtr.Size * 23
-					+ Generic.SizeInBytes
-					+ BBox.SizeInBytes));
+				return new CharMap(rec.charmap);
 			}
 		}
-
-		/*private IntPtr driver;
-		private IntPtr memory;
-		private IntPtr stream;
-		private IntPtr sizesList;
-		private IntPtr autoHint;
-		private IntPtr extensions;
-		private IntPtr @internal;*/
 	}
 }

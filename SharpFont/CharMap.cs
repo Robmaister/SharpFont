@@ -23,6 +23,8 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
+using SharpFont.Internal;
+
 namespace SharpFont
 {
 	/// <summary>
@@ -31,15 +33,12 @@ namespace SharpFont
 	public sealed class CharMap
 	{
 		internal IntPtr reference;
+		internal CharMapRec rec;
 
 		internal CharMap(IntPtr reference)
 		{
 			this.reference = reference;
-		}
-
-		internal CharMap(IntPtr reference, int offset)
-		{
-			this.reference = new IntPtr(reference.ToInt64() + offset);
+			this.rec = (CharMapRec)Marshal.PtrToStructure(reference, typeof(CharMapRec));
 		}
 
 		/// <summary>
@@ -49,7 +48,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Face(Marshal.ReadIntPtr(reference, 0));
+				return new Face(rec.face);
 			}
 		}
 
@@ -61,7 +60,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (Encoding)Marshal.ReadInt32(reference, IntPtr.Size);
+				return rec.encoding;
 			}
 		}
 
@@ -74,7 +73,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (PlatformID)Marshal.ReadInt32(reference, 4 + IntPtr.Size);
+				return rec.platform_id;
 			}
 		}
 
@@ -86,7 +85,8 @@ namespace SharpFont
 		{
 			get
 			{
-				return (ushort)Marshal.ReadInt16(reference, 8 + IntPtr.Size);
+				//TODO find some way of getting a proper encoding ID enum...
+				return rec.encoding_id;
 			}
 		}
 	}

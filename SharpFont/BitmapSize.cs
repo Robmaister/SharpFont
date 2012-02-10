@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using System;
 using System.Runtime.InteropServices;
+using SharpFont.Internal;
 
 namespace SharpFont
 {
@@ -41,19 +42,19 @@ namespace SharpFont
 	/// contained in the bitmap strike itself. They are computed from the
 	/// global font parameters.
 	/// </remarks>
-	[StructLayout(LayoutKind.Sequential)]
 	public sealed class BitmapSize
 	{
 		internal IntPtr reference;
+		internal BitmapSizeInternal bitmapSizeInternal;
 
 		internal BitmapSize(IntPtr reference)
 		{
 			this.reference = reference;
 		}
 
-		internal BitmapSize(IntPtr reference, int offset)
+		internal BitmapSize(BitmapSizeInternal bmpSizeInt)
 		{
-			this.reference = new IntPtr(reference.ToInt64() + offset);
+			this.bitmapSizeInternal = bmpSizeInt;
 		}
 
 		/// <summary>
@@ -64,7 +65,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference, 0);
+				return bitmapSizeInternal.height;
 			}
 		}
 
@@ -75,7 +76,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference, 2);
+				return bitmapSizeInternal.width;
 			}
 		}
 
@@ -83,33 +84,33 @@ namespace SharpFont
 		/// The nominal size of the strike in 26.6 fractional points. This
 		/// field is not very useful.
 		/// </summary>
-		public int Size
+		public long Size
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 4);
+				return bitmapSizeInternal.size;
 			}
 		}
 
 		/// <summary>
 		/// The horizontal ppem (nominal width) in 26.6 fractional pixels.
 		/// </summary>
-		public int NominalWidth
+		public long NominalWidth
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 8);
+				return bitmapSizeInternal.x_ppem;
 			}
 		}
 
 		/// <summary>
 		/// The vertical ppem (nominal height) in 26.6 fractional pixels.
 		/// </summary>
-		public int NominalHeight
+		public long NominalHeight
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 12);
+				return bitmapSizeInternal.y_ppem;
 			}
 		}
 	}

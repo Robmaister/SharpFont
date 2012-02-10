@@ -3,6 +3,12 @@ using System.Runtime.InteropServices;
 
 namespace SharpFont.Internal
 {
+	/// <summary>
+	/// Internally represents a Bitmap.
+	/// </summary>
+	/// <remarks>
+	/// Refer to <see cref="Bitmap"/> for FreeType documentation.
+	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
 	internal class BitmapInternal
 	{

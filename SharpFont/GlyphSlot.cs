@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using System;
 using System.Runtime.InteropServices;
+using SharpFont.Internal;
 
 namespace SharpFont
 {
@@ -74,10 +75,12 @@ namespace SharpFont
 	public sealed class GlyphSlot
 	{
 		internal IntPtr reference;
+		internal GlyphSlotRec rec;
 
 		internal GlyphSlot(IntPtr reference)
 		{
 			this.reference = reference;
+			this.rec = (GlyphSlotRec)Marshal.PtrToStructure(reference, typeof(GlyphSlotRec));
 		}
 
 		/// <summary>
@@ -87,7 +90,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Library(Marshal.ReadIntPtr(reference, 0));
+				return new Library(rec.library);
 			}
 		}
 
@@ -98,8 +101,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Face(Marshal.ReadIntPtr(reference, 0
-					+ IntPtr.Size));
+				return new Face(rec.face);
 			}
 		}
 
@@ -112,8 +114,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new GlyphSlot(Marshal.ReadIntPtr(reference, 0
-					+ IntPtr.Size * 2));
+				return new GlyphSlot(rec.next);
 			}
 		}
 
@@ -147,9 +148,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new GlyphMetrics(reference, 4 
-					+ IntPtr.Size * 3 
-					+ Generic.SizeInBytes);
+				return new GlyphMetrics(rec.metrics);
 			}
 		}
 
@@ -163,10 +162,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 4 
-					+ IntPtr.Size * 3 
-					+ Generic.SizeInBytes 
-					+ GlyphMetrics.SizeInBytes);
+				return rec.linearHoriAdvance;
 			}
 		}
 
@@ -180,10 +176,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 8 
-					+ IntPtr.Size * 3 
-					+ Generic.SizeInBytes 
-					+ GlyphMetrics.SizeInBytes);
+				return rec.linearVertAdvance;
 			}
 		}
 
@@ -197,10 +190,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Vector2i(reference, 12 
-					+ IntPtr.Size * 3 
-					+ Generic.SizeInBytes 
-					+ GlyphMetrics.SizeInBytes);
+				return new Vector2i(rec.advance);
 			}
 		}
 
@@ -231,11 +221,11 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Bitmap(reference, 16 
+				return /*new Bitmap(reference, 16 
 					+ IntPtr.Size * 3 
 					+ Generic.SizeInBytes 
 					+ GlyphMetrics.SizeInBytes 
-					+ Vector2i.SizeInBytes);
+					+ Vector2i.SizeInBytes);*/ null;
 			}
 		}
 
@@ -252,7 +242,7 @@ namespace SharpFont
 					+ Generic.SizeInBytes 
 					+ GlyphMetrics.SizeInBytes 
 					+ Vector2i.SizeInBytes 
-					+ Bitmap.SizeInBytes);
+					/*+ Bitmap.SizeInBytes*/);
 			}
 		}
 
@@ -270,7 +260,7 @@ namespace SharpFont
 					+ Generic.SizeInBytes 
 					+ GlyphMetrics.SizeInBytes 
 					+ Vector2i.SizeInBytes 
-					+ Bitmap.SizeInBytes);
+					/*+ Bitmap.SizeInBytes*/);
 			}
 		}
 
@@ -289,7 +279,7 @@ namespace SharpFont
 					+ Generic.SizeInBytes 
 					+ GlyphMetrics.SizeInBytes 
 					+ Vector2i.SizeInBytes 
-					+ Bitmap.SizeInBytes);
+					/*+ Bitmap.SizeInBytes*/);
 			}
 		}
 
@@ -308,7 +298,7 @@ namespace SharpFont
 					+ Generic.SizeInBytes 
 					+ GlyphMetrics.SizeInBytes 
 					+ Vector2i.SizeInBytes 
-					+ Bitmap.SizeInBytes 
+					/*+ Bitmap.SizeInBytes*/ 
 					+ Outline.SizeInBytes);
 			}
 		}
@@ -332,7 +322,7 @@ namespace SharpFont
 					+ Generic.SizeInBytes
 					+ GlyphMetrics.SizeInBytes
 					+ Vector2i.SizeInBytes
-					+ Bitmap.SizeInBytes
+					/*+ Bitmap.SizeInBytes*/
 					+ Outline.SizeInBytes);
 
 				for (int i = 0; i < count; i++)
@@ -358,7 +348,7 @@ namespace SharpFont
 					+ Generic.SizeInBytes
 					+ GlyphMetrics.SizeInBytes
 					+ Vector2i.SizeInBytes
-					+ Bitmap.SizeInBytes
+					/*+ Bitmap.SizeInBytes*/
 					+ Outline.SizeInBytes);
 			}
 		}
@@ -375,7 +365,7 @@ namespace SharpFont
 					+ Generic.SizeInBytes
 					+ GlyphMetrics.SizeInBytes
 					+ Vector2i.SizeInBytes
-					+ Bitmap.SizeInBytes
+					/*+ Bitmap.SizeInBytes*/
 					+ Outline.SizeInBytes);
 			}
 		}
@@ -393,7 +383,7 @@ namespace SharpFont
 					+ Generic.SizeInBytes
 					+ GlyphMetrics.SizeInBytes
 					+ Vector2i.SizeInBytes
-					+ Bitmap.SizeInBytes
+					/*+ Bitmap.SizeInBytes*/
 					+ Outline.SizeInBytes);
 			}
 		}
@@ -411,7 +401,7 @@ namespace SharpFont
 					+ Generic.SizeInBytes
 					+ GlyphMetrics.SizeInBytes
 					+ Vector2i.SizeInBytes
-					+ Bitmap.SizeInBytes
+					/*+ Bitmap.SizeInBytes*/
 					+ Outline.SizeInBytes);
 			}
 		}
@@ -430,7 +420,7 @@ namespace SharpFont
 					+ Generic.SizeInBytes
 					+ GlyphMetrics.SizeInBytes
 					+ Vector2i.SizeInBytes
-					+ Bitmap.SizeInBytes
+					/*+ Bitmap.SizeInBytes*/
 					+ Outline.SizeInBytes);
 			}
 		}

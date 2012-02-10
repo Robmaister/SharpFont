@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using System;
 using System.Runtime.InteropServices;
+using SharpFont.Internal;
 
 namespace SharpFont
 {
@@ -38,18 +39,15 @@ namespace SharpFont
 	public sealed class Outline
 	{
 		internal IntPtr reference;
+		internal OutlineInternal outlineInternal;
 
 		internal Outline(IntPtr reference)
 		{
 			this.reference = reference;
+			this.outlineInternal = (OutlineInternal)Marshal.PtrToStructure(reference, typeof(OutlineInternal));
 		}
 
-		internal Outline(IntPtr reference, int offset)
-		{
-			this.reference = new IntPtr(reference.ToInt64() + offset);
-		}
-
-		/// <summary>
+		/*/// <summary>
 		/// Gets the size of the class, in bytes.
 		/// </summary>
 		public static int SizeInBytes
@@ -58,7 +56,7 @@ namespace SharpFont
 			{
 				return 8 + IntPtr.Size * 3;
 			}
-		}
+		}*/
 
 		/// <summary>
 		/// The number of contours in the outline.
@@ -67,7 +65,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference, 0);
+				return outlineInternal.n_contours;
 			}
 		}
 
@@ -78,7 +76,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt16(reference, 2);
+				return outlineInternal.n_points;
 			}
 		}
 
@@ -96,11 +94,11 @@ namespace SharpFont
 					return null;
 
 				Vector2i[] points = new Vector2i[count];
-				IntPtr array = Marshal.ReadIntPtr(reference, 4);
+				IntPtr array = outlineInternal.points;
 
 				for (int i = 0; i < count; i++)
 				{
-					points[i] = new Vector2i(array, IntPtr.Size * i);
+					points[i] = new Vector2i(new IntPtr(array.ToInt64() + IntPtr.Size * i));
 				}
 
 				return points;
@@ -134,7 +132,7 @@ namespace SharpFont
 					return null;
 
 				byte[] tags = new byte[count];
-				IntPtr array = Marshal.ReadIntPtr(reference, 4 + IntPtr.Size);
+				IntPtr array = outlineInternal.tags;
 
 				for (int i = 0; i < count; i++)
 				{
@@ -161,7 +159,7 @@ namespace SharpFont
 					return null;
 
 				short[] contours = new short[count];
-				IntPtr array = Marshal.ReadIntPtr(reference, 4 + IntPtr.Size * 2);
+				IntPtr array = outlineInternal.contours;
 
 				for (int i = 0; i < count; i++)
 				{
@@ -181,7 +179,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (OutlineFlags)Marshal.ReadInt32(reference, 4 + IntPtr.Size * 3);
+				return outlineInternal.flags;
 			}
 		}
 	}

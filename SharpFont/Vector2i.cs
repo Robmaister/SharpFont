@@ -22,6 +22,7 @@ SOFTWARE.*/
 
 using System;
 using System.Runtime.InteropServices;
+using SharpFont.Internal;
 
 namespace SharpFont
 {
@@ -31,18 +32,20 @@ namespace SharpFont
 	public sealed class Vector2i
 	{
 		internal IntPtr reference;
+		internal VectorInternal vec;
 
 		internal Vector2i(IntPtr reference)
 		{
 			this.reference = reference;
+			this.vec = (VectorInternal)Marshal.PtrToStructure(reference, typeof(VectorInternal));
 		}
 
-		internal Vector2i(IntPtr reference, int offset)
+		internal Vector2i(VectorInternal vInt)
 		{
-			this.reference = new IntPtr(reference.ToInt64() + offset);
+			this.vec = vInt;
 		}
 
-		/// <summary>
+		/*/// <summary>
 		/// Initializes a new instance of the Vector2i class. X and Y default
 		/// to 0.
 		/// </summary>
@@ -72,7 +75,7 @@ namespace SharpFont
 			{
 				return 8;
 			}
-		}
+		}*/
 
 		/// <summary>
 		/// The horizontal coordinate.
@@ -81,12 +84,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 0);
-			}
-
-			set
-			{
-				Marshal.WriteInt32(reference, 0, value);
+				return vec.x;
 			}
 		}
 
@@ -97,12 +95,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 4);
-			}
-
-			set
-			{
-				Marshal.WriteInt32(reference, 4, value);
+				return vec.y;
 			}
 		}
 	}

@@ -23,29 +23,37 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
+using SharpFont.Internal;
+
 namespace SharpFont
 {
 	/// <summary>
-	/// A structure used to model the metrics of a single glyph. The values are expressed in 26.6 fractional pixel format; if the flag FT_LOAD_NO_SCALE has been used while loading the glyph, values are expressed in font units instead.
+	/// A structure used to model the metrics of a single glyph. The values are
+	/// expressed in 26.6 fractional pixel format; if the flag FT_LOAD_NO_SCALE
+	/// has been used while loading the glyph, values are expressed in font
+	/// units instead.
 	/// </summary>
 	/// <remarks>
-	/// If not disabled with FT_LOAD_NO_HINTING, the values represent dimensions of the hinted glyph (in case hinting is applicable).
+	/// If not disabled with FT_LOAD_NO_HINTING, the values represent
+	/// dimensions of the hinted glyph (in case hinting is applicable).
 	/// </remarks>
 	public sealed class GlyphMetrics
 	{
 		internal IntPtr reference;
+		internal GlyphMetricsInternal glyphMetricsInternal;
 
 		internal GlyphMetrics(IntPtr reference)
 		{
 			this.reference = reference;
+			this.glyphMetricsInternal = (GlyphMetricsInternal)Marshal.PtrToStructure(reference, typeof(GlyphMetricsInternal));
 		}
 
-		internal GlyphMetrics(IntPtr reference, int offset)
+		internal GlyphMetrics(GlyphMetricsInternal glyphMetInt)
 		{
-			this.reference = new IntPtr(reference.ToInt64() + offset);
+			this.glyphMetricsInternal = glyphMetInt;
 		}
 
-		/// <summary>
+		/*/// <summary>
 		/// Gets the size of a GlyphMetrics, in bytes.
 		/// </summary>
 		public static int SizeInBytes
@@ -54,7 +62,7 @@ namespace SharpFont
 			{
 				return 32;
 			}
-		}
+		}*/
 
 		/// <summary>
 		/// The glyph's width.
@@ -63,7 +71,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 0);
+				return glyphMetricsInternal.width;
 			}
 		}
 
@@ -74,7 +82,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 4);
+				return glyphMetricsInternal.height;
 			}
 		}
 
@@ -85,7 +93,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 8);
+				return glyphMetricsInternal.horiBearingX;
 			}
 		}
 
@@ -96,7 +104,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 12);
+				return glyphMetricsInternal.horiBearingY;
 			}
 		}
 
@@ -107,7 +115,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 16);
+				return glyphMetricsInternal.horiAdvance;
 			}
 		}
 
@@ -118,7 +126,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 20);
+				return glyphMetricsInternal.vertBearingX;
 			}
 		}
 
@@ -129,7 +137,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 24);
+				return glyphMetricsInternal.vertBearingY;
 			}
 		}
 
@@ -140,7 +148,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 28);
+				return glyphMetricsInternal.vertAdvance;
 			}
 		}
 	}

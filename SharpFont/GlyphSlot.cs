@@ -203,11 +203,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (GlyphFormat)Marshal.ReadInt32(reference, 12 
-					+ IntPtr.Size * 3 
-					+ Generic.SizeInBytes 
-					+ GlyphMetrics.SizeInBytes 
-					+ Vector2i.SizeInBytes);
+				return rec.format;
 			}
 		}
 
@@ -221,11 +217,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return /*new Bitmap(reference, 16 
-					+ IntPtr.Size * 3 
-					+ Generic.SizeInBytes 
-					+ GlyphMetrics.SizeInBytes 
-					+ Vector2i.SizeInBytes);*/ null;
+				return new Bitmap(rec.bitmap);
 			}
 		}
 
@@ -237,12 +229,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 16 
-					+ IntPtr.Size * 3 
-					+ Generic.SizeInBytes 
-					+ GlyphMetrics.SizeInBytes 
-					+ Vector2i.SizeInBytes 
-					/*+ Bitmap.SizeInBytes*/);
+				return rec.bitmap_left;
 			}
 		}
 
@@ -255,12 +242,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 20 
-					+ IntPtr.Size * 3 
-					+ Generic.SizeInBytes 
-					+ GlyphMetrics.SizeInBytes 
-					+ Vector2i.SizeInBytes 
-					/*+ Bitmap.SizeInBytes*/);
+				return rec.bitmap_top;
 			}
 		}
 
@@ -274,12 +256,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Outline(reference, 24 
-					+ IntPtr.Size * 3 
-					+ Generic.SizeInBytes 
-					+ GlyphMetrics.SizeInBytes 
-					+ Vector2i.SizeInBytes 
-					/*+ Bitmap.SizeInBytes*/);
+				return new Outline(rec.outline);
 			}
 		}
 
@@ -293,13 +270,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (uint)Marshal.ReadInt32(reference, 24 
-					+ IntPtr.Size * 3 
-					+ Generic.SizeInBytes 
-					+ GlyphMetrics.SizeInBytes 
-					+ Vector2i.SizeInBytes 
-					/*+ Bitmap.SizeInBytes*/ 
-					+ Outline.SizeInBytes);
+				return rec.num_subglyphs;
 			}
 		}
 
@@ -317,13 +288,7 @@ namespace SharpFont
 					return null;
 
 				SubGlyph[] subglyphs = new SubGlyph[count];
-				IntPtr array = Marshal.ReadIntPtr(reference, 28
-					+ IntPtr.Size * 3
-					+ Generic.SizeInBytes
-					+ GlyphMetrics.SizeInBytes
-					+ Vector2i.SizeInBytes
-					/*+ Bitmap.SizeInBytes*/
-					+ Outline.SizeInBytes);
+				IntPtr array = rec.subglyphs;
 
 				for (int i = 0; i < count; i++)
 				{
@@ -343,30 +308,18 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference, 28
-					+ IntPtr.Size * 4
-					+ Generic.SizeInBytes
-					+ GlyphMetrics.SizeInBytes
-					+ Vector2i.SizeInBytes
-					/*+ Bitmap.SizeInBytes*/
-					+ Outline.SizeInBytes);
+				return rec.control_data;
 			}
 		}
 
 		/// <summary>
 		/// This is the length in bytes of the control data.
 		/// </summary>
-		public int ControlLength
+		public long ControlLength
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 28
-					+ IntPtr.Size * 5
-					+ Generic.SizeInBytes
-					+ GlyphMetrics.SizeInBytes
-					+ Vector2i.SizeInBytes
-					/*+ Bitmap.SizeInBytes*/
-					+ Outline.SizeInBytes);
+				return rec.control_len;
 			}
 		}
 
@@ -374,17 +327,11 @@ namespace SharpFont
 		/// The difference between hinted and unhinted left side bearing while
 		/// autohinting is active. Zero otherwise.
 		/// </summary>
-		public int DeltaLSB
+		public long DeltaLSB
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 32
-					+ IntPtr.Size * 5
-					+ Generic.SizeInBytes
-					+ GlyphMetrics.SizeInBytes
-					+ Vector2i.SizeInBytes
-					/*+ Bitmap.SizeInBytes*/
-					+ Outline.SizeInBytes);
+				return rec.lsb_delta;
 			}
 		}
 
@@ -392,17 +339,11 @@ namespace SharpFont
 		/// The difference between hinted and unhinted right side bearing while
 		/// autohinting is active. Zero otherwise.
 		/// </summary>
-		public int DeltaRSB
+		public long DeltaRSB
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 36
-					+ IntPtr.Size * 5
-					+ Generic.SizeInBytes
-					+ GlyphMetrics.SizeInBytes
-					+ Vector2i.SizeInBytes
-					/*+ Bitmap.SizeInBytes*/
-					+ Outline.SizeInBytes);
+				return rec.rsb_delta;
 			}
 		}
 
@@ -415,13 +356,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference, 40
-					+ IntPtr.Size * 5
-					+ Generic.SizeInBytes
-					+ GlyphMetrics.SizeInBytes
-					+ Vector2i.SizeInBytes
-					/*+ Bitmap.SizeInBytes*/
-					+ Outline.SizeInBytes);
+				return rec.other;
 			}
 		}
 	}

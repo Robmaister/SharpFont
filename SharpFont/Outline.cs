@@ -47,6 +47,11 @@ namespace SharpFont
 			this.outlineInternal = (OutlineInternal)Marshal.PtrToStructure(reference, typeof(OutlineInternal));
 		}
 
+		internal Outline(OutlineInternal outlineInt)
+		{
+			this.outlineInternal = outlineInt;
+		}
+
 		/*/// <summary>
 		/// Gets the size of the class, in bytes.
 		/// </summary>

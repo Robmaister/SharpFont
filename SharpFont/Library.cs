@@ -35,13 +35,56 @@ namespace SharpFont
 	/// For multi-threading applications each thread should have its own
 	/// FT_Library object.
 	/// </summary>
-	public sealed class Library
+	public sealed class Library : IDisposable
 	{
 		internal IntPtr reference;
+
+		private bool disposed;
+
+		/// <summary>
+		/// Initializes a new instance of the Library class.
+		/// </summary>
+		public Library()
+		{
+			//duplicate the error checking code from FT.InitFreeType, it's the
+			//simplest way to create a new Library without copies
+			IntPtr libraryRef;
+			Error err = FT.FT_Init_FreeType(out libraryRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			reference = libraryRef;
+		}
 
 		internal Library(IntPtr reference)
 		{
 			this.reference = reference;
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if (!disposed)
+			{
+				if (disposing)
+				{
+				}
+
+				FT.DoneFreeType(this);
+				reference = IntPtr.Zero;
+
+				disposed = true;
+			}
+		}
+
+		~Library()
+		{
+			Dispose(false);
 		}
 	}
 }

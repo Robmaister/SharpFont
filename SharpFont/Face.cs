@@ -175,7 +175,7 @@ namespace SharpFont
 
 				for (int i = 0; i < count; i++)
 				{
-					sizes[i] = new BitmapSize(array, IntPtr.Size * i);
+					sizes[i] = new BitmapSize(new IntPtr(array.ToInt64() + IntPtr.Size * i));
 				}
 
 				return sizes;
@@ -210,7 +210,7 @@ namespace SharpFont
 
 				for (int i = 0; i < count; i++)
 				{
-					charmaps[i] = new CharMap(array, IntPtr.Size * i);
+					charmaps[i] = new CharMap(new IntPtr(array.ToInt64() + IntPtr.Size * i));
 				}
 
 				return charmaps;
@@ -385,5 +385,7 @@ namespace SharpFont
 				return new CharMap(rec.charmap);
 			}
 		}
+
+
 	}
 }

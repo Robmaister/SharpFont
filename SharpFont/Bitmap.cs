@@ -44,6 +44,11 @@ namespace SharpFont
 			this.bmpInternal = (BitmapInternal)Marshal.PtrToStructure(reference, typeof(BitmapInternal));
 		}
 
+		internal Bitmap(BitmapInternal bmpInt)
+		{
+			this.bmpInternal = bmpInt;
+		}
+
 		/*/// <summary>
 		/// Gets the size of a Bitmap, in bytes.
 		/// </summary>

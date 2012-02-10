@@ -80,6 +80,6 @@ namespace SharpFont.Internal
 
 		internal IntPtr other;
 
-		internal IntPtr @internal;
+		private IntPtr @internal;
 	}
 }

@@ -43,7 +43,7 @@ namespace Examples
 				{
 					Console.WriteLine("FreeType version: " + lib.Version());
 
-					using (Face regular = FT.NewFace(lib, @"Fonts/Cousine-Regular-Latin.ttf", 0))
+					using (Face regular = lib.NewFace(@"Fonts/Cousine-Regular-Latin.ttf", 0))
 					{
 
 						//write out some basic font information
@@ -55,7 +55,7 @@ namespace Examples
 						Console.WriteLine("Style flags: " + regular.StyleFlags);
 
 						//render 'A'
-						uint capitalA = FT.GetCharIndex(regular, 'D');
+						uint capitalA = FT.GetCharIndex(regular, 'A');
 						FT.SetCharSize(regular, 0, 32 * 64, 0, 96);
 						FT.LoadGlyph(regular, capitalA, LoadFlags.Default, LoadTarget.Normal);
 						FT.RenderGlyph(regular.Glyph, RenderMode.Normal);

@@ -455,8 +455,8 @@ namespace SharpFont
 		/// <see cref="DoneFace"/>.
 		/// </remarks>
 		/// <param name="library">A handle to the library resource</param>
-		/// <param name="fileBase">A pointer to the beginning of the font data</param>
-		/// <param name="faceIndex">The index of the face within the font. The first face has index 0</param>
+		/// <param name="fileBase">A pointer to the beginning of the font data.</param>
+		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
 		/// <returns>A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.</returns>
 		/// <see cref="OpenFace"/>
 		public unsafe static Face NewMemoryFace(Library library, ref byte[] fileBase, int faceIndex)
@@ -484,11 +484,11 @@ namespace SharpFont
 		/// <see cref="Face.Glyph"/>.
 		/// 
 		/// OpenFace can be used to quickly check whether the font format of
-		/// a given font resource is supported by FreeType. If the faceIndex 
-		/// field is negative, the function's return value is 0 if the font 
-		/// format is recognized, or non-zero otherwise; the function returns 
-		/// a more or less empty face handle in ‘*aface’ (if ‘aface’ isn't 
-		/// NULL). The only useful field in this special case is 
+		/// a given font resource is supported by FreeType. If the faceIndex
+		/// field is negative, the function's return value is 0 if the font
+		/// format is recognized, or non-zero otherwise; the function returns
+		/// a more or less empty face handle in ‘*aface’ (if ‘aface’ isn't
+		/// NULL). The only useful field in this special case is
 		/// <see cref="Face.FaceCount"/> which gives the number of faces within
 		/// the font file. After examination, the returned FT_Face structure
 		/// should be deallocated with a call to <see cref="DoneFace"/>.
@@ -496,7 +496,7 @@ namespace SharpFont
 		/// Each new face object created with this function also owns a default
 		/// <see cref="Size"/> object, accessible as <see cref="Face.Size"/>.
 		/// 
-		/// See the discussion of reference counters in the description of 
+		/// See the discussion of reference counters in the description of
 		/// FT_Reference_Face.
 		/// </remarks>
 		/// <param name="library">A handle to the library resource</param>

@@ -39,66 +39,52 @@ namespace Examples
 			
 			try
 			{
-				Library lib = FT.InitFreeType();
-				int min, maj, rev;
-				FT.LibraryVersion(lib, out maj, out min, out rev);
-				Console.WriteLine("FreeType version: " + maj + "." + min + "." + rev + '\n');
-				
-				Face regular;
-				
-				using (FileStream f = File.OpenRead(@"Fonts/Cousine-Regular-Latin.ttf"))
+				using (Library lib = new Library())
 				{
-					using (BinaryReader reader = new BinaryReader(f))
+					Console.WriteLine("FreeType version: " + lib.Version());
+
+					using (Face regular = FT.NewFace(lib, @"Fonts/Cousine-Regular-Latin.ttf", 0))
 					{
-						byte[] fontData = new byte[reader.BaseStream.Length];
-						reader.Read(fontData, 0, fontData.Length);
-						regular = FT.NewMemoryFace(lib, ref fontData, 0);
+
+						//write out some basic font information
+						Console.WriteLine("Information for font " + regular.FamilyName);
+						Console.WriteLine("====================================");
+						Console.WriteLine("Number of faces: " + regular.FaceCount);
+						Console.WriteLine("Face flags: " + regular.FaceFlags);
+						Console.WriteLine("Style: " + regular.StyleName);
+						Console.WriteLine("Style flags: " + regular.StyleFlags);
+
+						//render 'A'
+						uint capitalA = FT.GetCharIndex(regular, 'D');
+						FT.SetCharSize(regular, 0, 32 * 64, 0, 96);
+						FT.LoadGlyph(regular, capitalA, LoadFlags.Default, LoadTarget.Normal);
+						FT.RenderGlyph(regular.Glyph, RenderMode.Normal);
+
+						SharpFont.Bitmap sBitmap = regular.Glyph.Bitmap;
+
+						//copy data to managed memory
+						//HACK currently scaling to a 32bpp RGBA image, don't do this.
+						byte[] data = new byte[sBitmap.Rows * sBitmap.Width * 4];
+						for (int i = 0; i < data.Length; i += 4)
+						{
+							data[i] = (byte)(Marshal.ReadByte(sBitmap.Buffer, (i / 4)));
+							data[i + 1] = data[i];
+							data[i + 2] = data[i];
+							data[i + 3] = 255; //no transparency
+						}
+
+						//save a bitmap of the data.
+						using (System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(sBitmap.Width, sBitmap.Rows, PixelFormat.Format32bppArgb))
+						{
+							BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
+							Marshal.Copy(data, 0, bmpData.Scan0, data.Length);
+							bmp.UnlockBits(bmpData);
+
+							System.Drawing.Bitmap bmp2 = new System.Drawing.Bitmap(bmp);
+							bmp2.Save("A.bmp");
+						}
 					}
 				}
-				
-				//Face regular = FT.NewFace(lib, @"Fonts/Cousine-Regular-Latin.ttf", 0);
-				//Face regular = FT.NewFace(lib, "/usr/share/fonts/comic.ttf", 0);
-
-				//write out some basic font information
-				Console.WriteLine("Information for font " + regular.FamilyName);
-				Console.WriteLine("====================================");
-				Console.WriteLine("Number of faces: " + regular.FaceCount);
-				Console.WriteLine("Face flags: " + regular.FaceFlags);
-				Console.WriteLine("Style: " + regular.StyleName);
-				Console.WriteLine("Style flags: " + regular.StyleFlags);
-
-				//render 'A'
-				uint capitalA = FT.GetCharIndex(regular, 'D');
-				FT.SetCharSize(regular, 0, 32 * 64, 0, 96);
-				FT.LoadGlyph(regular, capitalA, LoadFlags.Default, LoadTarget.Normal);
-				FT.RenderGlyph(regular.Glyph, RenderMode.Normal);
-
-				SharpFont.Bitmap sBitmap = regular.Glyph.Bitmap;
-
-				//copy data to managed memory
-				//HACK currently scaling to a 32bpp RGBA image, don't do this.
-				byte[] data = new byte[sBitmap.Rows * sBitmap.Width * 4];
-				for (int i = 0; i < data.Length; i += 4)
-				{
-					data[i] = (byte)(Marshal.ReadByte(sBitmap.Buffer, (i / 4)));
-					data[i + 1] = data[i];
-					data[i + 2] = data[i];
-					data[i + 3] = 255; //no transparency
-				}
-
-				//save a bitmap of the data.
-				using (System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(sBitmap.Width, sBitmap.Rows, PixelFormat.Format32bppArgb))
-				{
-					BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-					Marshal.Copy(data, 0, bmpData.Scan0, data.Length);
-					bmp.UnlockBits(bmpData);
-
-					System.Drawing.Bitmap bmp2 = new System.Drawing.Bitmap(bmp);
-					bmp2.Save("A.bmp");
-				}
-
-				FT.DoneFace(regular);
-				FT.DoneFreeType(lib);
 			}
 			catch (FreeTypeException e)
 			{

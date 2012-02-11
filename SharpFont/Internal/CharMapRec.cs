@@ -38,5 +38,7 @@ namespace SharpFont.Internal
 		internal Encoding encoding;
 		internal PlatformID platform_id;
 		internal ushort encoding_id;
+
+		internal static int SizeInBytes { get { return 8 + IntPtr.Size; } }
 	}
 }

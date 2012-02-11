@@ -100,5 +100,8 @@ namespace SharpFont.Internal
 		private IntPtr extensions;
 
 		private IntPtr @internal;
+
+		//TODO adjust for the hacked in Generic IntPtrs.
+		internal static int SizeInBytes { get { return 24 + sizeof(FT_Long) * 5 + IntPtr.Size * 17 + BBoxInternal.SizeInBytes; } }
 	}
 }

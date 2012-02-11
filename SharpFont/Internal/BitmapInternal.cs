@@ -20,5 +20,7 @@ namespace SharpFont.Internal
 		internal PixelMode pixel_mode;
 		internal byte palette_mode;
 		internal IntPtr palette;
+
+		internal static int SizeInBytes { get { return 16 + IntPtr.Size * 2; } }
 	}
 }

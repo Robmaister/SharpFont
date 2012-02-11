@@ -76,8 +76,6 @@ namespace SharpFont
 				}
 
 				FT.DoneFreeType(this);
-				reference = IntPtr.Zero;
-
 				disposed = true;
 			}
 		}
@@ -85,6 +83,28 @@ namespace SharpFont
 		~Library()
 		{
 			Dispose(false);
+		}
+
+		public Version Version()
+		{
+			int major, minor, patch;
+			FT.LibraryVersion(this, out major, out minor, out patch);
+			return new Version(major, minor, patch);
+		}
+
+		public Face NewFace(string path, int faceIndex)
+		{
+			return FT.NewFace(this, path, faceIndex);
+		}
+
+		public Face NewMemoryFace(byte[] file, int faceIndex)
+		{
+			return FT.NewMemoryFace(this, ref file, faceIndex);
+		}
+
+		public Face OpenFace(OpenArgs args, int faceIndex)
+		{
+			return FT.OpenFace(this, args, faceIndex);
 		}
 	}
 }

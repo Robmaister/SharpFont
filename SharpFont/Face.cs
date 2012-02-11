@@ -35,10 +35,12 @@ namespace SharpFont
 	/// Fields may be changed after a call to FT_Attach_File or
 	/// FT_Attach_Stream.
 	/// </remarks>
-	public sealed class Face
+	public sealed class Face : IDisposable
 	{
 		internal IntPtr reference;
 		internal FaceRec rec;
+
+		private bool disposed;
 
 		internal Face(IntPtr reference)
 		{
@@ -386,6 +388,47 @@ namespace SharpFont
 			}
 		}
 
+		public void Dispose()
+		{
+			Dispose(true);
+		}
 
+		private void Dispose(bool disposing)
+		{
+			if (!disposed)
+			{
+				if (disposing)
+				{
+				}
+
+				FT.DoneFace(this);
+				disposed = true;
+			}
+		}
+
+		~Face()
+		{
+			Dispose(false);
+		}
+
+		public void AttachFile(string path)
+		{
+			FT.AttachFile(this, path);
+		}
+
+		public void AttachStream(OpenArgs parameters)
+		{
+			FT.AttachStream(this, parameters);
+		}
+
+		public void SelectSize(int strikeIndex)
+		{
+			FT.SelectSize(this, strikeIndex);
+		}
+
+		public void RequestSize(SizeRequest request)
+		{
+			FT.RequestSize(this, request);
+		}
 	}
 }

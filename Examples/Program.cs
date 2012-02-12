@@ -33,7 +33,7 @@ namespace Examples
 {
 	class Program
 	{
-		public unsafe static void Main(string[] args)
+		public static void Main(string[] args)
 		{
 			//TODO make several examples in an example browser
 
@@ -56,35 +56,14 @@ namespace Examples
 						Console.WriteLine("Style: " + face.StyleName);
 						Console.WriteLine("Style flags: " + face.StyleFlags);
 
-						//render 'A'
-						uint capitalA = face.GetCharIndex('A');
 						face.SetCharSize(0, 32 * 64, 0, 96);
-						face.LoadGlyph(capitalA, LoadFlags.Default, LoadTarget.Normal);
-						face.RenderGlyph(face.Glyph, RenderMode.Normal);
 
-						SharpFont.Bitmap sBitmap = face.Glyph.Bitmap;
+						Console.WriteLine("\nWriting string \"Hello World!\":");
+						System.Drawing.Bitmap bmp = RenderString(face, "Hello World!");
+						bmp.Save("helloworld3.png", System.Drawing.Imaging.ImageFormat.Png);
+						bmp.Dispose();
 
-						//copy data to managed memory
-						//HACK currently scaling to a 32bpp RGBA image, don't do this.
-						byte[] data = new byte[sBitmap.Rows * sBitmap.Width * 4];
-						for (int i = 0; i < data.Length; i += 4)
-						{
-							data[i] = (byte)(Marshal.ReadByte(sBitmap.Buffer, (i / 4)));
-							data[i + 1] = data[i];
-							data[i + 2] = data[i];
-							data[i + 3] = 255; //no transparency
-						}
-
-						//save a bitmap of the data.
-						using (System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(sBitmap.Width, sBitmap.Rows, PixelFormat.Format32bppArgb))
-						{
-							BitmapData bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
-							Marshal.Copy(data, 0, bmpData.Scan0, data.Length);
-							bmp.UnlockBits(bmpData);
-
-							System.Drawing.Bitmap bmp2 = new System.Drawing.Bitmap(bmp);
-							bmp2.Save("A.bmp");
-						}
+						Console.WriteLine("Done!\n");
 					}
 				}
 			}
@@ -94,6 +73,84 @@ namespace Examples
 			}
 
 			Console.ReadLine();
+		}
+
+		public static System.Drawing.Bitmap RenderString(Face f, string text)
+		{
+			int penX = 0, penY = 0;
+			int width = 0;
+			int height = 0;
+
+			for (int i = 0; i < text.Length; i++)
+			{
+				char c = text[i];
+
+				uint glyphIndex = f.GetCharIndex(c);
+				f.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
+
+				width += (int)f.Glyph.Advance.X >> 6;
+
+				if (FT.HasKerning(f) && i < text.Length - 1)
+				{
+					char cNext = text[i + 1];
+					width += (int)f.GetKerning(glyphIndex, f.GetCharIndex(cNext), KerningMode.Default).X >> 6;
+				}
+
+				if (f.Glyph.Metrics.Height >> 6 > height)
+					height = (int)f.Glyph.Metrics.Height >> 6;
+			}
+
+			//hacked in the size and overshot because I'm too lazy to measure it beforehand.
+			System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(width, height);
+
+			penX = 0;
+			penY = 0;
+
+			for(int i = 0; i < text.Length; i++)
+			{
+				char c = text[i];
+
+				uint glyphIndex = f.GetCharIndex(c);
+				f.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
+				f.RenderGlyph(f.Glyph, RenderMode.Normal);
+
+				if (c == ' ')
+				{
+					penX += (int)f.Glyph.Advance.X >> 6;
+
+					if (FT.HasKerning(f) && i < text.Length - 1)
+					{
+						char cNext = text[i + 1];
+						width += (int)f.GetKerning(glyphIndex, f.GetCharIndex(cNext), KerningMode.Default).X >> 6;
+					}
+
+					penY += (int)f.Glyph.Advance.Y >> 6;
+					continue;
+				}
+
+				BitmapData data = bmp.LockBits(new Rectangle(penX, penY, f.Glyph.Bitmap.Width, f.Glyph.Bitmap.Rows), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+				byte[] pixelAlphas = new byte[f.Glyph.Bitmap.Width * f.Glyph.Bitmap.Rows];
+				Marshal.Copy(f.Glyph.Bitmap.Buffer, pixelAlphas, 0, pixelAlphas.Length);
+
+				for (int j = 0; j < pixelAlphas.Length; j++)
+				{
+					int pixelOffset = (j / data.Width + (bmp.Height - data.Height)) * data.Stride + (j % data.Width) * 4;
+					Marshal.WriteByte(data.Scan0, pixelOffset + 3, pixelAlphas[j]);
+				}
+
+				bmp.UnlockBits(data);
+
+				penX += (int)f.Glyph.Advance.X >> 6;
+				penY += (int)f.Glyph.Advance.Y >> 6;
+
+				if (FT.HasKerning(f) && i < text.Length - 1)
+				{
+					char cNext = text[i + 1];
+					width += (int)f.GetKerning(glyphIndex, f.GetCharIndex(cNext), KerningMode.Default).X >> 6;
+				}
+			}
+
+			return bmp;
 		}
 
 		/// <summary>

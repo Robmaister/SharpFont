@@ -60,7 +60,7 @@ namespace Examples
 
 						Console.WriteLine("\nWriting string \"Hello World!\":");
 						System.Drawing.Bitmap bmp = RenderString(face, "Hello World!");
-						bmp.Save("helloworld3.png", System.Drawing.Imaging.ImageFormat.Png);
+						bmp.Save("helloworld.png", System.Drawing.Imaging.ImageFormat.Png);
 						bmp.Dispose();
 
 						Console.WriteLine("Done!\n");
@@ -81,6 +81,7 @@ namespace Examples
 			int width = 0;
 			int height = 0;
 
+			//measure the size of the string before rendering it, requirement of Bitmap.
 			for (int i = 0; i < text.Length; i++)
 			{
 				char c = text[i];
@@ -100,12 +101,13 @@ namespace Examples
 					height = (int)f.Glyph.Metrics.Height >> 6;
 			}
 
-			//hacked in the size and overshot because I'm too lazy to measure it beforehand.
+			//create a new bitmap that fits the string.
 			System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(width, height);
 
 			penX = 0;
 			penY = 0;
 
+			//draw the string
 			for(int i = 0; i < text.Length; i++)
 			{
 				char c = text[i];

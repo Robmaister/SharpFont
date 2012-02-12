@@ -33,6 +33,7 @@ namespace SharpFont
 	/// details of usage.
 	/// </summary>
 	/// <param name="object">The address of the FreeType object which is under finalization. Its client data is accessed through its ‘generic’ field.</param>
+	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate void GenericFinalizer(IntPtr @object);
 
 	/// <summary>
@@ -49,78 +50,46 @@ namespace SharpFont
 	/// would put the address of the glyph cache destructor in the ‘finalizer’
 	/// field).
 	/// </summary>
-	public sealed class Generic
+	[StructLayout(LayoutKind.Sequential)]
+	public struct Generic
 	{
-		internal IntPtr reference;
-
-		internal Generic(IntPtr reference)
-		{
-			this.reference = reference;
-		}
-
-		internal Generic(IntPtr reference, int offset)
-		{
-			this.reference = new IntPtr(reference.ToInt64() + offset);
-		}
+		private IntPtr data;
+		private GenericFinalizer finalizer;
 
 		/// <summary>
-		/// Gets the size of a Generic, in bytes.
+		/// Initializes a new instance of the Generic struct.
 		/// </summary>
-		public static int SizeInBytes
+		/// <param name="data">A typeless pointer to some client data. The data it cointains must stay fixed until finalizer is called.</param>
+		/// <param name="finalizer">A delegate that gets called when the contained object gets finalized.</param>
+		public Generic(IntPtr data, GenericFinalizer finalizer)
+			: this()
 		{
-			get
-			{
-				return IntPtr.Size * 2;
-			}
+			this.data = data;
+			this.finalizer = finalizer;
 		}
 
 		/// <summary>
 		/// A typeless pointer to any client-specified data. This field is 
 		/// completely ignored by the FreeType library.
 		/// </summary>
-		public IntPtr Data
-		{
-			get
-			{
-				return Marshal.ReadIntPtr(reference, 0);
-			}
-
-			set
-			{
-				Marshal.WriteIntPtr(reference, 0, value);
-			}
-		}
+		public IntPtr Data { get { return data; } set { data = value; } }
 
 		/// <summary>
 		/// A pointer to a <see cref="GenericFinalizer"/> function, which will
 		/// be called when the object is destroyed. If this field is set to
 		/// NULL, no code will be called.
 		/// </summary>
-		public IntPtr Finalizer
+		public GenericFinalizer Finalizer { get { return finalizer; } set { finalizer = value; } }
+
+		internal void WriteToUnmanagedMemory(IntPtr location)
 		{
-			get
-			{
-				return Marshal.ReadIntPtr(reference,  IntPtr.Size);
-			}
-
-			set
-			{
-				Marshal.WriteIntPtr(reference,  IntPtr.Size, value);
-			}
+			Marshal.WriteIntPtr(location, data);
+			Marshal.WriteIntPtr(location, IntPtr.Size, Marshal.GetFunctionPointerForDelegate(finalizer));
 		}
-
-		//TODO overload constructor for different data types.
 
 		/// <summary>
-		/// Initializes a new instance of the Generic struct. Useful for
-		/// creating proper <see cref="Finalizer"/> function pointers.
+		/// Gets the size of a Generic, in bytes.
 		/// </summary>
-		/// <param name="data">A typeless pointer to any client-specified data.</param>
-		/// <param name="finalizer">A function pointer to be called when the containing object is destroyed.</param>
-		public Generic(IntPtr data, GenericFinalizer finalizer)
-		{
-			Data = data;
-			Finalizer = Marshal.GetFunctionPointerForDelegate(finalizer);
-		}
+		public static int SizeInBytes { get { return IntPtr.Size * 2; } }
 	}
 }

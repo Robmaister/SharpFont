@@ -72,9 +72,7 @@ namespace SharpFont.Internal
 		internal int num_charmaps;
 		internal IntPtr charmaps;
 
-		//HACK change Generic to a struct!
-		internal IntPtr generic;
-		internal IntPtr generic_finalizer;
+		internal Generic generic;
 
 		internal BBoxInternal bbox;
 
@@ -98,14 +96,11 @@ namespace SharpFont.Internal
 		private IntPtr stream;
 
 		private IntPtr sizes_list;
-		//HACK generic again
-		private IntPtr autohint;
-		private IntPtr autohint_1;
+		private Generic autohint;
 		private IntPtr extensions;
 
 		private IntPtr @internal;
 
-		//TODO adjust for the hacked in Generic IntPtrs.
-		internal static int SizeInBytes { get { return 24 + sizeof(FT_Long) * 5 + IntPtr.Size * 17 + BBoxInternal.SizeInBytes; } }
+		internal static int SizeInBytes { get { return 24 + sizeof(FT_Long) * 5 + IntPtr.Size * 13 + Generic.SizeInBytes + BBoxInternal.SizeInBytes; } }
 	}
 }

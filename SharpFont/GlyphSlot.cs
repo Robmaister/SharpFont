@@ -131,9 +131,7 @@ namespace SharpFont
 		{
 			get
 			{
-				//add 4 because of a private "reserved" field between next and generic.
-				return new Generic(reference, 4 
-					+ IntPtr.Size * 3);
+				return rec.generic;
 			}
 		}
 

@@ -246,8 +246,14 @@ namespace SharpFont
 		{
 			get
 			{
-				//HACK fix this later.
-				return new Generic(reference, IntPtr.Size * 11);
+				return rec.generic;
+			}
+
+			set
+			{
+				//rec.generic = value;
+				value.WriteToUnmanagedMemory(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceRec), "generic").ToInt64()));
+				rec = (FaceRec)Marshal.PtrToStructure(reference, typeof(FaceRec));
 			}
 		}
 

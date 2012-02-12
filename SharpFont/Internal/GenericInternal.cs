@@ -25,61 +25,12 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-#if FT64
-using FT_Long = System.Int64;
-using FT_ULong = System.UInt64;
-using FT_Fixed = System.Int64;
-using FT_Pos = System.Int64;
-using FT_26Dot6 = System.Int64;
-#else
-using FT_Long = System.Int32;
-using FT_ULong = System.UInt32;
-using FT_Fixed = System.Int32;
-using FT_Pos = System.Int32;
-using FT_26Dot6 = System.Int32;
-#endif
-
 namespace SharpFont.Internal
 {
-	/// <summary>
-	/// Internally represents a GlyphSlot.
-	/// </summary>
-	/// <remarks>
-	/// Refer to <see cref="GlyphSlot"/> for FreeType documentation.
-	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal class GlyphSlotRec
+	internal struct GenericInternal
 	{
-		internal IntPtr library;
-		internal IntPtr face;
-		internal IntPtr next;
-		internal uint reserved;
-		internal Generic generic;
-
-		internal GlyphMetricsInternal metrics;
-		internal FT_Fixed linearHoriAdvance;
-		internal FT_Fixed linearVertAdvance;
-		internal VectorInternal advance;
-
-		internal GlyphFormat format;
-
-		internal BitmapInternal bitmap;
-		internal int bitmap_left;
-		internal int bitmap_top;
-
-		internal OutlineInternal outline;
-
-		internal uint num_subglyphs;
-		internal IntPtr subglyphs;
-
-		internal IntPtr control_data;
-		internal FT_Long control_len;
-
-		internal FT_Pos lsb_delta;
-		internal FT_Pos rsb_delta;
-
-		internal IntPtr other;
-
-		private IntPtr @internal;
+		IntPtr data;
+		GenericFinalizer finalizer;
 	}
 }

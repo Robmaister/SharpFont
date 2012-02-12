@@ -65,7 +65,8 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Generic(reference, IntPtr.Size);
+				//HACK generic
+				return new Generic();
 			}
 		}
 

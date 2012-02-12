@@ -75,6 +75,7 @@
     <Compile Include="Internal\BitmapSizeInternal.cs" />
     <Compile Include="Internal\CharMapRec.cs" />
     <Compile Include="Internal\FaceRec.cs" />
+    <Compile Include="Internal\GenericInternal.cs" />
     <Compile Include="Internal\GlyphMetricsInternal.cs" />
     <Compile Include="Internal\GlyphSlotRec.cs" />
     <Compile Include="Internal\OutlineInternal.cs" />

@@ -36,7 +36,7 @@ namespace Examples
 		public unsafe static void Main(string[] args)
 		{
 			//TODO make several examples in an example browser
-			
+
 			try
 			{
 				using (Library lib = new Library())
@@ -45,6 +45,9 @@ namespace Examples
 
 					using (Face face = lib.NewFace(@"Fonts/Cousine-Regular-Latin.ttf", 0))
 					{
+						//attach a finalizer delegate
+						face.Generic = new Generic(IntPtr.Zero, OnFaceDestroyed);
+
 						//write out some basic font information
 						Console.WriteLine("Information for font " + face.FamilyName);
 						Console.WriteLine("====================================");
@@ -90,7 +93,16 @@ namespace Examples
 				Console.Write(e.Error.ToString());
 			}
 
-			Console.Read();
+			Console.ReadLine();
+		}
+
+		/// <summary>
+		/// Called when Face is destroyed.
+		/// </summary>
+		/// <param name="face">Pointer to the face</param>
+		public static void OnFaceDestroyed(IntPtr face)
+		{
+			Console.WriteLine("Face destroyed!");
 		}
 	}
 }

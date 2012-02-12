@@ -565,7 +565,7 @@ namespace SharpFont
 		/// reference FT_Face objects.
 		/// </summary>
 		/// <param name="face">A handle to a target face object.</param>
-		public static void ReferenceFace(Face face)
+		internal static void ReferenceFace(Face face)
 		{
 			Error err = FT_Reference_Face(face.reference);
 

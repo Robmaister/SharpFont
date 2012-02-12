@@ -44,7 +44,6 @@ namespace SharpFont
 		internal IntPtr reference;
 		internal FaceRec rec;
 
-		private bool duplicate;
 		private bool disposed;
 
 		#endregion
@@ -60,7 +59,9 @@ namespace SharpFont
 		{
 			this.reference = reference;
 			this.rec = (FaceRec)Marshal.PtrToStructure(reference, typeof(FaceRec));
-			this.duplicate = duplicate;
+
+			if (duplicate)
+				FT.ReferenceFace(this);
 		}
 
 		#endregion
@@ -550,9 +551,9 @@ namespace SharpFont
 				{
 				}
 
-				//only DoneFace if this was the original Face and not a duplicate reference.
-				if (!duplicate)
-					FT.DoneFace(this);
+				//duplicates will just decrement the reference count, actual
+				//Face not destroyed until all Face copies are destroyed.
+				FT.DoneFace(this);
 
 				disposed = true;
 			}

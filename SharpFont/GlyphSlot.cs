@@ -1,6 +1,8 @@
 ﻿#region MIT License
 /*Copyright (c) 2012 Robert Rouhani <robert.rouhani@gmail.com>
 
+SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
+
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
 the Software without restriction, including without limitation the rights to
@@ -90,7 +92,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Library(rec.library);
+				return new Library(rec.library, true);
 			}
 		}
 
@@ -101,7 +103,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Face(rec.face);
+				return new Face(rec.face, true);
 			}
 		}
 
@@ -358,6 +360,11 @@ namespace SharpFont
 			{
 				return rec.other;
 			}
+		}
+
+		public void GetSubGlyphInfo(uint subIndex, out int index, out SubGlyphFlags flags, out int arg1, out int arg2, out Matrix2i transform)
+		{
+			FT.GetSubGlyphInfo(this, subIndex, out index, out flags, out arg1, out arg2, out transform);
 		}
 	}
 }

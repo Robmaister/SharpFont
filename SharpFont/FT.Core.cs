@@ -1,6 +1,8 @@
 ﻿#region MIT License
 /*Copyright (c) 2012 Robert Rouhani <robert.rouhani@gmail.com>
 
+SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
+
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
 the Software without restriction, including without limitation the rights to
@@ -408,7 +410,7 @@ namespace SharpFont
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new Library(libraryRef);
+			return new Library(libraryRef, false);
 		}
 
 		/// <summary>
@@ -443,7 +445,7 @@ namespace SharpFont
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new Face(faceRef);
+			return new Face(faceRef, false);
 		}
 
 		/// <summary>
@@ -470,7 +472,7 @@ namespace SharpFont
 				if (err != Error.Ok)
 					throw new FreeTypeException(err);
 
-				return new Face(faceRef);
+				return new Face(faceRef, false);
 			}
 		}
 
@@ -512,7 +514,7 @@ namespace SharpFont
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new Face(faceRef);
+			return new Face(faceRef, false);
 		}
 
 		/// <summary>
@@ -767,12 +769,16 @@ namespace SharpFont
 		/// <param name="pointSize">The point size in 16.16 fractional points.</param>
 		/// <param name="degree">The degree of tightness.</param>
 		/// <param name="kerning">The kerning in 16.16 fractional points.</param>
-		public static void GetTrackKerning(Face face, int pointSize, int degree, out int kerning)
+		public static int GetTrackKerning(Face face, int pointSize, int degree)
 		{
+			int kerning;
+
 			Error err = FT_Get_Track_Kerning(face.reference, pointSize, degree, out kerning);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
+
+			return kerning;
 		}
 
 		/// <summary>

@@ -1,6 +1,8 @@
 ﻿#region MIT License
 /*Copyright (c) 2012 Robert Rouhani <robert.rouhani@gmail.com>
 
+SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
+
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
 the Software without restriction, including without limitation the rights to
@@ -37,16 +39,33 @@ namespace SharpFont
 	/// </remarks>
 	public sealed class Face : IDisposable
 	{
+		#region Fields
+
 		internal IntPtr reference;
 		internal FaceRec rec;
 
+		private bool duplicate;
 		private bool disposed;
 
-		internal Face(IntPtr reference)
+		#endregion
+
+		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the Face class.
+		/// </summary>
+		/// <param name="reference">A pointer to the unmanaged memory containing the Face.</param>
+		/// <param name="duplicate">A value indicating whether </param>
+		internal Face(IntPtr reference, bool duplicate)
 		{
 			this.reference = reference;
 			this.rec = (FaceRec)Marshal.PtrToStructure(reference, typeof(FaceRec));
+			this.duplicate = duplicate;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// The number of faces in the font file. Some font formats can have
@@ -388,27 +407,18 @@ namespace SharpFont
 			}
 		}
 
-		public void Dispose()
+		#endregion
+
+		#region Public methods
+
+		public bool CheckTrueTypePatents()
 		{
-			Dispose(true);
+			return FT.FaceCheckTrueTypePatents(this);
 		}
 
-		private void Dispose(bool disposing)
+		public bool SetUnpatentedHinting(bool value)
 		{
-			if (!disposed)
-			{
-				if (disposing)
-				{
-				}
-
-				FT.DoneFace(this);
-				disposed = true;
-			}
-		}
-
-		~Face()
-		{
-			Dispose(false);
+			return FT.FaceSetUnpatentedHinting(this, value);
 		}
 
 		public void AttachFile(string path)
@@ -430,5 +440,122 @@ namespace SharpFont
 		{
 			FT.RequestSize(this, request);
 		}
+
+		public void SetCharSize(int width, int height, uint horizontalResolution, uint verticalResolution)
+		{
+			FT.SetCharSize(this, width, height, horizontalResolution, verticalResolution);
+		}
+
+		public void SetPixelSizes(uint width, uint height)
+		{
+			FT.SetPixelSizes(this, width, height);
+		}
+
+		public void LoadGlyph(uint glyphIndex, LoadFlags flags, LoadTarget target)
+		{
+			FT.LoadGlyph(this, glyphIndex, flags, target);
+		}
+
+		public void LoadChar(uint charCode, LoadFlags flags, LoadTarget target)
+		{
+			FT.LoadChar(this, charCode, flags, target);
+		}
+
+		public void SetTransform(Matrix2i matrix, Vector2i delta)
+		{
+			FT.SetTransform(this, matrix, delta);
+		}
+
+		public void RenderGlyph(GlyphSlot slot, RenderMode mode)
+		{
+			FT.RenderGlyph(slot, mode);
+		}
+
+		public Vector2i GetKerning(uint leftGlyph, uint rightGlyph, KerningMode mode)
+		{
+			return FT.GetKerning(this, leftGlyph, rightGlyph, mode);
+		}
+
+		public int GetTrackKerning(int pointSize, int degree)
+		{
+			return FT.GetTrackKerning(this, pointSize, degree);
+		}
+
+		public string GetGlyphName(uint glyphIndex, int bufferSize)
+		{
+			return FT.GetGlyphName(this, glyphIndex, bufferSize);
+		}
+
+		public string GetGlyphName(uint glyphIndex, byte[] buffer)
+		{
+			return FT.GetGlyphName(this, glyphIndex, buffer);
+		}
+
+		public string GetPostscriptName()
+		{
+			return FT.GetPostscriptName(this);
+		}
+
+		public void SelectCharmap(Encoding encoding)
+		{
+			FT.SelectCharmap(this, encoding);
+		}
+
+		public void SetCharmap(CharMap charmap)
+		{
+			FT.SetCharmap(this, charmap);
+		}
+
+		public uint GetCharIndex(uint charCode)
+		{
+			return FT.GetCharIndex(this, charCode);
+		}
+
+		public uint GetFirstChar(out uint glyphIndex)
+		{
+			return FT.GetFirstChar(this, out glyphIndex);
+		}
+
+		public uint GetNextChar(uint charCode, out uint glyphIndex)
+		{
+			return FT.GetNextChar(this, charCode, out glyphIndex);
+		}
+
+		public uint GetNameIndex(string name)
+		{
+			return FT.GetNameIndex(this, name);
+		}
+
+		#endregion
+
+		#region IDisposable members
+
+		public void Dispose()
+		{
+			Dispose(true);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if (!disposed)
+			{
+				if (disposing)
+				{
+				}
+
+				//only DoneFace if this was the original Face and not a duplicate reference.
+				if (!duplicate)
+					FT.DoneFace(this);
+
+				disposed = true;
+			}
+		}
+
+		~Face()
+		{
+			Dispose(false);
+		}
+
+		#endregion
 	}
 }

@@ -35,32 +35,31 @@ namespace Examples
 	{
 		public unsafe static void Main(string[] args)
 		{
-			//TODO have some sort of browser?
+			//TODO make several examples in an example browser
 			
 			try
 			{
 				using (Library lib = new Library())
 				{
-					Console.WriteLine("FreeType version: " + lib.Version());
+					Console.WriteLine("FreeType version: " + lib.Version() + "\n");
 
-					using (Face regular = lib.NewFace(@"Fonts/Cousine-Regular-Latin.ttf", 0))
+					using (Face face = lib.NewFace(@"Fonts/Cousine-Regular-Latin.ttf", 0))
 					{
-
 						//write out some basic font information
-						Console.WriteLine("Information for font " + regular.FamilyName);
+						Console.WriteLine("Information for font " + face.FamilyName);
 						Console.WriteLine("====================================");
-						Console.WriteLine("Number of faces: " + regular.FaceCount);
-						Console.WriteLine("Face flags: " + regular.FaceFlags);
-						Console.WriteLine("Style: " + regular.StyleName);
-						Console.WriteLine("Style flags: " + regular.StyleFlags);
+						Console.WriteLine("Number of faces: " + face.FaceCount);
+						Console.WriteLine("Face flags: " + face.FaceFlags);
+						Console.WriteLine("Style: " + face.StyleName);
+						Console.WriteLine("Style flags: " + face.StyleFlags);
 
 						//render 'A'
-						uint capitalA = FT.GetCharIndex(regular, 'A');
-						FT.SetCharSize(regular, 0, 32 * 64, 0, 96);
-						FT.LoadGlyph(regular, capitalA, LoadFlags.Default, LoadTarget.Normal);
-						FT.RenderGlyph(regular.Glyph, RenderMode.Normal);
+						uint capitalA = face.GetCharIndex('A');
+						face.SetCharSize(0, 32 * 64, 0, 96);
+						face.LoadGlyph(capitalA, LoadFlags.Default, LoadTarget.Normal);
+						face.RenderGlyph(face.Glyph, RenderMode.Normal);
 
-						SharpFont.Bitmap sBitmap = regular.Glyph.Bitmap;
+						SharpFont.Bitmap sBitmap = face.Glyph.Bitmap;
 
 						//copy data to managed memory
 						//HACK currently scaling to a 32bpp RGBA image, don't do this.

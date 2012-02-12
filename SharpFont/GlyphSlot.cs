@@ -160,7 +160,7 @@ namespace SharpFont
 		/// loading the glyph. This field can be important to perform correct
 		/// WYSIWYG layout. Only relevant for outline glyphs.
 		/// </summary>
-		public int LinearHorizontalAdvance
+		public long LinearHorizontalAdvance
 		{
 			get
 			{
@@ -174,7 +174,7 @@ namespace SharpFont
 		/// loading the glyph. This field can be important to perform correct
 		/// WYSIWYG layout. Only relevant for outline glyphs.
 		/// </summary>
-		public int LinearVerticalAdvance
+		public long LinearVerticalAdvance
 		{
 			get
 			{

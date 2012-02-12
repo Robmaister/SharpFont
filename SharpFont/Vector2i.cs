@@ -82,7 +82,7 @@ namespace SharpFont
 		/// <summary>
 		/// The horizontal coordinate.
 		/// </summary>
-		public int X
+		public long X
 		{
 			get
 			{
@@ -93,7 +93,7 @@ namespace SharpFont
 		/// <summary>
 		/// The vertical coordinate.
 		/// </summary>
-		public int Y
+		public long Y
 		{
 			get
 			{

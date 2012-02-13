@@ -79,6 +79,7 @@ namespace SharpFont
 		/// <summary>
 		/// The horizontal resolution. If set to zero, <see cref="Width"/> is treated as a 26.6 fractional pixel value.
 		/// </summary>
+		[CLSCompliant(false)]
 		public uint HorizontalResolution
 		{
 			get
@@ -90,6 +91,7 @@ namespace SharpFont
 		/// <summary>
 		/// The horizontal resolution. If set to zero, <see cref="Height"/> is treated as a 26.6 fractional pixel value.
 		/// </summary>
+		[CLSCompliant(false)]
 		public uint VerticalResolution
 		{
 			get

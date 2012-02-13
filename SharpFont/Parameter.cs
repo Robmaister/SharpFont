@@ -58,6 +58,7 @@ namespace SharpFont
 		/// <summary>
 		/// A four-byte identification tag.
 		/// </summary>
+		[CLSCompliant(false)]
 		public ParamTag Tag
 		{
 			get

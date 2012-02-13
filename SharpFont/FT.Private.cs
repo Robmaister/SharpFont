@@ -147,7 +147,7 @@ namespace SharpFont
 		internal static extern int FT_Face_GetCharVariantIsDefault(IntPtr face, uint charcode, uint variantSelector);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern IntPtr FT_Face_GetVariantSelectors(IntPtr face, uint charcode, uint variantSelector);
+		internal static extern IntPtr FT_Face_GetVariantSelectors(IntPtr face);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern IntPtr FT_Face_GetVariantsOfChar(IntPtr face, uint charcode);

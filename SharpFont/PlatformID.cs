@@ -30,6 +30,7 @@ namespace SharpFont
 	/// A list of valid values for the ‘platform_id’ identifier code in
 	/// FT_CharMapRec and FT_SfntName structures.
 	/// </summary>
+	[CLSCompliant(false)]
 	public enum PlatformID : ushort
 	{
 		/// <summary>

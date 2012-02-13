@@ -35,7 +35,7 @@ namespace SharpFont
 	/// The coverage value is always between 0 and 255. If you want less gray values, the callback function has to reduce them.
 	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	public struct Span
+	internal struct Span
 	{
 		/// <summary>
 		/// The span's horizontal start position.

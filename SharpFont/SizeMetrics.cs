@@ -64,6 +64,7 @@ namespace SharpFont
 		/// The width of the scaled EM square in pixels, hence the term ‘ppem’
 		/// (pixels per EM). It is also referred to as ‘nominal width’.
 		/// </summary>
+		[CLSCompliant(false)]
 		public ushort NominalWidth
 		{
 			get
@@ -76,6 +77,7 @@ namespace SharpFont
 		/// The height of the scaled EM square in pixels, hence the term ‘ppem’
 		/// (pixels per EM). It is also referred to as ‘nominal width’.
 		/// </summary>
+		[CLSCompliant(false)]
 		public ushort NominalHeight
 		{
 			get

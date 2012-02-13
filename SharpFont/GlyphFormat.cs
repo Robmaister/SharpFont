@@ -29,6 +29,7 @@ namespace SharpFont
 	/// <summary>
 	/// An enumeration type used to describe the format of a given glyph image. Note that this version of FreeType only supports two image formats, even though future font drivers will be able to register their own format.
 	/// </summary>
+	[CLSCompliant(false)]
 	public enum GlyphFormat : uint
 	{
 		/// <summary>

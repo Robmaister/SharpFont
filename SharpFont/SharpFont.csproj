@@ -126,7 +126,7 @@
     <Compile Include="Type1\BlendFlags.cs" />
     <Compile Include="Type1\EncodingType.cs" />
     <Compile Include="Vector2i.cs" />
-    <Compile Include="WinFNTID.cs" />
+    <Compile Include="WinFntID.cs" />
     <Compile Include="FT.Private.cs" />
   </ItemGroup>
   <ItemGroup>

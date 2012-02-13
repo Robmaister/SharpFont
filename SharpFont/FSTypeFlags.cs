@@ -39,6 +39,7 @@ namespace SharpFont
 	/// in this way.
 	/// </remarks>
 	/// <see href="http://www.adobe.com/devnet/acrobat/pdfs/FontPolicies.pdf"/>
+	[CLSCompliant(false)]
 	[Flags]
 	public enum FSTypeFlags : ushort
 	{

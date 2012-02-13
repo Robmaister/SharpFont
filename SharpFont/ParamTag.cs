@@ -26,6 +26,7 @@ using System;
 
 namespace SharpFont
 {
+	[CLSCompliant(false)]
 	public enum ParamTag : uint
 	{
 		/// <summary>

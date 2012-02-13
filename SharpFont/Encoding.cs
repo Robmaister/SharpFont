@@ -37,6 +37,7 @@ namespace SharpFont
 	/// 
 	/// Other encodings might be defined in the future.
 	/// </remarks>
+	[CLSCompliant(false)]
 	public enum Encoding : uint
 	{
 		/// <summary>

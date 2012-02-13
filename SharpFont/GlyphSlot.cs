@@ -199,6 +199,7 @@ namespace SharpFont
 		/// slot. Typically FT_GLYPH_FORMAT_BITMAP, FT_GLYPH_FORMAT_OUTLINE, or
 		/// FT_GLYPH_FORMAT_COMPOSITE, but others are possible.
 		/// </summary>
+		[CLSCompliant(false)]
 		public GlyphFormat Format
 		{
 			get
@@ -266,6 +267,7 @@ namespace SharpFont
 		/// loaded with the FT_LOAD_NO_RECURSE flag. For now this is internal
 		/// to FreeType.
 		/// </summary>
+		[CLSCompliant(false)]
 		public uint SubglyphsCount
 		{
 			get
@@ -360,6 +362,23 @@ namespace SharpFont
 			}
 		}
 
+		/// <summary>
+		/// Retrieve a description of a given subglyph. Only use it if
+		/// ‘glyph->format’ is FT_GLYPH_FORMAT_COMPOSITE; an error is returned
+		/// otherwise.
+		/// </summary>
+		/// <remarks>
+		/// The values of ‘*p_arg1’, ‘*p_arg2’, and ‘*p_transform’ must be
+		/// interpreted depending on the flags returned in ‘*p_flags’. See the
+		/// TrueType specification for details.
+		/// </remarks>
+		/// <param name="subIndex">The index of the subglyph. Must be less than ‘glyph->num_subglyphs’.</param>
+		/// <param name="index">The glyph index of the subglyph.</param>
+		/// <param name="flags">The subglyph flags, see FT_SUBGLYPH_FLAG_XXX.</param>
+		/// <param name="arg1">The subglyph's first argument (if any).</param>
+		/// <param name="arg2">The subglyph's second argument (if any).</param>
+		/// <param name="transform">The subglyph transformation (if any).</param>
+		[CLSCompliant(false)]
 		public void GetSubGlyphInfo(uint subIndex, out int index, out SubGlyphFlags flags, out int arg1, out int arg2, out Matrix2i transform)
 		{
 			FT.GetSubGlyphInfo(this, subIndex, out index, out flags, out arg1, out arg2, out transform);

@@ -80,6 +80,7 @@
     <Compile Include="Internal\GlyphSlotRec.cs" />
     <Compile Include="Internal\OutlineInternal.cs" />
     <Compile Include="Internal\VectorInternal.cs" />
+    <Compile Include="Orientation.cs" />
     <Compile Include="TrueType\EncodingID.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="Face.cs" />

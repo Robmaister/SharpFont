@@ -178,6 +178,23 @@ namespace SharpFont
 		/// <summary>
 		/// Disable auto-hinter. See also the note below.
 		/// </summary>
-		NoAutohint =				0x8000
+		NoAutohint =				0x8000,
+
+		/// <summary>
+		/// A bit-flag to be OR-ed with the ‘flags’ parameter of the
+		/// <see cref="FT.GetAdvance"/> and <see cref="FT.GetAdvances"/>
+		/// functions.
+		/// 
+		/// If set, it indicates that you want these functions to fail if the
+		/// corresponding hinting mode or font driver doesn't allow for very
+		/// quick advance computation.
+		/// 
+		/// Typically, glyphs which are either unscaled, unhinted, bitmapped,
+		/// or light-hinted can have their advance width computed very quickly.
+		/// 
+		/// Normal and bytecode hinted modes, which require loading, scaling,
+		/// and hinting of the glyph outline, are extremely slow by comparison.
+		/// </summary>
+		AdvanceFlagFastOnly =		0x20000000
 	}
 }

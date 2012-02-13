@@ -410,15 +410,91 @@ namespace SharpFont
 
 		#region List Processing
 
-		//TODO get this done
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern IntPtr FT_List_Find(IntPtr list, IntPtr data);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_List_Add(IntPtr list, IntPtr node);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_List_Insert(IntPtr list, IntPtr node);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_List_Remove(IntPtr list, IntPtr data);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_List_Up(IntPtr list, IntPtr data);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern IntPtr FT_List_Iterator(IntPtr node, IntPtr user);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_List_Iterate(IntPtr list, IntPtr iterator, IntPtr user);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_List_Finalize(IntPtr list, IntPtr destroy, IntPtr memory, IntPtr user);
 
 		#endregion
 
 		#region Outline Processing
 
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Outline_New(IntPtr library, uint numPoints, int numContours, out IntPtr anoutline);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Outline_New_Internal(IntPtr memory, uint numPoints, int numContours, out IntPtr anoutline);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Outline_Done(IntPtr library, IntPtr outline);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Outline_Done_Internal(IntPtr memory, IntPtr outline);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Outline_Copy(IntPtr source, out IntPtr target);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Outline_Translate(IntPtr outline, int xOffset, int yOffset);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Outline_Transform(IntPtr outline, IntPtr matrix);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Outline_Embolden(IntPtr outline, int strength);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Outline_Reverse(IntPtr outline);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Outline_Check(IntPtr outline);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Outline_Get_BBox(IntPtr outline, out IntPtr abbox);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Outline_Decompose(IntPtr outline, IntPtr func_interface, IntPtr user);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Outline_Get_CBox(IntPtr outline, out IntPtr acbox);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Outline_Get_Bitmap(IntPtr library, IntPtr outline, out IntPtr abitmap);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Outline_Render(IntPtr library, IntPtr outline, IntPtr @params);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Orientation FT_Outline_Get_Orientation(IntPtr outline);
+
 		#endregion
 
 		#region Quick retrieval of advance values
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Get_Advance(IntPtr face, uint gIndex, LoadFlags load_flags, out int padvance);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Get_Advances(IntPtr face, uint start, uint count, LoadFlags load_flags, out int padvance);
 
 		#endregion
 

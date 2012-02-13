@@ -70,39 +70,106 @@ namespace SharpFont.TrueType
 	/// </summary>
 	public enum MacEncodingID : ushort
 	{
+		/// <summary>Roman encoding.</summary>
 		Roman = 0,
+
+		/// <summary>Japanese encoding.</summary>
 		Japanese = 1,
+
+		/// <summary>Traditional Chinese encoding.</summary>
 		TraditionalChinese = 2,
+
+		/// <summary>Korean encoding.</summary>
 		Korean = 3,
+
+		/// <summary>Arabic encoding.</summary>
 		Arabic = 4,
+
+		/// <summary>Hebrew encoding.</summary>
 		Hebrew = 5,
+
+		/// <summary>Greek encoding.</summary>
 		Greek = 6,
+
+		/// <summary>Russian encoding.</summary>
 		Russian = 7,
+
+		/// <summary>RSymbol encoding.</summary>
 		RSymbol = 8,
+
+		/// <summary>Devanagari encoding.</summary>
 		Devanagari = 9,
+
+		/// <summary>Gurmukhi encoding.</summary>
 		Gurmukhi = 10,
+
+		/// <summary>Gujarati encoding.</summary>
 		Gujarati = 11,
+
+		/// <summary>Oriya encoding.</summary>
 		Oriya = 12,
+
+		/// <summary>Bengali encoding.</summary>
 		Bengali = 13,
+
+		/// <summary>Tamil encoding.</summary>
 		Tamil = 14,
+
+		/// <summary>Telugu encoding.</summary>
 		Telugu = 15,
+
+		/// <summary>Kannada encoding.</summary>
 		Kannada = 16,
+
+		/// <summary>Malayalam encoding.</summary>
 		Malayalam = 17,
+
+		/// <summary>Sinhalese encoding.</summary>
 		Sinhalese = 18,
+
+		/// <summary>Burmese encoding.</summary>
 		Burmese = 19,
+
+		/// <summary>Khmer encoding.</summary>
 		Khmer = 20,
+
+		/// <summary>Thai encoding.</summary>
 		Thai = 21,
+
+		/// <summary>Laotian encoding.</summary>
 		Laotian = 22,
+
+		/// <summary>Georgian encoding.</summary>
 		Georgian = 23,
+
+		/// <summary>Amernian encoding.</summary>
 		Armenian = 24,
+
+		/// <summary>Maldivian encoding.</summary>
 		Maldivian = 25,
+
+		/// <summary>Simplified Chinese encoding.</summary>
 		SimplifiedChinese = 25,
+
+		/// <summary>Tibetan encoding.</summary>
 		Tibetan = 26,
+
+		/// <summary>Mongolian encoding.</summary>
 		Mongolian = 27,
+
+		/// <summary>Geez encoding.</summary>
 		Geez = 28,
+
+		/// <summary>Slavic encoding.</summary>
 		Slavic = 29,
+
+		/// <summary>Vietnamese encoding.</summary>
 		Vietnamese = 30,
+
+		/// <summary>Sindhi encoding.</summary>
 		Sindhi = 31,
+
+		/// <summary>No encoding specified.</summary>
 		Uninterpreted = 32,
 	}
 

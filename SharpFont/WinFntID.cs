@@ -33,7 +33,7 @@ namespace SharpFont
 	/// MAPPINGS/VENDORS/MICSFT/WINDOWS subdirectory. cp1361 is roughly a 
 	/// superset of MAPPINGS/OBSOLETE/EASTASIA/KSC/JOHAB.TXT.
 	/// </summary>
-	public enum WinFNTID : byte
+	public enum WinFntID : byte
 	{
 		/// <summary>
 		/// ANSI encoding. A superset of ISO 8859-1.

@@ -130,13 +130,13 @@ namespace Examples
 					continue;
 				}
 
-				BitmapData data = bmp.LockBits(new Rectangle(penX, penY, f.Glyph.Bitmap.Width, f.Glyph.Bitmap.Rows), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+				BitmapData data = bmp.LockBits(new Rectangle(penX, penY + (bmp.Height - f.Glyph.Bitmap.Rows), f.Glyph.Bitmap.Width, f.Glyph.Bitmap.Rows), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
 				byte[] pixelAlphas = new byte[f.Glyph.Bitmap.Width * f.Glyph.Bitmap.Rows];
 				Marshal.Copy(f.Glyph.Bitmap.Buffer, pixelAlphas, 0, pixelAlphas.Length);
 
 				for (int j = 0; j < pixelAlphas.Length; j++)
 				{
-					int pixelOffset = (j / data.Width + (bmp.Height - data.Height)) * data.Stride + (j % data.Width) * 4;
+					int pixelOffset = (j / data.Width) * data.Stride + (j % data.Width * 4);
 					Marshal.WriteByte(data.Scan0, pixelOffset + 3, pixelAlphas[j]);
 				}
 

@@ -23,62 +23,44 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Runtime.InteropServices;
 
 namespace SharpFont
 {
 	/// <summary>
-	/// FreeType root size class structure. A size object models a face object
-	/// at a given size.
+	/// A list of values to identify various types of LCD filters.
 	/// </summary>
-	public sealed class Size
+	public enum LcdFilter
 	{
-		internal IntPtr reference;
-
-		internal Size(IntPtr reference)
-		{
-			this.reference = reference;
-		}
-
-		internal Size(IntPtr reference, int offset)
-		{
-			this.reference = new IntPtr(reference.ToInt64() + offset);
-		}
+		/// <summary>
+		/// Do not perform filtering. When used with subpixel rendering, this
+		/// results in sometimes severe color fringes.
+		/// </summary>
+		None =		0,
 
 		/// <summary>
-		/// Handle to the parent face object.
+		/// The default filter reduces color fringes considerably, at the cost
+		/// of a slight blurriness in the output.
 		/// </summary>
-		public Face Face
-		{
-			get
-			{
-				return new Face(Marshal.ReadIntPtr(reference, 0), true);
-			}
-		}
+		Default =	1,
 
 		/// <summary>
-		/// A typeless pointer, which is unused by the FreeType library or any
-		/// of its drivers. It can be used by client applications to link their
-		/// own data to each size object.
+		/// The light filter is a variant that produces less blurriness at the
+		/// cost of slightly more color fringes than the default one. It might
+		/// be better, depending on taste, your monitor, or your personal
+		/// vision.
 		/// </summary>
-		public Generic Generic
-		{
-			get
-			{
-				//HACK generic
-				return null;
-			}
-		}
+		Light =		2,
 
 		/// <summary>
-		/// Metrics for this size object. This field is read-only.
+		/// This filter corresponds to the original libXft color filter. It
+		/// provides high contrast output but can exhibit really bad color
+		/// fringes if glyphs are not extremely well hinted to the pixel grid.
+		/// In other words, it only works well if the TrueType bytecode
+		/// interpreter is enabled and high-quality hinted fonts are used.
+		/// 
+		/// This filter is only provided for comparison purposes, and might be
+		/// disabled or stay unsupported in the future.
 		/// </summary>
-		public SizeMetrics Metrics
-		{
-			get
-			{
-				return new SizeMetrics(reference, IntPtr.Size + Generic.SizeInBytes);
-			}
-		}
+		Legacy =	16
 	}
 }

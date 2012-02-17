@@ -500,6 +500,24 @@ namespace SharpFont
 
 		#region Bitmap Handling
 
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Bitmap_New(out IntPtr abitmap);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Bitmap_Copy(IntPtr library, IntPtr source, out IntPtr target);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Bitmap_Embolden(IntPtr library, IntPtr bitmap, int xStrength, int yStrength);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Bitmap_Convert(IntPtr library, IntPtr source, out IntPtr target, int alignment);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_GlyphSlot_Own_Bitmap(IntPtr slot);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Bitmap_Done(IntPtr library, IntPtr bitmap);
+
 		#endregion
 
 		#region Scanline Converter
@@ -520,17 +538,32 @@ namespace SharpFont
 
 		#region GZIP Streams
 
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Stream_OpenGzip(IntPtr stream, IntPtr source);
+
 		#endregion
 
-		#region LSW Streams
+		#region LZW Streams
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Stream_OpenLZW(IntPtr stream, IntPtr source);
 
 		#endregion
 
 		#region BZIP2 Streams
 
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Stream_OpenBzip2(IntPtr stream, IntPtr source);
+
 		#endregion
 
 		#region LCD Filtering
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Library_SetLcdFilter(IntPtr library, LcdFilter filter);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Library_SetLcdFilterWeights(IntPtr library, byte[] weights);
 
 		#endregion
 

@@ -54,8 +54,8 @@ namespace SharpFont
 			this.outlineInternal = outlineInt;
 		}
 
-		/*/// <summary>
-		/// Gets the size of the class, in bytes.
+		/// <summary>
+		/// Gets the size of the Outline, in bytes.
 		/// </summary>
 		public static int SizeInBytes
 		{
@@ -63,7 +63,7 @@ namespace SharpFont
 			{
 				return 8 + IntPtr.Size * 3;
 			}
-		}*/
+		}
 
 		/// <summary>
 		/// The number of contours in the outline.

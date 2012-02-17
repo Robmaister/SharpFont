@@ -25,6 +25,8 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
+using SharpFont.Internal;
+
 namespace SharpFont
 {
 	/// <summary>
@@ -50,11 +52,9 @@ namespace SharpFont
 	/// would put the address of the glyph cache destructor in the ‘finalizer’
 	/// field).
 	/// </summary>
-	[StructLayout(LayoutKind.Sequential)]
-	public struct Generic
+	public class Generic
 	{
-		private IntPtr data;
-		private GenericFinalizer finalizer;
+		private GenericInternal genInternal;
 
 		/// <summary>
 		/// Initializes a new instance of the Generic struct.
@@ -62,29 +62,28 @@ namespace SharpFont
 		/// <param name="data">A typeless pointer to some client data. The data it cointains must stay fixed until finalizer is called.</param>
 		/// <param name="finalizer">A delegate that gets called when the contained object gets finalized.</param>
 		public Generic(IntPtr data, GenericFinalizer finalizer)
-			: this()
 		{
-			this.data = data;
-			this.finalizer = finalizer;
+			genInternal.data = data;
+			genInternal.finalizer = finalizer;
 		}
 
 		/// <summary>
 		/// A typeless pointer to any client-specified data. This field is 
 		/// completely ignored by the FreeType library.
 		/// </summary>
-		public IntPtr Data { get { return data; } set { data = value; } }
+		public IntPtr Data { get { return genInternal.data; } set { genInternal.data = value; } }
 
 		/// <summary>
 		/// A pointer to a <see cref="GenericFinalizer"/> function, which will
 		/// be called when the object is destroyed. If this field is set to
 		/// NULL, no code will be called.
 		/// </summary>
-		public GenericFinalizer Finalizer { get { return finalizer; } set { finalizer = value; } }
+		public GenericFinalizer Finalizer { get { return genInternal.finalizer; } set { genInternal.finalizer = value; } }
 
 		internal void WriteToUnmanagedMemory(IntPtr location)
 		{
-			Marshal.WriteIntPtr(location, data);
-			Marshal.WriteIntPtr(location, IntPtr.Size, Marshal.GetFunctionPointerForDelegate(finalizer));
+			Marshal.WriteIntPtr(location, genInternal.data);
+			Marshal.WriteIntPtr(location, IntPtr.Size, Marshal.GetFunctionPointerForDelegate(genInternal.finalizer));
 		}
 
 		/// <summary>

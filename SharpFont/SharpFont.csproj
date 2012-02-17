@@ -78,8 +78,10 @@
     <Compile Include="Internal\GenericInternal.cs" />
     <Compile Include="Internal\GlyphMetricsInternal.cs" />
     <Compile Include="Internal\GlyphSlotRec.cs" />
+    <Compile Include="Internal\OutlineFuncsInternal.cs" />
     <Compile Include="Internal\OutlineInternal.cs" />
     <Compile Include="Internal\VectorInternal.cs" />
+    <Compile Include="LcdFilter.cs" />
     <Compile Include="Orientation.cs" />
     <Compile Include="TrueType\EncodingID.cs" />
     <Compile Include="Error.cs" />

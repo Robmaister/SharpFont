@@ -1057,7 +1057,7 @@ namespace SharpFont
 		/// <param name="face">A handle to the source face object.</param>
 		/// <returns>The fsType flags, FT_FSTYPE_XXX.</returns>
 		[CLSCompliant(false)]
-		public static FSTypeFlags GetFSTypeFlags(Face face)
+		public static EmbeddingTypeFlags GetFSTypeFlags(Face face)
 		{
 			return FT_Get_FSType_Flags(face.reference);
 		}

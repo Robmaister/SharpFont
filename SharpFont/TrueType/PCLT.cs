@@ -25,101 +25,149 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.Cache.Internal;
+using SharpFont.TrueType.Internal;
 
-namespace SharpFont.Cache
+namespace SharpFont.TrueType
 {
 	/// <summary>
-	/// A structure used to describe a given character size in either pixels or
-	/// points to the cache manager.
+	/// A structure used to model a TrueType PCLT table. All fields comply to
+	/// the TrueType specification.
 	/// </summary>
-	/// <remarks>
-	/// This type is mainly used to retrieve <see cref="Size"/> objects through
-	/// the cache manager.
-	/// </remarks>
-	/// <see cref="FTC.ManagerLookupSize"/>
-	public class Scaler
+	public class PCLT
 	{
 		internal IntPtr reference;
-		internal ScalerRec rec;
+		internal PCLTRec rec;
 
-		internal Scaler(IntPtr reference)
+		internal PCLT(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (ScalerRec)Marshal.PtrToStructure(reference, typeof(ScalerRec));
+			this.rec = (PCLTRec)Marshal.PtrToStructure(reference, typeof(PCLTRec));
 		}
 
-		/// <summary>
-		/// Gets the source face ID.
-		/// </summary>
-		public IntPtr FaceID
+		public long Version
 		{
 			get
 			{
-				return rec.face_id;
+				return rec.Version;
 			}
 		}
-
-		/// <summary>
-		/// Gets the character width.
-		/// </summary>
+		
 		[CLSCompliant(false)]
-		public uint Width
+		public ulong FontNumber
 		{
 			get
 			{
-				return rec.width;
+				return rec.FontNumber;
 			}
 		}
 
-		/// <summary>
-		/// Gets the character height.
-		/// </summary>
 		[CLSCompliant(false)]
-		public uint Height
+		public ushort Pitch
 		{
 			get
 			{
-				return rec.height;
+				return rec.Pitch;
 			}
 		}
 
-		/// <summary>
-		/// Gets a boolean. If true, the ‘width’ and ‘height’ fields are
-		/// interpreted as integer pixel character sizes. Otherwise, they are
-		/// expressed as 1/64th of points.
-		/// </summary>
-		public bool Pixel
-		{
-			get
-			{
-				return rec.pixel == 1;
-			}
-		}
-
-		/// <summary>
-		/// Only used when ‘pixel’ is value 0 to indicate the horizontal
-		/// resolution in dpi.
-		/// </summary>
 		[CLSCompliant(false)]
-		public uint ResolutionX
+		public ushort Height
 		{
 			get
 			{
-				return rec.x_res;
+				return rec.xHeight;
 			}
 		}
 
-		/// <summary>
-		/// Only used when ‘pixel’ is value 0 to indicate the vertical
-		/// resolution in dpi.
-		/// </summary>
 		[CLSCompliant(false)]
-		public uint ResolutionY
+		public ushort Style
 		{
 			get
 			{
-				return rec.y_res;
+				return rec.Style;
+			}
+		}
+
+		[CLSCompliant(false)]
+		public ushort TypeFamily
+		{
+			get
+			{
+				return rec.TypeFamily;
+			}
+		}
+
+		[CLSCompliant(false)]
+		public ushort CapHeight
+		{
+			get
+			{
+				return rec.CapHeight;
+			}
+		}
+
+		[CLSCompliant(false)]
+		public ushort SymbolSet
+		{
+			get
+			{
+				return rec.SymbolSet;
+			}
+		}
+
+		public string TypeFace
+		{
+			get
+			{
+				return rec.TypeFace;
+			}
+		}
+
+		public byte[] CharacterComplement
+		{
+			get
+			{
+				return rec.CharacterComplement;
+			}
+		}
+
+		public byte[] FileName
+		{
+			get
+			{
+				return rec.FileName;
+			}
+		}
+
+		public byte StrokeWeight
+		{
+			get
+			{
+				return rec.StrokeWeight;
+			}
+		}
+		
+		public byte WidthType
+		{
+			get
+			{
+				return rec.WidthType;
+			}
+		}
+		
+		public byte SerifStyle
+		{
+			get
+			{
+				return rec.SerifStyle;
+			}
+		}
+		
+		public byte Reserved
+		{
+			get
+			{
+				return rec.Reserved;
 			}
 		}
 	}

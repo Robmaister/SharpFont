@@ -24,7 +24,7 @@ SOFTWARE.*/
 
 using System;
 
-namespace SharpFont
+namespace SharpFont.TrueType
 {
 	/// <summary>
 	/// A list of valid values for the ‘platform_id’ identifier code in

@@ -25,67 +25,50 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.Cache.Internal;
+#if FT64
+using FT_Long = System.Int64;
+using FT_ULong = System.UInt64;
+using FT_Fixed = System.Int64;
+using FT_Pos = System.Int64;
+using FT_26Dot6 = System.Int64;
+#else
+using FT_Long = System.Int32;
+using FT_ULong = System.UInt32;
+using FT_Fixed = System.Int32;
+using FT_Pos = System.Int32;
+using FT_26Dot6 = System.Int32;
+#endif
 
-namespace SharpFont.Cache
+namespace SharpFont.TrueType.Internal
 {
-	/// <summary>
-	/// A structure used to model the type of images in a glyph cache.
-	/// </summary>
-	public class ImageType
+	[StructLayout(LayoutKind.Sequential)]
+	internal class HeaderRec
 	{
-		internal IntPtr reference;
-		internal ImageTypeRec rec;
+		internal FT_Fixed Table_Version;
+		internal FT_Fixed Font_Revision;
 
-		internal ImageType(IntPtr reference)
-		{
-			this.reference = reference;
-			this.rec = (ImageTypeRec)Marshal.PtrToStructure(reference, typeof(ImageTypeRec));
-		}
+		internal FT_Long CheckSum_Adjust;
+		internal FT_Long Magic_Number;
 
-		/// <summary>
-		/// Gets the face ID.
-		/// </summary>
-		public IntPtr FaceID
-		{
-			get
-			{
-				return rec.face_id;
-			}
-		}
+		internal ushort Flags;
+		internal ushort Units_Per_EM;
 
-		/// <summary>
-		/// Gets the width in pixels.
-		/// </summary>
-		public int Width
-		{
-			get
-			{
-				return rec.width;
-			}
-		}
+		[MarshalAs(UnmanagedType.LPArray, SizeConst = 2)]
+		internal FT_Long[] Created;
 
-		/// <summary>
-		/// Gets the height in pixels.
-		/// </summary>
-		public int Height
-		{
-			get
-			{
-				return rec.height;
-			}
-		}
+		[MarshalAs(UnmanagedType.LPArray, SizeConst = 2)]
+		internal FT_Long[] Modified;
 
-		/// <summary>
-		/// Gets the load flags, as in <see cref="FT.LoadGlyph"/>
-		/// </summary>
-		[CLSCompliant(false)]
-		public LoadFlags Flags
-		{
-			get
-			{
-				return rec.flags;
-			}
-		}
+		internal short xMin;
+		internal short yMin;
+		internal short xMax;
+		internal short yMax;
+
+		internal ushort Mac_Style;
+		internal ushort Lowest_Rec_PPEM;
+
+		internal short Font_Direction;
+		internal short Index_To_Loc_Format;
+		internal short Glyph_Data_Format;
 	}
 }

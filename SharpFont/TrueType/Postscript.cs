@@ -25,66 +25,101 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.Cache.Internal;
+using SharpFont.TrueType.Internal;
 
-namespace SharpFont.Cache
+namespace SharpFont.TrueType
 {
 	/// <summary>
-	/// A structure used to model the type of images in a glyph cache.
+	/// A structure used to model a TrueType PostScript table. All fields
+	/// comply to the TrueType specification. This structure does not reference
+	/// the PostScript glyph names, which can be nevertheless accessed with the
+	/// ‘ttpost’ module.
 	/// </summary>
-	public class ImageType
+	public class Postscript
 	{
 		internal IntPtr reference;
-		internal ImageTypeRec rec;
+		internal PostscriptRec rec;
 
-		internal ImageType(IntPtr reference)
+		internal Postscript(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (ImageTypeRec)Marshal.PtrToStructure(reference, typeof(ImageTypeRec));
+			this.rec = (PostscriptRec)Marshal.PtrToStructure(reference, typeof(PostscriptRec));
 		}
 
-		/// <summary>
-		/// Gets the face ID.
-		/// </summary>
-		public IntPtr FaceID
+		public long FormatType
 		{
 			get
 			{
-				return rec.face_id;
+				return rec.FormatType;
 			}
 		}
-
-		/// <summary>
-		/// Gets the width in pixels.
-		/// </summary>
-		public int Width
+		
+		public long ItalicAngle
 		{
 			get
 			{
-				return rec.width;
+				return rec.italicAngle;
 			}
 		}
-
-		/// <summary>
-		/// Gets the height in pixels.
-		/// </summary>
-		public int Height
+		
+		public short UnderlinePosition
 		{
 			get
 			{
-				return rec.height;
+				return rec.underlinePosition;
+			}
+		}
+		
+		public short UnderlineThickness
+		{
+			get
+			{
+				return rec.underlineThickness;
 			}
 		}
 
-		/// <summary>
-		/// Gets the load flags, as in <see cref="FT.LoadGlyph"/>
-		/// </summary>
 		[CLSCompliant(false)]
-		public LoadFlags Flags
+		public ulong IsFixedPitch
 		{
 			get
 			{
-				return rec.flags;
+				return rec.isFixedPitch;
+			}
+		}
+
+		[CLSCompliant(false)]
+		public ulong MinimumMemoryType42
+		{
+			get
+			{
+				return rec.minMemType42;
+			}
+		}
+
+		[CLSCompliant(false)]
+		public ulong MaximumMemoryType42
+		{
+			get
+			{
+				return rec.maxMemType42;
+			}
+		}
+
+		[CLSCompliant(false)]
+		public ulong MinimumMemoryType1
+		{
+			get
+			{
+				return rec.minMemType1;
+			}
+		}
+
+		[CLSCompliant(false)]
+		public ulong MaximumMemoryType1
+		{
+			get
+			{
+				return rec.maxMemType1;
 			}
 		}
 	}

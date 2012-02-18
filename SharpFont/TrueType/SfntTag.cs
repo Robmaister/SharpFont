@@ -23,69 +23,21 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Runtime.InteropServices;
 
-using SharpFont.Cache.Internal;
-
-namespace SharpFont.Cache
+namespace SharpFont.TrueType
 {
 	/// <summary>
-	/// A structure used to model the type of images in a glyph cache.
+	/// An enumeration used to specify the index of an SFNT table. Used in the
+	/// <see cref="FT.GetSfntTable"/> API function.
 	/// </summary>
-	public class ImageType
+	public enum SfntTag
 	{
-		internal IntPtr reference;
-		internal ImageTypeRec rec;
-
-		internal ImageType(IntPtr reference)
-		{
-			this.reference = reference;
-			this.rec = (ImageTypeRec)Marshal.PtrToStructure(reference, typeof(ImageTypeRec));
-		}
-
-		/// <summary>
-		/// Gets the face ID.
-		/// </summary>
-		public IntPtr FaceID
-		{
-			get
-			{
-				return rec.face_id;
-			}
-		}
-
-		/// <summary>
-		/// Gets the width in pixels.
-		/// </summary>
-		public int Width
-		{
-			get
-			{
-				return rec.width;
-			}
-		}
-
-		/// <summary>
-		/// Gets the height in pixels.
-		/// </summary>
-		public int Height
-		{
-			get
-			{
-				return rec.height;
-			}
-		}
-
-		/// <summary>
-		/// Gets the load flags, as in <see cref="FT.LoadGlyph"/>
-		/// </summary>
-		[CLSCompliant(false)]
-		public LoadFlags Flags
-		{
-			get
-			{
-				return rec.flags;
-			}
-		}
+		Header = 0,
+		MaxProfile = 1,
+		OS2 = 2,
+		HorizontalHeader = 3,
+		VerticalHeader = 4,
+		Postscript = 5,
+		PCLT = 6
 	}
 }

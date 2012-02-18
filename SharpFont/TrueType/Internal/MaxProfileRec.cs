@@ -25,67 +25,39 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.Cache.Internal;
+#if FT64
+using FT_Long = System.Int64;
+using FT_ULong = System.UInt64;
+using FT_Fixed = System.Int64;
+using FT_Pos = System.Int64;
+using FT_26Dot6 = System.Int64;
+#else
+using FT_Long = System.Int32;
+using FT_ULong = System.UInt32;
+using FT_Fixed = System.Int32;
+using FT_Pos = System.Int32;
+using FT_26Dot6 = System.Int32;
+#endif
 
-namespace SharpFont.Cache
+namespace SharpFont.TrueType.Internal
 {
-	/// <summary>
-	/// A structure used to model the type of images in a glyph cache.
-	/// </summary>
-	public class ImageType
+	[StructLayout(LayoutKind.Sequential)]
+	internal class MaxProfileRec
 	{
-		internal IntPtr reference;
-		internal ImageTypeRec rec;
-
-		internal ImageType(IntPtr reference)
-		{
-			this.reference = reference;
-			this.rec = (ImageTypeRec)Marshal.PtrToStructure(reference, typeof(ImageTypeRec));
-		}
-
-		/// <summary>
-		/// Gets the face ID.
-		/// </summary>
-		public IntPtr FaceID
-		{
-			get
-			{
-				return rec.face_id;
-			}
-		}
-
-		/// <summary>
-		/// Gets the width in pixels.
-		/// </summary>
-		public int Width
-		{
-			get
-			{
-				return rec.width;
-			}
-		}
-
-		/// <summary>
-		/// Gets the height in pixels.
-		/// </summary>
-		public int Height
-		{
-			get
-			{
-				return rec.height;
-			}
-		}
-
-		/// <summary>
-		/// Gets the load flags, as in <see cref="FT.LoadGlyph"/>
-		/// </summary>
-		[CLSCompliant(false)]
-		public LoadFlags Flags
-		{
-			get
-			{
-				return rec.flags;
-			}
-		}
+		internal FT_Fixed version;
+		internal ushort numGlyphs;
+		internal ushort maxPoints;
+		internal ushort maxContours;
+		internal ushort maxCompositePoints;
+		internal ushort maxCompositeContours;
+		internal ushort maxZones;
+		internal ushort maxTwilightPoints;
+		internal ushort maxStorage;
+		internal ushort maxFunctionDefs;
+		internal ushort maxInstructionDefs;
+		internal ushort maxStackElements;
+		internal ushort maxSizeOfInstructions;
+		internal ushort maxComponentElements;
+		internal ushort maxComponentDepth;
 	}
 }

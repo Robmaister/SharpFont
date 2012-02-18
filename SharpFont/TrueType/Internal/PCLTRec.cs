@@ -25,67 +25,46 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.Cache.Internal;
+#if FT64
+using FT_Long = System.Int64;
+using FT_ULong = System.UInt64;
+using FT_Fixed = System.Int64;
+using FT_Pos = System.Int64;
+using FT_26Dot6 = System.Int64;
+#else
+using FT_Long = System.Int32;
+using FT_ULong = System.UInt32;
+using FT_Fixed = System.Int32;
+using FT_Pos = System.Int32;
+using FT_26Dot6 = System.Int32;
+#endif
 
-namespace SharpFont.Cache
+namespace SharpFont.TrueType.Internal
 {
-	/// <summary>
-	/// A structure used to model the type of images in a glyph cache.
-	/// </summary>
-	public class ImageType
+	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+	internal class PCLTRec
 	{
-		internal IntPtr reference;
-		internal ImageTypeRec rec;
+		internal FT_Fixed Version;
+		internal FT_ULong FontNumber;
+		internal ushort Pitch;
+		internal ushort xHeight;
+		internal ushort Style;
+		internal ushort TypeFamily;
+		internal ushort CapHeight;
+		internal ushort SymbolSet;
 
-		internal ImageType(IntPtr reference)
-		{
-			this.reference = reference;
-			this.rec = (ImageTypeRec)Marshal.PtrToStructure(reference, typeof(ImageTypeRec));
-		}
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
+		internal string TypeFace;
 
-		/// <summary>
-		/// Gets the face ID.
-		/// </summary>
-		public IntPtr FaceID
-		{
-			get
-			{
-				return rec.face_id;
-			}
-		}
+		[MarshalAs(UnmanagedType.LPArray, SizeConst = 8)]
+		internal byte[] CharacterComplement;
 
-		/// <summary>
-		/// Gets the width in pixels.
-		/// </summary>
-		public int Width
-		{
-			get
-			{
-				return rec.width;
-			}
-		}
+		[MarshalAs(UnmanagedType.LPArray, SizeConst = 6)]
+		internal byte[] FileName;
 
-		/// <summary>
-		/// Gets the height in pixels.
-		/// </summary>
-		public int Height
-		{
-			get
-			{
-				return rec.height;
-			}
-		}
-
-		/// <summary>
-		/// Gets the load flags, as in <see cref="FT.LoadGlyph"/>
-		/// </summary>
-		[CLSCompliant(false)]
-		public LoadFlags Flags
-		{
-			get
-			{
-				return rec.flags;
-			}
-		}
+		internal byte StrokeWeight;
+		internal byte WidthType;
+		internal byte SerifStyle;
+		internal byte Reserved;
 	}
 }

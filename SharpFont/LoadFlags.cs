@@ -44,7 +44,8 @@ namespace SharpFont
 	/// algorithm to use. See FT_LOAD_TARGET_XXX for details.
 	/// </remarks>
 	[Flags]
-	public enum LoadFlags
+	[CLSCompliant(false)]
+	public enum LoadFlags : uint
 	{
 		/// <summary>
 		/// Corresponding to 0, this value is used as the default glyph load 

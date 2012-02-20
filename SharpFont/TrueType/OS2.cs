@@ -83,7 +83,7 @@ namespace SharpFont.TrueType
 		}
 
 		[CLSCompliant(false)]
-		public EmbeddingTypeFlags EmbeddingType
+		public EmbeddingTypes EmbeddingType
 		{
 			get
 			{

@@ -57,7 +57,7 @@ namespace SharpFont
 		private GenericInternal genInternal;
 
 		/// <summary>
-		/// Initializes a new instance of the Generic struct.
+		/// Initializes a new instance of the Generic class.
 		/// </summary>
 		/// <param name="data">A typeless pointer to some client data. The data it cointains must stay fixed until finalizer is called.</param>
 		/// <param name="finalizer">A delegate that gets called when the contained object gets finalized.</param>

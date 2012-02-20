@@ -65,7 +65,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Destroys the face.
+		/// Finalizes an instance of the Face class.
 		/// </summary>
 		~Face()
 		{

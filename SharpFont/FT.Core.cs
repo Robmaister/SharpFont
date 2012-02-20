@@ -23,8 +23,8 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace SharpFont
 {
@@ -482,7 +482,7 @@ namespace SharpFont
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
 		/// <returns>A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.</returns>
 		/// <see cref="OpenFace"/>
-		public unsafe static Face NewMemoryFace(Library library, ref byte[] fileBase, int faceIndex)
+		public static unsafe Face NewMemoryFace(Library library, ref byte[] fileBase, int faceIndex)
 		{
 			fixed (byte* ptr = fileBase)
 			{
@@ -1041,7 +1041,7 @@ namespace SharpFont
 		/// <param name="face">A handle to the source face object.</param>
 		/// <returns>The fsType flags, FT_FSTYPE_XXX.</returns>
 		[CLSCompliant(false)]
-		public static EmbeddingTypeFlags GetFSTypeFlags(Face face)
+		public static EmbeddingTypes GetFSTypeFlags(Face face)
 		{
 			return FT_Get_FSType_Flags(face.reference);
 		}

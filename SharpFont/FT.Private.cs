@@ -137,7 +137,7 @@ namespace SharpFont
 		internal static extern Error FT_Get_SubGlyph_Info(IntPtr glyph, uint sub_index, out int p_index, out SubGlyphFlags p_flags, out int p_arg1, out int p_arg2, out IntPtr p_transform);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern EmbeddingTypeFlags FT_Get_FSType_Flags(IntPtr face);
+		internal static extern EmbeddingTypes FT_Get_FSType_Flags(IntPtr face);
 
 		#endregion
 

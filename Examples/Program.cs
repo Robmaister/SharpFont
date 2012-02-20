@@ -108,7 +108,7 @@ namespace Examples
 			penY = 0;
 
 			//draw the string
-			for(int i = 0; i < text.Length; i++)
+			for (int i = 0; i < text.Length; i++)
 			{
 				char c = text[i];
 

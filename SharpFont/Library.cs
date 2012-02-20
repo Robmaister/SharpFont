@@ -68,7 +68,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Destroys the library.
+		/// Finalizes an instance of the Library class.
 		/// </summary>
 		~Library()
 		{

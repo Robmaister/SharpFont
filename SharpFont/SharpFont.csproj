@@ -114,7 +114,7 @@
     <Compile Include="Face.cs" />
     <Compile Include="FaceFlags.cs" />
     <Compile Include="FreeTypeException.cs" />
-    <Compile Include="TrueType\EmbeddingTypeFlags.cs" />
+    <Compile Include="EmbeddingTypes.cs" />
     <Compile Include="FT.Core.cs" />
     <Compile Include="Gasp.cs" />
     <Compile Include="Generic.cs" />
@@ -151,7 +151,7 @@
     <Compile Include="TrueType\PCLT.cs" />
     <Compile Include="TrueType\PlatformID.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="PSDictionaryKeys.cs" />
+    <Compile Include="PostScript\DictionaryKeys.cs" />
     <Compile Include="RenderMode.cs" />
     <Compile Include="Size.cs" />
     <Compile Include="SizeMetrics.cs" />
@@ -166,8 +166,8 @@
     <Compile Include="TrueType\Postscript.cs" />
     <Compile Include="TrueType\SfntTag.cs" />
     <Compile Include="TrueType\VertHeader.cs" />
-    <Compile Include="Type1\BlendFlags.cs" />
-    <Compile Include="Type1\EncodingType.cs" />
+    <Compile Include="PostScript\BlendFlags.cs" />
+    <Compile Include="PostScript\EncodingType.cs" />
     <Compile Include="Vector2i.cs" />
     <Compile Include="WinFntID.cs" />
     <Compile Include="FT.Private.cs" />

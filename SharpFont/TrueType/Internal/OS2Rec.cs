@@ -48,7 +48,7 @@ namespace SharpFont.TrueType.Internal
 		internal short xAvgCharWidth;
 		internal ushort usWeightClass;
 		internal ushort usWidthClass;
-		internal EmbeddingTypeFlags fsType;
+		internal EmbeddingTypes fsType;
 		internal short ySubscriptXSize;
 		internal short ySubscriptYSize;
 		internal short ySubscriptXOffset;

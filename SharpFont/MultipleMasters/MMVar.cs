@@ -25,81 +25,88 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-namespace SharpFont
+using SharpFont.MultipleMasters.Internal;
+
+namespace SharpFont.MultipleMasters
 {
-	/// <summary>
-	/// A structure used to model a size request.
-	/// </summary>
-	/// <remarks>
-	/// If <see cref="Width"/> is zero, then the horizontal scaling value is
-	/// set equal to the vertical scaling value, and vice versa.
-	/// </remarks>
-	[StructLayout(LayoutKind.Sequential)]
-	public sealed class SizeRequest
+	/// <summary><para>
+	/// A structure used to model the axes and space of a Multiple Masters or
+	/// GX var distortable font.
+	/// </para><para>
+	/// Some fields are specific to one format and not to the other.
+	/// </para></summary>
+	public class MMVar
 	{
 		internal IntPtr reference;
+		internal MMVarInternal varInternal;
 
-		internal SizeRequest(IntPtr reference)
+		internal MMVar(IntPtr reference)
 		{
 			this.reference = reference;
+			this.varInternal = (MMVarInternal)Marshal.PtrToStructure(reference, typeof(MMVarInternal));
 		}
 
 		/// <summary>
-		/// See <see cref="SizeRequestType"/>.
-		/// </summary>
-		SizeRequestType RequestType
-		{
-			get
-			{
-				return (SizeRequestType)Marshal.ReadInt32(reference, 0);
-			}
-		}
-
-		/// <summary>
-		/// The desired width.
-		/// </summary>
-		public int Width
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference, 4);
-			}
-		}
-
-		/// <summary>
-		/// The desired height.
-		/// </summary>
-		public int Height
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference, 8);
-			}
-		}
-
-		/// <summary>
-		/// The horizontal resolution. If set to zero, <see cref="Width"/> is
-		/// treated as a 26.6 fractional pixel value.
+		/// Gets the number of axes. The maximum value is 4 for MM; no limit in GX.
 		/// </summary>
 		[CLSCompliant(false)]
-		public uint HorizontalResolution
+		public uint AxisCount
 		{
 			get
 			{
-				return (uint)Marshal.ReadInt32(reference, 12);
+				return varInternal.num_axis;
 			}
 		}
 
 		/// <summary>
-		/// The horizontal resolution. If set to zero, <see cref="Height"/> is
-		/// treated as a 26.6 fractional pixel value.
+		/// Gets the number of designs; should be normally 2^num_axis for MM fonts.
+		/// Not meaningful for GX (where every glyph could have a different
+		/// number of designs).
 		/// </summary>
 		[CLSCompliant(false)]
-		public uint VerticalResolution
+		public uint DesignsCount
 		{
 			get
 			{
-				return (uint)Marshal.ReadInt32(reference, 16);
+				return varInternal.num_designs;
+			}
+		}
+
+		/// <summary>
+		/// Gets the number of named styles; only meaningful for GX which allows
+		/// certain design coordinates to have a string ID (in the ‘name’
+		/// table) associated with them. The font can tell the user that, for
+		/// example, Weight=1.5 is ‘Bold’.
+		/// </summary>
+		[CLSCompliant(false)]
+		public uint NamedStylesCount
+		{
+			get
+			{
+				return varInternal.num_namedstyles;
+			}
+		}
+
+		/// <summary>
+		/// Gets a table of axis descriptors. GX fonts contain slightly more data
+		/// than MM.
+		/// </summary>
+		public VarAxis Axis
+		{
+			get
+			{
+				return new VarAxis(varInternal.axis);
+			}
+		}
+
+		/// <summary>
+		/// Gets a table of named styles. Only meaningful with GX.
+		/// </summary>
+		public VarNamedStyle NamedStyle
+		{
+			get
+			{
+				return new VarNamedStyle(varInternal.namedstyle);
 			}
 		}
 	}

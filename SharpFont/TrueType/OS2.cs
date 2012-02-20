@@ -29,13 +29,13 @@ using SharpFont.TrueType.Internal;
 
 namespace SharpFont.TrueType
 {
-	/// <summary>
+	/// <summary><para>
 	/// A structure used to model a TrueType OS/2 table. This is the long table
 	/// version. All fields comply to the TrueType specification.
-	/// 
+	/// </para><para>
 	/// Note that we now support old Mac fonts which do not include an OS/2
 	/// table. In this case, the ‘version’ field is always set to 0xFFFF.
-	/// </summary>
+	/// </para></summary>
 	public class OS2
 	{
 		internal IntPtr reference;

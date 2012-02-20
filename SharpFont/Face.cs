@@ -34,8 +34,8 @@ namespace SharpFont
 	/// a font file.
 	/// </summary>
 	/// <remarks>
-	/// Fields may be changed after a call to FT_Attach_File or
-	/// FT_Attach_Stream.
+	/// Fields may be changed after a call to <see cref="FT.AttachFile"/> or
+	/// <see cref="FT.AttachStream"/>.
 	/// </remarks>
 	public sealed class Face : IDisposable
 	{
@@ -64,13 +64,21 @@ namespace SharpFont
 				FT.ReferenceFace(this);
 		}
 
+		/// <summary>
+		/// Destroys the face.
+		/// </summary>
+		~Face()
+		{
+			Dispose(false);
+		}
+
 		#endregion
 
 		#region Properties
 
 		/// <summary>
-		/// The number of faces in the font file. Some font formats can have
-		/// multiple faces in a font file.
+		/// Gets the number of faces in the font file. Some font formats can
+		/// have multiple faces in a font file.
 		/// </summary>
 		public long FaceCount
 		{
@@ -81,8 +89,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The index of the face in the font file. It is set to 0 if there is
-		/// only one face in the font file.
+		/// Gets the index of the face in the font file. It is set to 0 if
+		/// there is only one face in the font file.
 		/// </summary>
 		public long FaceIndex
 		{
@@ -93,9 +101,10 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A set of bit flags that give important information about the face;
-		/// see FT_FACE_FLAG_XXX for the details.
+		/// Gets a set of bit flags that give important information about the
+		/// face.
 		/// </summary>
+		/// <see cref="FaceFlags"/>
 		public FaceFlags FaceFlags
 		{
 			get
@@ -105,9 +114,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A set of bit flags indicating the style of the face; see
-		/// FT_STYLE_FLAG_XXX for the details.
+		/// Gets a set of bit flags indicating the style of the face.
 		/// </summary>
+		/// <see cref="StyleFlags"/>
 		public StyleFlags StyleFlags
 		{
 			get
@@ -116,14 +125,14 @@ namespace SharpFont
 			}
 		}
 
-		/// <summary>
-		/// The number of glyphs in the face. If the face is scalable and has
-		/// sbits (see ‘num_fixed_sizes’), it is set to the number of outline
-		/// glyphs.
-		/// 
+		/// <summary><para>
+		/// Gets the number of glyphs in the face. If the face is scalable and
+		/// has sbits (see ‘num_fixed_sizes’), it is set to the number of
+		/// outline glyphs.
+		/// </para><para>
 		/// For CID-keyed fonts, this value gives the highest CID used in the
 		/// font.
-		/// </summary>
+		/// </para></summary>
 		public long GlyphCount
 		{
 			get
@@ -133,7 +142,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The face's family name. This is an ASCII string, usually in
+		/// Gets the face's family name. This is an ASCII string, usually in
 		/// English, which describes the typeface's family (like ‘Times New
 		/// Roman’, ‘Bodoni’, ‘Garamond’, etc). This is a least common
 		/// denominator used to list fonts. Some formats (TrueType &amp;
@@ -150,7 +159,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The face's style name. This is an ASCII string, usually in
+		/// Gets the face's style name. This is an ASCII string, usually in
 		/// English, which describes the typeface's style (like ‘Italic’,
 		/// ‘Bold’, ‘Condensed’, etc). Not all font formats provide a style
 		/// name, so this field is optional, and can be set to NULL. As for
@@ -167,7 +176,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The number of bitmap strikes in the face. Even if the face is
+		/// Gets the number of bitmap strikes in the face. Even if the face is
 		/// scalable, there might still be bitmap strikes, which are called
 		/// ‘sbits’ in that case.
 		/// </summary>
@@ -180,8 +189,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// An array of FT_Bitmap_Size for all bitmap strikes in the face. It
-		/// is set to NULL if there is no bitmap strike.
+		/// Gets an array of FT_Bitmap_Size for all bitmap strikes in the face.
+		/// It is set to NULL if there is no bitmap strike.
 		/// </summary>
 		public BitmapSize[] AvailableSizes
 		{
@@ -205,7 +214,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The number of charmaps in the face.
+		/// Gets the number of charmaps in the face.
 		/// </summary>
 		public int CharmapsCount
 		{
@@ -216,7 +225,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// An array of the charmaps of the face.
+		/// Gets an array of the charmaps of the face.
 		/// </summary>
 		public CharMap[] CharMaps
 		{
@@ -240,9 +249,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A field reserved for client uses. See the FT_Generic type
-		/// description.
+		/// Gets a field reserved for client uses.
 		/// </summary>
+		/// <see cref="Generic"/>
 		public Generic Generic
 		{
 			get
@@ -258,16 +267,16 @@ namespace SharpFont
 			}
 		}
 
-		/// <summary>
-		/// The font bounding box. Coordinates are expressed in font units (see
-		/// ‘units_per_EM’). The box is large enough to contain any glyph from
-		/// the font. Thus, ‘bbox.yMax’ can be seen as the ‘maximal ascender’,
-		/// and ‘bbox.yMin’ as the ‘minimal descender’. Only relevant for
-		/// scalable formats.
-		/// 
+		/// <summary><para>
+		/// Gets the font bounding box. Coordinates are expressed in font units
+		/// (see ‘units_per_EM’). The box is large enough to contain any glyph
+		/// from the font. Thus, ‘bbox.yMax’ can be seen as the ‘maximal
+		/// ascender’, and ‘bbox.yMin’ as the ‘minimal descender’. Only
+		/// relevant for scalable formats.
+		/// </para><para>
 		/// Note that the bounding box might be off by (at least) one pixel for
 		/// hinted fonts. See FT_Size_Metrics for further discussion.
-		/// </summary>
+		/// </para></summary>
 		public BBox BBox
 		{
 			get
@@ -277,7 +286,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The number of font units per EM square for this face. This is
+		/// Gets the number of font units per EM square for this face. This is
 		/// typically 2048 for TrueType fonts, and 1000 for Type 1 fonts. Only
 		/// relevant for scalable formats.
 		/// </summary>
@@ -291,9 +300,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The typographic ascender of the face, expressed in font units. For
-		/// font formats not having this information, it is set to ‘bbox.yMax’.
-		/// Only relevant for scalable formats.
+		/// Gets the typographic ascender of the face, expressed in font units.
+		/// For font formats not having this information, it is set to
+		/// ‘bbox.yMax’. Only relevant for scalable formats.
 		/// </summary>
 		public short Ascender
 		{
@@ -304,10 +313,10 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The typographic descender of the face, expressed in font units. For
-		/// font formats not having this information, it is set to ‘bbox.yMin’.
-		/// Note that this field is usually negative. Only relevant for
-		/// scalable formats.
+		/// Gets the typographic descender of the face, expressed in font units.
+		/// For font formats not having this information, it is set to
+		/// ‘bbox.yMin’.Note that this field is usually negative. Only relevant
+		/// for scalable formats.
 		/// </summary>
 		public short Descender
 		{
@@ -318,7 +327,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The height is the vertical distance between two consecutive
+		/// Gets the height is the vertical distance between two consecutive
 		/// baselines, expressed in font units. It is always positive. Only
 		/// relevant for scalable formats.
 		/// </summary>
@@ -331,9 +340,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The maximal advance width, in font units, for all glyphs in this
-		/// face. This can be used to make word wrapping computations faster.
-		/// Only relevant for scalable formats.
+		/// Gets the maximal advance width, in font units, for all glyphs in
+		/// this face. This can be used to make word wrapping computations
+		/// faster. Only relevant for scalable formats.
 		/// </summary>
 		public short MaxAdvanceWidth
 		{
@@ -344,9 +353,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The maximal advance height, in font units, for all glyphs in this
-		/// face. This is only relevant for vertical layouts, and is set to
-		/// ‘height’ for fonts that do not provide vertical metrics. Only
+		/// Gets the maximal advance height, in font units, for all glyphs in
+		/// this face. This is only relevant for vertical layouts, and is set
+		/// to ‘height’ for fonts that do not provide vertical metrics. Only
 		/// relevant for scalable formats.
 		/// </summary>
 		public short MaxAdvanceHeight
@@ -358,8 +367,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The position, in font units, of the underline line for this face.
-		/// It is the center of the underlining stem. Only relevant for
+		/// Gets the position, in font units, of the underline line for this
+		/// face. It is the center of the underlining stem. Only relevant for
 		/// scalable formats.
 		/// </summary>
 		public short UnderlinePosition
@@ -371,8 +380,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The thickness, in font units, of the underline for this face. Only
-		/// relevant for scalable formats.
+		/// Gets the thickness, in font units, of the underline for this face.
+		/// Only relevant for scalable formats.
 		/// </summary>
 		public short UnderlineThickness
 		{
@@ -383,7 +392,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The face's associated glyph slot(s).
+		/// Gets the face's associated glyph slot(s).
 		/// </summary>
 		public GlyphSlot Glyph
 		{
@@ -394,7 +403,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The current active size for this face.
+		/// Gets the current active size for this face.
 		/// </summary>
 		public Size Size
 		{
@@ -405,7 +414,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The current active charmap for this face.
+		/// Gets the current active charmap for this face.
 		/// </summary>
 		public CharMap CharMap
 		{
@@ -419,15 +428,15 @@ namespace SharpFont
 
 		#region Public methods
 
-		/// <summary>
+		/// <summary><para>
 		/// Parse all bytecode instructions of a TrueType font file to check
 		/// whether any of the patented opcodes are used. This is only useful
 		/// if you want to be able to use the unpatented hinter with fonts that
 		/// do not use these opcodes.
-		/// 
+		/// </para><para>
 		/// Note that this function parses all glyph instructions in the font
 		/// file, which may be slow.
-		/// </summary>
+		/// </para></summary>
 		/// <remarks>
 		/// Since May 2010, TrueType hinting is no longer patented.
 		/// </remarks>
@@ -468,15 +477,15 @@ namespace SharpFont
 		/// attach an AFM file that comes with a Type 1 font to get the kerning
 		/// values and other metrics.
 		/// </summary>
-		/// <remarks>
+		/// <remarks><para>
 		/// The meaning of the ‘attach’ (i.e., what really happens when the new
 		/// file is read) is not fixed by FreeType itself. It really depends on
 		/// the font format (and thus the font driver).
-		/// 
+		/// </para><para>
 		/// Client applications are expected to know what they are doing when
 		/// invoking this function. Most drivers simply do not implement file
 		/// attachments.
-		/// </remarks>
+		/// </para></remarks>
 		/// <param name="parameters">A pointer to <see cref="OpenArgs"/> which must be filled by the caller.</param>
 		public void AttachStream(OpenArgs parameters)
 		{
@@ -505,16 +514,16 @@ namespace SharpFont
 		/// This function calls FT_Request_Size to request the nominal size (in
 		/// points).
 		/// </summary>
-		/// <remarks>
+		/// <remarks><para>
 		/// If either the character width or height is zero, it is set equal to
 		/// the other value.
-		/// 
+		/// </para><para>
 		/// If either the horizontal or vertical resolution is zero, it is set
 		/// equal to the other value.
-		/// 
+		/// </para><para>
 		/// A character width or height smaller than 1pt is set to 1pt; if both
 		/// resolution values are zero, they are set to 72dpi.
-		/// </remarks>
+		/// </para></remarks>
 		/// <param name="width">The nominal width, in 26.6 fractional points.</param>
 		/// <param name="height">The nominal height, in 26.6 fractional points.</param>
 		/// <param name="horizontalResolution">The horizontal resolution in dpi.</param>
@@ -541,15 +550,15 @@ namespace SharpFont
 		/// A function used to load a single glyph into the glyph slot of a
 		/// face object.
 		/// </summary>
-		/// <remarks>
-		/// The loaded glyph may be transformed. See FT_Set_Transform for the
-		/// details.
-		/// 
+		/// <remarks><para>
+		/// The loaded glyph may be transformed. See
+		/// <see cref="FT.SetTransform"/> for the details.
+		/// </para><para>
 		/// For subsetted CID-keyed fonts, ‘FT_Err_Invalid_Argument’ is
 		/// returned for invalid CID values (this is, for CID values which
 		/// don't have a corresponding glyph in the font). See the discussion
 		/// of the FT_FACE_FLAG_CID_KEYED flag for more details.
-		/// </remarks>
+		/// </para></remarks>
 		/// <param name="glyphIndex">The index of the glyph in the font file. For CID-keyed fonts (either in PS or in CFF format) this argument specifies the CID value.</param>
 		/// <param name="flags">A flag indicating what to load for this glyph. The FT_LOAD_XXX constants can be used to control the glyph loading process (e.g., whether the outline should be scaled, whether to load bitmaps or not, whether to hint the outline, etc).</param>
 		/// <param name="target">The target to OR with the flags.</param>
@@ -581,15 +590,15 @@ namespace SharpFont
 		/// images when they are loaded into a glyph slot through
 		/// FT_Load_Glyph.
 		/// </summary>
-		/// <remarks>
+		/// <remarks><para>
 		/// The transformation is only applied to scalable image formats after
 		/// the glyph has been loaded. It means that hinting is unaltered by
 		/// the transformation and is performed on the character size given in
 		/// the last call to FT_Set_Char_Size or FT_Set_Pixel_Sizes.
-		/// 
+		/// </para><para>
 		/// Note that this also transforms the ‘face.glyph.advance’ field, but
 		/// not the values in ‘face.glyph.metrics’.
-		/// </remarks>
+		/// </para></remarks>
 		/// <param name="matrix">A pointer to the transformation's 2x2 matrix. Use 0 for the identity matrix.</param>
 		/// <param name="delta">A pointer to the translation vector. Use 0 for the null vector.</param>
 		public void SetTransform(Matrix2i matrix, Vector2i delta)
@@ -643,22 +652,22 @@ namespace SharpFont
 		/// Retrieve the ASCII name of a given glyph in a face. This only works
 		/// for those faces where FT_HAS_GLYPH_NAMES(face) returns 1.
 		/// </summary>
-		/// <remarks>
+		/// <remarks><para>
 		/// An error is returned if the face doesn't provide glyph names or if
 		/// the glyph index is invalid. In all cases of failure, the first byte
 		/// of ‘buffer’ is set to 0 to indicate an empty name.
-		/// 
+		/// </para><para>
 		/// The glyph name is truncated to fit within the buffer if it is too
 		/// long. The returned string is always zero-terminated.
-		/// 
+		/// </para><para>
 		/// Be aware that FreeType reorders glyph indices internally so that
 		/// glyph index 0 always corresponds to the ‘missing glyph’ (called
 		/// ‘.notdef’).
-		/// 
+		/// </para><para>
 		/// This function is not compiled within the library if the config
 		/// macro ‘FT_CONFIG_OPTION_NO_GLYPH_NAMES’ is defined in
 		/// ‘include/freetype/config/ftoptions.h’.
-		/// </remarks>
+		/// </para></remarks>
 		/// <param name="glyphIndex">The glyph index.</param>
 		/// <param name="bufferSize">The maximal number of bytes available in the buffer.</param>
 		/// <returns>The ASCII name of a given glyph in a face.</returns>
@@ -672,22 +681,22 @@ namespace SharpFont
 		/// Retrieve the ASCII name of a given glyph in a face. This only works
 		/// for those faces where FT_HAS_GLYPH_NAMES(face) returns 1.
 		/// </summary>
-		/// <remarks>
+		/// <remarks><para>
 		/// An error is returned if the face doesn't provide glyph names or if
 		/// the glyph index is invalid. In all cases of failure, the first byte
 		/// of ‘buffer’ is set to 0 to indicate an empty name.
-		/// 
+		/// </para><para>
 		/// The glyph name is truncated to fit within the buffer if it is too
 		/// long. The returned string is always zero-terminated.
-		/// 
+		/// </para><para>
 		/// Be aware that FreeType reorders glyph indices internally so that
 		/// glyph index 0 always corresponds to the ‘missing glyph’ (called
 		/// ‘.notdef’).
-		/// 
+		/// </para><para>
 		/// This function is not compiled within the library if the config
 		/// macro ‘FT_CONFIG_OPTION_NO_GLYPH_NAMES’ is defined in
 		/// ‘include/freetype/config/ftoptions.h’.
-		/// </remarks>
+		/// </para></remarks>
 		/// <param name="glyphIndex">The glyph index.</param>
 		/// <param name="buffer">The target buffer where the name is copied to.</param>
 		/// <returns>The ASCII name of a given glyph in a face.</returns>
@@ -714,15 +723,15 @@ namespace SharpFont
 		/// Select a given charmap by its encoding tag (as listed in
 		/// ‘freetype.h’).
 		/// </summary>
-		/// <remarks>
+		/// <remarks><para>
 		/// This function returns an error if no charmap in the face
 		/// corresponds to the encoding queried here.
-		/// 
+		/// </para><para>
 		/// Because many fonts contain more than a single cmap for Unicode
 		/// encoding, this function has some special code to select the one
 		/// which covers Unicode best. It is thus preferable to FT_Set_Charmap
 		/// in this case.
-		/// </remarks>
+		/// </para></remarks>
 		/// <param name="encoding">A handle to the selected encoding.</param>
 		[CLSCompliant(false)]
 		public void SelectCharmap(Encoding encoding)
@@ -767,14 +776,14 @@ namespace SharpFont
 		/// current charmap of a given face. It also returns the corresponding
 		/// glyph index.
 		/// </summary>
-		/// <remarks>
+		/// <remarks><para>
 		/// You should use this function with FT_Get_Next_Char to be able to
 		/// parse all character codes available in a given charmap.
-		/// 
+		/// </para><para>
 		/// Note that ‘agindex’ is set to 0 if the charmap is empty. The result
 		/// itself can be 0 in two cases: if the charmap is empty or when the
 		/// value 0 is the first valid character code.
-		/// </remarks>
+		/// </para></remarks>
 		/// <param name="glyphIndex">Glyph index of first character code. 0 if charmap is empty.</param>
 		/// <returns>The charmap's first character code.</returns>
 		[CLSCompliant(false)]
@@ -788,14 +797,14 @@ namespace SharpFont
 		/// current charmap of a given face following the value ‘char_code’, as
 		/// well as the corresponding glyph index.
 		/// </summary>
-		/// <remarks>
+		/// <remarks><para>
 		/// You should use this function with FT_Get_First_Char to walk over
 		/// all character codes available in a given charmap. See the note for
 		/// this function for a simple code example.
-		/// 
+		/// </para><para>
 		/// Note that ‘*agindex’ is set to 0 when there are no more codes in
 		/// the charmap.
-		/// </remarks>
+		/// </para></remarks>
 		/// <param name="charCode">The starting character code.</param>
 		/// <param name="glyphIndex">Glyph index of first character code. 0 if charmap is empty.</param>
 		/// <returns>The charmap's next character code.</returns>
@@ -844,11 +853,6 @@ namespace SharpFont
 
 				disposed = true;
 			}
-		}
-
-		~Face()
-		{
-			Dispose(false);
 		}
 
 		#endregion

@@ -38,20 +38,20 @@ namespace SharpFont
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate void GenericFinalizer(IntPtr @object);
 
-	/// <summary>
+	/// <summary><para>
 	/// Client applications often need to associate their own data to a variety
 	/// of FreeType core objects. For example, a text layout API might want to
 	/// associate a glyph cache to a given size object.
-	/// 
+	/// </para><para>
 	/// Most FreeType object contains a ‘generic’ field, of type FT_Generic, 
 	/// which usage is left to client applications and font servers.
-	/// 
+	/// </para><para>
 	/// It can be used to store a pointer to client-specific data, as well as
 	/// the address of a ‘finalizer’ function, which will be called by FreeType
 	/// when the object is destroyed (for example, the previous client example
 	/// would put the address of the glyph cache destructor in the ‘finalizer’
 	/// field).
-	/// </summary>
+	/// </para></summary>
 	public class Generic
 	{
 		private GenericInternal genInternal;
@@ -68,27 +68,38 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A typeless pointer to any client-specified data. This field is 
-		/// completely ignored by the FreeType library.
+		/// Gets or sets a typeless pointer to any client-specified data. This
+		/// field is completely ignored by the FreeType library.
 		/// </summary>
-		public IntPtr Data { get { return genInternal.data; } set { genInternal.data = value; } }
+		public IntPtr Data
+		{
+			get
+			{
+				return genInternal.data;
+			}
+			
+			set
+			{
+				genInternal.data = value;
+			}
+		}
 
 		/// <summary>
-		/// A pointer to a <see cref="GenericFinalizer"/> function, which will
-		/// be called when the object is destroyed. If this field is set to
-		/// NULL, no code will be called.
+		/// Gets or sets a pointer to a <see cref="GenericFinalizer"/>
+		/// function, which will be called when the object is destroyed. If
+		/// this field is set to NULL, no code will be called.
 		/// </summary>
 		public GenericFinalizer Finalizer { get { return genInternal.finalizer; } set { genInternal.finalizer = value; } }
+
+		/// <summary>
+		/// Gets the size of a Generic, in bytes.
+		/// </summary>
+		public static int SizeInBytes { get { return IntPtr.Size * 2; } }
 
 		internal void WriteToUnmanagedMemory(IntPtr location)
 		{
 			Marshal.WriteIntPtr(location, genInternal.data);
 			Marshal.WriteIntPtr(location, IntPtr.Size, Marshal.GetFunctionPointerForDelegate(genInternal.finalizer));
 		}
-
-		/// <summary>
-		/// Gets the size of a Generic, in bytes.
-		/// </summary>
-		public static int SizeInBytes { get { return IntPtr.Size * 2; } }
 	}
 }

@@ -26,23 +26,23 @@ using System;
 
 namespace SharpFont.Cache
 {
-	/// <summary>
+	/// <summary><para>
 	/// This object corresponds to one instance of the cache-subsystem. It is
 	/// used to cache one or more <see cref="Face"/> objects, along with
 	/// corresponding <see cref="Size"/> objects.
-	/// 
+	/// </para><para>
 	/// The manager intentionally limits the total number of opened
 	/// <see cref="Face"/> and <see cref="Size"/> objects to control memory
 	/// usage. See the ‘max_faces’ and ‘max_sizes’ parameters of
 	/// <see cref="FTC.ManagerNew"/>.
-	/// 
+	/// </para><para>
 	/// The manager is also used to cache ‘nodes’ of various types while
 	/// limiting their total memory usage.
-	/// 
+	/// </para><para>
 	/// All limitations are enforced by keeping lists of managed objects in
 	/// most-recently-used order, and flushing old nodes to make room for new
 	/// ones.
-	/// </summary>
+	/// </para></summary>
 	public class Manager
 	{
 		internal IntPtr reference;

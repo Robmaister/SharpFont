@@ -30,22 +30,22 @@ namespace SharpFont
 	/// <summary>
 	/// The size metrics structure gives the metrics of a size object.
 	/// </summary>
-	/// <remarks>
+	/// <remarks><para>
 	/// The scaling values, if relevant, are determined first during a size
 	/// changing operation. The remaining fields are then set by the driver.
 	/// For scalable formats, they are usually set to scaled values of the
 	/// corresponding fields in <see cref="Face"/>.
-	/// 
+	/// </para><para>
 	/// Note that due to glyph hinting, these values might not be exact for
 	/// certain fonts. Thus they must be treated as unreliable with an error
 	/// margin of at least one pixel!
-	/// 
+	/// </para><para>
 	/// Indeed, the only way to get the exact metrics is to render all glyphs.
 	/// As this would be a definite performance hit, it is up to client
 	/// applications to perform such computations.
-	/// 
+	/// </para><para>
 	/// The SizeMetrics structure is valid for bitmap fonts also.
-	/// </remarks>
+	/// </para></remarks>
 	public sealed class SizeMetrics
 	{
 		internal IntPtr reference;

@@ -25,81 +25,94 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-namespace SharpFont
+using SharpFont.MultipleMasters.Internal;
+
+namespace SharpFont.MultipleMasters
 {
 	/// <summary>
-	/// A structure used to model a size request.
+	/// A simple structure used to model a given axis in design space for
+	/// Multiple Masters and GX var fonts.
 	/// </summary>
-	/// <remarks>
-	/// If <see cref="Width"/> is zero, then the horizontal scaling value is
-	/// set equal to the vertical scaling value, and vice versa.
-	/// </remarks>
-	[StructLayout(LayoutKind.Sequential)]
-	public sealed class SizeRequest
+	public class VarAxis
 	{
 		internal IntPtr reference;
+		internal VarAxisInternal axisInternal;
 
-		internal SizeRequest(IntPtr reference)
+		internal VarAxis(IntPtr reference)
 		{
 			this.reference = reference;
+			this.axisInternal = (VarAxisInternal)Marshal.PtrToStructure(reference, typeof(VarAxisInternal));
 		}
 
 		/// <summary>
-		/// See <see cref="SizeRequestType"/>.
+		/// Gets the axis's name. Not always meaningful for GX.
 		/// </summary>
-		SizeRequestType RequestType
+		public string Name
 		{
 			get
 			{
-				return (SizeRequestType)Marshal.ReadInt32(reference, 0);
+				return axisInternal.name;
 			}
 		}
 
 		/// <summary>
-		/// The desired width.
+		/// Gets the axis's minimum design coordinate.
 		/// </summary>
-		public int Width
+		public long Minimum
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 4);
+				return axisInternal.minimum;
 			}
 		}
 
 		/// <summary>
-		/// The desired height.
+		/// Gets the axis's default design coordinate. FreeType computes meaningful
+		/// default values for MM; it is then an integer value, not in 16.16
+		/// format.
 		/// </summary>
-		public int Height
+		public long Default
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 8);
+				return axisInternal.def;
 			}
 		}
 
 		/// <summary>
-		/// The horizontal resolution. If set to zero, <see cref="Width"/> is
-		/// treated as a 26.6 fractional pixel value.
+		/// Gets the axis's maximum design coordinate.
+		/// </summary>
+		public long Maximum
+		{
+			get
+			{
+				return axisInternal.maximum;
+			}
+		}
+
+		/// <summary>
+		/// Gets the axis's tag (the GX equivalent to ‘name’). FreeType provides
+		/// default values for MM if possible.
 		/// </summary>
 		[CLSCompliant(false)]
-		public uint HorizontalResolution
+		public ulong Tag
 		{
 			get
 			{
-				return (uint)Marshal.ReadInt32(reference, 12);
+				return axisInternal.tag;
 			}
 		}
 
 		/// <summary>
-		/// The horizontal resolution. If set to zero, <see cref="Height"/> is
-		/// treated as a 26.6 fractional pixel value.
+		/// Gets the entry in ‘name’ table (another GX version of ‘name’). Not
+		/// meaningful for MM.
 		/// </summary>
 		[CLSCompliant(false)]
-		public uint VerticalResolution
+		public uint StrID
 		{
 			get
 			{
-				return (uint)Marshal.ReadInt32(reference, 16);
+				return axisInternal.strid;
 			}
 		}
 	}

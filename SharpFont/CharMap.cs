@@ -44,7 +44,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A handle to the parent face object.
+		/// Gets a handle to the parent face object.
 		/// </summary>
 		public Face Face
 		{
@@ -55,8 +55,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// An <see cref="Encoding"/> tag identifying the charmap. Use this
-		/// with <see cref="FT.SelectCharmap"/>.
+		/// Gets an <see cref="Encoding"/> tag identifying the charmap. Use
+		/// this with <see cref="FT.SelectCharmap"/>.
 		/// </summary>
 		[CLSCompliant(false)]
 		public Encoding Encoding
@@ -68,9 +68,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// An ID number describing the platform for the following encoding ID.
-		/// This comes directly from the TrueType specification and should be
-		/// emulated for other formats.
+		/// Gets an ID number describing the platform for the following
+		/// encoding ID. This comes directly from the TrueType specification
+		/// and should be emulated for other formats.
 		/// </summary>
 		[CLSCompliant(false)]
 		public PlatformID PlatformID
@@ -82,7 +82,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A platform specific encoding number. This also comes from the
+		/// Gets a platform specific encoding number. This also comes from the
 		/// TrueType specification and should be emulated similarly.
 		/// </summary>
 		[CLSCompliant(false)]

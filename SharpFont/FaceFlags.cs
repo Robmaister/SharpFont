@@ -115,7 +115,7 @@ namespace SharpFont
 		/// </summary>
 		Hinter =			0x0800,
 
-		/// <summary>
+		/// <summary><para>
 		/// Set if the font is CID-keyed. In that case, the font is not
 		/// accessed by glyph indices but by CID values. For subsetted
 		/// CID-keyed fonts this has the consequence that not all index values
@@ -123,30 +123,30 @@ namespace SharpFont
 		/// which corresponding glyphs in the subsetted font exist make
 		/// FT_Load_Glyph return successfully; in all other cases you get an
 		/// ‘FT_Err_Invalid_Argument’ error.
-		/// 
+		/// </para><para>
 		/// Note that CID-keyed fonts which are in an SFNT wrapper don't have
 		/// this flag set since the glyphs are accessed in the normal way
 		/// (using contiguous indices); the ‘CID-ness’ isn't visible to the
 		/// application.
-		/// </summary>
+		/// </para></summary>
 		CIDKeyed =			0x1000,
 
-		/// <summary>
+		/// <summary><para>
 		/// Set if the font is ‘tricky’, this is, it always needs the font
 		/// format's native hinting engine to get a reasonable result. A
 		/// typical example is the Chinese font ‘mingli.ttf’ which uses
 		/// TrueType bytecode instructions to move and scale all of its
 		/// subglyphs.
-		/// 
+		/// </para><para>
 		/// It is not possible to autohint such fonts using
 		/// FT_LOAD_FORCE_AUTOHINT; it will also ignore FT_LOAD_NO_HINTING. You
 		/// have to set both FT_LOAD_NO_HINTING and FT_LOAD_NO_AUTOHINT to
 		/// really disable hinting; however, you probably never want this
 		/// except for demonstration purposes.
-		/// 
+		/// </para><para>
 		/// Currently, there are about a dozen TrueType fonts in the list of
 		/// tricky fonts; they are hard-coded in file ‘ttobjs.c’.
-		/// </summary>
+		/// </para></summary>
 		Tricky =			0x2000
 	}
 }

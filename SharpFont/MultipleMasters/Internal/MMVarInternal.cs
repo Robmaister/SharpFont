@@ -25,39 +25,15 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-#if FT64
-using FT_26Dot6 = System.Int64;
-using FT_Fixed = System.Int64;
-using FT_Long = System.Int64;
-using FT_Pos = System.Int64;
-using FT_ULong = System.UInt64;
-#else
-using FT_26Dot6 = System.Int32;
-using FT_Fixed = System.Int32;
-using FT_Long = System.Int32;
-using FT_Pos = System.Int32;
-using FT_ULong = System.UInt32;
-#endif
-
-namespace SharpFont.Internal
+namespace SharpFont.MultipleMasters.Internal
 {
-	/// <summary>
-	/// Internally represents a BitmapSize.
-	/// </summary>
-	/// <remarks>
-	/// Refer to <see cref="BitmapSize"/> for FreeType documentation.
-	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal class BitmapSizeInternal
+	internal class MMVarInternal
 	{
-		internal short height;
-		internal short width;
-
-		internal FT_Pos size;
-
-		internal FT_Pos x_ppem;
-		internal FT_Pos y_ppem;
-
-		internal static int SizeInBytes { get { return 4 + sizeof(FT_Pos) * 3; } }
+		internal uint num_axis;
+		internal uint num_designs;
+		internal uint num_namedstyles;
+		internal IntPtr axis;
+		internal IntPtr namedstyle;
 	}
 }

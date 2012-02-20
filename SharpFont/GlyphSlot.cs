@@ -33,25 +33,26 @@ namespace SharpFont
 	/// where individual glyphs can be loaded, be they in outline or bitmap 
 	/// format.
 	/// </summary>
-	/// <remarks>
+	/// <remarks><para>
 	/// If FT_Load_Glyph is called with default flags (see FT_LOAD_DEFAULT) the
 	/// glyph image is loaded in the glyph slot in its native format (e.g., an
 	/// outline glyph for TrueType and Type 1 formats).
-	/// 
+	/// </para><para>
 	/// This image can later be converted into a bitmap by calling 
 	/// FT_Render_Glyph. This function finds the current renderer for the
 	/// native image's format, then invokes it.
-	/// 
+	/// </para><para>
 	/// The renderer is in charge of transforming the native image through the
 	/// slot's face transformation fields, then converting it into a bitmap
 	/// that is returned in ‘slot->bitmap’.
-	/// 
+	/// </para><para>
 	/// Note that ‘slot->bitmap_left’ and ‘slot->bitmap_top’ are also used to 
 	/// specify the position of the bitmap relative to the current pen position
 	/// (e.g., coordinates (0,0) on the baseline). Of course, ‘slot->format’ is
 	/// also changed to FT_GLYPH_FORMAT_BITMAP.
-	/// </remarks>
+	/// </para></remarks>
 	/// <example>
+	/// <code>
 	/// FT_Pos  origin_x	   = 0;
 	///	FT_Pos  prev_rsb_delta = 0;
 	/// 
@@ -73,6 +74,7 @@ namespace SharpFont
 	/// 
 	/// origin_x += face-&gt;glyph-&gt;advance.x;
 	/// endfor  
+	/// </code>
 	/// </example>
 	public sealed class GlyphSlot
 	{
@@ -86,7 +88,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A handle to the FreeType library instance this slot belongs to.
+		/// Gets a handle to the FreeType library instance this slot belongs
+		/// to.
 		/// </summary>
 		public Library Library
 		{
@@ -97,7 +100,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A handle to the parent face object.
+		/// Gets a handle to the parent face object.
 		/// </summary>
 		public Face Face
 		{
@@ -120,11 +123,9 @@ namespace SharpFont
 			}
 		}
 
-		//private uint reserved;
-
 		/// <summary>
-		/// A typeless pointer which is unused by the FreeType library or any
-		/// of its drivers. It can be used by client applications to link
+		/// Gets a typeless pointer which is unused by the FreeType library or
+		/// any of its drivers. It can be used by client applications to link
 		/// their own data to each glyph slot object.
 		/// </summary>
 		public Generic Generic
@@ -135,15 +136,15 @@ namespace SharpFont
 			}
 		}
 
-		/// <summary>
-		/// The metrics of the last loaded glyph in the slot. The returned
+		/// <summary><para>
+		/// Gets the metrics of the last loaded glyph in the slot. The returned
 		/// values depend on the last load flags (see the FT_Load_Glyph API
 		/// function) and can be expressed either in 26.6 fractional pixels or
 		/// font units.
-		/// 
+		/// </para><para>
 		/// Note that even when the glyph image is transformed, the metrics are
 		/// not.
-		/// </summary>
+		/// </para></summary>
 		public GlyphMetrics Metrics
 		{
 			get
@@ -153,10 +154,10 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The advance width of the unhinted glyph. Its value is expressed in
-		/// 16.16 fractional pixels, unless FT_LOAD_LINEAR_DESIGN is set when
-		/// loading the glyph. This field can be important to perform correct
-		/// WYSIWYG layout. Only relevant for outline glyphs.
+		/// Gets the advance width of the unhinted glyph. Its value is
+		/// expressed in 16.16 fractional pixels, unless FT_LOAD_LINEAR_DESIGN
+		/// is set when loading the glyph. This field can be important to
+		/// perform correct WYSIWYG layout. Only relevant for outline glyphs.
 		/// </summary>
 		public long LinearHorizontalAdvance
 		{
@@ -167,10 +168,10 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The advance height of the unhinted glyph. Its value is expressed in
-		/// 16.16 fractional pixels, unless FT_LOAD_LINEAR_DESIGN is set when
-		/// loading the glyph. This field can be important to perform correct
-		/// WYSIWYG layout. Only relevant for outline glyphs.
+		/// Gets the advance height of the unhinted glyph. Its value is
+		/// expressed in 16.16 fractional pixels, unless FT_LOAD_LINEAR_DESIGN
+		/// is set when loading the glyph. This field can be important to
+		/// perform correct WYSIWYG layout. Only relevant for outline glyphs.
 		/// </summary>
 		public long LinearVerticalAdvance
 		{
@@ -248,10 +249,10 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The outline descriptor for the current glyph image if its format is
-		/// FT_GLYPH_FORMAT_OUTLINE. Once a glyph is loaded, ‘outline’ can be
-		/// transformed, distorted, embolded, etc. However, it must not be
-		/// freed.
+		/// Gets the outline descriptor for the current glyph image if its
+		/// format is FT_GLYPH_FORMAT_OUTLINE. Once a glyph is loaded,
+		/// ‘outline’ can be transformed, distorted, embolded, etc. However, it
+		/// must not be freed.
 		/// </summary>
 		public Outline Outline
 		{
@@ -262,10 +263,10 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The number of subglyphs in a composite glyph. This field is only
-		/// valid for the composite glyph format that should normally only be
-		/// loaded with the FT_LOAD_NO_RECURSE flag. For now this is internal
-		/// to FreeType.
+		/// Gets the number of subglyphs in a composite glyph. This field is
+		/// only valid for the composite glyph format that should normally only
+		/// be loaded with the FT_LOAD_NO_RECURSE flag. For now this is
+		/// internal to FreeType.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint SubglyphsCount
@@ -277,8 +278,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// An array of subglyph descriptors for composite glyphs. There are
-		/// ‘num_subglyphs’ elements in there. Currently internal to FreeType.
+		/// Gets an array of subglyph descriptors for composite glyphs. There
+		/// are ‘num_subglyphs’ elements in there. Currently internal to
+		/// FreeType.
 		/// </summary>
 		public SubGlyph[] Subglyphs
 		{
@@ -326,8 +328,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The difference between hinted and unhinted left side bearing while
-		/// autohinting is active. Zero otherwise.
+		/// Gets the difference between hinted and unhinted left side bearing
+		/// while autohinting is active. Zero otherwise.
 		/// </summary>
 		public long DeltaLSB
 		{
@@ -338,8 +340,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The difference between hinted and unhinted right side bearing while
-		/// autohinting is active. Zero otherwise.
+		/// Gets the difference between hinted and unhinted right side bearing
+		/// while autohinting is active. Zero otherwise.
 		/// </summary>
 		public long DeltaRSB
 		{
@@ -363,7 +365,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Retrieve a description of a given subglyph. Only use it if
+		/// Gets a description of a given subglyph. Only use it if
 		/// ‘glyph->format’ is FT_GLYPH_FORMAT_COMPOSITE; an error is returned
 		/// otherwise.
 		/// </summary>

@@ -30,17 +30,17 @@ namespace SharpFont
 	/// A list of bit-field constants use for the flags in an outline's ‘flags’
 	/// field.
 	/// </summary>
-	/// <remarks>
+	/// <remarks><para>
 	/// The flags FT_OUTLINE_IGNORE_DROPOUTS, FT_OUTLINE_SMART_DROPOUTS, and
 	/// FT_OUTLINE_INCLUDE_STUBS are ignored by the smooth rasterizer.
-	/// 
+	/// </para><para>
 	/// There exists a second mechanism to pass the drop-out mode to the B/W
 	/// rasterizer; see the ‘tags’ field in FT_Outline.
-	/// 
+	/// </para><para>
 	/// Please refer to the description of the ‘SCANTYPE’ instruction in the
 	/// OpenType specification (in file ‘ttinst1.doc’) how simple drop-outs,
 	/// smart drop-outs, and stubs are defined.
-	/// </remarks>
+	/// </para></remarks>
 	[Flags]
 	public enum OutlineFlags
 	{

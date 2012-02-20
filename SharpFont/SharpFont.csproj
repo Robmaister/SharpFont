@@ -85,6 +85,7 @@
     <Compile Include="CharMap.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="Encoding.cs" />
+    <Compile Include="FT.Format.cs" />
     <Compile Include="Internal\BBoxInternal.cs" />
     <Compile Include="Internal\BitmapInternal.cs" />
     <Compile Include="Internal\BitmapSizeInternal.cs" />
@@ -97,6 +98,16 @@
     <Compile Include="Internal\OutlineInternal.cs" />
     <Compile Include="Internal\VectorInternal.cs" />
     <Compile Include="LcdFilter.cs" />
+    <Compile Include="MultipleMasters\Internal\MMAxisInternal.cs" />
+    <Compile Include="MultipleMasters\Internal\MMVarInternal.cs" />
+    <Compile Include="MultipleMasters\Internal\MultiMasterInternal.cs" />
+    <Compile Include="MultipleMasters\Internal\VarAxisInternal.cs" />
+    <Compile Include="MultipleMasters\Internal\VarNamedStyleInternal.cs" />
+    <Compile Include="MultipleMasters\MMAxis.cs" />
+    <Compile Include="MultipleMasters\MMVar.cs" />
+    <Compile Include="MultipleMasters\MultiMaster.cs" />
+    <Compile Include="MultipleMasters\VarAxis.cs" />
+    <Compile Include="MultipleMasters\VarNamedStyle.cs" />
     <Compile Include="Orientation.cs" />
     <Compile Include="TrueType\EncodingID.cs" />
     <Compile Include="Error.cs" />
@@ -167,6 +178,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

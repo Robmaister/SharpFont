@@ -30,8 +30,6 @@ namespace SharpFont
 	{
 		private Error error;
 
-		public Error Error { get { return error; } }
-
 		public FreeTypeException()
 			: base()
 		{
@@ -55,5 +53,7 @@ namespace SharpFont
 		{
 			this.error = error;
 		}
+
+		public Error Error { get { return error; } }
 	}
 }

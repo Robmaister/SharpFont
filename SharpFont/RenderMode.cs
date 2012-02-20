@@ -26,30 +26,30 @@ using System;
 
 namespace SharpFont
 {
-	/// <summary>
+	/// <summary><para>
 	/// An enumeration type that lists the render modes supported by FreeType
 	/// 2. Each mode corresponds to a specific type of scanline conversion
 	/// performed on the outline.
-	/// 
+	/// </para><para>
 	/// For bitmap fonts and embedded bitmaps the 
 	/// <see cref="Bitmap.PixelMode"/> field in the FT_GlyphSlotRec structure
 	/// gives the format of the returned bitmap.
-	/// 
+	/// </para><para>
 	/// All modes except <see cref="RenderMode.Mono"/> use 256 levels of
 	/// opacity.
-	/// </summary>
-	/// <remarks>
+	/// </para></summary>
+	/// <remarks><para>
 	/// The LCD-optimized glyph bitmaps produced by 
 	/// <see cref="FT.RenderGlyph"/> can be filtered to reduce color-fringes by
 	/// using FT_Library_SetLcdFilter (not active in the default builds). It is
 	/// up to the caller to either call FT_Library_SetLcdFilter (if available)
 	/// or do the filtering itself.
-	/// 
+	/// </para><para>
 	/// The selected render mode only affects vector glyphs of a font. Embedded
 	/// bitmaps often have a different pixel mode like
 	/// <see cref="PixelMode.Mono"/>. You can use FT_Bitmap_Convert to
 	/// transform them into 8-bit pixmaps.
-	/// </remarks>
+	/// </para></remarks>
 	public enum RenderMode
 	{
 		/// <summary>

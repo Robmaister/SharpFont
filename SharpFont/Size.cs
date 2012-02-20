@@ -46,7 +46,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Handle to the parent face object.
+		/// Gets a handle to the parent face object.
 		/// </summary>
 		public Face Face
 		{
@@ -57,9 +57,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A typeless pointer, which is unused by the FreeType library or any
-		/// of its drivers. It can be used by client applications to link their
-		/// own data to each size object.
+		/// Gets a typeless pointer, which is unused by the FreeType library or
+		/// any of its drivers. It can be used by client applications to link
+		/// their own data to each size object.
 		/// </summary>
 		public Generic Generic
 		{
@@ -71,7 +71,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Metrics for this size object. This field is read-only.
+		/// Gets metrics for this size object. This field is read-only.
 		/// </summary>
 		public SizeMetrics Metrics
 		{

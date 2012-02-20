@@ -34,16 +34,16 @@ namespace SharpFont
 	/// used for the <see cref="Face.AvailableSizes"/> field of
 	/// <see cref="Face"/>.
 	/// </summary>
-	/// <remarks>
+	/// <remarks><para>
 	/// Windows FNT: The nominal size given in a FNT font is not reliable. Thus
 	/// when the driver finds it incorrect, it sets ‘size’ to some calculated
 	/// values and sets ‘x_ppem’ and ‘y_ppem’ to the pixel width and height
 	/// given in the font, respectively.
-	/// 
+	/// </para><para>
 	/// TrueType embedded bitmaps: ‘size’, ‘width’, and ‘height’ values are not
 	/// contained in the bitmap strike itself. They are computed from the
 	/// global font parameters.
-	/// </remarks>
+	/// </para></remarks>
 	public sealed class BitmapSize
 	{
 		internal IntPtr reference;
@@ -60,7 +60,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The vertical distance, in pixels, between two consecutive
+		/// Gets the vertical distance, in pixels, between two consecutive
 		/// baselines. It is always positive.
 		/// </summary>
 		public short Height
@@ -72,7 +72,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The average width, in pixels, of all glyphs in the strike.
+		/// Gets the average width, in pixels, of all glyphs in the strike.
 		/// </summary>
 		public short Width
 		{
@@ -83,7 +83,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The nominal size of the strike in 26.6 fractional points. This
+		/// Gets the nominal size of the strike in 26.6 fractional points. This
 		/// field is not very useful.
 		/// </summary>
 		public long Size
@@ -95,7 +95,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The horizontal ppem (nominal width) in 26.6 fractional pixels.
+		/// Gets the horizontal ppem (nominal width) in 26.6 fractional pixels.
 		/// </summary>
 		public long NominalWidth
 		{
@@ -106,7 +106,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The vertical ppem (nominal height) in 26.6 fractional pixels.
+		/// Gets the vertical ppem (nominal height) in 26.6 fractional pixels.
 		/// </summary>
 		public long NominalHeight
 		{

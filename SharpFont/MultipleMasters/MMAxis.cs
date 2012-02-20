@@ -25,39 +25,64 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-#if FT64
-using FT_26Dot6 = System.Int64;
-using FT_Fixed = System.Int64;
-using FT_Long = System.Int64;
-using FT_Pos = System.Int64;
-using FT_ULong = System.UInt64;
-#else
-using FT_26Dot6 = System.Int32;
-using FT_Fixed = System.Int32;
-using FT_Long = System.Int32;
-using FT_Pos = System.Int32;
-using FT_ULong = System.UInt32;
-#endif
+using SharpFont.MultipleMasters.Internal;
 
-namespace SharpFont.Internal
+namespace SharpFont.MultipleMasters
 {
-	/// <summary>
-	/// Internally represents a BitmapSize.
-	/// </summary>
-	/// <remarks>
-	/// Refer to <see cref="BitmapSize"/> for FreeType documentation.
-	/// </remarks>
-	[StructLayout(LayoutKind.Sequential)]
-	internal class BitmapSizeInternal
+	/// <summary><para>
+	/// A simple structure used to model a given axis in design space for
+	/// Multiple Masters fonts.
+	/// </para><para>
+	/// This structure can't be used for GX var fonts.
+	/// </para></summary>
+	public class MMAxis
 	{
-		internal short height;
-		internal short width;
+		internal IntPtr reference;
+		internal MMAxisInternal axisInternal;
 
-		internal FT_Pos size;
+		internal MMAxis(IntPtr reference)
+		{
+			this.reference = reference;
+			this.axisInternal = (MMAxisInternal)Marshal.PtrToStructure(reference, typeof(MMAxisInternal));
+		}
 
-		internal FT_Pos x_ppem;
-		internal FT_Pos y_ppem;
+		internal MMAxis(MMAxisInternal axisInternal)
+		{
+			this.reference = IntPtr.Zero;
+			this.axisInternal = axisInternal;
+		}
 
-		internal static int SizeInBytes { get { return 4 + sizeof(FT_Pos) * 3; } }
+		/// <summary>
+		/// Gets the axis's name.
+		/// </summary>
+		public string Name
+		{
+			get
+			{
+				return axisInternal.name;
+			}
+		}
+
+		/// <summary>
+		/// Gets the axis's minimum design coordinate.
+		/// </summary>
+		public long Minimum
+		{
+			get
+			{
+				return axisInternal.minimum;
+			}
+		}
+
+		/// <summary>
+		/// Gets the axis's maximum design coordinate.
+		/// </summary>
+		public long Maximum
+		{
+			get
+			{
+				return axisInternal.maximum;
+			}
+		}
 	}
 }

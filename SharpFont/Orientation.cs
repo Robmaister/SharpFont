@@ -26,12 +26,12 @@ using System;
 
 namespace SharpFont
 {
-	/// <summary>
+	/// <summary><para>
 	/// A list of values used to describe an outline's contour orientation.
-	/// 
+	/// </para><para>
 	/// The TrueType and PostScript specifications use different conventions to
 	/// determine whether outline contours should be filled or unfilled.
-	/// </summary>
+	/// </para></summary>
 	public enum Orientation
 	{
 		/// <summary>

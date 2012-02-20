@@ -105,7 +105,7 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// Gest the maximum gray level value (in the range 1 to 255).
+		/// Gets the maximum gray level value (in the range 1 to 255).
 		/// </summary>
 		public byte MaxGrays
 		{
@@ -128,7 +128,7 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// The horizontal advance width in pixels.
+		/// Gets the horizontal advance width in pixels.
 		/// </summary>
 		public byte AdvanceX
 		{
@@ -139,7 +139,7 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// The vertical advance height in pixels.
+		/// Gets the vertical advance height in pixels.
 		/// </summary>
 		public byte AdvanceY
 		{
@@ -150,9 +150,9 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// A pointer to the bitmap pixels.
+		/// Gets a pointer to the bitmap pixels.
 		/// </summary>
-		public IntPtr buffer
+		public IntPtr Buffer
 		{
 			get
 			{

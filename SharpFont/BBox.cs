@@ -49,19 +49,8 @@ namespace SharpFont
 			this.bboxInternal = bboxInt;
 		}
 
-		/*/// <summary>
-		/// Gets the size of the class, in bytes.
-		/// </summary>
-		public static int SizeInBytes
-		{
-			get
-			{
-				return IntPtr.Size * 4;
-			}
-		}*/
-
 		/// <summary>
-		/// The horizontal minimum (left-most).
+		/// Gets the horizontal minimum (left-most).
 		/// </summary>
 		public long Left
 		{
@@ -72,7 +61,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The vertical minimum (bottom-most).
+		/// Gets the vertical minimum (bottom-most).
 		/// </summary>
 		public long Bottom
 		{
@@ -83,7 +72,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The horizontal maximum (right-most).
+		/// Gets the horizontal maximum (right-most).
 		/// </summary>
 		public long Right
 		{
@@ -94,7 +83,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The vertical maximum (top-most).
+		/// Gets the vertical maximum (top-most).
 		/// </summary>
 		public long Top
 		{

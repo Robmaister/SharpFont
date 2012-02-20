@@ -26,26 +26,26 @@ using System;
 
 namespace SharpFont
 {
-	/// <summary>
+	/// <summary><para>
 	/// A list of values that are used to select a specific hinting algorithm
 	/// to use by the hinter. You should OR one of these values to your
 	/// ‘load_flags’ when calling FT_Load_Glyph.
-	/// 
+	/// </para><para>
 	/// Note that font's native hinters may ignore the hinting algorithm you 
 	/// have specified (e.g., the TrueType bytecode interpreter). You can set
 	/// FT_LOAD_FORCE_AUTOHINT to ensure that the auto-hinter is used.
-	/// 
+	/// </para><para>
 	/// Also note that FT_LOAD_TARGET_LIGHT is an exception, in that it always
 	/// implies FT_LOAD_FORCE_AUTOHINT.
-	/// </summary>
-	/// <remarks>
+	/// </para></summary>
+	/// <remarks><para>
 	/// You should use only one of the FT_LOAD_TARGET_XXX values in your 
 	/// ‘load_flags’. They can't be ORed.
-	/// 
+	/// </para><para>
 	/// If FT_LOAD_RENDER is also set, the glyph is rendered in the
 	/// corresponding mode (i.e., the mode which matches the used algorithm
 	/// best) unless FT_LOAD_MONOCHROME is set.
-	/// 
+	/// </para><para>
 	/// You can use a hinting algorithm that doesn't correspond to the same 
 	/// rendering mode. As an example, it is possible to use the ‘light’ 
 	/// hinting algorithm and have the results rendered in horizontal LCD pixel
@@ -56,7 +56,7 @@ namespace SharpFont
 	///
 	/// FT_Render_Glyph( face->glyph, FT_RENDER_MODE_LCD );
 	/// </code>
-	/// </remarks>
+	/// </para></remarks>
 	public enum LoadTarget
 	{
 		/// <summary>
@@ -66,13 +66,13 @@ namespace SharpFont
 		/// </summary>
 		Normal =		(RenderMode.Normal & 15) << 16,
 
-		/// <summary>
+		/// <summary><para>
 		/// A lighter hinting algorithm for non-monochrome modes. Many
 		/// generated glyphs are more fuzzy but better resemble its original 
 		/// shape. A bit like rendering on Mac OS X.
-		/// 
+		/// </para><para>
 		/// As a special exception, this target implies FT_LOAD_FORCE_AUTOHINT.
-		/// </summary>
+		/// </para></summary>
 		Light =			(RenderMode.Light & 15) << 16,
 
 		/// <summary>

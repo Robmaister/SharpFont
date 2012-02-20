@@ -34,13 +34,13 @@ namespace SharpFont.TrueType
 	/// table, as well as the corresponding horizontal metrics table, i.e., the
 	/// ‘hmtx’ table.
 	/// </summary>
-	/// <remarks>
+	/// <remarks><para>
 	/// IMPORTANT: The TT_HoriHeader and TT_VertHeader structures should be
 	/// identical except for the names of their fields which are different.
-	/// 
+	/// </para><para>
 	/// This ensures that a single function in the ‘ttload’ module is able to
 	/// read both the horizontal and vertical headers.
-	/// </remarks>
+	/// </para></remarks>
 	public class HoriHeader
 	{
 		internal IntPtr reference;
@@ -63,17 +63,17 @@ namespace SharpFont.TrueType
 			}
 		}
 
-		/// <summary>
-		/// Gest the font's ascender, i.e., the distance from the baseline to
+		/// <summary><para>
+		/// Gets the font's ascender, i.e., the distance from the baseline to
 		/// the top-most of all glyph points found in the font.
-		/// 
+		/// </para><para>
 		/// This value is invalid in many fonts, as it is usually set by the
 		/// font designer, and often reflects only a portion of the glyphs
 		/// found in the font (maybe ASCII).
-		/// 
+		/// </para><para>
 		/// You should use the ‘sTypoAscender’ field of the OS/2 table instead
 		/// if you want the correct one.
-		/// </summary>
+		/// </para></summary>
 		public short Ascender
 		{
 			get
@@ -82,18 +82,18 @@ namespace SharpFont.TrueType
 			}
 		}
 
-		/// <summary>
+		/// <summary><para>
 		/// Gets the font's descender, i.e., the distance from the baseline to
 		/// the bottom-most of all glyph points found in the font. It is
 		/// negative.
-		/// 
+		/// </para><para>
 		/// This value is invalid in many fonts, as it is usually set by the
 		/// font designer, and often reflects only a portion of the glyphs
 		/// found in the font (maybe ASCII).
-		/// 
+		/// </para><para>
 		/// You should use the ‘sTypoDescender’ field of the OS/2 table instead
 		/// if you want the correct one.
-		/// </summary>
+		/// </para></summary>
 		public short Descender
 		{
 			get
@@ -230,7 +230,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// A pointer into the ‘hmtx’ table.
+		/// Gets a pointer into the ‘hmtx’ table.
 		/// </summary>
 		public IntPtr long_metrics
 		{
@@ -241,7 +241,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// A pointer into the ‘hmtx’ table.
+		/// Gets a pointer into the ‘hmtx’ table.
 		/// </summary>
 		public IntPtr short_metrics
 		{

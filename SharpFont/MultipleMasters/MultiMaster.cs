@@ -25,81 +25,66 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-namespace SharpFont
+using SharpFont.MultipleMasters.Internal;
+
+namespace SharpFont.MultipleMasters
 {
-	/// <summary>
-	/// A structure used to model a size request.
-	/// </summary>
-	/// <remarks>
-	/// If <see cref="Width"/> is zero, then the horizontal scaling value is
-	/// set equal to the vertical scaling value, and vice versa.
-	/// </remarks>
-	[StructLayout(LayoutKind.Sequential)]
-	public sealed class SizeRequest
+	/// <summary><para>
+	/// A structure used to model the axes and space of a Multiple Masters
+	/// font.
+	/// </para><para>
+	/// This structure can't be used for GX var fonts.
+	/// </para></summary>
+	public class MultiMaster
 	{
 		internal IntPtr reference;
+		internal MultiMasterInternal masterInternal;
 
-		internal SizeRequest(IntPtr reference)
+		internal MultiMaster(IntPtr reference)
 		{
 			this.reference = reference;
+			this.masterInternal = (MultiMasterInternal)Marshal.PtrToStructure(reference, typeof(MultiMasterInternal));
 		}
 
 		/// <summary>
-		/// See <see cref="SizeRequestType"/>.
-		/// </summary>
-		SizeRequestType RequestType
-		{
-			get
-			{
-				return (SizeRequestType)Marshal.ReadInt32(reference, 0);
-			}
-		}
-
-		/// <summary>
-		/// The desired width.
-		/// </summary>
-		public int Width
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference, 4);
-			}
-		}
-
-		/// <summary>
-		/// The desired height.
-		/// </summary>
-		public int Height
-		{
-			get
-			{
-				return Marshal.ReadInt32(reference, 8);
-			}
-		}
-
-		/// <summary>
-		/// The horizontal resolution. If set to zero, <see cref="Width"/> is
-		/// treated as a 26.6 fractional pixel value.
+		/// Gets the number of axes. Cannot exceed 4.
 		/// </summary>
 		[CLSCompliant(false)]
-		public uint HorizontalResolution
+		public uint AxisCount
 		{
 			get
 			{
-				return (uint)Marshal.ReadInt32(reference, 12);
+				return masterInternal.num_axis;
 			}
 		}
 
 		/// <summary>
-		/// The horizontal resolution. If set to zero, <see cref="Height"/> is
-		/// treated as a 26.6 fractional pixel value.
+		/// Gets the number of designs; should be normally 2^num_axis even though the
+		/// Type 1 specification strangely allows for intermediate designs to
+		/// be present. This number cannot exceed 16.
 		/// </summary>
 		[CLSCompliant(false)]
-		public uint VerticalResolution
+		public uint DesignsCount
 		{
 			get
 			{
-				return (uint)Marshal.ReadInt32(reference, 16);
+				return masterInternal.num_designs;
+			}
+		}
+
+		/// <summary>
+		/// Gets a table of axis descriptors.
+		/// </summary>
+		public MMAxis[] Axis
+		{
+			get
+			{
+				MMAxis[] axis = new MMAxis[masterInternal.num_axis];
+
+				for (int i = 0; i < masterInternal.num_axis; i++)
+					axis[i] = new MMAxis(masterInternal.axis[i]);
+
+				return axis;
 			}
 		}
 	}

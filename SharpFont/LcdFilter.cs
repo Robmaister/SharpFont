@@ -51,16 +51,16 @@ namespace SharpFont
 		/// </summary>
 		Light =		2,
 
-		/// <summary>
+		/// <summary><para>
 		/// This filter corresponds to the original libXft color filter. It
 		/// provides high contrast output but can exhibit really bad color
 		/// fringes if glyphs are not extremely well hinted to the pixel grid.
 		/// In other words, it only works well if the TrueType bytecode
 		/// interpreter is enabled and high-quality hinted fonts are used.
-		/// 
+		/// </para><para>
 		/// This filter is only provided for comparison purposes, and might be
 		/// disabled or stay unsupported in the future.
-		/// </summary>
+		/// </para></summary>
 		Legacy =	16
 	}
 }

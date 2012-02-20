@@ -30,13 +30,13 @@ namespace SharpFont
 	/// An enumeration used to specify character sets supported by charmaps.
 	/// Used in the FT_Select_Charmap API function.
 	/// </summary>
-	/// <remarks>
+	/// <remarks><para>
 	/// Despite the name, this enumeration lists specific character repertories
 	/// (i.e., charsets), and not text encoding methods (e.g., UTF-8, UTF-16,
 	/// etc.).
-	/// 
+	/// </para><para>
 	/// Other encodings might be defined in the future.
-	/// </remarks>
+	/// </para></remarks>
 	[CLSCompliant(false)]
 	public enum Encoding : uint
 	{
@@ -52,15 +52,15 @@ namespace SharpFont
 		/// <see href="http://www.ceviz.net/symbol.htm"/>
 		MicrosoftSymbol =	('s' << 24 | 'y' << 16 | 'm' << 8 | 'b'),
 
-		/// <summary>
+		/// <summary><para>
 		/// Corresponds to the Unicode character set. This value covers all
 		/// versions of the Unicode repertoire, including ASCII and Latin-1.
 		/// Most fonts include a Unicode charmap, but not all of them.
-		/// 
+		/// </para><para>
 		/// For example, if you want to access Unicode value U+1F028 (and the
 		/// font contains it), use value 0x1F028 as the input value for
 		/// FT_Get_Char_Index.
-		/// </summary>
+		/// </para></summary>
 		Unicode =			('u' << 24 | 'n' << 16 | 'i' << 8 | 'c'),
 
 		/// <summary>

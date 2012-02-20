@@ -26,17 +26,17 @@ using System;
 using System.Runtime.InteropServices;
 
 #if FT64
-using FT_Long = System.Int64;
-using FT_ULong = System.UInt64;
-using FT_Fixed = System.Int64;
-using FT_Pos = System.Int64;
 using FT_26Dot6 = System.Int64;
+using FT_Fixed = System.Int64;
+using FT_Long = System.Int64;
+using FT_Pos = System.Int64;
+using FT_ULong = System.UInt64;
 #else
-using FT_Long = System.Int32;
-using FT_ULong = System.UInt32;
-using FT_Fixed = System.Int32;
-using FT_Pos = System.Int32;
 using FT_26Dot6 = System.Int32;
+using FT_Fixed = System.Int32;
+using FT_Long = System.Int32;
+using FT_Pos = System.Int32;
+using FT_ULong = System.UInt32;
 #endif
 
 namespace SharpFont.TrueType.Internal

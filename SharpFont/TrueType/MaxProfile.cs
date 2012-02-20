@@ -60,7 +60,7 @@ namespace SharpFont.TrueType
 		}
 		
 		/// <summary>
-		/// Gest the number of glyphs in this TrueType font.
+		/// Gets the number of glyphs in this TrueType font.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort GlyphCount

@@ -67,7 +67,7 @@ namespace SharpFont
 		}*/
 
 		/// <summary>
-		/// The glyph's width.
+		/// Gets the glyph's width.
 		/// </summary>
 		public long Width
 		{
@@ -78,7 +78,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The glyph's height.
+		/// Gets the glyph's height.
 		/// </summary>
 		public long Height
 		{
@@ -89,7 +89,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Left side bearing for horizontal layout.
+		/// Gets the left side bearing for horizontal layout.
 		/// </summary>
 		public long HorizontalBearingX
 		{
@@ -100,7 +100,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Top side bearing for horizontal layout.
+		/// Gets the top side bearing for horizontal layout.
 		/// </summary>
 		public long HorizontalBearingY
 		{
@@ -111,7 +111,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Advance width for horizontal layout.
+		/// Gets the advance width for horizontal layout.
 		/// </summary>
 		public long HorizontalAdvance
 		{
@@ -122,7 +122,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Left side bearing for vertical layout.
+		/// Gets the left side bearing for vertical layout.
 		/// </summary>
 		public long VerticalBearingX
 		{
@@ -133,7 +133,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Top side bearing for vertical layout. Larger positive values mean further below the vertical glyph origin.
+		/// Gets the top side bearing for vertical layout. Larger positive
+		/// values mean further below the vertical glyph origin.
 		/// </summary>
 		public long VerticalBearingY
 		{
@@ -144,7 +145,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Advance height for vertical layout. Positive values mean the glyph has a positive advance downward.
+		/// Gets the advance height for vertical layout. Positive values mean
+		/// the glyph has a positive advance downward.
 		/// </summary>
 		public long VerticalAdvance
 		{

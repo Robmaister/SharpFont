@@ -26,17 +26,17 @@ using System;
 
 namespace SharpFont
 {
-	/// <summary>
+	/// <summary><para>
 	/// A handle to a FreeType library instance. Each ‘library’ is completely
 	/// independent from the others; it is the ‘root’ of a set of objects like
 	/// fonts, faces, sizes, etc.
-	/// 
+	/// </para><para>
 	/// It also embeds a memory manager (see FT_Memory), as well as a scan-line
 	/// converter object (see FT_Raster).
-	/// 
+	/// </para><para>
 	/// For multi-threading applications each thread should have its own
 	/// FT_Library object.
-	/// </summary>
+	/// </para></summary>
 	public sealed class Library : IDisposable
 	{
 		internal IntPtr reference;
@@ -67,27 +67,9 @@ namespace SharpFont
 			this.duplicate = duplicate;
 		}
 
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-		private void Dispose(bool disposing)
-		{
-			if (!disposed)
-			{
-				if (disposing)
-				{
-				}
-
-				if (!duplicate)
-					FT.DoneFreeType(this);
-
-				disposed = true;
-			}
-		}
-
+		/// <summary>
+		/// Destroys the library.
+		/// </summary>
 		~Library()
 		{
 			Dispose(false);
@@ -96,14 +78,14 @@ namespace SharpFont
 		/// <summary>
 		/// Return the version of the FreeType library being used.
 		/// </summary>
-		/// <remarks>
+		/// <remarks><para>
 		/// The reason why this function takes a "library" argument is because
 		/// certain programs implement library initialization in a custom way
 		/// that doesn't use <see cref="FT.InitFreeType"/>.
-		/// 
+		/// </para><para>
 		/// In such cases, the library version might not be available before
 		/// the library object has been created.
-		/// </remarks>
+		/// </para></remarks>
 		/// <returns>The version of the FreeType library being used.</returns>
 		public Version Version()
 		{
@@ -146,11 +128,11 @@ namespace SharpFont
 		/// Create a <see cref="Face"/> object from a given resource described
 		/// by <see cref="OpenArgs"/>.
 		/// </summary>
-		/// <remarks>
+		/// <remarks><para>
 		/// Unlike FreeType 1.x, this function automatically creates a glyph
 		/// slot for the face object which can be accessed directly through
 		/// <see cref="Face.Glyph"/>.
-		/// 
+		/// </para><para>
 		/// OpenFace can be used to quickly check whether the font format of
 		/// a given font resource is supported by FreeType. If the faceIndex
 		/// field is negative, the function's return value is 0 if the font
@@ -160,19 +142,40 @@ namespace SharpFont
 		/// <see cref="Face.FaceCount"/> which gives the number of faces within
 		/// the font file. After examination, the returned FT_Face structure
 		/// should be deallocated with a call to <see cref="FT.DoneFace"/>.
-		/// 
+		/// </para><para>
 		/// Each new face object created with this function also owns a default
 		/// <see cref="Size"/> object, accessible as <see cref="Face.Size"/>.
-		/// 
+		/// </para><para>
 		/// See the discussion of reference counters in the description of
 		/// FT_Reference_Face.
-		/// </remarks>
+		/// </para></remarks>
 		/// <param name="args">A pointer to an <see cref="OpenArgs"/> structure which must be filled by the caller.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
 		/// <returns>A handle to a new face object. If ‘face_index’ is greater than or equal to zero, it must be non-NULL.</returns>
 		public Face OpenFace(OpenArgs args, int faceIndex)
 		{
 			return FT.OpenFace(this, args, faceIndex);
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if (!disposed)
+			{
+				if (disposing)
+				{
+				}
+
+				if (!duplicate)
+					FT.DoneFreeType(this);
+
+				disposed = true;
+			}
 		}
 	}
 }

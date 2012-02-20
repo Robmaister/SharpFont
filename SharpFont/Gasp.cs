@@ -29,16 +29,16 @@ namespace SharpFont
 	/// <summary>
 	/// A list of values and/or bit-flags returned by the FT_Get_Gasp function.
 	/// </summary>
-	/// <remarks>
+	/// <remarks><para>
 	/// The bit-flags ‘FT_GASP_DO_GRIDFIT’ and ‘FT_GASP_DO_GRAY’ are to be used
 	/// for standard font rasterization only. Independently of that,
 	/// ‘FT_GASP_SYMMETRIC_SMOOTHING’ and ‘FT_GASP_SYMMETRIC_GRIDFIT’ are to be
 	/// used if ClearType is enabled (and ‘FT_GASP_DO_GRIDFIT’ and
 	/// ‘FT_GASP_DO_GRAY’ are consequently ignored).
-	/// 
+	/// </para><para>
 	/// ‘ClearType’ is Microsoft's implementation of LCD rendering, partly
 	/// protected by patents.
-	/// </remarks>
+	/// </para></remarks>
 	[Flags]
 	public enum Gasp
 	{

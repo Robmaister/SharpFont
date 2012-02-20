@@ -29,6 +29,7 @@ using SharpFont.TrueType;
 
 namespace SharpFont
 {
+	
 	public partial class FT
 	{
 		#region Core API
@@ -523,8 +524,6 @@ namespace SharpFont
 		#endregion
 
 		#region Scanline Converter
-
-
 
 		#endregion
 

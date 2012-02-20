@@ -47,40 +47,8 @@ namespace SharpFont
 			this.vec = vInt;
 		}
 
-		/*/// <summary>
-		/// Initializes a new instance of the Vector2i class. X and Y default
-		/// to 0.
-		/// </summary>
-		public Vector2i()
-		{
-			reference = Marshal.AllocHGlobal(SizeInBytes);
-		}
-
 		/// <summary>
-		/// Initializes a new instance of the Vector2i class.
-		/// </summary>
-		/// <param name="x">The X component of the vector.</param>
-		/// <param name="y">The Y component of the vector.</param>
-		public Vector2i(int x, int y)
-			: this()
-		{
-			X = x;
-			Y = y;
-		}
-
-		/// <summary>
-		/// Gets the size of the vector in bytes.
-		/// </summary>
-		public static int SizeInBytes
-		{
-			get
-			{
-				return 8;
-			}
-		}*/
-
-		/// <summary>
-		/// The horizontal coordinate.
+		/// Gets the horizontal coordinate.
 		/// </summary>
 		public long X
 		{
@@ -91,7 +59,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The vertical coordinate.
+		/// Gets the vertical coordinate.
 		/// </summary>
 		public long Y
 		{

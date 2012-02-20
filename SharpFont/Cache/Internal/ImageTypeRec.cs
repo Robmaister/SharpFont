@@ -27,6 +27,7 @@ using System.Runtime.InteropServices;
 
 namespace SharpFont.Cache.Internal
 {
+	[StructLayout(LayoutKind.Sequential)]
 	internal class ImageTypeRec
 	{
 		internal IntPtr face_id;

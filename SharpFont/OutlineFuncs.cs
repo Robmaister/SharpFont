@@ -29,37 +29,37 @@ using SharpFont.Internal;
 
 namespace SharpFont
 {
-	/// <summary>
+	/// <summary><para>
 	/// A function pointer type used to describe the signature of a ‘move to’
 	/// function during outline walking/decomposition.
-	/// 
+	/// </para><para>
 	/// A ‘move to’ is emitted to start a new contour in an outline.
-	/// </summary>
+	/// </para></summary>
 	/// <param name="to">A pointer to the target point of the ‘move to’.</param>
 	/// <param name="user">A typeless pointer which is passed from the caller of the decomposition function.</param>
 	/// <returns>Error code. 0 means success.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate int MoveToFunc(Vector2i to, IntPtr user);
 
-	/// <summary>
+	/// <summary><para>
 	/// A function pointer type used to describe the signature of a ‘line to’
 	/// function during outline walking/decomposition.
-	/// 
+	/// </para><para>
 	/// A ‘line to’ is emitted to indicate a segment in the outline.
-	/// </summary>
+	/// </para></summary>
 	/// <param name="to">A pointer to the target point of the ‘line to’.</param>
 	/// <param name="user">A typeless pointer which is passed from the caller of the decomposition function.</param>
 	/// <returns>Error code. 0 means success.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate int LineToFunc(Vector2i to, IntPtr user);
 
-	/// <summary>
+	/// <summary><para>
 	/// A function pointer type used to describe the signature of a ‘conic to’
 	/// function during outline walking or decomposition.
-	/// 
+	/// </para><para>
 	/// A ‘conic to’ is emitted to indicate a second-order Bézier arc in the
 	/// outline.
-	/// </summary>
+	/// </para></summary>
 	/// <param name="control">An intermediate control point between the last position and the new target in ‘to’.</param>
 	/// <param name="to">A pointer to the target end point of the conic arc.</param>
 	/// <param name="user">A typeless pointer which is passed from the caller of the decomposition function.</param>
@@ -67,12 +67,12 @@ namespace SharpFont
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate int ConicToFunc(Vector2i control, Vector2i to, IntPtr user);
 
-	/// <summary>
+	/// <summary><para>
 	/// A function pointer type used to describe the signature of a ‘cubic to’
 	/// function during outline walking or decomposition.
-	/// 
+	/// </para><para>
 	/// A ‘cubic to’ is emitted to indicate a third-order Bézier arc.
-	/// </summary>
+	/// </para></summary>
 	/// <param name="control1">A pointer to the first Bézier control point.</param>
 	/// <param name="control2">A pointer to the second Bézier control point.</param>
 	/// <param name="to">A pointer to the target end point.</param>
@@ -89,10 +89,10 @@ namespace SharpFont
 	/// The point coordinates sent to the emitters are the transformed version
 	/// of the original coordinates (this is important for high accuracy during
 	/// scan-conversion). The transformation is simple:
-	/// 
+	/// <code>
 	///    x' = (x &lt;&lt; shift) - delta
 	///    y' = (x &lt;&lt; shift) - delta
-	/// 
+	/// </code>
 	/// Set the values of ‘shift’ and ‘delta’ to 0 to get the original point
 	/// coordinates.
 	/// </remarks>
@@ -100,18 +100,30 @@ namespace SharpFont
 	{
 		internal OutlineFuncsInternal funcsInt;
 
+		/// <summary>
+		/// Initializes a new instance of the OutlineFuncs class.
+		/// </summary>
 		public OutlineFuncs()
 		{
 		}
 
-		public OutlineFuncs(MoveToFunc moveTo, LineToFunc lineTo, ConicToFunc conicTo, CubicToFunc cubicTo, int shift, long delta)
+		/// <summary>
+		/// Initializes a new instance of the OutlineFuncs class.
+		/// </summary>
+		/// <param name="moveTo">The move to delegate.</param>
+		/// <param name="lineTo">The line to delegate.</param>
+		/// <param name="conicTo">The conic to delegate.</param>
+		/// <param name="cubicTo">The cubic to delegate.</param>
+		/// <param name="shift">A value to shift by.</param>
+		/// <param name="delta">A delta to transform by.</param>
+		public OutlineFuncs(MoveToFunc moveTo, LineToFunc lineTo, ConicToFunc conicTo, CubicToFunc cubicTo, int shift, int delta)
 		{
 			funcsInt.moveTo = moveTo;
 			funcsInt.lineTo = lineTo;
 			funcsInt.conicTo = conicTo;
 			funcsInt.cubicTo = cubicTo;
 			funcsInt.shift = shift;
-			funcsInt.delta = (int)delta;
+			funcsInt.delta = delta;
 		}
 
 		/// <summary>
@@ -123,6 +135,7 @@ namespace SharpFont
 			{
 				return funcsInt.moveTo;
 			}
+
 			set
 			{
 				funcsInt.moveTo = value;
@@ -138,6 +151,7 @@ namespace SharpFont
 			{
 				return funcsInt.lineTo;
 			}
+
 			set
 			{
 				funcsInt.lineTo = value;
@@ -153,6 +167,7 @@ namespace SharpFont
 			{
 				return funcsInt.conicTo;
 			}
+
 			set
 			{
 				funcsInt.conicTo = value;
@@ -168,6 +183,7 @@ namespace SharpFont
 			{
 				return funcsInt.cubicTo;
 			}
+
 			set
 			{
 				funcsInt.cubicTo = value;
@@ -184,6 +200,7 @@ namespace SharpFont
 			{
 				return funcsInt.shift;
 			}
+
 			set
 			{
 				funcsInt.shift = value;
@@ -200,6 +217,7 @@ namespace SharpFont
 			{
 				return funcsInt.delta;
 			}
+
 			set
 			{
 				funcsInt.delta = (int)value;

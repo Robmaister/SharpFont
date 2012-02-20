@@ -26,15 +26,15 @@ using System;
 
 namespace SharpFont.Cache
 {
-	/// <summary>
+	/// <summary><para>
 	/// An opaque handle to a cache node object. Each cache node is
 	/// reference-counted. A node with a count of 0 might be flushed out of a
 	/// full cache whenever a lookup request is performed.
-	/// 
+	/// </para><para>
 	/// If you look up nodes, you have the ability to ‘acquire’ them, i.e., to
 	/// increment their reference count. This will prevent the node from being
 	/// flushed out of the cache until you explicitly ‘release’ it.
-	/// </summary>
+	/// </para></summary>
 	/// <see cref="FTC.NodeUnref"/>
 	/// <seealso cref="FTC.SbitCacheLookup"/>
 	/// <seealso cref="FTC.ImageCacheLookup"/>

@@ -25,39 +25,48 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-#if FT64
-using FT_26Dot6 = System.Int64;
-using FT_Fixed = System.Int64;
-using FT_Long = System.Int64;
-using FT_Pos = System.Int64;
-using FT_ULong = System.UInt64;
-#else
-using FT_26Dot6 = System.Int32;
-using FT_Fixed = System.Int32;
-using FT_Long = System.Int32;
-using FT_Pos = System.Int32;
-using FT_ULong = System.UInt32;
-#endif
+using SharpFont.MultipleMasters.Internal;
 
-namespace SharpFont.Internal
+namespace SharpFont.MultipleMasters
 {
-	/// <summary>
-	/// Internally represents a BitmapSize.
-	/// </summary>
-	/// <remarks>
-	/// Refer to <see cref="BitmapSize"/> for FreeType documentation.
-	/// </remarks>
-	[StructLayout(LayoutKind.Sequential)]
-	internal class BitmapSizeInternal
+	/// <summary><para>
+	/// A simple structure used to model a named style in a GX var font.
+	/// </para><para>
+	/// This structure can't be used for MM fonts.
+	/// </para></summary>
+	public class VarNamedStyle
 	{
-		internal short height;
-		internal short width;
+		internal IntPtr reference;
+		internal VarNamedStyleInternal styleInternal;
 
-		internal FT_Pos size;
+		internal VarNamedStyle(IntPtr reference)
+		{
+			this.reference = reference;
+			this.styleInternal = (VarNamedStyleInternal)Marshal.PtrToStructure(reference, typeof(VarNamedStyleInternal));
+		}
 
-		internal FT_Pos x_ppem;
-		internal FT_Pos y_ppem;
+		/// <summary>
+		/// Gets the design coordinates for this style. This is an array with one
+		/// entry for each axis.
+		/// </summary>
+		public IntPtr Coordinates
+		{
+			get
+			{
+				return styleInternal.coords;
+			}
+		}
 
-		internal static int SizeInBytes { get { return 4 + sizeof(FT_Pos) * 3; } }
+		/// <summary>
+		/// Gets the entry in ‘name’ table identifying this style.
+		/// </summary>
+		[CLSCompliant(false)]
+		public uint StrID
+		{
+			get
+			{
+				return styleInternal.strid;
+			}
+		}
 	}
 }

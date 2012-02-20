@@ -31,13 +31,13 @@ namespace SharpFont
 	/// The subglyph structure is an internal object used to describe subglyphs
 	/// (for example, in the case of composites).
 	/// </summary>
-	/// <remarks>
+	/// <remarks><para>
 	/// The subglyph implementation is not part of the high-level API, hence
 	/// the forward structure declaration.
-	/// 
+	/// </para><para>
 	/// You can however retrieve subglyph information with
 	/// FT_Get_SubGlyph_Info.
-	/// </remarks>
+	/// </para></remarks>
 	public sealed class SubGlyph
 	{
 		internal IntPtr reference;

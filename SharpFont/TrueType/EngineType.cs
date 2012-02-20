@@ -38,14 +38,14 @@ namespace SharpFont.TrueType
 		/// </summary>
 		None = 0,
 
-		/// <summary>
+		/// <summary><para>
 		/// The library implements a bytecode interpreter that doesn't support
 		/// the patented operations of the TrueType virtual machine.
-		/// 
+		/// </para><para>
 		/// Its main use is to load certain Asian fonts which position and
 		/// scale glyph components with bytecode instructions. It produces bad
 		/// output for most other fonts.
-		/// </summary>
+		/// </para></summary>
 		Unpatented,
 
 		/// <summary>

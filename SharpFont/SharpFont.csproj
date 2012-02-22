@@ -76,11 +76,13 @@
     <Compile Include="Cache\Internal\ImageTypeRec.cs" />
     <Compile Include="Cache\Internal\ManagerRec.cs" />
     <Compile Include="Cache\Internal\NodeRec.cs" />
+    <Compile Include="Cache\Internal\SBitCacheRec.cs" />
     <Compile Include="Cache\Internal\SBitRec.cs" />
     <Compile Include="Cache\Internal\ScalerRec.cs" />
     <Compile Include="Cache\Manager.cs" />
     <Compile Include="Cache\Node.cs" />
     <Compile Include="Cache\SBit.cs" />
+    <Compile Include="Cache\SBitCache.cs" />
     <Compile Include="Cache\Scaler.cs" />
     <Compile Include="CharMap.cs" />
     <Compile Include="Data.cs" />

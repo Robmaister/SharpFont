@@ -224,10 +224,10 @@ namespace SharpFont
 		#region Multiple Masters
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Get_Multi_Master(IntPtr face, IntPtr amaster);
+		internal static extern Error FT_Get_Multi_Master(IntPtr face, out IntPtr amaster);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Get_MM_Var(IntPtr face, IntPtr amaster);
+		internal static extern Error FT_Get_MM_Var(IntPtr face, out IntPtr amaster);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Error FT_Set_MM_Design_Coordinates(IntPtr face, uint num_coords, IntPtr coords);

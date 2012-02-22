@@ -25,19 +25,19 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-namespace SharpFont
+namespace SharpFont.Cache
 {
-	//TODO fill this class out.
-
 	/// <summary>
-	/// The root glyph structure contains a given glyph image plus its advance
-	/// width in 16.16 fixed float format.
+	/// A handle to a small bitmap cache. These are special cache objects used
+	/// to store small glyph bitmaps (and anti-aliased pixmaps) in a much more
+	/// efficient way than the traditional glyph image cache implemented by
+	/// <see cref="ImageCache"/>.
 	/// </summary>
-	public class Glyph
+	public class SBitCache
 	{
 		internal IntPtr reference;
 
-		internal Glyph(IntPtr reference)
+		internal SBitCache(IntPtr reference)
 		{
 			this.reference = reference;
 		}

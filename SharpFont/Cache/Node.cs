@@ -36,7 +36,7 @@ namespace SharpFont.Cache
 	/// flushed out of the cache until you explicitly ‘release’ it.
 	/// </para></summary>
 	/// <see cref="FTC.NodeUnref"/>
-	/// <seealso cref="FTC.SbitCacheLookup"/>
+	/// <seealso cref="FTC.SBitCacheLookup"/>
 	/// <seealso cref="FTC.ImageCacheLookup"/>
 	public class Node
 	{
@@ -45,6 +45,17 @@ namespace SharpFont.Cache
 		internal Node(IntPtr reference)
 		{
 			this.reference = reference;
+		}
+
+		/// <summary>
+		/// Decrement a cache node's internal reference count. When the count
+		/// reaches 0, it is not destroyed but becomes eligible for subsequent
+		/// cache flushes.
+		/// </summary>
+		/// <param name="manager">The cache manager handle.</param>
+		public void Unref(Manager manager)
+		{
+			FTC.NodeUnref(this, manager);
 		}
 	}
 }

@@ -25,21 +25,10 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-namespace SharpFont
+namespace SharpFont.Cache.Internal
 {
-	//TODO fill this class out.
-
-	/// <summary>
-	/// The root glyph structure contains a given glyph image plus its advance
-	/// width in 16.16 fixed float format.
-	/// </summary>
-	public class Glyph
+	[StructLayout(LayoutKind.Sequential)]
+	internal class SBitCacheRec
 	{
-		internal IntPtr reference;
-
-		internal Glyph(IntPtr reference)
-		{
-			this.reference = reference;
-		}
 	}
 }

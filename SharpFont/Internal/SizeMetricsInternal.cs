@@ -3,8 +3,6 @@
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
-SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
-
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
 the Software without restriction, including without limitation the rights to
@@ -43,64 +41,17 @@ using FT_ULong = System.UInt32;
 
 namespace SharpFont.Internal
 {
-	/// <summary>
-	/// Internally represents a Face.
-	/// </summary>
-	/// <remarks>
-	/// Refer to <see cref="Face"/> for FreeType documentation.
-	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal class FaceRec
+	internal struct SizeMetricsInternal
 	{
-		internal FT_Long num_faces;
-		internal FT_Long face_index;
+		internal ushort x_ppem;
+		internal ushort y_ppem;
 
-		internal FT_Long face_flags;
-		internal FT_Long style_flags;
-
-		internal FT_Long num_glyphs;
-
-		[MarshalAs(UnmanagedType.LPStr)]
-		internal string family_name;
-
-		[MarshalAs(UnmanagedType.LPStr)]
-		internal string style_name;
-
-		internal int num_fixed_sizes;
-		internal IntPtr available_sizes;
-
-		internal int num_charmaps;
-		internal IntPtr charmaps;
-
-		internal GenericInternal generic;
-
-		internal BBoxInternal bbox;
-
-		internal ushort units_per_EM;
-		internal short ascender;
-		internal short descender;
-		internal short height;
-
-		internal short max_advance_width;
-		internal short max_advance_height;
-
-		internal short underline_position;
-		internal short underline_thickness;
-
-		internal IntPtr glyph;
-		internal IntPtr size;
-		internal IntPtr charmap;
-
-		private IntPtr driver;
-		private IntPtr memory;
-		private IntPtr stream;
-
-		private IntPtr sizes_list;
-		private GenericInternal autohint;
-		private IntPtr extensions;
-
-		private IntPtr @internal;
-
-		internal static int SizeInBytes { get { return 24 + sizeof(FT_Long) * 5 + IntPtr.Size * 13 + Generic.SizeInBytes + BBoxInternal.SizeInBytes; } }
+		internal FT_Fixed x_scale;
+		internal FT_Fixed y_scale;
+		internal FT_Pos ascender;
+		internal FT_Pos descender;
+		internal FT_Pos height;
+		internal FT_Pos max_advance;
 	}
 }

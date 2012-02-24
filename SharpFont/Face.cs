@@ -256,7 +256,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return rec.generic;
+				return new Generic(rec.generic);
 			}
 
 			set

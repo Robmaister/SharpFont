@@ -172,10 +172,10 @@ namespace SharpFont
 		internal static extern Error FT_Glyph_Transform(IntPtr glyph, IntPtr matrix, IntPtr delta);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Glyph_Get_CBox(IntPtr glyph, uint bbox_mode, out IntPtr acbox);
+		internal static extern void FT_Glyph_Get_CBox(IntPtr glyph, GlyphBBoxMode bbox_mode, out IntPtr acbox);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Glyph_To_Bitmap(IntPtr the_glyph, RenderMode render_mode, IntPtr origin, bool destroy);
+		internal static extern Error FT_Glyph_To_Bitmap(ref IntPtr the_glyph, RenderMode render_mode, IntPtr origin, bool destroy);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern void FT_Done_Glyph(IntPtr glyph);
@@ -194,7 +194,7 @@ namespace SharpFont
 		internal static extern Error FT_GetFile_From_Mac_ATS_Name([MarshalAs(UnmanagedType.LPStr)] string fontName, out IntPtr pathSpec, out int face_index);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_GetFilePath_From_Mac_ATS_Name([MarshalAs(UnmanagedType.LPStr)] string fontName, out IntPtr path, out int maxPathSize, out int face_index);
+		internal static extern Error FT_GetFilePath_From_Mac_ATS_Name([MarshalAs(UnmanagedType.LPStr)] string fontName, IntPtr path, int maxPathSize, out int face_index);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Error FT_New_Face_From_FSSpec(IntPtr library, IntPtr spec, int face_index, out IntPtr aface);

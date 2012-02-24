@@ -27,9 +27,10 @@ using System;
 namespace SharpFont
 {
 	/// <summary>
-	/// The mode how the values of FT_Glyph_Get_CBox are returned.
+	/// The mode how the values of <see cref="FT.GlyphGetCBox"/> are returned.
 	/// </summary>
-	public enum GlyphBBoxMode
+	[CLSCompliant(false)]
+	public enum GlyphBBoxMode : uint
 	{
 		/// <summary>Return unscaled font units.</summary>
 		Unscaled = 0,

@@ -25,6 +25,8 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
+using SharpFont.Internal;
+
 namespace SharpFont
 {
 	/// <summary>
@@ -49,15 +51,18 @@ namespace SharpFont
 	public sealed class SizeMetrics
 	{
 		internal IntPtr reference;
+		internal SizeMetricsInternal metricsInternal;
 
 		internal SizeMetrics(IntPtr reference)
 		{
 			this.reference = reference;
+			this.metricsInternal = (SizeMetricsInternal)Marshal.PtrToStructure(reference, typeof(SizeMetricsInternal));
 		}
 
-		internal SizeMetrics(IntPtr reference, int offset)
+		internal SizeMetrics(SizeMetricsInternal metricsInternal)
 		{
-			this.reference = new IntPtr(reference.ToInt64() + offset);
+			this.reference = IntPtr.Zero;
+			this.metricsInternal = metricsInternal;
 		}
 
 		/// <summary>
@@ -69,7 +74,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (ushort)Marshal.ReadInt16(reference, 0);
+				return metricsInternal.x_ppem;
 			}
 		}
 
@@ -82,7 +87,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (ushort)Marshal.ReadInt16(reference, 2);
+				return metricsInternal.y_ppem;
 			}
 		}
 
@@ -91,11 +96,11 @@ namespace SharpFont
 		/// from font units to 26.6 fractional pixels. Only relevant for
 		/// scalable font formats.
 		/// </summary>
-		public int ScaleX
+		public long ScaleX
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 4);
+				return metricsInternal.x_scale;
 			}
 		}
 
@@ -104,11 +109,11 @@ namespace SharpFont
 		/// from font units to 26.6 fractional pixels. Only relevant for
 		/// scalable font formats.
 		/// </summary>
-		public int ScaleY
+		public long ScaleY
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 8);
+				return metricsInternal.y_scale;
 			}
 		}
 
@@ -116,11 +121,11 @@ namespace SharpFont
 		/// The ascender in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
-		public int Ascender
+		public long Ascender
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 12);
+				return metricsInternal.ascender;
 			}
 		}
 
@@ -128,11 +133,11 @@ namespace SharpFont
 		/// The descender in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
-		public int Descender
+		public long Descender
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 16);
+				return metricsInternal.descender;
 			}
 		}
 
@@ -140,11 +145,11 @@ namespace SharpFont
 		/// The height in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
-		public int Height
+		public long Height
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 20);
+				return metricsInternal.height;
 			}
 		}
 
@@ -152,11 +157,11 @@ namespace SharpFont
 		/// The maximal advance width in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
-		public int MaxAdvance
+		public long MaxAdvance
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 24);
+				return metricsInternal.max_advance;
 			}
 		}
 	}

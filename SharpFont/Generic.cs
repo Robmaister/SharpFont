@@ -67,6 +67,21 @@ namespace SharpFont
 			genInternal.finalizer = finalizer;
 		}
 
+		internal Generic(GenericInternal genInternal)
+		{
+			this.genInternal = genInternal;
+		}
+
+		internal Generic(IntPtr reference)
+		{
+			this.genInternal = (GenericInternal)Marshal.PtrToStructure(reference, typeof(GenericInternal));
+		}
+
+		internal Generic(IntPtr reference, int offset)
+			: this(new IntPtr(reference.ToInt64() + offset))
+		{
+		}
+
 		/// <summary>
 		/// Gets or sets a typeless pointer to any client-specified data. This
 		/// field is completely ignored by the FreeType library.
@@ -96,6 +111,7 @@ namespace SharpFont
 		/// </summary>
 		public static int SizeInBytes { get { return IntPtr.Size * 2; } }
 
+		//TODO make this private and build it into the setters if the reference isn't IntPtr.Zero.
 		internal void WriteToUnmanagedMemory(IntPtr location)
 		{
 			Marshal.WriteIntPtr(location, genInternal.data);

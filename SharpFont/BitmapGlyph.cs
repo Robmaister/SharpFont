@@ -29,64 +29,76 @@ using SharpFont.Internal;
 
 namespace SharpFont
 {
+	//TODO some sort of pseudo-inheritance for glyphs following FreeType's method.
+
 	/// <summary>
-	/// FreeType root size class structure. A size object models a face object
-	/// at a given size.
+	/// A structure used for bitmap glyph images. This really is a ‘sub-class’
+	/// of <see cref="Glyph"/>.
 	/// </summary>
-	public sealed class Size
+	/// <remarks><para>
+	/// You can typecast an <see cref="Glyph"/> to <see cref="BitmapGlyph"/> if
+	/// you have ‘<see cref="Glyph.Format"/> ==
+	/// <see cref="GlyphFormat.Bitmap"/>’. This lets you access the bitmap's
+	/// contents easily.
+	/// </para><para>
+	/// The corresponding pixel buffer is always owned by
+	/// <see cref="BitmapGlyph"/> and is thus created and destroyed with it.
+	/// </para></remarks>
+	public class BitmapGlyph
 	{
 		internal IntPtr reference;
-		internal SizeRec rec;
+		internal BitmapGlyphRec rec;
 
-		internal Size(IntPtr reference)
+		internal BitmapGlyph(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (SizeRec)Marshal.PtrToStructure(reference, typeof(SizeRec));
-		}
-
-		internal Size(IntPtr reference, int offset)
-			: this(new IntPtr(reference.ToInt64() + offset))
-		{
+			this.rec = (BitmapGlyphRec)Marshal.PtrToStructure(reference, typeof(BitmapGlyphRec));
 		}
 
 		/// <summary>
-		/// Gets a handle to the parent face object.
+		/// The root <see cref="Glyph"/> fields.
 		/// </summary>
-		public Face Face
+		public Glyph Root
 		{
 			get
 			{
-				return new Face(rec.face, true);
+				return new Glyph(rec.root);
 			}
 		}
 
 		/// <summary>
-		/// Gets a typeless pointer, which is unused by the FreeType library or
-		/// any of its drivers. It can be used by client applications to link
-		/// their own data to each size object.
+		/// The left-side bearing, i.e., the horizontal distance from the
+		/// current pen position to the left border of the glyph bitmap.
 		/// </summary>
-		public Generic Generic
+		public int Left
 		{
 			get
 			{
-				return new Generic(rec.generic);
-			}
-
-			set
-			{
-				value.WriteToUnmanagedMemory(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceRec), "generic").ToInt64()));
-				rec = (SizeRec)Marshal.PtrToStructure(reference, typeof(SizeRec));
+				return rec.left;
 			}
 		}
 
 		/// <summary>
-		/// Gets metrics for this size object. This field is read-only.
+		/// The top-side bearing, i.e., the vertical distance from the current
+		/// pen position to the top border of the glyph bitmap. This distance
+		/// is positive for upwards y!
 		/// </summary>
-		public SizeMetrics Metrics
+		public int Top
 		{
 			get
 			{
-				return new SizeMetrics(rec.metrics);
+				return rec.top;
+			}
+		}
+
+		/// <summary>
+		/// A descriptor for the bitmap.
+		/// </summary>
+		public Bitmap Bitmap
+		{
+			get
+			{
+				return new Bitmap(rec.bitmap);
 			}
 		}
 	}

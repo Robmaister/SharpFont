@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="BBox.cs" />
     <Compile Include="Bitmap.cs" />
+    <Compile Include="BitmapGlyph.cs" />
     <Compile Include="BitmapSize.cs" />
     <Compile Include="Cache\CMapCache.cs" />
     <Compile Include="Cache\FaceRequester.cs" />
@@ -89,15 +90,20 @@
     <Compile Include="Encoding.cs" />
     <Compile Include="FT.Format.cs" />
     <Compile Include="Internal\BBoxInternal.cs" />
+    <Compile Include="Internal\BitmapGlyphRec.cs" />
     <Compile Include="Internal\BitmapInternal.cs" />
     <Compile Include="Internal\BitmapSizeInternal.cs" />
     <Compile Include="Internal\CharMapRec.cs" />
     <Compile Include="Internal\FaceRec.cs" />
     <Compile Include="Internal\GenericInternal.cs" />
     <Compile Include="Internal\GlyphMetricsInternal.cs" />
+    <Compile Include="Internal\GlyphRec.cs" />
     <Compile Include="Internal\GlyphSlotRec.cs" />
     <Compile Include="Internal\OutlineFuncsInternal.cs" />
+    <Compile Include="Internal\OutlineGlyphRec.cs" />
     <Compile Include="Internal\OutlineInternal.cs" />
+    <Compile Include="Internal\SizeMetricsInternal.cs" />
+    <Compile Include="Internal\SizeRec.cs" />
     <Compile Include="Internal\VectorInternal.cs" />
     <Compile Include="LcdFilter.cs" />
     <Compile Include="MultipleMasters\Internal\MMAxisInternal.cs" />
@@ -111,6 +117,7 @@
     <Compile Include="MultipleMasters\VarAxis.cs" />
     <Compile Include="MultipleMasters\VarNamedStyle.cs" />
     <Compile Include="Orientation.cs" />
+    <Compile Include="OutlineGlyph.cs" />
     <Compile Include="TrueType\EncodingID.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="Face.cs" />

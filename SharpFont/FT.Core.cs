@@ -1204,5 +1204,366 @@ namespace SharpFont
 		}
 
 		#endregion
+
+		#region Glyph Management
+
+		/// <summary>
+		/// A function used to extract a glyph image from a slot. Note that the
+		/// created <see cref="Glyph"/> object must be released with
+		/// <see cref="DoneGlyph"/>.
+		/// </summary>
+		/// <param name="slot">A handle to the source glyph slot.</param>
+		/// <returns>A handle to the glyph object.</returns>
+		public static Glyph GetGlyph(GlyphSlot slot)
+		{
+			IntPtr glyphRef;
+
+			Error err = FT_Get_Glyph(slot.reference, out glyphRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Glyph(glyphRef);
+		}
+
+		/// <summary>
+		/// A function used to copy a glyph image. Note that the created
+		/// <see cref="Glyph"/> object must be released with
+		/// <see cref="DoneGlyph"/>.
+		/// </summary>
+		/// <param name="source">A handle to the source glyph object.</param>
+		/// <returns>A handle to the target glyph object. 0 in case of error.</returns>
+		public static Glyph GlyphCopy(Glyph source)
+		{
+			IntPtr glyphRef;
+
+			Error err = FT_Glyph_Copy(source.reference, out glyphRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Glyph(glyphRef);
+		}
+
+		/// <summary>
+		/// Transform a glyph image if its format is scalable.
+		/// </summary>
+		/// <param name="glyph">A handle to the target glyph object.</param>
+		/// <param name="matrix">A pointer to a 2x2 matrix to apply.</param>
+		/// <param name="delta">A pointer to a 2d vector to apply. Coordinates are expressed in 1/64th of a pixel.</param>
+		public static void GlyphTransform(Glyph glyph, Matrix2i matrix, Vector2i delta)
+		{
+			Error err = FT_Glyph_Transform(glyph.reference, matrix.reference, delta.reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary><para>
+		/// Return a glyph's ‘control box’. The control box encloses all the
+		/// outline's points, including Bézier control points. Though it
+		/// coincides with the exact bounding box for most glyphs, it can be
+		/// slightly larger in some situations (like when rotating an outline
+		/// which contains Bézier outside arcs).
+		/// </para><para>
+		/// Computing the control box is very fast, while getting the bounding
+		/// box can take much more time as it needs to walk over all segments
+		/// and arcs in the outline. To get the latter, you can use the
+		/// ‘ftbbox’ component which is dedicated to this single task.
+		/// </para></summary>
+		/// <remarks><para>
+		/// Coordinates are relative to the glyph origin, using the y upwards
+		/// convention.
+		/// </para><para>
+		/// If the glyph has been loaded with <see cref="LoadFlags.NoScale"/>,
+		/// ‘bbox_mode’ must be set to <see cref="GlyphBBoxMode.Unscaled"/> to
+		/// get unscaled font units in 26.6 pixel format. The value
+		/// <see cref="GlyphBBoxMode.Subpixels"/> is another name for this
+		/// constant.
+		/// </para><para>
+		/// If the font is tricky and the glyph has been loaded with
+		/// <see cref="LoadFlags.NoScale"/>, the resulting CBox is meaningless.
+		/// To get reasonable values for the CBox it is necessary to load the
+		/// glyph at a large ppem value (so that the hinting instructions can
+		/// properly shift and scale the subglyphs), then extracting the CBox
+		/// which can be eventually converted back to font units.
+		/// </para><para>
+		/// Note that the maximum coordinates are exclusive, which means that
+		/// one can compute the width and height of the glyph image (be it in
+		/// integer or 26.6 pixels) as:
+		/// </para><para>
+		/// <code>
+		/// width  = bbox.xMax - bbox.xMin;
+		/// height = bbox.yMax - bbox.yMin;
+		/// </code>
+		/// </para><para>
+		/// Note also that for 26.6 coordinates, if ‘bbox_mode’ is set to
+		/// <see cref="GlyphBBoxMode.Gridfit"/>, the coordinates will also be
+		/// grid-fitted, which corresponds to:
+		/// </para><para>
+		/// <code>
+		/// bbox.xMin = FLOOR(bbox.xMin);
+		/// bbox.yMin = FLOOR(bbox.yMin);
+		/// bbox.xMax = CEILING(bbox.xMax);
+		/// bbox.yMax = CEILING(bbox.yMax);
+		/// </code>
+		/// </para><para>
+		/// To get the bbox in pixel coordinates, set ‘bbox_mode’ to
+		/// <see cref="GlyphBBoxMode.Truncate"/>.
+		/// </para><para>
+		/// To get the bbox in grid-fitted pixel coordinates, set ‘bbox_mode’
+		/// to <see cref="GlyphBBoxMode.Pixels"/>.
+		/// </para></remarks>
+		/// <param name="glyph">A handle to the source glyph object.</param>
+		/// <param name="mode">The mode which indicates how to interpret the returned bounding box values.</param>
+		/// <returns>The glyph coordinate bounding box. Coordinates are expressed in 1/64th of pixels if it is grid-fitted.</returns>
+		public static BBox GlyphGetCBox(Glyph glyph, GlyphBBoxMode mode)
+		{
+			IntPtr cboxRef;
+
+			FT_Glyph_Get_CBox(glyph.reference, mode, out cboxRef);
+
+			return new BBox(cboxRef);
+		}
+
+		/// <summary>
+		/// Convert a given glyph object to a bitmap glyph object.
+		/// </summary>
+		/// <remarks><para>
+		/// This function does nothing if the glyph format isn't scalable.
+		/// </para><para>
+		/// The glyph image is translated with the ‘origin’ vector before
+		/// rendering.
+		/// </para><para>
+		/// The first parameter is a pointer to an <see cref="Glyph"/> handle,
+		/// that will be replaced by this function (with newly allocated data).
+		/// Typically, you would use (omitting error handling):
+		/// </para><para>
+		/// --sample code ommitted--
+		/// </para></remarks>
+		/// <param name="glyph">A pointer to a handle to the target glyph.</param>
+		/// <param name="renderMode">An enumeration that describes how the data is rendered.</param>
+		/// <param name="origin">A pointer to a vector used to translate the glyph image before rendering. Can be 0 (if no translation). The origin is expressed in 26.6 pixels.</param>
+		/// <param name="destroy">A boolean that indicates that the original glyph image should be destroyed by this function. It is never destroyed in case of error.</param>
+		public static void GlyphToBitmap(Glyph glyph, RenderMode renderMode, Vector2i origin, bool destroy)
+		{
+			Error err = FT_Glyph_To_Bitmap(ref glyph.reference, renderMode, origin.reference, destroy);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Destroy a given glyph.
+		/// </summary>
+		/// <param name="glyph">A handle to the target glyph object.</param>
+		public static void DoneGlyph(Glyph glyph)
+		{
+			FT_Done_Glyph(glyph.reference);
+		}
+
+		#endregion
+
+		#region Mac Specific Interface
+
+		/// <summary>
+		/// Create a new face object from a FOND resource.
+		/// </summary>
+		/// <remarks>
+		/// This function can be used to create <see cref="Face"/> objects from
+		/// fonts that are installed in the system as follows.
+		/// <code>
+		/// fond = GetResource( 'FOND', fontName );
+		/// error = FT_New_Face_From_FOND( library, fond, 0, &amp;face );
+		/// </code>
+		/// </remarks>
+		/// <param name="library">A handle to the library resource.</param>
+		/// <param name="fond">A FOND resource.</param>
+		/// <param name="faceIndex">Only supported for the -1 ‘sanity check’ special case.</param>
+		/// <returns>A handle to a new face object.</returns>
+		public static Face NewFaceFromFOND(Library library, IntPtr fond, int faceIndex)
+		{
+			IntPtr faceRef;
+
+			Error err = FT_New_Face_From_FOND(library.reference, fond, faceIndex, out faceRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Face(faceRef, false);
+		}
+
+		/// <summary>
+		/// Return an FSSpec for the disk file containing the named font.
+		/// </summary>
+		/// <param name="fontName">Mac OS name of the font (e.g., Times New Roman Bold).</param>
+		/// <param name="faceIndex">Index of the face. For passing to <see cref="NewFaceFromFSSpec"/>.</param>
+		/// <returns>FSSpec to the file. For passing to <see cref="NewFaceFromFSSpec"/>.</returns>
+		public static IntPtr GetFileFromMacName(string fontName, out int faceIndex)
+		{
+			IntPtr fsspec;
+
+			Error err = FT_GetFile_From_Mac_Name(fontName, out fsspec, out faceIndex);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return fsspec;
+		}
+
+		/// <summary>
+		/// Return an FSSpec for the disk file containing the named font.
+		/// </summary>
+		/// <param name="fontName">Mac OS name of the font in ATS framework.</param>
+		/// <param name="faceIndex">Index of the face. For passing to <see cref="NewFaceFromFSSpec"/>.</param>
+		/// <returns>FSSpec to the file. For passing to <see cref="NewFaceFromFSSpec"/>.</returns>
+		public static IntPtr GetFileFromMacATSName(string fontName, out int faceIndex)
+		{
+			IntPtr fsspec;
+
+			Error err = FT_GetFile_From_Mac_ATS_Name(fontName, out fsspec, out faceIndex);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return fsspec;
+		}
+
+		/// <summary>
+		/// Return a pathname of the disk file and face index for given font
+		/// name which is handled by ATS framework.
+		/// </summary>
+		/// <param name="fontName">Mac OS name of the font in ATS framework.</param>
+		/// <param name="path">Buffer to store pathname of the file. For passing to <see cref="NewFace"/>. The client must allocate this buffer before calling this function.</param>
+		/// <returns>Index of the face. For passing to <see cref="NewFace"/>.</returns>
+		public unsafe static int GetFilePathFromMacATSName(string fontName, byte[] path)
+		{
+			int faceIndex;
+
+			fixed (void* ptr = path)
+			{
+				Error err = FT_GetFilePath_From_Mac_ATS_Name(fontName, (IntPtr)ptr, path.Length, out faceIndex);
+
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+			}
+
+			return faceIndex;
+		}
+
+		/// <summary>
+		/// Create a new face object from a given resource and typeface index
+		/// using an FSSpec to the font file.
+		/// </summary>
+		/// <remarks>
+		/// <see cref="NewFaceFromFSSpec"/> is identical to
+		/// <see cref="NewFace"/> except it accepts an FSSpec instead of a
+		/// path.
+		/// </remarks>
+		/// <param name="library">A handle to the library resource.</param>
+		/// <param name="spec">FSSpec to the font file.</param>
+		/// <param name="faceIndex">The index of the face within the resource. The first face has index 0.</param>
+		/// <returns>A handle to a new face object.</returns>
+		public static Face NewFaceFromFSSpec(Library library, IntPtr spec, int faceIndex)
+		{
+			IntPtr faceRef;
+
+			Error err = FT_New_Face_From_FSSpec(library.reference, spec, faceIndex, out faceRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Face(faceRef, false);
+		}
+
+		/// <summary>
+		/// Create a new face object from a given resource and typeface index
+		/// using an FSRef to the font file.
+		/// </summary>
+		/// <remarks>
+		/// <see cref="NewFaceFromFSRef"/> is identical to
+		/// <see cref="NewFace"/> except it accepts an FSRef instead of a path.
+		/// </remarks>
+		/// <param name="library">A handle to the library resource.</param>
+		/// <param name="ref">FSRef to the font file.</param>
+		/// <param name="faceIndex">The index of the face within the resource. The first face has index 0.</param>
+		/// <returns>A handle to a new face object.</returns>
+		public static Face NewFaceFromFSRef(Library library, IntPtr @ref, int faceIndex)
+		{
+			IntPtr faceRef;
+
+			Error err = FT_New_Face_From_FSRef(library.reference, @ref, faceIndex, out faceRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Face(faceRef, false);
+		}
+
+		#endregion
+
+		#region Size Management
+
+		/// <summary>
+		/// Create a new size object from a given face object.
+		/// </summary>
+		/// <remarks>
+		/// You need to call <see cref="ActivateSize"/> in order to select the
+		/// new size for upcoming calls to <see cref="SetPixelSizes"/>,
+		/// <see cref="SetCharSize"/>, <see cref="LoadGlyph"/>,
+		/// <see cref="LoadChar"/>, etc.
+		/// </remarks>
+		/// <param name="face">A handle to a parent face object.</param>
+		/// <returns>A handle to a new size object.</returns>
+		public static Size NewSize(Face face)
+		{
+			IntPtr sizeRef;
+
+			Error err = FT_New_Size(face.reference, out sizeRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Size(sizeRef);
+		}
+
+		/// <summary>
+		/// Discard a given size object. Note that <see cref="DoneFace"/>
+		/// automatically discards all size objects allocated with
+		/// <see cref="NewSize"/>.
+		/// </summary>
+		/// <param name="size">A handle to a target size object.</param>
+		public static void DoneSize(Size size)
+		{
+			Error err = FT_Done_Size(size.reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary><para>
+		/// Even though it is possible to create several size objects for a
+		/// given face (see <see cref="NewSize"/> for details), functions like
+		/// <see cref="LoadGlyph"/> or <see cref="LoadChar"/> only use the one
+		/// which has been activated last to determine the ‘current character
+		/// pixel size’.
+		/// </para><para>
+		/// This function can be used to ‘activate’ a previously created size
+		/// object.
+		/// </para></summary>
+		/// <remarks>
+		/// If ‘face’ is the size's parent face object, this function changes
+		/// the value of ‘face->size’ to the input size handle.
+		/// </remarks>
+		/// <param name="size">A handle to a target size object.</param>
+		public static void ActivateSize(Size size)
+		{
+			Error err = FT_Activate_Size(size.reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		#endregion
 	}
 }

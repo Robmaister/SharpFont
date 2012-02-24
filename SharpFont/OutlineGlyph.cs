@@ -30,63 +30,53 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary>
-	/// FreeType root size class structure. A size object models a face object
-	/// at a given size.
+	/// A structure used for outline (vectorial) glyph images. This really is a
+	/// ‘sub-class’ of <see cref="Glyph"/>.
 	/// </summary>
-	public sealed class Size
+	/// <remarks><para>
+	/// You can typecast an <see cref="Glyph"/> to <see cref="OutlineGlyph"/>
+	/// if you have ‘<see cref="Glyph.Format"/> ==
+	/// <see cref="GlyphFormat.Outline"/>’. This lets you access the outline's
+	/// content easily.
+	/// </para><para>
+	/// As the outline is extracted from a glyph slot, its coordinates are
+	/// expressed normally in 26.6 pixels, unless the flag
+	/// <see cref="LoadFlags.NoScale"/> was used in <see cref="FT.LoadGlyph"/>
+	/// or <see cref="FT.LoadChar"/>.
+	/// </para><para>
+	/// The outline's tables are always owned by the object and are destroyed
+	/// with it.
+	/// </para></remarks>
+	public class OutlineGlyph
 	{
 		internal IntPtr reference;
-		internal SizeRec rec;
+		internal OutlineGlyphRec rec;
 
-		internal Size(IntPtr reference)
+		internal OutlineGlyph(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (SizeRec)Marshal.PtrToStructure(reference, typeof(SizeRec));
-		}
-
-		internal Size(IntPtr reference, int offset)
-			: this(new IntPtr(reference.ToInt64() + offset))
-		{
+			this.rec = (OutlineGlyphRec)Marshal.PtrToStructure(reference, typeof(OutlineGlyphRec));
 		}
 
 		/// <summary>
-		/// Gets a handle to the parent face object.
+		/// The root <see cref="Glyph"/> fields.
 		/// </summary>
-		public Face Face
+		public Glyph Root
 		{
 			get
 			{
-				return new Face(rec.face, true);
+				return new Glyph(rec.root);
 			}
 		}
 
 		/// <summary>
-		/// Gets a typeless pointer, which is unused by the FreeType library or
-		/// any of its drivers. It can be used by client applications to link
-		/// their own data to each size object.
+		/// A descriptor for the outline.
 		/// </summary>
-		public Generic Generic
+		public Outline Outline
 		{
 			get
 			{
-				return new Generic(rec.generic);
-			}
-
-			set
-			{
-				value.WriteToUnmanagedMemory(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceRec), "generic").ToInt64()));
-				rec = (SizeRec)Marshal.PtrToStructure(reference, typeof(SizeRec));
-			}
-		}
-
-		/// <summary>
-		/// Gets metrics for this size object. This field is read-only.
-		/// </summary>
-		public SizeMetrics Metrics
-		{
-			get
-			{
-				return new SizeMetrics(rec.metrics);
+				return new Outline(rec.outline);
 			}
 		}
 	}

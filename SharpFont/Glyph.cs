@@ -25,10 +25,10 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
+using SharpFont.Internal;
+
 namespace SharpFont
 {
-	//TODO fill this class out.
-
 	/// <summary>
 	/// The root glyph structure contains a given glyph image plus its advance
 	/// width in 16.16 fixed float format.
@@ -36,10 +36,52 @@ namespace SharpFont
 	public class Glyph
 	{
 		internal IntPtr reference;
+		internal GlyphRec rec;
 
 		internal Glyph(IntPtr reference)
 		{
 			this.reference = reference;
+			this.rec = (GlyphRec)Marshal.PtrToStructure(reference, typeof(GlyphRec));
+		}
+
+		internal Glyph(GlyphRec rec)
+		{
+			this.reference = IntPtr.Zero;
+			this.rec = rec;
+		}
+
+		/// <summary>
+		/// A handle to the FreeType library object.
+		/// </summary>
+		public Library Library
+		{
+			get
+			{
+				return new Library(rec.library, true);
+			}
+		}
+
+		/// <summary>
+		/// The format of the glyph's image.
+		/// </summary>
+		[CLSCompliant(false)]
+		public GlyphFormat Format
+		{
+			get
+			{
+				return rec.format;
+			}
+		}
+
+		/// <summary>
+		/// A 16.16 vector that gives the glyph's advance width.
+		/// </summary>
+		public Vector2i Advance
+		{
+			get
+			{
+				return new Vector2i(rec.advance);
+			}
 		}
 	}
 }

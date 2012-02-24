@@ -54,7 +54,7 @@ namespace SharpFont.Internal
 		internal IntPtr face;
 		internal IntPtr next;
 		internal uint reserved;
-		internal Generic generic;
+		internal GenericInternal generic;
 
 		internal GlyphMetricsInternal metrics;
 		internal FT_Fixed linearHoriAdvance;

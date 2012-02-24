@@ -25,26 +25,15 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
+
 namespace SharpFont.Internal
 {
-	/// <summary>
-	/// Internally represents a Bitmap.
-	/// </summary>
-	/// <remarks>
-	/// Refer to <see cref="Bitmap"/> for FreeType documentation.
-	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct BitmapInternal
+	internal class SizeRec
 	{
-		internal int rows;
-		internal int width;
-		internal int pitch;
-		internal IntPtr buffer;
-		internal short num_grays;
-		internal PixelMode pixel_mode;
-		internal byte palette_mode;
-		internal IntPtr palette;
-
-		internal static int SizeInBytes { get { return 16 + IntPtr.Size * 2; } }
+		internal IntPtr face;
+		internal GenericInternal generic;
+		internal SizeMetricsInternal metrics;
+		private IntPtr @internal;
 	}
 }

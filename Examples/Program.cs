@@ -60,7 +60,7 @@ namespace Examples
 
 						Console.WriteLine("\nWriting string \"Hello World!\":");
 						System.Drawing.Bitmap bmp = RenderString(face, "Hello World!");
-						bmp.Save("helloworld.png", System.Drawing.Imaging.ImageFormat.Png);
+						bmp.Save("helloworld5.png", System.Drawing.Imaging.ImageFormat.Png);
 						bmp.Dispose();
 
 						Console.WriteLine("Done!\n");

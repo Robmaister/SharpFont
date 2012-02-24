@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class OutlineInternal
+	internal struct OutlineInternal
 	{
 		internal short n_contours;
 		internal short n_points;

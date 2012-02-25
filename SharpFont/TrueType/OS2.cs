@@ -193,7 +193,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return rec.ulUnicodeRange1;
+				return (uint)rec.ulUnicodeRange1;
 			}
 		}
 
@@ -202,7 +202,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return rec.ulUnicodeRange2;
+				return (uint)rec.ulUnicodeRange2;
 			}
 		}
 
@@ -211,7 +211,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return rec.ulUnicodeRange3;
+				return (uint)rec.ulUnicodeRange3;
 			}
 		}
 
@@ -220,7 +220,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return rec.ulUnicodeRange4;
+				return (uint)rec.ulUnicodeRange4;
 			}
 		}
 
@@ -307,7 +307,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return rec.ulCodePageRange1;
+				return (uint)rec.ulCodePageRange1;
 			}
 		}
 
@@ -316,7 +316,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return rec.ulUnicodeRange1;
+				return (uint)rec.ulUnicodeRange1;
 			}
 		}
 

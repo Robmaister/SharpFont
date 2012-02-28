@@ -51,11 +51,11 @@ namespace SharpFont.TrueType
 		/// <summary>
 		/// Gets the version number.
 		/// </summary>
-		public long Version
+		public int Version
 		{
 			get
 			{
-				return rec.version;
+				return (int)rec.version;
 			}
 		}
 		

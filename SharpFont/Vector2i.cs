@@ -50,22 +50,22 @@ namespace SharpFont
 		/// <summary>
 		/// Gets the horizontal coordinate.
 		/// </summary>
-		public long X
+		public int X
 		{
 			get
 			{
-				return vec.x;
+				return (int)vec.x;
 			}
 		}
 
 		/// <summary>
 		/// Gets the vertical coordinate.
 		/// </summary>
-		public long Y
+		public int Y
 		{
 			get
 			{
-				return vec.y;
+				return (int)vec.y;
 			}
 		}
 	}

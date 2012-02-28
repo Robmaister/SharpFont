@@ -52,44 +52,44 @@ namespace SharpFont
 		/// <summary>
 		/// Gets the horizontal minimum (left-most).
 		/// </summary>
-		public long Left
+		public int Left
 		{
 			get
 			{
-				return bboxInternal.xMin;
+				return (int)bboxInternal.xMin;
 			}
 		}
 
 		/// <summary>
 		/// Gets the vertical minimum (bottom-most).
 		/// </summary>
-		public long Bottom
+		public int Bottom
 		{
 			get
 			{
-				return bboxInternal.yMin;
+				return (int)bboxInternal.yMin;
 			}
 		}
 
 		/// <summary>
 		/// Gets the horizontal maximum (right-most).
 		/// </summary>
-		public long Right
+		public int Right
 		{
 			get
 			{
-				return bboxInternal.xMax;
+				return (int)bboxInternal.xMax;
 			}
 		}
 
 		/// <summary>
 		/// Gets the vertical maximum (top-most).
 		/// </summary>
-		public long Top
+		public int Top
 		{
 			get
 			{
-				return bboxInternal.yMax;
+				return (int)bboxInternal.yMax;
 			}
 		}
 	}

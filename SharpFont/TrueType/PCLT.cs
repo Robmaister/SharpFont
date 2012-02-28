@@ -44,20 +44,20 @@ namespace SharpFont.TrueType
 			this.rec = (PCLTRec)Marshal.PtrToStructure(reference, typeof(PCLTRec));
 		}
 
-		public long Version
+		public int Version
 		{
 			get
 			{
-				return rec.Version;
+				return (int)rec.Version;
 			}
 		}
 		
 		[CLSCompliant(false)]
-		public ulong FontNumber
+		public uint FontNumber
 		{
 			get
 			{
-				return rec.FontNumber;
+				return (uint)rec.FontNumber;
 			}
 		}
 

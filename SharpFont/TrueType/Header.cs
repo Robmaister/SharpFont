@@ -44,35 +44,35 @@ namespace SharpFont.TrueType
 			this.rec = (HeaderRec)Marshal.PtrToStructure(reference, typeof(HeaderRec));
 		}
 
-		public long TableVersion
+		public int TableVersion
 		{
 			get
 			{
-				return rec.Table_Version;
+				return (int)rec.Table_Version;
 			}
 		}
 
-		public long FontRevision
+		public int FontRevision
 		{
 			get
 			{
-				return rec.Font_Revision;
+				return (int)rec.Font_Revision;
 			}
 		}
 
-		public long CheckSumAdjust
+		public int CheckSumAdjust
 		{
 			get
 			{
-				return rec.CheckSum_Adjust;
+				return (int)rec.CheckSum_Adjust;
 			}
 		}
 
-		public long MagicNumber
+		public int MagicNumber
 		{
 			get
 			{
-				return rec.Magic_Number;
+				return (int)rec.Magic_Number;
 			}
 		}
 
@@ -94,26 +94,26 @@ namespace SharpFont.TrueType
 			}
 		}
 
-		public long[] Created
+		public int[] Created
 		{
 			get
 			{
-				#if FT64
+				#if WIN64
 				return rec.Created;
 				#else
-				return Array.ConvertAll<int, long>(rec.Created, new Converter<int, long>(delegate(int i) { return i; }));
+				return Array.ConvertAll<IntPtr, int>(rec.Created, new Converter<IntPtr, int>(delegate(IntPtr i) { return (int)i; }));
 				#endif
 			}
 		}
 
-		public long[] Modified
+		public int[] Modified
 		{
 			get
 			{
-				#if FT64
-				return rec.Modified;
+				#if WIN64
+				return rec.Created;
 				#else
-				return Array.ConvertAll<int, long>(rec.Modified, new Converter<int, long>(delegate(int i) { return i; }));
+				return Array.ConvertAll<IntPtr, int>(rec.Created, new Converter<IntPtr, int>(delegate(IntPtr i) { return (int)i; }));
 				#endif
 			}
 		}

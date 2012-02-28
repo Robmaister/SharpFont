@@ -86,33 +86,33 @@ namespace SharpFont
 		/// Gets the nominal size of the strike in 26.6 fractional points. This
 		/// field is not very useful.
 		/// </summary>
-		public long Size
+		public int Size
 		{
 			get
 			{
-				return bitmapSizeInternal.size;
+				return (int)bitmapSizeInternal.size;
 			}
 		}
 
 		/// <summary>
 		/// Gets the horizontal ppem (nominal width) in 26.6 fractional pixels.
 		/// </summary>
-		public long NominalWidth
+		public int NominalWidth
 		{
 			get
 			{
-				return bitmapSizeInternal.x_ppem;
+				return (int)bitmapSizeInternal.x_ppem;
 			}
 		}
 
 		/// <summary>
 		/// Gets the vertical ppem (nominal height) in 26.6 fractional pixels.
 		/// </summary>
-		public long NominalHeight
+		public int NominalHeight
 		{
 			get
 			{
-				return bitmapSizeInternal.y_ppem;
+				return (int)bitmapSizeInternal.y_ppem;
 			}
 		}
 	}

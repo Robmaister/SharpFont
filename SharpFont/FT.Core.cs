@@ -1317,6 +1317,7 @@ namespace SharpFont
 		/// <param name="glyph">A handle to the source glyph object.</param>
 		/// <param name="mode">The mode which indicates how to interpret the returned bounding box values.</param>
 		/// <returns>The glyph coordinate bounding box. Coordinates are expressed in 1/64th of pixels if it is grid-fitted.</returns>
+		[CLSCompliant(false)]
 		public static BBox GlyphGetCBox(Glyph glyph, GlyphBBoxMode mode)
 		{
 			IntPtr cboxRef;

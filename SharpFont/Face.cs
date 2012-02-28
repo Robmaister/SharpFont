@@ -80,11 +80,11 @@ namespace SharpFont
 		/// Gets the number of faces in the font file. Some font formats can
 		/// have multiple faces in a font file.
 		/// </summary>
-		public long FaceCount
+		public int FaceCount
 		{
 			get
 			{
-				return rec.num_faces;
+				return (int)rec.num_faces;
 			}
 		}
 
@@ -92,11 +92,11 @@ namespace SharpFont
 		/// Gets the index of the face in the font file. It is set to 0 if
 		/// there is only one face in the font file.
 		/// </summary>
-		public long FaceIndex
+		public int FaceIndex
 		{
 			get
 			{
-				return rec.face_index;
+				return (int)rec.face_index;
 			}
 		}
 
@@ -133,11 +133,11 @@ namespace SharpFont
 		/// For CID-keyed fonts, this value gives the highest CID used in the
 		/// font.
 		/// </para></summary>
-		public long GlyphCount
+		public int GlyphCount
 		{
 			get
 			{
-				return rec.num_glyphs;
+				return (int)rec.num_glyphs;
 			}
 		}
 

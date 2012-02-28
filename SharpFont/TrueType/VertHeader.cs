@@ -55,11 +55,11 @@ namespace SharpFont.TrueType
 		/// <summary>
 		/// Gets the table version.
 		/// </summary>
-		public long Version
+		public int Version
 		{
 			get
 			{
-				return rec.Version;
+				return (int)rec.Version;
 			}
 		}
 

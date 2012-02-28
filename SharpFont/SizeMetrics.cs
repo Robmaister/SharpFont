@@ -96,11 +96,11 @@ namespace SharpFont
 		/// from font units to 26.6 fractional pixels. Only relevant for
 		/// scalable font formats.
 		/// </summary>
-		public long ScaleX
+		public int ScaleX
 		{
 			get
 			{
-				return metricsInternal.x_scale;
+				return (int)metricsInternal.x_scale;
 			}
 		}
 
@@ -109,11 +109,11 @@ namespace SharpFont
 		/// from font units to 26.6 fractional pixels. Only relevant for
 		/// scalable font formats.
 		/// </summary>
-		public long ScaleY
+		public int ScaleY
 		{
 			get
 			{
-				return metricsInternal.y_scale;
+				return (int)metricsInternal.y_scale;
 			}
 		}
 
@@ -121,11 +121,11 @@ namespace SharpFont
 		/// The ascender in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
-		public long Ascender
+		public int Ascender
 		{
 			get
 			{
-				return metricsInternal.ascender;
+				return (int)metricsInternal.ascender;
 			}
 		}
 
@@ -133,11 +133,11 @@ namespace SharpFont
 		/// The descender in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
-		public long Descender
+		public int Descender
 		{
 			get
 			{
-				return metricsInternal.descender;
+				return (int)metricsInternal.descender;
 			}
 		}
 
@@ -145,11 +145,11 @@ namespace SharpFont
 		/// The height in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
-		public long Height
+		public int Height
 		{
 			get
 			{
-				return metricsInternal.height;
+				return (int)metricsInternal.height;
 			}
 		}
 
@@ -157,11 +157,11 @@ namespace SharpFont
 		/// The maximal advance width in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
-		public long MaxAdvance
+		public int MaxAdvance
 		{
 			get
 			{
-				return metricsInternal.max_advance;
+				return (int)metricsInternal.max_advance;
 			}
 		}
 	}

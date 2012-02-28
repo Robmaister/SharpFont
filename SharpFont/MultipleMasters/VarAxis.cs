@@ -58,11 +58,11 @@ namespace SharpFont.MultipleMasters
 		/// <summary>
 		/// Gets the axis's minimum design coordinate.
 		/// </summary>
-		public long Minimum
+		public int Minimum
 		{
 			get
 			{
-				return axisInternal.minimum;
+				return (int)axisInternal.minimum;
 			}
 		}
 
@@ -71,22 +71,22 @@ namespace SharpFont.MultipleMasters
 		/// default values for MM; it is then an integer value, not in 16.16
 		/// format.
 		/// </summary>
-		public long Default
+		public int Default
 		{
 			get
 			{
-				return axisInternal.def;
+				return (int)axisInternal.def;
 			}
 		}
 
 		/// <summary>
 		/// Gets the axis's maximum design coordinate.
 		/// </summary>
-		public long Maximum
+		public int Maximum
 		{
 			get
 			{
-				return axisInternal.maximum;
+				return (int)axisInternal.maximum;
 			}
 		}
 
@@ -95,11 +95,11 @@ namespace SharpFont.MultipleMasters
 		/// default values for MM if possible.
 		/// </summary>
 		[CLSCompliant(false)]
-		public ulong Tag
+		public uint Tag
 		{
 			get
 			{
-				return axisInternal.tag;
+				return (uint)axisInternal.tag;
 			}
 		}
 

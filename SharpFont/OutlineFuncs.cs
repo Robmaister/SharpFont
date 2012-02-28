@@ -123,7 +123,12 @@ namespace SharpFont
 			funcsInt.conicTo = conicTo;
 			funcsInt.cubicTo = cubicTo;
 			funcsInt.shift = shift;
+
+			#if WIN64
 			funcsInt.delta = delta;
+			#else
+			funcsInt.delta = (IntPtr)delta;
+			#endif
 		}
 
 		/// <summary>
@@ -211,17 +216,17 @@ namespace SharpFont
 		/// Gets or sets the delta that is applied to coordinates before they
 		/// are sent to the emitter, but after the shift.
 		/// </summary>
-		public long Delta
+		public int Delta
 		{
 			get
 			{
-				return funcsInt.delta;
+				return (int)funcsInt.delta;
 			}
 
-			set
+			/*set
 			{
-				funcsInt.delta = (int)value;
-			}
+				funcsInt.delta = (IntPtr)value;
+			}*/
 		}
 	}
 }

@@ -66,22 +66,22 @@ namespace SharpFont.MultipleMasters
 		/// <summary>
 		/// Gets the axis's minimum design coordinate.
 		/// </summary>
-		public long Minimum
+		public int Minimum
 		{
 			get
 			{
-				return axisInternal.minimum;
+				return (int)axisInternal.minimum;
 			}
 		}
 
 		/// <summary>
 		/// Gets the axis's maximum design coordinate.
 		/// </summary>
-		public long Maximum
+		public int Maximum
 		{
 			get
 			{
-				return axisInternal.maximum;
+				return (int)axisInternal.maximum;
 			}
 		}
 	}

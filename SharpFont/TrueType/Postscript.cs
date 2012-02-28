@@ -46,19 +46,19 @@ namespace SharpFont.TrueType
 			this.rec = (PostscriptRec)Marshal.PtrToStructure(reference, typeof(PostscriptRec));
 		}
 
-		public long FormatType
+		public int FormatType
 		{
 			get
 			{
-				return rec.FormatType;
+				return (int)rec.FormatType;
 			}
 		}
 		
-		public long ItalicAngle
+		public int ItalicAngle
 		{
 			get
 			{
-				return rec.italicAngle;
+				return (int)rec.italicAngle;
 			}
 		}
 		
@@ -79,47 +79,47 @@ namespace SharpFont.TrueType
 		}
 
 		[CLSCompliant(false)]
-		public ulong IsFixedPitch
+		public uint IsFixedPitch
 		{
 			get
 			{
-				return rec.isFixedPitch;
+				return (uint)rec.isFixedPitch;
 			}
 		}
 
 		[CLSCompliant(false)]
-		public ulong MinimumMemoryType42
+		public uint MinimumMemoryType42
 		{
 			get
 			{
-				return rec.minMemType42;
+				return (uint)rec.minMemType42;
 			}
 		}
 
 		[CLSCompliant(false)]
-		public ulong MaximumMemoryType42
+		public uint MaximumMemoryType42
 		{
 			get
 			{
-				return rec.maxMemType42;
+				return (uint)rec.maxMemType42;
 			}
 		}
 
 		[CLSCompliant(false)]
-		public ulong MinimumMemoryType1
+		public uint MinimumMemoryType1
 		{
 			get
 			{
-				return rec.minMemType1;
+				return (uint)rec.minMemType1;
 			}
 		}
 
 		[CLSCompliant(false)]
-		public ulong MaximumMemoryType1
+		public uint MaximumMemoryType1
 		{
 			get
 			{
-				return rec.maxMemType1;
+				return (uint)rec.maxMemType1;
 			}
 		}
 	}

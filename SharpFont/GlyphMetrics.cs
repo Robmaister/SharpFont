@@ -69,66 +69,66 @@ namespace SharpFont
 		/// <summary>
 		/// Gets the glyph's width.
 		/// </summary>
-		public long Width
+		public int Width
 		{
 			get
 			{
-				return glyphMetricsInternal.width;
+				return (int)glyphMetricsInternal.width;
 			}
 		}
 
 		/// <summary>
 		/// Gets the glyph's height.
 		/// </summary>
-		public long Height
+		public int Height
 		{
 			get
 			{
-				return glyphMetricsInternal.height;
+				return (int)glyphMetricsInternal.height;
 			}
 		}
 
 		/// <summary>
 		/// Gets the left side bearing for horizontal layout.
 		/// </summary>
-		public long HorizontalBearingX
+		public int HorizontalBearingX
 		{
 			get
 			{
-				return glyphMetricsInternal.horiBearingX;
+				return (int)glyphMetricsInternal.horiBearingX;
 			}
 		}
 
 		/// <summary>
 		/// Gets the top side bearing for horizontal layout.
 		/// </summary>
-		public long HorizontalBearingY
+		public int HorizontalBearingY
 		{
 			get
 			{
-				return glyphMetricsInternal.horiBearingY;
+				return (int)glyphMetricsInternal.horiBearingY;
 			}
 		}
 
 		/// <summary>
 		/// Gets the advance width for horizontal layout.
 		/// </summary>
-		public long HorizontalAdvance
+		public int HorizontalAdvance
 		{
 			get
 			{
-				return glyphMetricsInternal.horiAdvance;
+				return (int)glyphMetricsInternal.horiAdvance;
 			}
 		}
 
 		/// <summary>
 		/// Gets the left side bearing for vertical layout.
 		/// </summary>
-		public long VerticalBearingX
+		public int VerticalBearingX
 		{
 			get
 			{
-				return glyphMetricsInternal.vertBearingX;
+				return (int)glyphMetricsInternal.vertBearingX;
 			}
 		}
 
@@ -136,11 +136,11 @@ namespace SharpFont
 		/// Gets the top side bearing for vertical layout. Larger positive
 		/// values mean further below the vertical glyph origin.
 		/// </summary>
-		public long VerticalBearingY
+		public int VerticalBearingY
 		{
 			get
 			{
-				return glyphMetricsInternal.vertBearingY;
+				return (int)glyphMetricsInternal.vertBearingY;
 			}
 		}
 
@@ -148,11 +148,11 @@ namespace SharpFont
 		/// Gets the advance height for vertical layout. Positive values mean
 		/// the glyph has a positive advance downward.
 		/// </summary>
-		public long VerticalAdvance
+		public int VerticalAdvance
 		{
 			get
 			{
-				return glyphMetricsInternal.vertAdvance;
+				return (int)glyphMetricsInternal.vertAdvance;
 			}
 		}
 	}

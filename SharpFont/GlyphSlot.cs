@@ -159,11 +159,11 @@ namespace SharpFont
 		/// is set when loading the glyph. This field can be important to
 		/// perform correct WYSIWYG layout. Only relevant for outline glyphs.
 		/// </summary>
-		public long LinearHorizontalAdvance
+		public int LinearHorizontalAdvance
 		{
 			get
 			{
-				return rec.linearHoriAdvance;
+				return (int)rec.linearHoriAdvance;
 			}
 		}
 
@@ -173,11 +173,11 @@ namespace SharpFont
 		/// is set when loading the glyph. This field can be important to
 		/// perform correct WYSIWYG layout. Only relevant for outline glyphs.
 		/// </summary>
-		public long LinearVerticalAdvance
+		public int LinearVerticalAdvance
 		{
 			get
 			{
-				return rec.linearVertAdvance;
+				return (int)rec.linearVertAdvance;
 			}
 		}
 
@@ -319,11 +319,11 @@ namespace SharpFont
 		/// <summary>
 		/// This is the length in bytes of the control data.
 		/// </summary>
-		public long ControlLength
+		public int ControlLength
 		{
 			get
 			{
-				return rec.control_len;
+				return (int)rec.control_len;
 			}
 		}
 
@@ -331,11 +331,11 @@ namespace SharpFont
 		/// Gets the difference between hinted and unhinted left side bearing
 		/// while autohinting is active. Zero otherwise.
 		/// </summary>
-		public long DeltaLSB
+		public int DeltaLSB
 		{
 			get
 			{
-				return rec.lsb_delta;
+				return (int)rec.lsb_delta;
 			}
 		}
 
@@ -343,11 +343,11 @@ namespace SharpFont
 		/// Gets the difference between hinted and unhinted right side bearing
 		/// while autohinting is active. Zero otherwise.
 		/// </summary>
-		public long DeltaRSB
+		public int DeltaRSB
 		{
 			get
 			{
-				return rec.rsb_delta;
+				return (int)rec.rsb_delta;
 			}
 		}
 

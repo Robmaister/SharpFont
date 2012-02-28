@@ -25,18 +25,18 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-#if FT64
-using FT_26Dot6 = System.Int64;
-using FT_Fixed = System.Int64;
-using FT_Long = System.Int64;
-using FT_Pos = System.Int64;
-using FT_ULong = System.UInt64;
-#else
+#if WIN64
 using FT_26Dot6 = System.Int32;
 using FT_Fixed = System.Int32;
 using FT_Long = System.Int32;
 using FT_Pos = System.Int32;
 using FT_ULong = System.UInt32;
+#else
+using FT_26Dot6 = System.IntPtr;
+using FT_Fixed = System.IntPtr;
+using FT_Long = System.IntPtr;
+using FT_Pos = System.IntPtr;
+using FT_ULong = System.UIntPtr;
 #endif
 
 namespace SharpFont.Internal
@@ -53,6 +53,6 @@ namespace SharpFont.Internal
 		internal FT_Pos xMin, yMin;
 		internal FT_Pos xMax, yMax;
 
-		internal static int SizeInBytes { get { return sizeof(FT_Pos) * 4; } }
+		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(FT_Pos)) * 4; } }
 	}
 }

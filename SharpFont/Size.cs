@@ -44,11 +44,6 @@ namespace SharpFont
 			this.rec = (SizeRec)Marshal.PtrToStructure(reference, typeof(SizeRec));
 		}
 
-		internal Size(IntPtr reference, int offset)
-			: this(new IntPtr(reference.ToInt64() + offset))
-		{
-		}
-
 		/// <summary>
 		/// Gets a handle to the parent face object.
 		/// </summary>

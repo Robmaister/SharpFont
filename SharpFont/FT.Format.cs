@@ -25,6 +25,7 @@ SOFTWARE.*/
 using System;
 
 using SharpFont.MultipleMasters;
+using SharpFont.TrueType;
 
 namespace SharpFont
 {
@@ -144,6 +145,43 @@ namespace SharpFont
 		#endregion
 
 		#region SFNT Names
+
+		/// <summary>
+		/// Retrieve the number of name strings in the SFNT ‘name’ table.
+		/// </summary>
+		/// <param name="face">A handle to the source face.</param>
+		/// <returns>The number of strings in the ‘name’ table.</returns>
+		public static uint GetSfntNameCount(Face face)
+		{
+			return FT_Get_Sfnt_Name_Count(face.reference);
+		}
+
+		/// <summary>
+		/// Retrieve a string of the SFNT ‘name’ table for a given index.
+		/// </summary>
+		/// <remarks><para>
+		/// The ‘string’ array returned in the ‘aname’ structure is not
+		/// null-terminated. The application should deallocate it if it is no
+		/// longer in use.
+		/// </para><para>
+		/// Use FT_Get_Sfnt_Name_Count to get the total number of available
+		/// ‘name’ table entries, then do a loop until you get the right
+		/// platform, encoding, and name ID.
+		/// </para></remarks>
+		/// <param name="face">A handle to the source face.</param>
+		/// <param name="idx">The index of the ‘name’ string.</param>
+		/// <returns>The indexed FT_SfntName structure.</returns>
+		public static SfntName GetSfntName(Face face, uint idx)
+		{
+			IntPtr nameRef;
+
+			Error err = FT_Get_Sfnt_Name(face.reference, idx, out nameRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new SfntName(nameRef);
+		}
 
 		#endregion
 

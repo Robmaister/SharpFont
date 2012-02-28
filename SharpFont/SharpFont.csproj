@@ -120,6 +120,8 @@
     <Compile Include="MultipleMasters\VarNamedStyle.cs" />
     <Compile Include="Orientation.cs" />
     <Compile Include="OutlineGlyph.cs" />
+    <Compile Include="TrueType\Internal\SfntNameInternal.cs" />
+    <Compile Include="TrueType\SfntName.cs" />
     <Compile Include="TrueType\EncodingID.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="Face.cs" />

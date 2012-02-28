@@ -25,30 +25,15 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-#if WIN64
-using FT_26Dot6 = System.Int32;
-using FT_Fixed = System.Int32;
-using FT_Long = System.Int32;
-using FT_Pos = System.Int32;
-using FT_ULong = System.UInt32;
-#else
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
-using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
-using FT_ULong = System.UIntPtr;
-#endif
-
-namespace SharpFont.Internal
+namespace SharpFont.MultipleMasters.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct OutlineFuncsInternal
+	internal class MMVarRec
 	{
-		internal MoveToFunc moveTo;
-		internal LineToFunc lineTo;
-		internal ConicToFunc conicTo;
-		internal CubicToFunc cubicTo;
-		internal int shift;
-		internal FT_Pos delta;
+		internal uint num_axis;
+		internal uint num_designs;
+		internal uint num_namedstyles;
+		internal IntPtr axis;
+		internal IntPtr namedstyle;
 	}
 }

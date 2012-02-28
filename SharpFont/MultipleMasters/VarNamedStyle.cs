@@ -37,12 +37,12 @@ namespace SharpFont.MultipleMasters
 	public class VarNamedStyle
 	{
 		internal IntPtr reference;
-		internal VarNamedStyleInternal styleInternal;
+		internal VarNamedStyleRec rec;
 
 		internal VarNamedStyle(IntPtr reference)
 		{
 			this.reference = reference;
-			this.styleInternal = (VarNamedStyleInternal)Marshal.PtrToStructure(reference, typeof(VarNamedStyleInternal));
+			this.rec = (VarNamedStyleRec)Marshal.PtrToStructure(reference, typeof(VarNamedStyleRec));
 		}
 
 		/// <summary>
@@ -53,7 +53,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return styleInternal.coords;
+				return rec.coords;
 			}
 		}
 
@@ -65,7 +65,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return styleInternal.strid;
+				return rec.strid;
 			}
 		}
 	}

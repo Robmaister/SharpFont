@@ -47,16 +47,16 @@ namespace SharpFont
 	public sealed class BitmapSize
 	{
 		internal IntPtr reference;
-		internal BitmapSizeInternal bitmapSizeInternal;
+		internal BitmapSizeRec rec;
 
 		internal BitmapSize(IntPtr reference)
 		{
 			this.reference = reference;
 		}
 
-		internal BitmapSize(BitmapSizeInternal bmpSizeInt)
+		internal BitmapSize(BitmapSizeRec bmpSizeInt)
 		{
-			this.bitmapSizeInternal = bmpSizeInt;
+			this.rec = bmpSizeInt;
 		}
 
 		/// <summary>
@@ -67,7 +67,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return bitmapSizeInternal.height;
+				return rec.height;
 			}
 		}
 
@@ -78,7 +78,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return bitmapSizeInternal.width;
+				return rec.width;
 			}
 		}
 
@@ -90,7 +90,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)bitmapSizeInternal.size;
+				return (int)rec.size;
 			}
 		}
 
@@ -101,7 +101,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)bitmapSizeInternal.x_ppem;
+				return (int)rec.x_ppem;
 			}
 		}
 
@@ -112,7 +112,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)bitmapSizeInternal.y_ppem;
+				return (int)rec.y_ppem;
 			}
 		}
 	}

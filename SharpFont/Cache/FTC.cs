@@ -27,8 +27,19 @@ using System.Runtime.InteropServices;
 
 namespace SharpFont.Cache
 {
+	/// <summary>
+	/// Provides an API very similar to the original FreeType Cache API.
+	/// </summary>
+	/// <remarks>
+	/// Useful for porting over C code that relies on the FreeType caching
+	/// sub-system. For everything else, use the instance methods of the
+	/// classes provided by SharpFont, they are designed to follow .NET naming
+	/// and style conventions.
+	/// </remarks>
 	public static class FTC
 	{
+		#region Public Members
+
 		/// <summary>
 		/// Create a new cache manager.
 		/// </summary>
@@ -412,6 +423,10 @@ namespace SharpFont.Cache
 			return new SBit(sbitRef);
 		}
 
+		#endregion
+
+		#region Internal Members
+
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Error FTC_Manager_New(IntPtr library, uint max_faces, uint max_sizes, ulong maxBytes, FaceRequester requester, IntPtr req_data, out IntPtr amanager);
 
@@ -456,5 +471,7 @@ namespace SharpFont.Cache
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Error FTC_SBitCache_LookupScaler(IntPtr cache, IntPtr scaler, LoadFlags load_flags, uint gindex, out IntPtr sbit, out IntPtr anode);
+
+		#endregion
 	}
 }

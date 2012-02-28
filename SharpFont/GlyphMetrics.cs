@@ -42,17 +42,17 @@ namespace SharpFont
 	public sealed class GlyphMetrics
 	{
 		internal IntPtr reference;
-		internal GlyphMetricsInternal glyphMetricsInternal;
+		internal GlyphMetricsRec rec;
 
 		internal GlyphMetrics(IntPtr reference)
 		{
 			this.reference = reference;
-			this.glyphMetricsInternal = (GlyphMetricsInternal)Marshal.PtrToStructure(reference, typeof(GlyphMetricsInternal));
+			this.rec = (GlyphMetricsRec)Marshal.PtrToStructure(reference, typeof(GlyphMetricsRec));
 		}
 
-		internal GlyphMetrics(GlyphMetricsInternal glyphMetInt)
+		internal GlyphMetrics(GlyphMetricsRec glyphMetInt)
 		{
-			this.glyphMetricsInternal = glyphMetInt;
+			this.rec = glyphMetInt;
 		}
 
 		/*/// <summary>
@@ -73,7 +73,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)glyphMetricsInternal.width;
+				return (int)rec.width;
 			}
 		}
 
@@ -84,7 +84,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)glyphMetricsInternal.height;
+				return (int)rec.height;
 			}
 		}
 
@@ -95,7 +95,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)glyphMetricsInternal.horiBearingX;
+				return (int)rec.horiBearingX;
 			}
 		}
 
@@ -106,7 +106,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)glyphMetricsInternal.horiBearingY;
+				return (int)rec.horiBearingY;
 			}
 		}
 
@@ -117,7 +117,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)glyphMetricsInternal.horiAdvance;
+				return (int)rec.horiAdvance;
 			}
 		}
 
@@ -128,7 +128,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)glyphMetricsInternal.vertBearingX;
+				return (int)rec.vertBearingX;
 			}
 		}
 
@@ -140,7 +140,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)glyphMetricsInternal.vertBearingY;
+				return (int)rec.vertBearingY;
 			}
 		}
 
@@ -152,7 +152,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)glyphMetricsInternal.vertAdvance;
+				return (int)rec.vertAdvance;
 			}
 		}
 	}

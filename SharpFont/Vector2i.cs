@@ -34,17 +34,17 @@ namespace SharpFont
 	public sealed class Vector2i
 	{
 		internal IntPtr reference;
-		internal VectorInternal vec;
+		internal VectorRec rec;
 
 		internal Vector2i(IntPtr reference)
 		{
 			this.reference = reference;
-			this.vec = (VectorInternal)Marshal.PtrToStructure(reference, typeof(VectorInternal));
+			this.rec = (VectorRec)Marshal.PtrToStructure(reference, typeof(VectorRec));
 		}
 
-		internal Vector2i(VectorInternal vInt)
+		internal Vector2i(VectorRec vInt)
 		{
-			this.vec = vInt;
+			this.rec = vInt;
 		}
 
 		/// <summary>
@@ -54,7 +54,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)vec.x;
+				return (int)rec.x;
 			}
 		}
 
@@ -65,7 +65,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)vec.y;
+				return (int)rec.y;
 			}
 		}
 	}

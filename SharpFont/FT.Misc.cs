@@ -23,28 +23,25 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Runtime.InteropServices;
 
-#if WIN64
-using FT_26Dot6 = System.Int32;
-using FT_Fixed = System.Int32;
-using FT_Long = System.Int32;
-using FT_Pos = System.Int32;
-using FT_ULong = System.UInt32;
-#else
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
-using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
-using FT_ULong = System.UIntPtr;
-#endif
-
-namespace SharpFont.Internal
+namespace SharpFont
 {
-	[StructLayout(LayoutKind.Sequential)]
-	internal struct VectorInternal
+	public static partial class FT
 	{
-		internal FT_Pos x;
-		internal FT_Pos y;
+		#region OpenType Validation
+
+		#endregion
+
+		#region Incremental Loading
+
+		#endregion
+
+		#region The TrueType Engine
+
+		#endregion
+
+		#region TrueTypeGX/AAT Validation
+
+		#endregion
 	}
 }

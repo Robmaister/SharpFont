@@ -33,6 +33,6 @@ namespace SharpFont.Internal
 		internal GlyphRec root;
 		internal int left;
 		internal int top;
-		internal BitmapInternal bitmap;
+		internal BitmapRec bitmap;
 	}
 }

@@ -38,18 +38,18 @@ namespace SharpFont.MultipleMasters
 	public class MMAxis
 	{
 		internal IntPtr reference;
-		internal MMAxisInternal axisInternal;
+		internal MMAxisRec rec;
 
 		internal MMAxis(IntPtr reference)
 		{
 			this.reference = reference;
-			this.axisInternal = (MMAxisInternal)Marshal.PtrToStructure(reference, typeof(MMAxisInternal));
+			this.rec = (MMAxisRec)Marshal.PtrToStructure(reference, typeof(MMAxisRec));
 		}
 
-		internal MMAxis(MMAxisInternal axisInternal)
+		internal MMAxis(MMAxisRec axisInternal)
 		{
 			this.reference = IntPtr.Zero;
-			this.axisInternal = axisInternal;
+			this.rec = axisInternal;
 		}
 
 		/// <summary>
@@ -59,7 +59,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return axisInternal.name;
+				return rec.name;
 			}
 		}
 
@@ -70,7 +70,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return (int)axisInternal.minimum;
+				return (int)rec.minimum;
 			}
 		}
 
@@ -81,7 +81,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return (int)axisInternal.maximum;
+				return (int)rec.maximum;
 			}
 		}
 	}

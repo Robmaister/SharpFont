@@ -41,17 +41,17 @@ namespace SharpFont
 	public sealed class Outline
 	{
 		internal IntPtr reference;
-		internal OutlineInternal outlineInternal;
+		internal OutlineRec rec;
 
 		internal Outline(IntPtr reference)
 		{
 			this.reference = reference;
-			this.outlineInternal = (OutlineInternal)Marshal.PtrToStructure(reference, typeof(OutlineInternal));
+			this.rec = (OutlineRec)Marshal.PtrToStructure(reference, typeof(OutlineRec));
 		}
 
-		internal Outline(OutlineInternal outlineInt)
+		internal Outline(OutlineRec outlineInt)
 		{
-			this.outlineInternal = outlineInt;
+			this.rec = outlineInt;
 		}
 
 		/// <summary>
@@ -72,7 +72,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return outlineInternal.n_contours;
+				return rec.n_contours;
 			}
 		}
 
@@ -83,7 +83,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return outlineInternal.n_points;
+				return rec.n_points;
 			}
 		}
 
@@ -101,7 +101,7 @@ namespace SharpFont
 					return null;
 
 				Vector2i[] points = new Vector2i[count];
-				IntPtr array = outlineInternal.points;
+				IntPtr array = rec.points;
 
 				for (int i = 0; i < count; i++)
 				{
@@ -139,7 +139,7 @@ namespace SharpFont
 					return null;
 
 				byte[] tags = new byte[count];
-				IntPtr array = outlineInternal.tags;
+				IntPtr array = rec.tags;
 
 				for (int i = 0; i < count; i++)
 				{
@@ -166,7 +166,7 @@ namespace SharpFont
 					return null;
 
 				short[] contours = new short[count];
-				IntPtr array = outlineInternal.contours;
+				IntPtr array = rec.contours;
 
 				for (int i = 0; i < count; i++)
 				{
@@ -186,7 +186,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return outlineInternal.flags;
+				return rec.flags;
 			}
 		}
 	}

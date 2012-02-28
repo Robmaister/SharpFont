@@ -30,7 +30,7 @@ using SharpFont.TrueType;
 namespace SharpFont
 {
 	
-	public partial class FT
+	public static partial class FT
 	{
 		#region Core API
 
@@ -556,7 +556,7 @@ namespace SharpFont
 		#region BZIP2 Streams
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Stream_OpenBzip2(IntPtr stream, IntPtr source);
+		internal static extern Error FT_Stream_OpenBzip2(IntPtr stream, IntPtr source);
 
 		#endregion
 

@@ -28,12 +28,9 @@ using System.Runtime.InteropServices;
 namespace SharpFont.MultipleMasters.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class MultiMasterInternal
+	internal class VarNamedStyleRec
 	{
-		internal uint num_axis;
-		internal uint num_designs;
-
-		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
-		internal MMAxisInternal[] axis;
+		internal IntPtr coords;
+		internal uint strid;
 	}
 }

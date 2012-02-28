@@ -38,12 +38,12 @@ namespace SharpFont.MultipleMasters
 	public class MMVar
 	{
 		internal IntPtr reference;
-		internal MMVarInternal varInternal;
+		internal MMVarRec rec;
 
 		internal MMVar(IntPtr reference)
 		{
 			this.reference = reference;
-			this.varInternal = (MMVarInternal)Marshal.PtrToStructure(reference, typeof(MMVarInternal));
+			this.rec = (MMVarRec)Marshal.PtrToStructure(reference, typeof(MMVarRec));
 		}
 
 		/// <summary>
@@ -54,7 +54,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return varInternal.num_axis;
+				return rec.num_axis;
 			}
 		}
 
@@ -68,7 +68,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return varInternal.num_designs;
+				return rec.num_designs;
 			}
 		}
 
@@ -83,7 +83,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return varInternal.num_namedstyles;
+				return rec.num_namedstyles;
 			}
 		}
 
@@ -95,7 +95,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return new VarAxis(varInternal.axis);
+				return new VarAxis(rec.axis);
 			}
 		}
 
@@ -106,7 +106,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return new VarNamedStyle(varInternal.namedstyle);
+				return new VarNamedStyle(rec.namedstyle);
 			}
 		}
 	}

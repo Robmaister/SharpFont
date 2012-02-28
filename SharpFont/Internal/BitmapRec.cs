@@ -25,33 +25,26 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-#if WIN64
-using FT_26Dot6 = System.Int32;
-using FT_Fixed = System.Int32;
-using FT_Long = System.Int32;
-using FT_Pos = System.Int32;
-using FT_ULong = System.UInt32;
-#else
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
-using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
-using FT_ULong = System.UIntPtr;
-#endif
-
 namespace SharpFont.Internal
 {
+	/// <summary>
+	/// Internally represents a Bitmap.
+	/// </summary>
+	/// <remarks>
+	/// Refer to <see cref="Bitmap"/> for FreeType documentation.
+	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct SizeMetricsInternal
+	internal struct BitmapRec
 	{
-		internal ushort x_ppem;
-		internal ushort y_ppem;
+		internal int rows;
+		internal int width;
+		internal int pitch;
+		internal IntPtr buffer;
+		internal short num_grays;
+		internal PixelMode pixel_mode;
+		internal byte palette_mode;
+		internal IntPtr palette;
 
-		internal FT_Fixed x_scale;
-		internal FT_Fixed y_scale;
-		internal FT_Pos ascender;
-		internal FT_Pos descender;
-		internal FT_Pos height;
-		internal FT_Pos max_advance;
+		internal static int SizeInBytes { get { return 16 + IntPtr.Size * 2; } }
 	}
 }

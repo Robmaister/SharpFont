@@ -98,7 +98,7 @@ namespace SharpFont
 	/// </remarks>
 	public class OutlineFuncs
 	{
-		internal OutlineFuncsInternal funcsInt;
+		internal OutlineFuncsRec rec;
 
 		/// <summary>
 		/// Initializes a new instance of the OutlineFuncs class.
@@ -118,16 +118,16 @@ namespace SharpFont
 		/// <param name="delta">A delta to transform by.</param>
 		public OutlineFuncs(MoveToFunc moveTo, LineToFunc lineTo, ConicToFunc conicTo, CubicToFunc cubicTo, int shift, int delta)
 		{
-			funcsInt.moveTo = moveTo;
-			funcsInt.lineTo = lineTo;
-			funcsInt.conicTo = conicTo;
-			funcsInt.cubicTo = cubicTo;
-			funcsInt.shift = shift;
+			rec.moveTo = moveTo;
+			rec.lineTo = lineTo;
+			rec.conicTo = conicTo;
+			rec.cubicTo = cubicTo;
+			rec.shift = shift;
 
 			#if WIN64
 			funcsInt.delta = delta;
 			#else
-			funcsInt.delta = (IntPtr)delta;
+			rec.delta = (IntPtr)delta;
 			#endif
 		}
 
@@ -138,12 +138,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return funcsInt.moveTo;
+				return rec.moveTo;
 			}
 
 			set
 			{
-				funcsInt.moveTo = value;
+				rec.moveTo = value;
 			}
 		}
 
@@ -154,12 +154,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return funcsInt.lineTo;
+				return rec.lineTo;
 			}
 
 			set
 			{
-				funcsInt.lineTo = value;
+				rec.lineTo = value;
 			}
 		}
 
@@ -170,12 +170,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return funcsInt.conicTo;
+				return rec.conicTo;
 			}
 
 			set
 			{
-				funcsInt.conicTo = value;
+				rec.conicTo = value;
 			}
 		}
 
@@ -186,12 +186,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return funcsInt.cubicTo;
+				return rec.cubicTo;
 			}
 
 			set
 			{
-				funcsInt.cubicTo = value;
+				rec.cubicTo = value;
 			}
 		}
 
@@ -203,12 +203,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return funcsInt.shift;
+				return rec.shift;
 			}
 
 			set
 			{
-				funcsInt.shift = value;
+				rec.shift = value;
 			}
 		}
 
@@ -220,7 +220,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)funcsInt.delta;
+				return (int)rec.delta;
 			}
 
 			/*set

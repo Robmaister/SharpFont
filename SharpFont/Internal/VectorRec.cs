@@ -41,26 +41,10 @@ using FT_ULong = System.UIntPtr;
 
 namespace SharpFont.Internal
 {
-	/// <summary>
-	/// Internally represents a GlyphMetrics.
-	/// </summary>
-	/// <remarks>
-	/// Refer to <see cref="GlyphMetrics"/> for FreeType documentation.
-	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct GlyphMetricsInternal
+	internal struct VectorRec
 	{
-		internal FT_Pos width;
-		internal FT_Pos height;
-
-		internal FT_Pos horiBearingX;
-		internal FT_Pos horiBearingY;
-		internal FT_Pos horiAdvance;
-
-		internal FT_Pos vertBearingX;
-		internal FT_Pos vertBearingY;
-		internal FT_Pos vertAdvance;
-
-		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(FT_Pos)) * 8; } }
+		internal FT_Pos x;
+		internal FT_Pos y;
 	}
 }

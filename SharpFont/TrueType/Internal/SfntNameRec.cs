@@ -25,34 +25,17 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-#if WIN64
-using FT_26Dot6 = System.Int32;
-using FT_Fixed = System.Int32;
-using FT_Long = System.Int32;
-using FT_Pos = System.Int32;
-using FT_ULong = System.UInt32;
-#else
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
-using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
-using FT_ULong = System.UIntPtr;
-#endif
-
-namespace SharpFont.Internal
+namespace SharpFont.TrueType.Internal
 {
-	/// <summary>
-	/// Internally represents a BBox.
-	/// </summary>
-	/// <remarks>
-	/// Refer to <see cref="BBox"/> for FreeType documentation.
-	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct BBoxInternal
+	internal struct SfntNameRec
 	{
-		internal FT_Pos xMin, yMin;
-		internal FT_Pos xMax, yMax;
+		internal PlatformID platform_id;
+		internal ushort encoding_id;
+		internal ushort language_id;
+		internal ushort name_id;
 
-		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(FT_Pos)) * 4; } }
+		internal IntPtr @string;
+		internal uint string_len;
 	}
 }

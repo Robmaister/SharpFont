@@ -54,20 +54,20 @@ namespace SharpFont.Internal
 		internal IntPtr face;
 		internal IntPtr next;
 		internal uint reserved;
-		internal GenericInternal generic;
+		internal GenericRec generic;
 
-		internal GlyphMetricsInternal metrics;
+		internal GlyphMetricsRec metrics;
 		internal FT_Fixed linearHoriAdvance;
 		internal FT_Fixed linearVertAdvance;
-		internal VectorInternal advance;
+		internal VectorRec advance;
 
 		internal GlyphFormat format;
 
-		internal BitmapInternal bitmap;
+		internal BitmapRec bitmap;
 		internal int bitmap_left;
 		internal int bitmap_top;
 
-		internal OutlineInternal outline;
+		internal OutlineRec outline;
 
 		internal uint num_subglyphs;
 		internal IntPtr subglyphs;

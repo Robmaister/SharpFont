@@ -38,12 +38,12 @@ namespace SharpFont.MultipleMasters
 	public class MultiMaster
 	{
 		internal IntPtr reference;
-		internal MultiMasterInternal masterInternal;
+		internal MultiMasterRec rec;
 
 		internal MultiMaster(IntPtr reference)
 		{
 			this.reference = reference;
-			this.masterInternal = (MultiMasterInternal)Marshal.PtrToStructure(reference, typeof(MultiMasterInternal));
+			this.rec = (MultiMasterRec)Marshal.PtrToStructure(reference, typeof(MultiMasterRec));
 		}
 
 		/// <summary>
@@ -54,7 +54,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return masterInternal.num_axis;
+				return rec.num_axis;
 			}
 		}
 
@@ -68,7 +68,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return masterInternal.num_designs;
+				return rec.num_designs;
 			}
 		}
 
@@ -79,10 +79,10 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				MMAxis[] axis = new MMAxis[masterInternal.num_axis];
+				MMAxis[] axis = new MMAxis[rec.num_axis];
 
-				for (int i = 0; i < masterInternal.num_axis; i++)
-					axis[i] = new MMAxis(masterInternal.axis[i]);
+				for (int i = 0; i < rec.num_axis; i++)
+					axis[i] = new MMAxis(rec.axis[i]);
 
 				return axis;
 			}

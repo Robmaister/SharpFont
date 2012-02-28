@@ -72,9 +72,9 @@ namespace SharpFont.Internal
 		internal int num_charmaps;
 		internal IntPtr charmaps;
 
-		internal GenericInternal generic;
+		internal GenericRec generic;
 
-		internal BBoxInternal bbox;
+		internal BBoxRec bbox;
 
 		internal ushort units_per_EM;
 		internal short ascender;
@@ -96,11 +96,11 @@ namespace SharpFont.Internal
 		private IntPtr stream;
 
 		private IntPtr sizes_list;
-		private GenericInternal autohint;
+		private GenericRec autohint;
 		private IntPtr extensions;
 
 		private IntPtr @internal;
 
-		internal static int SizeInBytes { get { return 24 + Marshal.SizeOf(typeof(FT_Long)) * 5 + IntPtr.Size * 13 + Generic.SizeInBytes + BBoxInternal.SizeInBytes; } }
+		internal static int SizeInBytes { get { return 24 + Marshal.SizeOf(typeof(FT_Long)) * 5 + IntPtr.Size * 13 + Generic.SizeInBytes + BBoxRec.SizeInBytes; } }
 	}
 }

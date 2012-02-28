@@ -91,28 +91,29 @@
     <Compile Include="Data.cs" />
     <Compile Include="Encoding.cs" />
     <Compile Include="FT.Format.cs" />
-    <Compile Include="Internal\BBoxInternal.cs" />
+    <Compile Include="FT.Misc.cs" />
+    <Compile Include="Internal\BBoxRec.cs" />
     <Compile Include="Internal\BitmapGlyphRec.cs" />
-    <Compile Include="Internal\BitmapInternal.cs" />
-    <Compile Include="Internal\BitmapSizeInternal.cs" />
+    <Compile Include="Internal\BitmapRec.cs" />
+    <Compile Include="Internal\BitmapSizeRec.cs" />
     <Compile Include="Internal\CharMapRec.cs" />
     <Compile Include="Internal\FaceRec.cs" />
-    <Compile Include="Internal\GenericInternal.cs" />
-    <Compile Include="Internal\GlyphMetricsInternal.cs" />
+    <Compile Include="Internal\GenericRec.cs" />
+    <Compile Include="Internal\GlyphMetricsRec.cs" />
     <Compile Include="Internal\GlyphRec.cs" />
     <Compile Include="Internal\GlyphSlotRec.cs" />
-    <Compile Include="Internal\OutlineFuncsInternal.cs" />
+    <Compile Include="Internal\OutlineFuncsRec.cs" />
     <Compile Include="Internal\OutlineGlyphRec.cs" />
-    <Compile Include="Internal\OutlineInternal.cs" />
-    <Compile Include="Internal\SizeMetricsInternal.cs" />
+    <Compile Include="Internal\OutlineRec.cs" />
+    <Compile Include="Internal\SizeMetricsRec.cs" />
     <Compile Include="Internal\SizeRec.cs" />
-    <Compile Include="Internal\VectorInternal.cs" />
+    <Compile Include="Internal\VectorRec.cs" />
     <Compile Include="LcdFilter.cs" />
-    <Compile Include="MultipleMasters\Internal\MMAxisInternal.cs" />
-    <Compile Include="MultipleMasters\Internal\MMVarInternal.cs" />
-    <Compile Include="MultipleMasters\Internal\MultiMasterInternal.cs" />
-    <Compile Include="MultipleMasters\Internal\VarAxisInternal.cs" />
-    <Compile Include="MultipleMasters\Internal\VarNamedStyleInternal.cs" />
+    <Compile Include="MultipleMasters\Internal\MMAxisRec.cs" />
+    <Compile Include="MultipleMasters\Internal\MMVarRec.cs" />
+    <Compile Include="MultipleMasters\Internal\MultiMasterRec.cs" />
+    <Compile Include="MultipleMasters\Internal\VarAxisRec.cs" />
+    <Compile Include="MultipleMasters\Internal\VarNamedStyleRec.cs" />
     <Compile Include="MultipleMasters\MMAxis.cs" />
     <Compile Include="MultipleMasters\MMVar.cs" />
     <Compile Include="MultipleMasters\MultiMaster.cs" />
@@ -120,7 +121,7 @@
     <Compile Include="MultipleMasters\VarNamedStyle.cs" />
     <Compile Include="Orientation.cs" />
     <Compile Include="OutlineGlyph.cs" />
-    <Compile Include="TrueType\Internal\SfntNameInternal.cs" />
+    <Compile Include="TrueType\Internal\SfntNameRec.cs" />
     <Compile Include="TrueType\SfntName.cs" />
     <Compile Include="TrueType\EncodingID.cs" />
     <Compile Include="Error.cs" />
@@ -186,6 +187,7 @@
     <Compile Include="FT.Private.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FT.Support.cs" />
     <None Include="SharpFont.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

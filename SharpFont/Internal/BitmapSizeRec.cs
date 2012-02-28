@@ -39,19 +39,25 @@ using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 #endif
 
-namespace SharpFont.MultipleMasters.Internal
+namespace SharpFont.Internal
 {
+	/// <summary>
+	/// Internally represents a BitmapSize.
+	/// </summary>
+	/// <remarks>
+	/// Refer to <see cref="BitmapSize"/> for FreeType documentation.
+	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal class VarAxisInternal
+	internal class BitmapSizeRec
 	{
-		[MarshalAs(UnmanagedType.LPStr)]
-		internal string name;
+		internal short height;
+		internal short width;
 
-		internal FT_Fixed minimum;
-		internal FT_Fixed def;
-		internal FT_Fixed maximum;
+		internal FT_Pos size;
 
-		internal FT_ULong tag;
-		internal uint strid;
+		internal FT_Pos x_ppem;
+		internal FT_Pos y_ppem;
+
+		internal static int SizeInBytes { get { return 4 + Marshal.SizeOf(typeof(FT_Pos)) * 3; } }
 	}
 }

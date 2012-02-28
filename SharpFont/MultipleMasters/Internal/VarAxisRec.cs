@@ -25,12 +25,33 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-namespace SharpFont.Internal
+#if WIN64
+using FT_26Dot6 = System.Int32;
+using FT_Fixed = System.Int32;
+using FT_Long = System.Int32;
+using FT_Pos = System.Int32;
+using FT_ULong = System.UInt32;
+#else
+using FT_26Dot6 = System.IntPtr;
+using FT_Fixed = System.IntPtr;
+using FT_Long = System.IntPtr;
+using FT_Pos = System.IntPtr;
+using FT_ULong = System.UIntPtr;
+#endif
+
+namespace SharpFont.MultipleMasters.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct GenericInternal
+	internal class VarAxisRec
 	{
-		internal IntPtr data;
-		internal GenericFinalizer finalizer;
+		[MarshalAs(UnmanagedType.LPStr)]
+		internal string name;
+
+		internal FT_Fixed minimum;
+		internal FT_Fixed def;
+		internal FT_Fixed maximum;
+
+		internal FT_ULong tag;
+		internal uint strid;
 	}
 }

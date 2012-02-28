@@ -36,17 +36,17 @@ namespace SharpFont
 	public sealed class BBox
 	{
 		internal IntPtr reference;
-		internal BBoxInternal bboxInternal;
+		internal BBoxRec rec;
 
 		internal BBox(IntPtr reference)
 		{
 			this.reference = reference;
-			this.bboxInternal = (BBoxInternal)Marshal.PtrToStructure(reference, typeof(BBoxInternal));
+			this.rec = (BBoxRec)Marshal.PtrToStructure(reference, typeof(BBoxRec));
 		}
 
-		internal BBox(BBoxInternal bboxInt)
+		internal BBox(BBoxRec bboxInt)
 		{
-			this.bboxInternal = bboxInt;
+			this.rec = bboxInt;
 		}
 
 		/// <summary>
@@ -56,7 +56,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)bboxInternal.xMin;
+				return (int)rec.xMin;
 			}
 		}
 
@@ -67,7 +67,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)bboxInternal.yMin;
+				return (int)rec.yMin;
 			}
 		}
 
@@ -78,7 +78,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)bboxInternal.xMax;
+				return (int)rec.xMax;
 			}
 		}
 
@@ -89,7 +89,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)bboxInternal.yMax;
+				return (int)rec.yMax;
 			}
 		}
 	}

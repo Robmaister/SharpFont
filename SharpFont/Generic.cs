@@ -54,7 +54,7 @@ namespace SharpFont
 	/// </para></summary>
 	public class Generic
 	{
-		private GenericInternal genInternal;
+		private GenericRec rec;
 
 		/// <summary>
 		/// Initializes a new instance of the Generic class.
@@ -63,18 +63,18 @@ namespace SharpFont
 		/// <param name="finalizer">A delegate that gets called when the contained object gets finalized.</param>
 		public Generic(IntPtr data, GenericFinalizer finalizer)
 		{
-			genInternal.data = data;
-			genInternal.finalizer = finalizer;
+			rec.data = data;
+			rec.finalizer = finalizer;
 		}
 
-		internal Generic(GenericInternal genInternal)
+		internal Generic(GenericRec genInternal)
 		{
-			this.genInternal = genInternal;
+			this.rec = genInternal;
 		}
 
 		internal Generic(IntPtr reference)
 		{
-			this.genInternal = (GenericInternal)Marshal.PtrToStructure(reference, typeof(GenericInternal));
+			this.rec = (GenericRec)Marshal.PtrToStructure(reference, typeof(GenericRec));
 		}
 
 		internal Generic(IntPtr reference, int offset)
@@ -90,12 +90,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return genInternal.data;
+				return rec.data;
 			}
 			
 			set
 			{
-				genInternal.data = value;
+				rec.data = value;
 			}
 		}
 
@@ -104,7 +104,7 @@ namespace SharpFont
 		/// function, which will be called when the object is destroyed. If
 		/// this field is set to NULL, no code will be called.
 		/// </summary>
-		public GenericFinalizer Finalizer { get { return genInternal.finalizer; } set { genInternal.finalizer = value; } }
+		public GenericFinalizer Finalizer { get { return rec.finalizer; } set { rec.finalizer = value; } }
 
 		/// <summary>
 		/// Gets the size of a Generic, in bytes.
@@ -114,8 +114,8 @@ namespace SharpFont
 		//TODO make this private and build it into the setters if the reference isn't IntPtr.Zero.
 		internal void WriteToUnmanagedMemory(IntPtr location)
 		{
-			Marshal.WriteIntPtr(location, genInternal.data);
-			Marshal.WriteIntPtr(location, IntPtr.Size, Marshal.GetFunctionPointerForDelegate(genInternal.finalizer));
+			Marshal.WriteIntPtr(location, rec.data);
+			Marshal.WriteIntPtr(location, IntPtr.Size, Marshal.GetFunctionPointerForDelegate(rec.finalizer));
 		}
 	}
 }

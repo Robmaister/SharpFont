@@ -31,6 +31,6 @@ namespace SharpFont.Internal
 	internal class OutlineGlyphRec
 	{
 		internal GlyphRec root;
-		internal OutlineInternal outline;
+		internal OutlineRec outline;
 	}
 }

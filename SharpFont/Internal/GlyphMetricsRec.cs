@@ -25,20 +25,42 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
+#if WIN64
+using FT_26Dot6 = System.Int32;
+using FT_Fixed = System.Int32;
+using FT_Long = System.Int32;
+using FT_Pos = System.Int32;
+using FT_ULong = System.UInt32;
+#else
+using FT_26Dot6 = System.IntPtr;
+using FT_Fixed = System.IntPtr;
+using FT_Long = System.IntPtr;
+using FT_Pos = System.IntPtr;
+using FT_ULong = System.UIntPtr;
+#endif
+
 namespace SharpFont.Internal
 {
+	/// <summary>
+	/// Internally represents a GlyphMetrics.
+	/// </summary>
+	/// <remarks>
+	/// Refer to <see cref="GlyphMetrics"/> for FreeType documentation.
+	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct OutlineInternal
+	internal struct GlyphMetricsRec
 	{
-		internal short n_contours;
-		internal short n_points;
+		internal FT_Pos width;
+		internal FT_Pos height;
 
-		internal IntPtr points;
-		internal IntPtr tags;
-		internal IntPtr contours;
+		internal FT_Pos horiBearingX;
+		internal FT_Pos horiBearingY;
+		internal FT_Pos horiAdvance;
 
-		internal OutlineFlags flags;
+		internal FT_Pos vertBearingX;
+		internal FT_Pos vertBearingY;
+		internal FT_Pos vertAdvance;
 
-		internal static int SizeInBytes { get { return 8 + IntPtr.Size * 3; } }
+		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(FT_Pos)) * 8; } }
 	}
 }

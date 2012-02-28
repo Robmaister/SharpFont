@@ -25,15 +25,15 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-
-namespace SharpFont.Internal
+namespace SharpFont.MultipleMasters.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class SizeRec
+	internal class MultiMasterRec
 	{
-		internal IntPtr face;
-		internal GenericRec generic;
-		internal SizeMetricsRec metrics;
-		private IntPtr @internal;
+		internal uint num_axis;
+		internal uint num_designs;
+
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+		internal MMAxisRec[] axis;
 	}
 }

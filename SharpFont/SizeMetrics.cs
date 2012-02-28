@@ -51,18 +51,18 @@ namespace SharpFont
 	public sealed class SizeMetrics
 	{
 		internal IntPtr reference;
-		internal SizeMetricsInternal metricsInternal;
+		internal SizeMetricsRec rec;
 
 		internal SizeMetrics(IntPtr reference)
 		{
 			this.reference = reference;
-			this.metricsInternal = (SizeMetricsInternal)Marshal.PtrToStructure(reference, typeof(SizeMetricsInternal));
+			this.rec = (SizeMetricsRec)Marshal.PtrToStructure(reference, typeof(SizeMetricsRec));
 		}
 
-		internal SizeMetrics(SizeMetricsInternal metricsInternal)
+		internal SizeMetrics(SizeMetricsRec metricsInternal)
 		{
 			this.reference = IntPtr.Zero;
-			this.metricsInternal = metricsInternal;
+			this.rec = metricsInternal;
 		}
 
 		/// <summary>
@@ -74,7 +74,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return metricsInternal.x_ppem;
+				return rec.x_ppem;
 			}
 		}
 
@@ -87,7 +87,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return metricsInternal.y_ppem;
+				return rec.y_ppem;
 			}
 		}
 
@@ -100,7 +100,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)metricsInternal.x_scale;
+				return (int)rec.x_scale;
 			}
 		}
 
@@ -113,7 +113,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)metricsInternal.y_scale;
+				return (int)rec.y_scale;
 			}
 		}
 
@@ -125,7 +125,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)metricsInternal.ascender;
+				return (int)rec.ascender;
 			}
 		}
 
@@ -137,7 +137,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)metricsInternal.descender;
+				return (int)rec.descender;
 			}
 		}
 
@@ -149,7 +149,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)metricsInternal.height;
+				return (int)rec.height;
 			}
 		}
 
@@ -161,7 +161,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)metricsInternal.max_advance;
+				return (int)rec.max_advance;
 			}
 		}
 	}

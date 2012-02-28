@@ -44,12 +44,12 @@ namespace SharpFont.TrueType
 	public class SfntName
 	{
 		internal IntPtr reference;
-		internal SfntNameInternal nameInt;
+		internal SfntNameRec rec;
 
 		internal SfntName(IntPtr reference)
 		{
 			this.reference = reference;
-			this.nameInt = (SfntNameInternal)Marshal.PtrToStructure(reference, typeof(SfntNameInternal));
+			this.rec = (SfntNameRec)Marshal.PtrToStructure(reference, typeof(SfntNameRec));
 		}
 
 		/// <summary>
@@ -60,7 +60,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return nameInt.platform_id;
+				return rec.platform_id;
 			}
 		}
 
@@ -72,7 +72,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return nameInt.encoding_id;
+				return rec.encoding_id;
 			}
 		}
 
@@ -84,7 +84,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return nameInt.language_id;
+				return rec.language_id;
 			}
 		}
 
@@ -96,7 +96,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return nameInt.name_id;
+				return rec.name_id;
 			}
 		}
 

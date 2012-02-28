@@ -42,22 +42,17 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.Internal
 {
 	/// <summary>
-	/// Internally represents a BitmapSize.
+	/// Internally represents a BBox.
 	/// </summary>
 	/// <remarks>
-	/// Refer to <see cref="BitmapSize"/> for FreeType documentation.
+	/// Refer to <see cref="BBox"/> for FreeType documentation.
 	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal class BitmapSizeInternal
+	internal struct BBoxRec
 	{
-		internal short height;
-		internal short width;
+		internal FT_Pos xMin, yMin;
+		internal FT_Pos xMax, yMax;
 
-		internal FT_Pos size;
-
-		internal FT_Pos x_ppem;
-		internal FT_Pos y_ppem;
-
-		internal static int SizeInBytes { get { return 4 + Marshal.SizeOf(typeof(FT_Pos)) * 3; } }
+		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(FT_Pos)) * 4; } }
 	}
 }

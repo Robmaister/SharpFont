@@ -44,17 +44,17 @@ namespace SharpFont
 	public sealed class Bitmap
 	{
 		internal IntPtr reference;
-		internal BitmapInternal bmpInternal;
+		internal BitmapRec rec;
 
 		internal Bitmap(IntPtr reference)
 		{
 			this.reference = reference;
-			this.bmpInternal = (BitmapInternal)Marshal.PtrToStructure(reference, typeof(BitmapInternal));
+			this.rec = (BitmapRec)Marshal.PtrToStructure(reference, typeof(BitmapRec));
 		}
 
-		internal Bitmap(BitmapInternal bmpInt)
+		internal Bitmap(BitmapRec bmpInt)
 		{
-			this.bmpInternal = bmpInt;
+			this.rec = bmpInt;
 		}
 
 		/*/// <summary>
@@ -75,7 +75,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return bmpInternal.rows;
+				return rec.rows;
 			}
 		}
 
@@ -86,7 +86,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return bmpInternal.width;
+				return rec.width;
 			}
 		}
 
@@ -112,7 +112,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return bmpInternal.pitch;
+				return rec.pitch;
 			}
 		}
 
@@ -124,7 +124,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return bmpInternal.buffer;
+				return rec.buffer;
 			}
 		}
 
@@ -136,7 +136,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return bmpInternal.num_grays;
+				return rec.num_grays;
 			}
 		}
 
@@ -147,7 +147,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return bmpInternal.pixel_mode;
+				return rec.pixel_mode;
 			}
 		}
 
@@ -160,7 +160,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return bmpInternal.palette_mode;
+				return rec.palette_mode;
 			}
 		}
 
@@ -173,7 +173,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return bmpInternal.palette;
+				return rec.palette;
 			}
 		}
 	}

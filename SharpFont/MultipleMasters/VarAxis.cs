@@ -36,12 +36,12 @@ namespace SharpFont.MultipleMasters
 	public class VarAxis
 	{
 		internal IntPtr reference;
-		internal VarAxisInternal axisInternal;
+		internal VarAxisRec rec;
 
 		internal VarAxis(IntPtr reference)
 		{
 			this.reference = reference;
-			this.axisInternal = (VarAxisInternal)Marshal.PtrToStructure(reference, typeof(VarAxisInternal));
+			this.rec = (VarAxisRec)Marshal.PtrToStructure(reference, typeof(VarAxisRec));
 		}
 
 		/// <summary>
@@ -51,7 +51,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return axisInternal.name;
+				return rec.name;
 			}
 		}
 
@@ -62,7 +62,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return (int)axisInternal.minimum;
+				return (int)rec.minimum;
 			}
 		}
 
@@ -75,7 +75,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return (int)axisInternal.def;
+				return (int)rec.def;
 			}
 		}
 
@@ -86,7 +86,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return (int)axisInternal.maximum;
+				return (int)rec.maximum;
 			}
 		}
 
@@ -99,7 +99,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return (uint)axisInternal.tag;
+				return (uint)rec.tag;
 			}
 		}
 
@@ -112,7 +112,7 @@ namespace SharpFont.MultipleMasters
 		{
 			get
 			{
-				return axisInternal.strid;
+				return rec.strid;
 			}
 		}
 	}

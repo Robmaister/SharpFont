@@ -39,15 +39,16 @@ using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 #endif
 
-namespace SharpFont.MultipleMasters.Internal
+namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct MMAxisInternal
+	internal struct OutlineFuncsRec
 	{
-		[MarshalAs(UnmanagedType.LPStr)]
-		internal string name;
-
-		internal FT_Long minimum;
-		internal FT_Long maximum;
+		internal MoveToFunc moveTo;
+		internal LineToFunc lineTo;
+		internal ConicToFunc conicTo;
+		internal CubicToFunc cubicTo;
+		internal int shift;
+		internal FT_Pos delta;
 	}
 }

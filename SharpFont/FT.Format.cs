@@ -29,7 +29,7 @@ using SharpFont.TrueType;
 
 namespace SharpFont
 {
-	public partial class FT
+	public static partial class FT
 	{
 		#region Multiple Masters
 
@@ -138,6 +138,49 @@ namespace SharpFont
 
 		#region TrueType Tables
 
+		/// <summary>
+		/// Return a pointer to a given SFNT table within a face.
+		/// </summary>
+		/// <remarks><para>
+		/// The table is owned by the face object and disappears with it.
+		/// </para><para>
+		/// This function is only useful to access SFNT tables that are loaded
+		/// by the sfnt, truetype, and opentype drivers. See
+		/// <see cref="SfntTag"/> for a list.
+		/// </para></remarks>
+		/// <param name="face">A handle to the source.</param>
+		/// <param name="tag">The index of the SFNT table.</param>
+		/// <returns><para>A type-less pointer to the table. This will be 0 in case of error, or if the corresponding table was not found OR loaded from the file.
+		/// </para><para>
+		/// Use a typecast according to ‘tag’ to access the structure elements.</para></returns>
+		public static object GetSfntTable(Face face, SfntTag tag)
+		{
+			IntPtr tableRef = FT_Get_Sfnt_Table(face.reference, tag);
+
+			if (tableRef == IntPtr.Zero)
+				return null;
+
+			switch (tag)
+			{
+				case SfntTag.Header:
+					return new Header(tableRef);
+				case SfntTag.HorizontalHeader:
+					return new HoriHeader(tableRef);
+				case SfntTag.MaxProfile:
+					return new MaxProfile(tableRef);
+				case SfntTag.OS2:
+					return new OS2(tableRef);
+				case SfntTag.PCLT:
+					return new PCLT(tableRef);
+				case SfntTag.Postscript:
+					return new Postscript(tableRef);
+				case SfntTag.VertHeader:
+					return new VertHeader(tableRef);
+				default:
+					return null;
+			}
+		}
+
 		#endregion
 
 		#region Type 1 Tables
@@ -151,6 +194,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">A handle to the source face.</param>
 		/// <returns>The number of strings in the ‘name’ table.</returns>
+		[CLSCompliant(false)]
 		public static uint GetSfntNameCount(Face face)
 		{
 			return FT_Get_Sfnt_Name_Count(face.reference);
@@ -171,6 +215,7 @@ namespace SharpFont
 		/// <param name="face">A handle to the source face.</param>
 		/// <param name="idx">The index of the ‘name’ string.</param>
 		/// <returns>The indexed FT_SfntName structure.</returns>
+		[CLSCompliant(false)]
 		public static SfntName GetSfntName(Face face, uint idx)
 		{
 			IntPtr nameRef;

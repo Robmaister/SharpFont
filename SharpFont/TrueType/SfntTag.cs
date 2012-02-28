@@ -36,7 +36,7 @@ namespace SharpFont.TrueType
 		MaxProfile = 1,
 		OS2 = 2,
 		HorizontalHeader = 3,
-		VerticalHeader = 4,
+		VertHeader = 4,
 		Postscript = 5,
 		PCLT = 6
 	}

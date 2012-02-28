@@ -25,17 +25,29 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-namespace SharpFont.TrueType.Internal
+#if WIN64
+using FT_26Dot6 = System.Int32;
+using FT_Fixed = System.Int32;
+using FT_Long = System.Int32;
+using FT_Pos = System.Int32;
+using FT_ULong = System.UInt32;
+#else
+using FT_26Dot6 = System.IntPtr;
+using FT_Fixed = System.IntPtr;
+using FT_Long = System.IntPtr;
+using FT_Pos = System.IntPtr;
+using FT_ULong = System.UIntPtr;
+#endif
+
+namespace SharpFont.MultipleMasters.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct SfntNameInternal
+	internal struct MMAxisRec
 	{
-		internal PlatformID platform_id;
-		internal ushort encoding_id;
-		internal ushort language_id;
-		internal ushort name_id;
+		[MarshalAs(UnmanagedType.LPStr)]
+		internal string name;
 
-		internal IntPtr @string;
-		internal uint string_len;
+		internal FT_Long minimum;
+		internal FT_Long maximum;
 	}
 }

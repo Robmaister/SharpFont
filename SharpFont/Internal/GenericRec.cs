@@ -25,15 +25,12 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-namespace SharpFont.MultipleMasters.Internal
+namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class MMVarInternal
+	internal struct GenericRec
 	{
-		internal uint num_axis;
-		internal uint num_designs;
-		internal uint num_namedstyles;
-		internal IntPtr axis;
-		internal IntPtr namedstyle;
+		internal IntPtr data;
+		internal GenericFinalizer finalizer;
 	}
 }

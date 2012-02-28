@@ -125,7 +125,7 @@ namespace SharpFont
 			rec.shift = shift;
 
 			#if WIN64
-			funcsInt.delta = delta;
+			rec.delta = delta;
 			#else
 			rec.delta = (IntPtr)delta;
 			#endif

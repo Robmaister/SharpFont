@@ -23,40 +23,99 @@ SOFTWARE.*/
 #endregion
 
 using System;
+using System.Runtime.InteropServices;
 
-namespace SharpFont
+using SharpFont.PostScript.Internal;
+
+namespace SharpFont.PostScript
 {
 	/// <summary>
-	/// An exception that gets thrown when FreeType returns an error code.
+	/// A structure used to model a Type 1 or Type 2 FontInfo dictionary. Note
+	/// that for Multiple Master fonts, each instance has its own FontInfo
+	/// dictionary.
 	/// </summary>
-	public class FreeTypeException : Exception
+	public class FontInfo
 	{
-		private Error error;
+		internal IntPtr reference;
+		internal FontInfoRec rec;
 
-		public FreeTypeException()
-			: base()
+		internal FontInfo(IntPtr reference)
 		{
-			error = Error.Ok;
+			this.reference = reference;
+			this.rec = (FontInfoRec)Marshal.PtrToStructure(reference, typeof(FontInfoRec));
 		}
 
-		public FreeTypeException(string message)
-			: base(message)
+		public string Version
 		{
-			error = Error.Ok;
+			get
+			{
+				return rec.version;
+			}
 		}
 
-		public FreeTypeException(string message, Exception innerException)
-			: base(message, innerException)
+		public string Notice
 		{
-			error = Error.Ok;
+			get
+			{
+				return rec.notice;
+			}
 		}
 
-		public FreeTypeException(Error error)
-			: base(error.ToString())
+		public string FullName
 		{
-			this.error = error;
+			get
+			{
+				return rec.full_name;
+			}
 		}
 
-		public Error Error { get { return error; } }
+		public string FamilyName
+		{
+			get
+			{
+				return rec.family_name;
+			}
+		}
+
+		public string Weight
+		{
+			get
+			{
+				return rec.weight;
+			}
+		}
+
+		public int ItalicAngle
+		{
+			get
+			{
+				return (int)rec.italic_angle;
+			}
+		}
+
+		public bool IsFixedPitch
+		{
+			get
+			{
+				return rec.is_fixed_pitch == 0;
+			}
+		}
+
+		public short UnderlinePosition
+		{
+			get
+			{
+				return rec.underline_position;
+			}
+		}
+
+		[CLSCompliant(false)]
+		public ushort UnderlineThickness
+		{
+			get
+			{
+				return rec.underline_thickness;
+			}
+		}
 	}
 }

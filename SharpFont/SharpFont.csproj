@@ -102,6 +102,7 @@
     <Compile Include="Internal\GlyphMetricsRec.cs" />
     <Compile Include="Internal\GlyphRec.cs" />
     <Compile Include="Internal\GlyphSlotRec.cs" />
+    <Compile Include="Internal\MatrixRec.cs" />
     <Compile Include="Internal\OutlineFuncsRec.cs" />
     <Compile Include="Internal\OutlineGlyphRec.cs" />
     <Compile Include="Internal\OutlineRec.cs" />
@@ -121,6 +122,14 @@
     <Compile Include="MultipleMasters\VarNamedStyle.cs" />
     <Compile Include="Orientation.cs" />
     <Compile Include="OutlineGlyph.cs" />
+    <Compile Include="PostScript\FaceDict.cs" />
+    <Compile Include="PostScript\FaceInfo.cs" />
+    <Compile Include="PostScript\FontInfo.cs" />
+    <Compile Include="PostScript\Internal\FaceDictRec.cs" />
+    <Compile Include="PostScript\Internal\FaceInfoRec.cs" />
+    <Compile Include="PostScript\Internal\FontInfoRec.cs" />
+    <Compile Include="PostScript\Internal\PrivateRec.cs" />
+    <Compile Include="PostScript\Private.cs" />
     <Compile Include="TrueType\Internal\SfntNameRec.cs" />
     <Compile Include="TrueType\SfntName.cs" />
     <Compile Include="TrueType\EncodingID.cs" />

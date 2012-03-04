@@ -25,6 +25,8 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
+using SharpFont.Internal;
+
 #if WIN64
 using FT_26Dot6 = System.Int32;
 using FT_Fixed = System.Int32;
@@ -39,66 +41,25 @@ using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 #endif
 
-namespace SharpFont.Internal
+namespace SharpFont.PostScript.Internal
 {
-	/// <summary>
-	/// Internally represents a Face.
-	/// </summary>
-	/// <remarks>
-	/// Refer to <see cref="Face"/> for FreeType documentation.
-	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal class FaceRec
+	internal class FaceDictRec
 	{
-		internal FT_Long num_faces;
-		internal FT_Long face_index;
+		internal PrivateRec private_dict;
 
-		internal FT_Long face_flags;
-		internal FT_Long style_flags;
+		internal uint len_buildchar;
+		internal FT_Fixed forcebold_threshold;
+		internal FT_Pos stroke_width;
+		internal FT_Fixed expansion_factor;
 
-		internal FT_Long num_glyphs;
+		internal byte paint_type;
+		internal byte font_type;
+		internal MatrixRec font_matrix;
+		internal VectorRec font_offset;
 
-		[MarshalAs(UnmanagedType.LPStr)]
-		internal string family_name;
-
-		[MarshalAs(UnmanagedType.LPStr)]
-		internal string style_name;
-
-		internal int num_fixed_sizes;
-		internal IntPtr available_sizes;
-
-		internal int num_charmaps;
-		internal IntPtr charmaps;
-
-		internal GenericRec generic;
-
-		internal BBoxRec bbox;
-
-		internal ushort units_per_EM;
-		internal short ascender;
-		internal short descender;
-		internal short height;
-
-		internal short max_advance_width;
-		internal short max_advance_height;
-
-		internal short underline_position;
-		internal short underline_thickness;
-
-		internal IntPtr glyph;
-		internal IntPtr size;
-		internal IntPtr charmap;
-
-		private IntPtr driver;
-		private IntPtr memory;
-		private IntPtr stream;
-
-		private IntPtr sizes_list;
-		private GenericRec autohint;
-		private IntPtr extensions;
-
-		private IntPtr @internal;
-
-		internal static int SizeInBytes { get { return 24 + Marshal.SizeOf(typeof(FT_Long)) * 5 + IntPtr.Size * 13 + Generic.SizeInBytes + BBoxRec.SizeInBytes; } }
+		internal uint num_subrs;
+		internal FT_ULong subrmap_offset;
+		internal int sd_bytes;
 	}
 }

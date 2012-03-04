@@ -25,6 +25,8 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
+using SharpFont.Internal;
+
 #if WIN64
 using FT_26Dot6 = System.Int32;
 using FT_Fixed = System.Int32;
@@ -39,66 +41,40 @@ using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 #endif
 
-namespace SharpFont.Internal
+namespace SharpFont.PostScript.Internal
 {
-	/// <summary>
-	/// Internally represents a Face.
-	/// </summary>
-	/// <remarks>
-	/// Refer to <see cref="Face"/> for FreeType documentation.
-	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal class FaceRec
+	internal class FaceInfoRec
 	{
-		internal FT_Long num_faces;
-		internal FT_Long face_index;
-
-		internal FT_Long face_flags;
-		internal FT_Long style_flags;
-
-		internal FT_Long num_glyphs;
+		[MarshalAs(UnmanagedType.LPStr)]
+		internal string cid_font_name;
+		internal FT_Fixed cid_version;
+		internal int cid_font_type;
 
 		[MarshalAs(UnmanagedType.LPStr)]
-		internal string family_name;
+		internal string registry;
 
 		[MarshalAs(UnmanagedType.LPStr)]
-		internal string style_name;
+		internal string ordering;
+		internal int supplement;
 
-		internal int num_fixed_sizes;
-		internal IntPtr available_sizes;
+		internal FontInfoRec font_info;
+		internal BBoxRec font_bbox;
+		internal FT_ULong uid_base;
 
-		internal int num_charmaps;
-		internal IntPtr charmaps;
+		internal int num_xuid;
 
-		internal GenericRec generic;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+		internal FT_ULong[] xuid;
 
-		internal BBoxRec bbox;
+		internal FT_ULong cidmap_offset;
+		internal int fd_bytes;
+		internal int gd_bytes;
+		internal FT_ULong cid_count;
 
-		internal ushort units_per_EM;
-		internal short ascender;
-		internal short descender;
-		internal short height;
+		internal int num_dicts;
+		internal IntPtr font_dicts;
 
-		internal short max_advance_width;
-		internal short max_advance_height;
-
-		internal short underline_position;
-		internal short underline_thickness;
-
-		internal IntPtr glyph;
-		internal IntPtr size;
-		internal IntPtr charmap;
-
-		private IntPtr driver;
-		private IntPtr memory;
-		private IntPtr stream;
-
-		private IntPtr sizes_list;
-		private GenericRec autohint;
-		private IntPtr extensions;
-
-		private IntPtr @internal;
-
-		internal static int SizeInBytes { get { return 24 + Marshal.SizeOf(typeof(FT_Long)) * 5 + IntPtr.Size * 13 + Generic.SizeInBytes + BBoxRec.SizeInBytes; } }
+		internal FT_ULong data_offset;
 	}
 }

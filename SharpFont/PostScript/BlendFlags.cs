@@ -24,7 +24,7 @@ SOFTWARE.*/
 
 using System;
 
-namespace SharpFont.Type1
+namespace SharpFont.PostScript
 {
 	/// <summary>
 	/// A set of flags used to indicate which fields are present in a given

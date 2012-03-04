@@ -39,66 +39,55 @@ using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 #endif
 
-namespace SharpFont.Internal
+namespace SharpFont.PostScript.Internal
 {
-	/// <summary>
-	/// Internally represents a Face.
-	/// </summary>
-	/// <remarks>
-	/// Refer to <see cref="Face"/> for FreeType documentation.
-	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal class FaceRec
+	internal struct PrivateRec
 	{
-		internal FT_Long num_faces;
-		internal FT_Long face_index;
+		internal int unique_id;
+		internal int lenIV;
 
-		internal FT_Long face_flags;
-		internal FT_Long style_flags;
+		internal byte num_blue_values;
+		internal byte num_other_blues;
+		internal byte num_family_blues;
+		internal byte num_family_other_blues;
 
-		internal FT_Long num_glyphs;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
+		internal short[] blue_values;
 
-		[MarshalAs(UnmanagedType.LPStr)]
-		internal string family_name;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+		internal short[] other_blues;
 
-		[MarshalAs(UnmanagedType.LPStr)]
-		internal string style_name;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 14)]
+		internal short[] family_blues;
 
-		internal int num_fixed_sizes;
-		internal IntPtr available_sizes;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
+		internal short[] family_other_blues;
 
-		internal int num_charmaps;
-		internal IntPtr charmaps;
+		internal FT_Fixed blue_scale;
+		internal int blue_shift;
+		internal int blue_fuzz;
 
-		internal GenericRec generic;
+		internal ushort standard_width;
+		internal ushort standard_height;
 
-		internal BBoxRec bbox;
+		internal byte num_snap_widths;
+		internal byte num_snap_heights;
+		internal byte force_bold;
+		internal byte round_stem_up;
 
-		internal ushort units_per_EM;
-		internal short ascender;
-		internal short descender;
-		internal short height;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 13)]
+		internal short[] snap_widths;
 
-		internal short max_advance_width;
-		internal short max_advance_height;
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 13)]
+		internal short[] snap_heights;
 
-		internal short underline_position;
-		internal short underline_thickness;
+		internal FT_Fixed expansion_factor;
 
-		internal IntPtr glyph;
-		internal IntPtr size;
-		internal IntPtr charmap;
+		internal FT_Long language_group;
+		internal FT_Long password;
 
-		private IntPtr driver;
-		private IntPtr memory;
-		private IntPtr stream;
-
-		private IntPtr sizes_list;
-		private GenericRec autohint;
-		private IntPtr extensions;
-
-		private IntPtr @internal;
-
-		internal static int SizeInBytes { get { return 24 + Marshal.SizeOf(typeof(FT_Long)) * 5 + IntPtr.Size * 13 + Generic.SizeInBytes + BBoxRec.SizeInBytes; } }
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+		internal short[] min_feature;
 	}
 }

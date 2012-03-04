@@ -26,6 +26,7 @@ using System;
 using System.Runtime.InteropServices;
 
 using SharpFont.TrueType;
+using SharpFont.PostScript;
 
 namespace SharpFont
 {
@@ -250,10 +251,10 @@ namespace SharpFont
 
 		//TODO find FT_TRUETYPE_TAGS_H and create an enum for "tag"
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Load_Sfnt_Table(IntPtr face, uint tag, int offset, IntPtr buffer, out uint length);
+		internal static extern Error FT_Load_Sfnt_Table(IntPtr face, uint tag, int offset, IntPtr buffer, ref uint length);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Sfnt_Table_Info(IntPtr face, uint table_index, ref uint tag, out uint length);
+		internal unsafe static extern Error FT_Sfnt_Table_Info(IntPtr face, uint table_index, SfntTag *tag, out uint length);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern uint FT_Get_CMap_Language_ID(IntPtr charmap);
@@ -269,13 +270,13 @@ namespace SharpFont
 		internal static extern bool FT_Has_PS_Glyph_Names(IntPtr face);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Get_PS_Font_Info(IntPtr face, IntPtr afont_info);
+		internal static extern Error FT_Get_PS_Font_Info(IntPtr face, out IntPtr afont_info);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Get_PS_Font_Private(IntPtr face, IntPtr afont_private);
+		internal static extern Error FT_Get_PS_Font_Private(IntPtr face, out IntPtr afont_private);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern int FT_Get_PS_Font_Value(IntPtr charmap);
+		internal static extern int FT_Get_PS_Font_Value(IntPtr face, DictionaryKeys key, uint idx, ref IntPtr value, int value_len);
 
 		#endregion
 

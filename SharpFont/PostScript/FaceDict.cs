@@ -25,93 +25,120 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.Internal;
+using SharpFont.PostScript.Internal;
 
-namespace SharpFont
+namespace SharpFont.PostScript
 {
 	/// <summary>
-	/// A simple structure used to store a 2x2 matrix. Coefficients are in 16.16 fixed float format. The computation performed is:
-	///     <code>
-	///     x' = x*xx + y*xy
-	///     y' = x*yx + y*yy
-	///     </code>
+	/// A structure used to represent data in a CID top-level dictionary.
 	/// </summary>
-	public sealed class Matrix2i
+	public class FaceDict
 	{
 		internal IntPtr reference;
-		internal MatrixRec rec;
+		internal FaceDictRec rec;
 
-		internal Matrix2i(IntPtr reference)
+		internal FaceDict(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (MatrixRec)Marshal.PtrToStructure(reference, typeof(MatrixRec));
+			this.rec = (FaceDictRec)Marshal.PtrToStructure(reference, typeof(FaceDictRec));
 		}
 
-		/// <summary>
-		/// Matrix coefficient.
-		/// </summary>
-		public int XX
+		public Private PrivateDictionary
 		{
 			get
 			{
-				return (int)rec.xx;
-			}
-
-			set
-			{
-				//TODO fix this.
-				//Marshal.WriteInt32(reference, 0, value);
+				return new Private(reference);
 			}
 		}
 
-		/// <summary>
-		/// Matrix coefficient.
-		/// </summary>
-		public int XY
+		[CLSCompliant(false)]
+		public uint BuildCharLength
 		{
 			get
 			{
-				return (int)rec.xy;
-			}
-
-			set
-			{
-				//TODO fix this.
-				//Marshal.WriteInt32(reference, 4, value);
+				return rec.len_buildchar;
 			}
 		}
 
-		/// <summary>
-		/// Matrix coefficient.
-		/// </summary>
-		public int YX
+		public int ForceBoldThreshold
 		{
 			get
 			{
-				return (int)rec.yx;
-			}
-
-			set
-			{
-				//TODO fix this.
-				//Marshal.WriteInt32(reference, 8, value);
+				return (int)rec.forcebold_threshold;
 			}
 		}
 
-		/// <summary>
-		/// Matrix coefficient.
-		/// </summary>
-		public int YY
+		public int StrokeWidth
 		{
 			get
 			{
-				return (int)rec.yy;
+				return (int)rec.stroke_width;
 			}
+		}
 
-			set
+		public int ExpansionFactor
+		{
+			get
 			{
-				//TODO fix this.
-				//Marshal.WriteInt32(reference, 12, value);
+				return (int)rec.expansion_factor;
+			}
+		}
+
+		public byte PaintType
+		{
+			get
+			{
+				return rec.paint_type;
+			}
+		}
+
+		public byte FontType
+		{
+			get
+			{
+				return rec.font_type;
+			}
+		}
+
+		public Matrix2i FontMatrix
+		{
+			get
+			{
+				return new Matrix2i(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceDictRec), "font_matrix").ToInt64()));
+			}
+		}
+
+		public Vector2i FontOffset
+		{
+			get
+			{
+				return new Vector2i(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceDictRec), "font_offset").ToInt64()));
+			}
+		}
+
+		[CLSCompliant(false)]
+		public uint SubrsCount
+		{
+			get
+			{
+				return rec.num_subrs;
+			}
+		}
+
+		[CLSCompliant(false)]
+		public uint SubrmapOffset
+		{
+			get
+			{
+				return (uint)rec.subrmap_offset;
+			}
+		}
+
+		public int SDBytes
+		{
+			get
+			{
+				return rec.sd_bytes;
 			}
 		}
 	}

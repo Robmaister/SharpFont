@@ -44,7 +44,7 @@ namespace SharpFont
 		internal Matrix2i(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (MatrixRec)Marshal.PtrToStructure(reference, typeof(MatrixRec));
+			this.rec = PInvokeHelper.PtrToStructure<MatrixRec>(reference);
 		}
 
 		/// <summary>

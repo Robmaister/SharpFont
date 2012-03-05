@@ -49,7 +49,7 @@ namespace SharpFont.TrueType
 		internal SfntName(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (SfntNameRec)Marshal.PtrToStructure(reference, typeof(SfntNameRec));
+			this.rec = PInvokeHelper.PtrToStructure<SfntNameRec>(reference);
 		}
 
 		/// <summary>

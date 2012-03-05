@@ -40,7 +40,7 @@ namespace SharpFont.PostScript
 		internal FaceInfo(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (FaceInfoRec)Marshal.PtrToStructure(reference, typeof(FaceInfoRec));
+			this.rec = PInvokeHelper.PtrToStructure<FaceInfoRec>(reference);
 		}
 
 		public string CIDFontName

@@ -41,7 +41,7 @@ namespace SharpFont
 		internal Size(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (SizeRec)Marshal.PtrToStructure(reference, typeof(SizeRec));
+			this.rec = PInvokeHelper.PtrToStructure<SizeRec>(reference);
 		}
 
 		/// <summary>

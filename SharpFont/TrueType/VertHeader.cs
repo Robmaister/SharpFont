@@ -49,7 +49,7 @@ namespace SharpFont.TrueType
 		internal VertHeader(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (VertHeaderRec)Marshal.PtrToStructure(reference, typeof(VertHeaderRec));
+			this.rec = PInvokeHelper.PtrToStructure<VertHeaderRec>(reference);
 		}
 
 		/// <summary>

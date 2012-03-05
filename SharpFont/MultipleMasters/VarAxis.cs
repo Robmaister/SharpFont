@@ -41,7 +41,7 @@ namespace SharpFont.MultipleMasters
 		internal VarAxis(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (VarAxisRec)Marshal.PtrToStructure(reference, typeof(VarAxisRec));
+			this.rec = PInvokeHelper.PtrToStructure<VarAxisRec>(reference);
 		}
 
 		/// <summary>

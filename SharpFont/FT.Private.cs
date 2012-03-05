@@ -399,7 +399,7 @@ namespace SharpFont
 		internal static extern void FT_Vector_Unit(out IntPtr vec, int angle);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Vector_Rotate(out IntPtr vec, int angle);
+		internal static extern void FT_Vector_Rotate(ref IntPtr vec, int angle);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern int FT_Vector_Length(IntPtr vec);
@@ -498,7 +498,7 @@ namespace SharpFont
 		internal static extern Error FT_Get_Advance(IntPtr face, uint gIndex, LoadFlags load_flags, out int padvance);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Get_Advances(IntPtr face, uint start, uint count, LoadFlags load_flags, out int padvance);
+		internal static extern Error FT_Get_Advances(IntPtr face, uint start, uint count, LoadFlags load_flags, out IntPtr padvance);
 
 		#endregion
 

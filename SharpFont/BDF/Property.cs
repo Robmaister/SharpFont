@@ -40,7 +40,7 @@ namespace SharpFont.BDF
 		internal Property(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (PropertyRec)Marshal.PtrToStructure(reference, typeof(PropertyRec));
+			this.rec = PInvokeHelper.PtrToStructure<PropertyRec>(reference);
 		}
 
 		/// <summary>

@@ -52,6 +52,7 @@ namespace SharpFont
 		internal BitmapSize(IntPtr reference)
 		{
 			this.reference = reference;
+			this.rec = PInvokeHelper.PtrToStructure<BitmapSizeRec>(reference);
 		}
 
 		internal BitmapSize(BitmapSizeRec bmpSizeInt)

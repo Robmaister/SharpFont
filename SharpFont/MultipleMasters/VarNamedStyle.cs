@@ -42,7 +42,7 @@ namespace SharpFont.MultipleMasters
 		internal VarNamedStyle(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (VarNamedStyleRec)Marshal.PtrToStructure(reference, typeof(VarNamedStyleRec));
+			this.rec = PInvokeHelper.PtrToStructure<VarNamedStyleRec>(reference);
 		}
 
 		/// <summary>

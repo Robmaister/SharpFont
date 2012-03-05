@@ -127,6 +127,7 @@
     <Compile Include="MultipleMasters\VarNamedStyle.cs" />
     <Compile Include="Orientation.cs" />
     <Compile Include="OutlineGlyph.cs" />
+    <Compile Include="PInvokeHelper.cs" />
     <Compile Include="PostScript\FaceDict.cs" />
     <Compile Include="PostScript\FaceInfo.cs" />
     <Compile Include="PostScript\FontInfo.cs" />

@@ -74,7 +74,7 @@ namespace SharpFont
 
 		internal Generic(IntPtr reference)
 		{
-			this.rec = (GenericRec)Marshal.PtrToStructure(reference, typeof(GenericRec));
+			this.rec = PInvokeHelper.PtrToStructure<GenericRec>(reference);
 		}
 
 		internal Generic(IntPtr reference, int offset)

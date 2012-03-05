@@ -46,7 +46,7 @@ namespace SharpFont.Cache
 		internal Scaler(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (ScalerRec)Marshal.PtrToStructure(reference, typeof(ScalerRec));
+			this.rec = PInvokeHelper.PtrToStructure<ScalerRec>(reference);
 		}
 
 		/// <summary>

@@ -43,7 +43,7 @@ namespace SharpFont.TrueType
 		internal Postscript(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (PostscriptRec)Marshal.PtrToStructure(reference, typeof(PostscriptRec));
+			this.rec = PInvokeHelper.PtrToStructure<PostscriptRec>(reference);
 		}
 
 		public int FormatType

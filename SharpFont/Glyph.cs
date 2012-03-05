@@ -41,7 +41,7 @@ namespace SharpFont
 		internal Glyph(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (GlyphRec)Marshal.PtrToStructure(reference, typeof(GlyphRec));
+			this.rec = PInvokeHelper.PtrToStructure<GlyphRec>(reference);
 		}
 
 		internal Glyph(GlyphRec rec)

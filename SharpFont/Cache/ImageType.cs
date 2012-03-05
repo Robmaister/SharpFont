@@ -40,7 +40,7 @@ namespace SharpFont.Cache
 		internal ImageType(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (ImageTypeRec)Marshal.PtrToStructure(reference, typeof(ImageTypeRec));
+			this.rec = PInvokeHelper.PtrToStructure<ImageTypeRec>(reference);
 		}
 
 		/// <summary>

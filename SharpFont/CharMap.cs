@@ -40,7 +40,7 @@ namespace SharpFont
 		internal CharMap(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (CharMapRec)Marshal.PtrToStructure(reference, typeof(CharMapRec));
+			this.rec = PInvokeHelper.PtrToStructure<CharMapRec>(reference);
 		}
 
 		/// <summary>

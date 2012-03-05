@@ -58,7 +58,7 @@ namespace SharpFont
 		internal Face(IntPtr reference, bool duplicate)
 		{
 			this.reference = reference;
-			this.rec = (FaceRec)Marshal.PtrToStructure(reference, typeof(FaceRec));
+			this.rec = PInvokeHelper.PtrToStructure<FaceRec>(reference);
 
 			if (duplicate)
 				FT.ReferenceFace(this);

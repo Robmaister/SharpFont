@@ -40,7 +40,7 @@ namespace SharpFont.FNT
 		internal Header(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (HeaderRec)Marshal.PtrToStructure(reference, typeof(HeaderRec));
+			this.rec = PInvokeHelper.PtrToStructure<HeaderRec>(reference);
 		}
 
 		[CLSCompliant(false)]

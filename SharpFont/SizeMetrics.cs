@@ -56,7 +56,7 @@ namespace SharpFont
 		internal SizeMetrics(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (SizeMetricsRec)Marshal.PtrToStructure(reference, typeof(SizeMetricsRec));
+			this.rec = PInvokeHelper.PtrToStructure<SizeMetricsRec>(reference);
 		}
 
 		internal SizeMetrics(SizeMetricsRec metricsInternal)

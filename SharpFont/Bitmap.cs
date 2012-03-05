@@ -49,7 +49,7 @@ namespace SharpFont
 		internal Bitmap(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (BitmapRec)Marshal.PtrToStructure(reference, typeof(BitmapRec));
+			this.rec = PInvokeHelper.PtrToStructure<BitmapRec>(reference);
 		}
 
 		internal Bitmap(BitmapRec bmpInt)

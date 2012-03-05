@@ -52,7 +52,7 @@ namespace SharpFont
 		internal BitmapGlyph(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (BitmapGlyphRec)Marshal.PtrToStructure(reference, typeof(BitmapGlyphRec));
+			this.rec = PInvokeHelper.PtrToStructure<BitmapGlyphRec>(reference);
 		}
 
 		/// <summary>

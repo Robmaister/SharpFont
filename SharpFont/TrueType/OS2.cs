@@ -44,7 +44,7 @@ namespace SharpFont.TrueType
 		internal OS2(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (OS2Rec)Marshal.PtrToStructure(reference, typeof(OS2Rec));
+			this.rec = PInvokeHelper.PtrToStructure<OS2Rec>(reference);
 		}
 
 		[CLSCompliant(false)]

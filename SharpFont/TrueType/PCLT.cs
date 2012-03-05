@@ -41,7 +41,7 @@ namespace SharpFont.TrueType
 		internal PCLT(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (PCLTRec)Marshal.PtrToStructure(reference, typeof(PCLTRec));
+			this.rec = PInvokeHelper.PtrToStructure<PCLTRec>(reference);
 		}
 
 		public int Version

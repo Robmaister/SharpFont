@@ -25,72 +25,22 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.Internal;
-
 namespace SharpFont
 {
 	/// <summary>
-	/// A structure used to hold an outline's bounding box, i.e., the
-	/// coordinates of its extrema in the horizontal and vertical directions.
+	/// Helpful methods to make marshalling simpler.
 	/// </summary>
-	public sealed class BBox
+	internal static class PInvokeHelper
 	{
-		internal IntPtr reference;
-		internal BBoxRec rec;
-
-		internal BBox(IntPtr reference)
-		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<BBoxRec>(reference);
-		}
-
-		internal BBox(BBoxRec bboxInt)
-		{
-			this.rec = bboxInt;
-		}
-
 		/// <summary>
-		/// Gets the horizontal minimum (left-most).
+		/// A generic wrapper for <see cref="Marshal.PtrToStructure(IntPtr, Type)"/>.
 		/// </summary>
-		public int Left
+		/// <typeparam name="T">The type to cast to.</typeparam>
+		/// <param name="reference">The pointer that holds the struct.</param>
+		/// <returns>A marshalled struct.</returns>
+		internal static T PtrToStructure<T>(IntPtr reference)
 		{
-			get
-			{
-				return (int)rec.xMin;
-			}
-		}
-
-		/// <summary>
-		/// Gets the vertical minimum (bottom-most).
-		/// </summary>
-		public int Bottom
-		{
-			get
-			{
-				return (int)rec.yMin;
-			}
-		}
-
-		/// <summary>
-		/// Gets the horizontal maximum (right-most).
-		/// </summary>
-		public int Right
-		{
-			get
-			{
-				return (int)rec.xMax;
-			}
-		}
-
-		/// <summary>
-		/// Gets the vertical maximum (top-most).
-		/// </summary>
-		public int Top
-		{
-			get
-			{
-				return (int)rec.yMax;
-			}
+			return (T)Marshal.PtrToStructure(reference, typeof(T));
 		}
 	}
 }

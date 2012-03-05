@@ -693,6 +693,7 @@ namespace SharpFont
 		/// <param name="face">The source face handle.</param>
 		/// <param name="ppem">The vertical character pixel size.</param>
 		/// <returns>Bit flags (see <see cref="Gasp"/>), or <see cref="Gasp.NoTable"/> if there is no ‘gasp’ table in the face.</returns>
+		[CLSCompliant(false)]
 		public static Gasp GetGasp(Face face, uint ppem)
 		{
 			return FT_Get_Gasp(face.reference, ppem);

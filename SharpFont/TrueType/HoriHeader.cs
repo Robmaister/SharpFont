@@ -49,7 +49,7 @@ namespace SharpFont.TrueType
 		internal HoriHeader(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (HoriHeaderRec)Marshal.PtrToStructure(reference, typeof(HoriHeaderRec));
+			this.rec = PInvokeHelper.PtrToStructure<HoriHeaderRec>(reference);
 		}
 
 		/// <summary>

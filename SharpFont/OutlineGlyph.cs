@@ -55,7 +55,7 @@ namespace SharpFont
 		internal OutlineGlyph(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (OutlineGlyphRec)Marshal.PtrToStructure(reference, typeof(OutlineGlyphRec));
+			this.rec = PInvokeHelper.PtrToStructure<OutlineGlyphRec>(reference);
 		}
 
 		/// <summary>

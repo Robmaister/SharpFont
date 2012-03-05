@@ -43,7 +43,7 @@ namespace SharpFont.MultipleMasters
 		internal MMVar(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (MMVarRec)Marshal.PtrToStructure(reference, typeof(MMVarRec));
+			this.rec = PInvokeHelper.PtrToStructure<MMVarRec>(reference);
 		}
 
 		/// <summary>

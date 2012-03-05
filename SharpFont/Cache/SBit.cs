@@ -43,7 +43,7 @@ namespace SharpFont.Cache
 		internal SBit(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (SBitRec)Marshal.PtrToStructure(reference, typeof(SBitRec));
+			this.rec = PInvokeHelper.PtrToStructure<SBitRec>(reference);
 		}
 
 		/// <summary>

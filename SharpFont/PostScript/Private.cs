@@ -42,7 +42,7 @@ namespace SharpFont.PostScript
 		internal Private(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (PrivateRec)Marshal.PtrToStructure(reference, typeof(PrivateRec));
+			this.rec = PInvokeHelper.PtrToStructure<PrivateRec>(reference);
 		}
 
 		public int UniqueID

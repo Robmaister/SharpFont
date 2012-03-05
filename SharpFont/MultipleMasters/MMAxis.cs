@@ -43,7 +43,7 @@ namespace SharpFont.MultipleMasters
 		internal MMAxis(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (MMAxisRec)Marshal.PtrToStructure(reference, typeof(MMAxisRec));
+			this.rec = PInvokeHelper.PtrToStructure<MMAxisRec>(reference);
 		}
 
 		internal MMAxis(MMAxisRec axisInternal)

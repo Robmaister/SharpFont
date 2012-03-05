@@ -39,7 +39,7 @@ namespace SharpFont
 		internal Vector2i(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (VectorRec)Marshal.PtrToStructure(reference, typeof(VectorRec));
+			this.rec = PInvokeHelper.PtrToStructure<VectorRec>(reference);
 		}
 
 		internal Vector2i(VectorRec vInt)

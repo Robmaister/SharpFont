@@ -47,7 +47,7 @@ namespace SharpFont
 		internal GlyphMetrics(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (GlyphMetricsRec)Marshal.PtrToStructure(reference, typeof(GlyphMetricsRec));
+			this.rec = PInvokeHelper.PtrToStructure<GlyphMetricsRec>(reference);
 		}
 
 		internal GlyphMetrics(GlyphMetricsRec glyphMetInt)

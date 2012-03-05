@@ -42,7 +42,7 @@ namespace SharpFont.PostScript
 		internal FontInfo(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (FontInfoRec)Marshal.PtrToStructure(reference, typeof(FontInfoRec));
+			this.rec = PInvokeHelper.PtrToStructure<FontInfoRec>(reference);
 		}
 
 		public string Version

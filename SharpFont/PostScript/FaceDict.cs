@@ -40,7 +40,7 @@ namespace SharpFont.PostScript
 		internal FaceDict(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (FaceDictRec)Marshal.PtrToStructure(reference, typeof(FaceDictRec));
+			this.rec = PInvokeHelper.PtrToStructure<FaceDictRec>(reference);
 		}
 
 		public Private PrivateDictionary

@@ -84,7 +84,7 @@ namespace SharpFont
 		internal GlyphSlot(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (GlyphSlotRec)Marshal.PtrToStructure(reference, typeof(GlyphSlotRec));
+			this.rec = PInvokeHelper.PtrToStructure<GlyphSlotRec>(reference);
 		}
 
 		/// <summary>

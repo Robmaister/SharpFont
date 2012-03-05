@@ -45,7 +45,7 @@ namespace SharpFont.TrueType
 		internal MaxProfile(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (MaxProfileRec)Marshal.PtrToStructure(reference, typeof(MaxProfileRec));
+			this.rec = PInvokeHelper.PtrToStructure<MaxProfileRec>(reference);
 		}
 
 		/// <summary>

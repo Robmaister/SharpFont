@@ -306,7 +306,7 @@ namespace SharpFont
 		internal static extern Error FT_Get_CID_Registry_Ordering_Supplement(IntPtr face, [MarshalAs(UnmanagedType.LPStr)] out string registry, [MarshalAs(UnmanagedType.LPStr)] out string ordering, out int aproperty);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Get_CID_Is_Internally_CID_Keyed(IntPtr face, out bool is_cid);
+		internal static extern Error FT_Get_CID_Is_Internally_CID_Keyed(IntPtr face, out byte is_cid);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Error FT_Get_CID_From_Glyph_Index(IntPtr face, uint glyph_index, out uint cid);
@@ -343,7 +343,7 @@ namespace SharpFont
 		#region Gasp Table
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern int FT_Get_Gasp(IntPtr face, uint ppem);
+		internal static extern Gasp FT_Get_Gasp(IntPtr face, uint ppem);
 
 		#endregion
 

@@ -187,7 +187,7 @@ namespace SharpFont.PostScript
 		{
 			get
 			{
-				return rec.force_bold == 0;
+				return rec.force_bold == 1;
 			}
 		}
 
@@ -195,7 +195,7 @@ namespace SharpFont.PostScript
 		{
 			get
 			{
-				return rec.round_stem_up == 0;
+				return rec.round_stem_up == 1;
 			}
 		}
 

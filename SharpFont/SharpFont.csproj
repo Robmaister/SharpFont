@@ -66,6 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BBox.cs" />
+    <Compile Include="BDF\Internal\PropertyRec.cs" />
+    <Compile Include="BDF\Property.cs" />
+    <Compile Include="BDF\PropertyType.cs" />
     <Compile Include="Bitmap.cs" />
     <Compile Include="BitmapGlyph.cs" />
     <Compile Include="BitmapSize.cs" />
@@ -90,6 +93,8 @@
     <Compile Include="CharMap.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="Encoding.cs" />
+    <Compile Include="FNT\Header.cs" />
+    <Compile Include="FNT\Internal\HeaderRec.cs" />
     <Compile Include="FT.Format.cs" />
     <Compile Include="FT.Misc.cs" />
     <Compile Include="Internal\BBoxRec.cs" />
@@ -192,7 +197,7 @@
     <Compile Include="PostScript\BlendFlags.cs" />
     <Compile Include="PostScript\EncodingType.cs" />
     <Compile Include="Vector2i.cs" />
-    <Compile Include="WinFntID.cs" />
+    <Compile Include="FNT\WinFntID.cs" />
     <Compile Include="FT.Private.cs" />
   </ItemGroup>
   <ItemGroup>

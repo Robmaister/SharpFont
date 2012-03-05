@@ -23,10 +23,12 @@ SOFTWARE.*/
 #endregion
 
 using System;
+using System.Runtime.InteropServices;
 
 using SharpFont.MultipleMasters;
 using SharpFont.TrueType;
 using SharpFont.PostScript;
+using SharpFont.BDF;
 
 namespace SharpFont
 {
@@ -385,6 +387,7 @@ namespace SharpFont
 		/// <param name="value">A pointer to memory into which to write the value.</param>
 		/// <param name="valueLength">The size, in bytes, of the memory supplied for the value.</param>
 		/// <returns>The amount of memory (in bytes) required to hold the requested value (if it exists, -1 otherwise).</returns>
+		[CLSCompliant(false)]
 		public static int GetPSFontValue(Face face, DictionaryKeys key, uint idx, ref IntPtr value, int valueLength)
 		{
 			return FT_Get_PS_Font_Value(face.reference, key, idx, ref value, valueLength);
@@ -437,25 +440,263 @@ namespace SharpFont
 
 		#region BDF and PCF Files
 
+		/// <summary>
+		/// Retrieve a BDF font character set identity, according to the BDF
+		/// specification.
+		/// </summary>
+		/// <remarks>
+		/// This function only works with BDF faces, returning an error
+		/// otherwise.
+		/// </remarks>
+		/// <param name="face">A handle to the input face.</param>
+		/// <param name="encoding">Charset encoding, as a C string, owned by the face.</param>
+		/// <param name="registry">Charset registry, as a C string, owned by the face.</param>
+		public static void GetBDFCharsetID(Face face, out string encoding, out string registry)
+		{
+			Error err = FT_Get_BDF_Charset_ID(face.reference, out encoding, out registry);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Retrieve a BDF property from a BDF or PCF font file.
+		/// </summary>
+		/// <remarks><para>
+		/// This function works with BDF and PCF fonts. It returns an error
+		/// otherwise. It also returns an error if the property is not in the
+		/// font.
+		/// </para><para>
+		/// A ‘property’ is a either key-value pair within the STARTPROPERTIES
+		/// ... ENDPROPERTIES block of a BDF font or a key-value pair from the
+		/// ‘info->props’ array within a ‘FontRec’ structure of a PCF font.
+		/// </para><para>
+		/// Integer properties are always stored as ‘signed’ within PCF fonts;
+		/// consequently, <see cref="PropertyType.Cardinal"/> is a possible
+		/// return value for BDF fonts only.
+		/// </para><para>
+		/// In case of error, ‘aproperty->type’ is always set to
+		/// <see cref="PropertyType.None"/>.
+		/// </para></remarks>
+		/// <param name="face">A handle to the input face.</param>
+		/// <param name="propertyName">The property name.</param>
+		/// <returns>The property.</returns>
+		public static Property GetBDFProperty(Face face, string propertyName)
+		{
+			IntPtr propertyRef;
+
+			Error err = FT_Get_BDF_Property(face.reference, propertyName, out propertyRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Property(propertyRef);
+		}
+
 		#endregion
 
 		#region CID Fonts
+
+		/// <summary>
+		/// Retrieve the Registry/Ordering/Supplement triple (also known as the
+		/// "R/O/S") from a CID-keyed font.
+		/// </summary>
+		/// <remarks>
+		/// This function only works with CID faces, returning an error
+		/// otherwise.
+		/// </remarks>
+		/// <param name="face">A handle to the input face.</param>
+		/// <param name="registry">The registry, as a C string, owned by the face.</param>
+		/// <param name="ordering">The ordering, as a C string, owned by the face.</param>
+		/// <param name="supplement">The supplement.</param>
+		public static void GetCIDRegistryOrderingSupplement(Face face, out string registry, out string ordering, out int supplement)
+		{
+			Error err = FT_Get_CID_Registry_Ordering_Supplement(face.reference, out registry, out ordering, out supplement);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Retrieve the type of the input face, CID keyed or not. In constrast
+		/// to the FT_IS_CID_KEYED macro this function returns successfully
+		/// also for CID-keyed fonts in an SNFT wrapper.
+		/// </summary>
+		/// <remarks>
+		/// This function only works with CID faces and OpenType fonts,
+		/// returning an error otherwise.
+		/// </remarks>
+		/// <param name="face">A handle to the input face.</param>
+		/// <returns>The type of the face as an FT_Bool.</returns>
+		public static bool GetCIDIsInternallyCIDKeyed(Face face)
+		{
+			byte is_cid;
+			Error err = FT_Get_CID_Is_Internally_CID_Keyed(face.reference, out is_cid);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return is_cid == 1;
+		}
+
+		/// <summary>
+		/// Retrieve the CID of the input glyph index.
+		/// </summary>
+		/// <remarks>
+		/// This function only works with CID faces and OpenType fonts,
+		/// returning an error otherwise.
+		/// </remarks>
+		/// <param name="face">A handle to the input face.</param>
+		/// <param name="glyphIndex">The input glyph index.</param>
+		/// <returns>The CID as an FT_UInt.</returns>
+		[CLSCompliant(false)]
+		public static uint GetCIDFromGlyphIndex(Face face, uint glyphIndex)
+		{
+			uint cid;
+			Error err = FT_Get_CID_From_Glyph_Index(face.reference, glyphIndex, out cid);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return cid;
+		}
 
 		#endregion
 
 		#region PFR Fonts
 
+		/// <summary>
+		/// Return the outline and metrics resolutions of a given PFR face.
+		/// </summary>
+		/// <remarks>
+		/// If the input face is not a PFR, this function will return an error.
+		/// However, in all cases, it will return valid values.
+		/// </remarks>
+		/// <param name="face">Handle to the input face. It can be a non-PFR face.</param>
+		/// <param name="outlineResolution">Outline resolution. This is equivalent to ‘face->units_per_EM’ for non-PFR fonts. Optional (parameter can be NULL).</param>
+		/// <param name="metricsResolution">Metrics resolution. This is equivalent to ‘outline_resolution’ for non-PFR fonts. Optional (parameter can be NULL).</param>
+		/// <param name="metricsXScale">A 16.16 fixed-point number used to scale distance expressed in metrics units to device sub-pixels. This is equivalent to ‘face->size->x_scale’, but for metrics only. Optional (parameter can be NULL).</param>
+		/// <param name="metricsYScale">Same as ‘ametrics_x_scale’ but for the vertical direction. optional (parameter can be NULL).</param>
+		[CLSCompliant(false)]
+		public static void GetPFRMetrics(Face face, out uint outlineResolution, out uint metricsResolution, out int metricsXScale, out int metricsYScale)
+		{
+			Error err = FT_Get_PFR_Metrics(face.reference, out outlineResolution, out metricsResolution, out metricsXScale, out metricsYScale);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Return the kerning pair corresponding to two glyphs in a PFR face.
+		/// The distance is expressed in metrics units, unlike the result of
+		/// <see cref="GetKerning"/>.
+		/// </summary>
+		/// <remarks><para>
+		/// This function always return distances in original PFR metrics
+		/// units. This is unlike <see cref="GetKerning"/> with the
+		/// <see cref="KerningMode.Unscaled"/> mode, which always returns
+		/// distances converted to outline units.
+		/// </para><para>
+		/// You can use the value of the ‘x_scale’ and ‘y_scale’ parameters
+		/// returned by <see cref="GetPFRMetrics"/> to scale these to device
+		/// sub-pixels.
+		/// </para></remarks>
+		/// <param name="face">A handle to the input face.</param>
+		/// <param name="left">Index of the left glyph.</param>
+		/// <param name="right">Index of the right glyph.</param>
+		/// <returns>A kerning vector.</returns>
+		[CLSCompliant(false)]
+		public static Vector2i GetPFRKerning(Face face, uint left, uint right)
+		{
+			IntPtr vectorRef;
+			Error err = FT_Get_PFR_Kerning(face.reference, left, right, out vectorRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Vector2i(vectorRef);
+		}
+
+		/// <summary>
+		/// Return a given glyph advance, expressed in original metrics units,
+		/// from a PFR font.
+		/// </summary>
+		/// <remarks>
+		/// You can use the ‘x_scale’ or ‘y_scale’ results of
+		/// <see cref="GetPFRMetrics"/> to convert the advance to device
+		/// sub-pixels (i.e., 1/64th of pixels).
+		/// </remarks>
+		/// <param name="face">A handle to the input face.</param>
+		/// <param name="glyphIndex">The glyph index.</param>
+		/// <returns>The glyph advance in metrics units.</returns>
+		[CLSCompliant(false)]
+		public static int GetPFRAdvance(Face face, uint glyphIndex)
+		{
+			int advance;
+			Error err = FT_Get_PFR_Advance(face.reference, glyphIndex, out advance);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return advance;
+		}
+
 		#endregion
 
 		#region Windows FNT Files
+
+		/// <summary>
+		/// Retrieve a Windows FNT font info header.
+		/// </summary>
+		/// <remarks>
+		/// This function only works with Windows FNT faces, returning an error
+		/// otherwise.
+		/// </remarks>
+		/// <param name="face">A handle to the input face.</param>
+		/// <returns>The WinFNT header.</returns>
+		public static FNT.Header GetWinFNTHeader(Face face)
+		{
+			IntPtr headerRef;
+			Error err = FT_Get_WinFNT_Header(face.reference, out headerRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new FNT.Header(headerRef);
+		}
 
 		#endregion
 
 		#region Font Formats
 
+		/// <summary>
+		/// Return a string describing the format of a given face, using values
+		/// which can be used as an X11 FONT_PROPERTY. Possible values are
+		/// ‘TrueType’, ‘Type 1’, ‘BDF’, ‘PCF’, ‘Type 42’, ‘CID Type 1’, ‘CFF’,
+		/// ‘PFR’, and ‘Windows FNT’.
+		/// </summary>
+		/// <param name="face">Input face handle.</param>
+		/// <returns>Font format string. NULL in case of error.</returns>
+		public static string GetX11FontFormat(Face face)
+		{
+			return Marshal.PtrToStringAnsi(FT_Get_X11_Font_Format(face.reference));
+		}
+
 		#endregion
 
 		#region Gasp Table
+
+		/// <summary>
+		/// Read the ‘gasp’ table from a TrueType or OpenType font file and
+		/// return the entry corresponding to a given character pixel size.
+		/// </summary>
+		/// <param name="face">The source face handle.</param>
+		/// <param name="ppem">The vertical character pixel size.</param>
+		/// <returns>Bit flags (see <see cref="Gasp"/>), or <see cref="Gasp.NoTable"/> if there is no ‘gasp’ table in the face.</returns>
+		public static Gasp GetGasp(Face face, uint ppem)
+		{
+			return FT_Get_Gasp(face.reference, ppem);
+		}
 
 		#endregion
 	}

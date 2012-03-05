@@ -25,96 +25,72 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.PostScript.Internal;
+using SharpFont.BDF.Internal;
 
-namespace SharpFont.PostScript
+namespace SharpFont.BDF
 {
 	/// <summary>
-	/// A structure used to model a Type 1 or Type 2 FontInfo dictionary. Note
-	/// that for Multiple Master fonts, each instance has its own FontInfo
-	/// dictionary.
+	/// This structure models a given BDF/PCF property.
 	/// </summary>
-	public class FontInfo
+	public class Property
 	{
 		internal IntPtr reference;
-		internal FontInfoRec rec;
+		internal PropertyRec rec;
 
-		internal FontInfo(IntPtr reference)
+		internal Property(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = (FontInfoRec)Marshal.PtrToStructure(reference, typeof(FontInfoRec));
+			this.rec = (PropertyRec)Marshal.PtrToStructure(reference, typeof(PropertyRec));
 		}
 
-		public string Version
+		/// <summary>
+		/// The property type.
+		/// </summary>
+		public PropertyType Type
 		{
 			get
 			{
-				return rec.version;
+				return rec.type;
 			}
 		}
 
-		public string Notice
+		/// <summary>
+		/// The atom string, if type is <see cref="PropertyType.Atom"/>.
+		/// </summary>
+		public string Atom
 		{
 			get
 			{
-				return rec.notice;
+				//only this property throws an exception because the pointer
+				//could be to unmanaged memory not owned by the process.
+				if (rec.type != PropertyType.Atom)
+					throw new InvalidOperationException("The property type is not Atom.");
+
+				return Marshal.PtrToStringAnsi(rec.atom);
 			}
 		}
 
-		public string FullName
+		/// <summary>
+		/// A signed integer, if type is <see cref="PropertyType.Integer"/>.
+		/// </summary>
+		public int Integer
 		{
 			get
 			{
-				return rec.full_name;
+				return rec.integer;
 			}
 		}
 
-		public string FamilyName
-		{
-			get
-			{
-				return rec.family_name;
-			}
-		}
-
-		public string Weight
-		{
-			get
-			{
-				return rec.weight;
-			}
-		}
-
-		public int ItalicAngle
-		{
-			get
-			{
-				return (int)rec.italic_angle;
-			}
-		}
-
-		public bool IsFixedPitch
-		{
-			get
-			{
-				return rec.is_fixed_pitch == 1;
-			}
-		}
-
-		public short UnderlinePosition
-		{
-			get
-			{
-				return rec.underline_position;
-			}
-		}
-
+		/// <summary>
+		/// An unsigned integer, if type is
+		/// <see cref="PropertyType.Cardinal"/>.
+		/// </summary>
 		[CLSCompliant(false)]
-		public ushort UnderlineThickness
+		public uint Cardinal
 		{
 			get
 			{
-				return rec.underline_thickness;
+				return rec.cardinal;
 			}
 		}
 	}

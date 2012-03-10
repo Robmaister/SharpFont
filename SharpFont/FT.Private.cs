@@ -424,13 +424,10 @@ namespace SharpFont
 		internal static extern void FT_List_Insert(IntPtr list, IntPtr node);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_List_Remove(IntPtr list, IntPtr data);
+		internal static extern void FT_List_Remove(IntPtr list, IntPtr node);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_List_Up(IntPtr list, IntPtr data);
-
-		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern IntPtr FT_List_Iterator(IntPtr node, IntPtr user);
+		internal static extern void FT_List_Up(IntPtr list, IntPtr node);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Error FT_List_Iterate(IntPtr list, IntPtr iterator, IntPtr user);
@@ -529,10 +526,6 @@ namespace SharpFont
 		#endregion
 
 		#region Glyph Stroker
-
-		#endregion
-
-		#region System Interface
 
 		#endregion
 

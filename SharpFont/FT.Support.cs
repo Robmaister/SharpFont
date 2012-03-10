@@ -23,6 +23,8 @@ SOFTWARE.*/
 #endregion
 
 using System;
+using System.Runtime.InteropServices;
+
 using SharpFont.Internal;
 
 namespace SharpFont
@@ -316,6 +318,91 @@ namespace SharpFont
 
 		#region List Processing
 
+		/// <summary>
+		/// Find the list node for a given listed object.
+		/// </summary>
+		/// <param name="list">Find the list node for a given listed object.</param>
+		/// <param name="data">The address of the listed object.</param>
+		/// <returns>List node. NULL if it wasn't found.</returns>
+		public static ListNode ListFind(FTList list, IntPtr data)
+		{
+			return new ListNode(FT_List_Find(list.reference, data));
+		}
+
+		/// <summary>
+		/// Append an element to the end of a list.
+		/// </summary>
+		/// <param name="list">A pointer to the parent list.</param>
+		/// <param name="node">The node to append.</param>
+		public static void ListAdd(FTList list, ListNode node)
+		{
+			FT_List_Add(list.reference, node.reference);
+		}
+
+		/// <summary>
+		/// Insert an element at the head of a list.
+		/// </summary>
+		/// <param name="list">A pointer to parent list.</param>
+		/// <param name="node">The node to insert.</param>
+		public static void ListInsert(FTList list, ListNode node)
+		{
+			FT_List_Insert(list.reference, node.reference);
+		}
+
+		/// <summary>
+		/// Remove a node from a list. This function doesn't check whether the
+		/// node is in the list!
+		/// </summary>
+		/// <param name="list">A pointer to the parent list.</param>
+		/// <param name="node">The node to remove.</param>
+		public static void ListRemove(FTList list, ListNode node)
+		{
+			FT_List_Remove(list.reference, node.reference);
+		}
+
+		/// <summary>
+		/// Move a node to the head/top of a list. Used to maintain LRU lists.
+		/// </summary>
+		/// <param name="list">A pointer to the parent list.</param>
+		/// <param name="node">The node to move.</param>
+		public static void ListUp(FTList list, ListNode node)
+		{
+			FT_List_Up(list.reference, node.reference);
+		}
+
+		/// <summary>
+		/// Parse a list and calls a given iterator function on each element.
+		/// Note that parsing is stopped as soon as one of the iterator calls
+		/// returns a non-zero value.
+		/// </summary>
+		/// <param name="list">A handle to the list.</param>
+		/// <param name="iterator">An iterator function, called on each node of the list.</param>
+		/// <param name="user">A user-supplied field which is passed as the second argument to the iterator.</param>
+		public static void ListIterate(FTList list, ListIterator iterator, IntPtr user)
+		{
+			Error err = FT_List_Iterate(list.reference, Marshal.GetFunctionPointerForDelegate(iterator), user);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Destroy all elements in the list as well as the list itself.
+		/// </summary>
+		/// <remarks>
+		/// This function expects that all nodes added by
+		/// <see cref="FT.ListAdd"/> or <see cref="FT.ListInsert"/> have been
+		/// dynamically allocated.
+		/// </remarks>
+		/// <param name="list">A handle to the list.</param>
+		/// <param name="destroy">A list destructor that will be applied to each element of the list.</param>
+		/// <param name="memory">The current memory object which handles deallocation.</param>
+		/// <param name="user">A user-supplied field which is passed as the last argument to the destructor.</param>
+		public static void ListFinalize(FTList list, ListDestructor destroy, Memory memory, IntPtr user)
+		{
+			FT_List_Finalize(list.reference, Marshal.GetFunctionPointerForDelegate(destroy), memory.reference, user);
+		}
+
 		#endregion
 
 		#region Outline Processing
@@ -409,10 +496,6 @@ namespace SharpFont
 		#endregion
 
 		#region Glyph Stroker
-
-		#endregion
-
-		#region System Interface
 
 		#endregion
 

@@ -69,7 +69,7 @@
     <Compile Include="BDF\Internal\PropertyRec.cs" />
     <Compile Include="BDF\Property.cs" />
     <Compile Include="BDF\PropertyType.cs" />
-    <Compile Include="Bitmap.cs" />
+    <Compile Include="FTBitmap.cs" />
     <Compile Include="BitmapGlyph.cs" />
     <Compile Include="BitmapSize.cs" />
     <Compile Include="Cache\CMapCache.cs" />
@@ -156,7 +156,7 @@
     <Compile Include="Library.cs" />
     <Compile Include="LoadFlags.cs" />
     <Compile Include="LoadTarget.cs" />
-    <Compile Include="Matrix2i.cs" />
+    <Compile Include="FTMatrix.cs" />
     <Compile Include="Module.cs" />
     <Compile Include="OpenArgs.cs" />
     <Compile Include="OpenFlags.cs" />
@@ -182,12 +182,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PostScript\DictionaryKeys.cs" />
     <Compile Include="RenderMode.cs" />
-    <Compile Include="Size.cs" />
+    <Compile Include="FTSize.cs" />
     <Compile Include="SizeMetrics.cs" />
     <Compile Include="SizeRequest.cs" />
     <Compile Include="SizeRequestType.cs" />
     <Compile Include="Span.cs" />
-    <Compile Include="Stream.cs" />
+    <Compile Include="FTStream.cs" />
     <Compile Include="StyleFlags.cs" />
     <Compile Include="SubGlyph.cs" />
     <Compile Include="SubGlyphFlags.cs" />
@@ -197,7 +197,7 @@
     <Compile Include="TrueType\VertHeader.cs" />
     <Compile Include="PostScript\BlendFlags.cs" />
     <Compile Include="PostScript\EncodingType.cs" />
-    <Compile Include="Vector2i.cs" />
+    <Compile Include="FTVector.cs" />
     <Compile Include="FNT\WinFntID.cs" />
     <Compile Include="FT.Private.cs" />
   </ItemGroup>

@@ -24,48 +24,64 @@ SOFTWARE.*/
 
 using System;
 using System.Runtime.InteropServices;
+
 using SharpFont.Internal;
 
 namespace SharpFont
 {
 	/// <summary>
-	/// A simple structure used to store a 2D vector.
+	/// FreeType root size class structure. A size object models a face object
+	/// at a given size.
 	/// </summary>
-	public sealed class Vector2i
+	public sealed class FTSize
 	{
 		internal IntPtr reference;
-		internal VectorRec rec;
+		internal SizeRec rec;
 
-		internal Vector2i(IntPtr reference)
+		internal FTSize(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<VectorRec>(reference);
-		}
-
-		internal Vector2i(VectorRec vInt)
-		{
-			this.rec = vInt;
+			this.rec = PInvokeHelper.PtrToStructure<SizeRec>(reference);
 		}
 
 		/// <summary>
-		/// Gets the horizontal coordinate.
+		/// Gets a handle to the parent face object.
 		/// </summary>
-		public int X
+		public Face Face
 		{
 			get
 			{
-				return (int)rec.x;
+				return new Face(rec.face, true);
 			}
 		}
 
 		/// <summary>
-		/// Gets the vertical coordinate.
+		/// Gets a typeless pointer, which is unused by the FreeType library or
+		/// any of its drivers. It can be used by client applications to link
+		/// their own data to each size object.
 		/// </summary>
-		public int Y
+		public Generic Generic
 		{
 			get
 			{
-				return (int)rec.y;
+				return new Generic(rec.generic);
+			}
+
+			set
+			{
+				value.WriteToUnmanagedMemory(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceRec), "generic").ToInt64()));
+				rec = (SizeRec)Marshal.PtrToStructure(reference, typeof(SizeRec));
+			}
+		}
+
+		/// <summary>
+		/// Gets metrics for this size object. This field is read-only.
+		/// </summary>
+		public SizeMetrics Metrics
+		{
+			get
+			{
+				return new SizeMetrics(rec.metrics);
 			}
 		}
 	}

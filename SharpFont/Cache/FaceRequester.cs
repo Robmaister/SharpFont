@@ -37,7 +37,7 @@ namespace SharpFont.Cache
 	/// client when <see cref="FTC.ManagerNew"/> is called.
 	/// </para><para>
 	/// The face requester should not perform funny things on the returned face
-	/// object, like creating a new <see cref="Size"/> for it, or setting a
+	/// object, like creating a new <see cref="FTSize"/> for it, or setting a
 	/// transformation through <see cref="FT.SetTransform"/>!
 	/// </para></remarks>
 	/// <param name="faceID">The face ID to resolve.</param>

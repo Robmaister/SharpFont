@@ -125,11 +125,11 @@ namespace SharpFont
 		/// <summary>
 		/// A handle to a source stream object.
 		/// </summary>
-		public Stream Stream
+		public FTStream Stream
 		{
 			get
 			{
-				return new Stream(Marshal.ReadIntPtr(reference, 8
+				return new FTStream(Marshal.ReadIntPtr(reference, 8
 					+ IntPtr.Size * 2));
 			}
 		}

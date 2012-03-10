@@ -149,7 +149,7 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="vec">The target vector to transform.</param>
 		/// <param name="matrix">A pointer to the source 2x2 matrix.</param>
-		public static void VectorTransform(Vector2i vec, Matrix2i matrix)
+		public static void VectorTransform(FTVector vec, FTMatrix matrix)
 		{
 			FT_Vector_Transform(ref vec.reference, matrix.reference);
 
@@ -165,7 +165,7 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="a">A pointer to matrix ‘a’.</param>
 		/// <param name="b">A pointer to matrix ‘b’.</param>
-		public static void MatrixMultiply(Matrix2i a, Matrix2i b)
+		public static void MatrixMultiply(FTMatrix a, FTMatrix b)
 		{
 			FT_Matrix_Multiply(a.reference, ref b.reference);
 
@@ -177,7 +177,7 @@ namespace SharpFont
 		/// Invert a 2x2 matrix. Return an error if it can't be inverted.
 		/// </summary>
 		/// <param name="matrix">A pointer to the target matrix. Remains untouched in case of error.</param>
-		public static void MatrixInvert(Matrix2i matrix)
+		public static void MatrixInvert(FTMatrix matrix)
 		{
 			Error err = FT_Matrix_Invert(ref matrix.reference);
 
@@ -259,12 +259,12 @@ namespace SharpFont
 		/// </para></summary>
 		/// <param name="angle">The address of angle.</param>
 		/// <returns>The address of target vector.</returns>
-		public static Vector2i VectorUnit(int angle)
+		public static FTVector VectorUnit(int angle)
 		{
 			IntPtr vecRef;
 			FT_Vector_Unit(out vecRef, angle);
 
-			return new Vector2i(vecRef);
+			return new FTVector(vecRef);
 		}
 
 		/// <summary>
@@ -272,7 +272,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="vec">The address of target vector.</param>
 		/// <param name="angle">The address of angle.</param>
-		public static void VectorRotate(Vector2i vec, int angle)
+		public static void VectorRotate(FTVector vec, int angle)
 		{
 			FT_Vector_Rotate(ref vec.reference, angle);
 		}
@@ -282,7 +282,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="vec">The address of target vector.</param>
 		/// <returns>The vector length, expressed in the same units that the original vector coordinates.</returns>
-		public static int VectorLength(Vector2i vec)
+		public static int VectorLength(FTVector vec)
 		{
 			return FT_Vector_Length(vec.reference);
 		}
@@ -293,7 +293,7 @@ namespace SharpFont
 		/// <param name="vec">The address of source vector.</param>
 		/// <param name="length">The vector length.</param>
 		/// <param name="angle">The vector angle.</param>
-		public static void VectorPolarize(Vector2i vec, out int length, out int angle)
+		public static void VectorPolarize(FTVector vec, out int length, out int angle)
 		{
 			FT_Vector_Polarize(vec.reference, out length, out angle);
 		}
@@ -304,12 +304,12 @@ namespace SharpFont
 		/// <param name="length">The vector length.</param>
 		/// <param name="angle">The vector angle.</param>
 		/// <returns>The address of source vector.</returns>
-		public static Vector2i VectorFromPolar(int length, int angle)
+		public static FTVector VectorFromPolar(int length, int angle)
 		{
 			IntPtr vecRef;
 			FT_Vector_From_Polar(out vecRef, length, angle);
 
-			return new Vector2i(vecRef);
+			return new FTVector(vecRef);
 		}
 
 		#endregion
@@ -449,7 +449,7 @@ namespace SharpFont
 		/// </para></remarks>
 		/// <param name="stream">The target embedding stream.</param>
 		/// <param name="source">The source stream.</param>
-		public static void StreamOpenGzip(Stream stream, Stream source)
+		public static void StreamOpenGzip(FTStream stream, FTStream source)
 		{
 			Error err = FT_Stream_OpenGzip(stream.reference, source.reference);
 
@@ -488,7 +488,7 @@ namespace SharpFont
 		/// </para></remarks>
 		/// <param name="stream">The target embedding stream.</param>
 		/// <param name="source">The source stream.</param>
-		public static void StreamOpenLZW(Stream stream, Stream source)
+		public static void StreamOpenLZW(FTStream stream, FTStream source)
 		{
 			Error err = FT_Stream_OpenLZW(stream.reference, source.reference);
 
@@ -527,7 +527,7 @@ namespace SharpFont
 		/// </para></remarks>
 		/// <param name="stream">The target embedding stream.</param>
 		/// <param name="source">The source stream.</param>
-		public static void StreamOpenBzip2(Stream stream, Stream source)
+		public static void StreamOpenBzip2(FTStream stream, FTStream source)
 		{
 			Error err = FT_Stream_OpenBzip2(stream.reference, source.reference);
 

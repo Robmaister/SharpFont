@@ -41,18 +41,18 @@ namespace SharpFont
 	/// However, drivers might be added in the future to support more
 	/// ‘colorful’ options.
 	/// </remarks>
-	public sealed class Bitmap
+	public sealed class FTBitmap
 	{
 		internal IntPtr reference;
 		internal BitmapRec rec;
 
-		internal Bitmap(IntPtr reference)
+		internal FTBitmap(IntPtr reference)
 		{
 			this.reference = reference;
 			this.rec = PInvokeHelper.PtrToStructure<BitmapRec>(reference);
 		}
 
-		internal Bitmap(BitmapRec bmpInt)
+		internal FTBitmap(BitmapRec bmpInt)
 		{
 			this.rec = bmpInt;
 		}

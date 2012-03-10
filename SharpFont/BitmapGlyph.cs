@@ -94,11 +94,11 @@ namespace SharpFont
 		/// <summary>
 		/// A descriptor for the bitmap.
 		/// </summary>
-		public Bitmap Bitmap
+		public FTBitmap Bitmap
 		{
 			get
 			{
-				return new Bitmap(rec.bitmap);
+				return new FTBitmap(rec.bitmap);
 			}
 		}
 	}

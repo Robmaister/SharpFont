@@ -76,11 +76,11 @@ namespace SharpFont
 		/// <summary>
 		/// A 16.16 vector that gives the glyph's advance width.
 		/// </summary>
-		public Vector2i Advance
+		public FTVector Advance
 		{
 			get
 			{
-				return new Vector2i(rec.advance);
+				return new FTVector(rec.advance);
 			}
 		}
 	}

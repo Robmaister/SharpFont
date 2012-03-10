@@ -29,10 +29,10 @@ namespace SharpFont.Cache
 	/// <summary><para>
 	/// This object corresponds to one instance of the cache-subsystem. It is
 	/// used to cache one or more <see cref="Face"/> objects, along with
-	/// corresponding <see cref="Size"/> objects.
+	/// corresponding <see cref="FTSize"/> objects.
 	/// </para><para>
 	/// The manager intentionally limits the total number of opened
-	/// <see cref="Face"/> and <see cref="Size"/> objects to control memory
+	/// <see cref="Face"/> and <see cref="FTSize"/> objects to control memory
 	/// usage. See the ‘max_faces’ and ‘max_sizes’ parameters of
 	/// <see cref="FTC.ManagerNew"/>.
 	/// </para><para>
@@ -65,8 +65,8 @@ namespace SharpFont.Cache
 		/// </summary>
 		/// <param name="library">The parent FreeType library handle to use.</param>
 		/// <param name="maxFaces">Maximum number of opened <see cref="Face"/> objects managed by this cache instance. Use 0 for defaults.</param>
-		/// <param name="maxSizes">Maximum number of opened <see cref="Size"/> objects managed by this cache instance. Use 0 for defaults.</param>
-		/// <param name="maxBytes">Maximum number of bytes to use for cached data nodes. Use 0 for defaults. Note that this value does not account for managed <see cref="Face"/> and <see cref="Size"/> objects.</param>
+		/// <param name="maxSizes">Maximum number of opened <see cref="FTSize"/> objects managed by this cache instance. Use 0 for defaults.</param>
+		/// <param name="maxBytes">Maximum number of bytes to use for cached data nodes. Use 0 for defaults. Note that this value does not account for managed <see cref="Face"/> and <see cref="FTSize"/> objects.</param>
 		/// <param name="requester">An application-provided callback used to translate face IDs into real <see cref="Face"/> objects.</param>
 		/// <param name="requestData">A generic pointer that is passed to the requester each time it is called (see <see cref="FaceRequester"/>).</param>
 		[CLSCompliant(false)]
@@ -92,7 +92,7 @@ namespace SharpFont.Cache
 
 		/// <summary>
 		/// Empty a given cache manager. This simply gets rid of all the
-		/// currently cached <see cref="Face"/> and <see cref="Size"/> objects
+		/// currently cached <see cref="Face"/> and <see cref="FTSize"/> objects
 		/// within the manager.
 		/// </summary>
 		public void Reset()
@@ -132,11 +132,11 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// Retrieve the <see cref="Size"/> object that corresponds to a given
+		/// Retrieve the <see cref="FTSize"/> object that corresponds to a given
 		/// <see cref="Scaler"/> pointer through a cache manager.
 		/// </summary>
 		/// <remarks><para>
-		/// The returned <see cref="Size"/> object is always owned by the
+		/// The returned <see cref="FTSize"/> object is always owned by the
 		/// manager. You should never try to discard it by yourself.
 		/// </para><para>
 		/// You can access the parent <see cref="Face"/> object simply as
@@ -153,7 +153,7 @@ namespace SharpFont.Cache
 		/// </para></remarks>
 		/// <param name="scaler">A scaler handle.</param>
 		/// <returns>A handle to the size object.</returns>
-		public Size LookupSize(Scaler scaler)
+		public FTSize LookupSize(Scaler scaler)
 		{
 			return FTC.ManagerLookupSize(this, scaler);
 		}

@@ -517,7 +517,7 @@ namespace SharpFont
 		/// should be deallocated with a call to <see cref="DoneFace"/>.
 		/// </para><para>
 		/// Each new face object created with this function also owns a default
-		/// <see cref="Size"/> object, accessible as <see cref="Face.Size"/>.
+		/// <see cref="FTSize"/> object, accessible as <see cref="Face.Size"/>.
 		/// </para><para>
 		/// See the discussion of reference counters in the description of
 		/// FT_Reference_Face.
@@ -724,7 +724,7 @@ namespace SharpFont
 		/// <param name="face">A handle to the source face object.</param>
 		/// <param name="matrix">A pointer to the transformation's 2x2 matrix. Use 0 for the identity matrix.</param>
 		/// <param name="delta">A pointer to the translation vector. Use 0 for the null vector.</param>
-		public static void SetTransform(Face face, Matrix2i matrix, Vector2i delta)
+		public static void SetTransform(Face face, FTMatrix matrix, FTVector delta)
 		{
 			FT_Set_Transform(face.reference, matrix.reference, delta.reference);
 		}
@@ -759,7 +759,7 @@ namespace SharpFont
 		/// <param name="mode">Determines the scale and dimension of the returned kerning vector.</param>
 		/// <returns>The kerning vector. This is either in font units or in pixels (26.6 format) for scalable formats, and in pixels for fixed-sizes formats.</returns>
 		[CLSCompliant(false)]
-		public static Vector2i GetKerning(Face face, uint leftGlyph, uint rightGlyph, KerningMode mode)
+		public static FTVector GetKerning(Face face, uint leftGlyph, uint rightGlyph, KerningMode mode)
 		{
 			IntPtr kernRef;
 			Error err = FT_Get_Kerning(face.reference, leftGlyph, rightGlyph, mode, out kernRef);
@@ -767,7 +767,7 @@ namespace SharpFont
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new Vector2i(kernRef);
+			return new FTVector(kernRef);
 		}
 
 		/// <summary>
@@ -1019,7 +1019,7 @@ namespace SharpFont
 		/// <param name="arg2">The subglyph's second argument (if any).</param>
 		/// <param name="transform">The subglyph transformation (if any).</param>
 		[CLSCompliant(false)]
-		public static void GetSubGlyphInfo(GlyphSlot glyph, uint subIndex, out int index, out SubGlyphFlags flags, out int arg1, out int arg2, out Matrix2i transform)
+		public static void GetSubGlyphInfo(GlyphSlot glyph, uint subIndex, out int index, out SubGlyphFlags flags, out int arg1, out int arg2, out FTMatrix transform)
 		{
 			IntPtr matrixRef;
 			Error err = FT_Get_SubGlyph_Info(glyph.reference, subIndex, out index, out flags, out arg1, out arg2, out matrixRef);
@@ -1027,7 +1027,7 @@ namespace SharpFont
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			transform = new Matrix2i(matrixRef);
+			transform = new FTMatrix(matrixRef);
 		}
 
 		/// <summary>
@@ -1251,7 +1251,7 @@ namespace SharpFont
 		/// <param name="glyph">A handle to the target glyph object.</param>
 		/// <param name="matrix">A pointer to a 2x2 matrix to apply.</param>
 		/// <param name="delta">A pointer to a 2d vector to apply. Coordinates are expressed in 1/64th of a pixel.</param>
-		public static void GlyphTransform(Glyph glyph, Matrix2i matrix, Vector2i delta)
+		public static void GlyphTransform(Glyph glyph, FTMatrix matrix, FTVector delta)
 		{
 			Error err = FT_Glyph_Transform(glyph.reference, matrix.reference, delta.reference);
 
@@ -1346,7 +1346,7 @@ namespace SharpFont
 		/// <param name="renderMode">An enumeration that describes how the data is rendered.</param>
 		/// <param name="origin">A pointer to a vector used to translate the glyph image before rendering. Can be 0 (if no translation). The origin is expressed in 26.6 pixels.</param>
 		/// <param name="destroy">A boolean that indicates that the original glyph image should be destroyed by this function. It is never destroyed in case of error.</param>
-		public static void GlyphToBitmap(Glyph glyph, RenderMode renderMode, Vector2i origin, bool destroy)
+		public static void GlyphToBitmap(Glyph glyph, RenderMode renderMode, FTVector origin, bool destroy)
 		{
 			Error err = FT_Glyph_To_Bitmap(ref glyph.reference, renderMode, origin.reference, destroy);
 
@@ -1516,7 +1516,7 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="face">A handle to a parent face object.</param>
 		/// <returns>A handle to a new size object.</returns>
-		public static Size NewSize(Face face)
+		public static FTSize NewSize(Face face)
 		{
 			IntPtr sizeRef;
 
@@ -1525,7 +1525,7 @@ namespace SharpFont
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new Size(sizeRef);
+			return new FTSize(sizeRef);
 		}
 
 		/// <summary>
@@ -1534,7 +1534,7 @@ namespace SharpFont
 		/// <see cref="NewSize"/>.
 		/// </summary>
 		/// <param name="size">A handle to a target size object.</param>
-		public static void DoneSize(Size size)
+		public static void DoneSize(FTSize size)
 		{
 			Error err = FT_Done_Size(size.reference);
 
@@ -1557,7 +1557,7 @@ namespace SharpFont
 		/// the value of ‘face->size’ to the input size handle.
 		/// </remarks>
 		/// <param name="size">A handle to a target size object.</param>
-		public static void ActivateSize(Size size)
+		public static void ActivateSize(FTSize size)
 		{
 			Error err = FT_Activate_Size(size.reference);
 

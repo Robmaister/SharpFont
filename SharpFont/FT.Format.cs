@@ -606,7 +606,7 @@ namespace SharpFont
 		/// <param name="right">Index of the right glyph.</param>
 		/// <returns>A kerning vector.</returns>
 		[CLSCompliant(false)]
-		public static Vector2i GetPFRKerning(Face face, uint left, uint right)
+		public static FTVector GetPFRKerning(Face face, uint left, uint right)
 		{
 			IntPtr vectorRef;
 			Error err = FT_Get_PFR_Kerning(face.reference, left, right, out vectorRef);
@@ -614,7 +614,7 @@ namespace SharpFont
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new Vector2i(vectorRef);
+			return new FTVector(vectorRef);
 		}
 
 		/// <summary>

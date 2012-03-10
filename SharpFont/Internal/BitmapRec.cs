@@ -31,7 +31,7 @@ namespace SharpFont.Internal
 	/// Internally represents a Bitmap.
 	/// </summary>
 	/// <remarks>
-	/// Refer to <see cref="Bitmap"/> for FreeType documentation.
+	/// Refer to <see cref="FTBitmap"/> for FreeType documentation.
 	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
 	internal struct BitmapRec

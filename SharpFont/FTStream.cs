@@ -30,11 +30,11 @@ namespace SharpFont
 	/// <summary>
 	/// A handle to an input stream.
 	/// </summary>
-	public sealed class Stream
+	public sealed class FTStream
 	{
 		internal IntPtr reference;
 
-		internal Stream(IntPtr reference)
+		internal FTStream(IntPtr reference)
 		{
 			this.reference = reference;
 		}

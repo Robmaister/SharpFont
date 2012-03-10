@@ -30,58 +30,88 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary>
-	/// FreeType root size class structure. A size object models a face object
-	/// at a given size.
+	/// A simple structure used to store a 2x2 matrix. Coefficients are in 16.16 fixed float format. The computation performed is:
+	///     <code>
+	///     x' = x*xx + y*xy
+	///     y' = x*yx + y*yy
+	///     </code>
 	/// </summary>
-	public sealed class Size
+	public sealed class FTMatrix
 	{
 		internal IntPtr reference;
-		internal SizeRec rec;
+		internal MatrixRec rec;
 
-		internal Size(IntPtr reference)
+		internal FTMatrix(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<SizeRec>(reference);
+			this.rec = PInvokeHelper.PtrToStructure<MatrixRec>(reference);
 		}
 
 		/// <summary>
-		/// Gets a handle to the parent face object.
+		/// Matrix coefficient.
 		/// </summary>
-		public Face Face
+		public int XX
 		{
 			get
 			{
-				return new Face(rec.face, true);
-			}
-		}
-
-		/// <summary>
-		/// Gets a typeless pointer, which is unused by the FreeType library or
-		/// any of its drivers. It can be used by client applications to link
-		/// their own data to each size object.
-		/// </summary>
-		public Generic Generic
-		{
-			get
-			{
-				return new Generic(rec.generic);
+				return (int)rec.xx;
 			}
 
 			set
 			{
-				value.WriteToUnmanagedMemory(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceRec), "generic").ToInt64()));
-				rec = (SizeRec)Marshal.PtrToStructure(reference, typeof(SizeRec));
+				//TODO fix this.
+				//Marshal.WriteInt32(reference, 0, value);
 			}
 		}
 
 		/// <summary>
-		/// Gets metrics for this size object. This field is read-only.
+		/// Matrix coefficient.
 		/// </summary>
-		public SizeMetrics Metrics
+		public int XY
 		{
 			get
 			{
-				return new SizeMetrics(rec.metrics);
+				return (int)rec.xy;
+			}
+
+			set
+			{
+				//TODO fix this.
+				//Marshal.WriteInt32(reference, 4, value);
+			}
+		}
+
+		/// <summary>
+		/// Matrix coefficient.
+		/// </summary>
+		public int YX
+		{
+			get
+			{
+				return (int)rec.yx;
+			}
+
+			set
+			{
+				//TODO fix this.
+				//Marshal.WriteInt32(reference, 8, value);
+			}
+		}
+
+		/// <summary>
+		/// Matrix coefficient.
+		/// </summary>
+		public int YY
+		{
+			get
+			{
+				return (int)rec.yy;
+			}
+
+			set
+			{
+				//TODO fix this.
+				//Marshal.WriteInt32(reference, 12, value);
 			}
 		}
 	}

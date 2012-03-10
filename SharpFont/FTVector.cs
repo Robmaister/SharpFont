@@ -24,94 +24,48 @@ SOFTWARE.*/
 
 using System;
 using System.Runtime.InteropServices;
-
 using SharpFont.Internal;
 
 namespace SharpFont
 {
 	/// <summary>
-	/// A simple structure used to store a 2x2 matrix. Coefficients are in 16.16 fixed float format. The computation performed is:
-	///     <code>
-	///     x' = x*xx + y*xy
-	///     y' = x*yx + y*yy
-	///     </code>
+	/// A simple structure used to store a 2D vector.
 	/// </summary>
-	public sealed class Matrix2i
+	public sealed class FTVector
 	{
 		internal IntPtr reference;
-		internal MatrixRec rec;
+		internal VectorRec rec;
 
-		internal Matrix2i(IntPtr reference)
+		internal FTVector(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<MatrixRec>(reference);
+			this.rec = PInvokeHelper.PtrToStructure<VectorRec>(reference);
+		}
+
+		internal FTVector(VectorRec vInt)
+		{
+			this.rec = vInt;
 		}
 
 		/// <summary>
-		/// Matrix coefficient.
+		/// Gets the horizontal coordinate.
 		/// </summary>
-		public int XX
+		public int X
 		{
 			get
 			{
-				return (int)rec.xx;
-			}
-
-			set
-			{
-				//TODO fix this.
-				//Marshal.WriteInt32(reference, 0, value);
-			}
-		}
-
-		/// <summary>
-		/// Matrix coefficient.
-		/// </summary>
-		public int XY
-		{
-			get
-			{
-				return (int)rec.xy;
-			}
-
-			set
-			{
-				//TODO fix this.
-				//Marshal.WriteInt32(reference, 4, value);
+				return (int)rec.x;
 			}
 		}
 
 		/// <summary>
-		/// Matrix coefficient.
+		/// Gets the vertical coordinate.
 		/// </summary>
-		public int YX
+		public int Y
 		{
 			get
 			{
-				return (int)rec.yx;
-			}
-
-			set
-			{
-				//TODO fix this.
-				//Marshal.WriteInt32(reference, 8, value);
-			}
-		}
-
-		/// <summary>
-		/// Matrix coefficient.
-		/// </summary>
-		public int YY
-		{
-			get
-			{
-				return (int)rec.yy;
-			}
-
-			set
-			{
-				//TODO fix this.
-				//Marshal.WriteInt32(reference, 12, value);
+				return (int)rec.y;
 			}
 		}
 	}

@@ -144,7 +144,7 @@ namespace SharpFont
 		/// should be deallocated with a call to <see cref="FT.DoneFace"/>.
 		/// </para><para>
 		/// Each new face object created with this function also owns a default
-		/// <see cref="Size"/> object, accessible as <see cref="Face.Size"/>.
+		/// <see cref="FTSize"/> object, accessible as <see cref="Face.Size"/>.
 		/// </para><para>
 		/// See the discussion of reference counters in the description of
 		/// FT_Reference_Face.

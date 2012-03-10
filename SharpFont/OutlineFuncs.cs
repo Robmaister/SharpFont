@@ -39,7 +39,7 @@ namespace SharpFont
 	/// <param name="user">A typeless pointer which is passed from the caller of the decomposition function.</param>
 	/// <returns>Error code. 0 means success.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate int MoveToFunc(Vector2i to, IntPtr user);
+	public delegate int MoveToFunc(FTVector to, IntPtr user);
 
 	/// <summary><para>
 	/// A function pointer type used to describe the signature of a ‘line to’
@@ -51,7 +51,7 @@ namespace SharpFont
 	/// <param name="user">A typeless pointer which is passed from the caller of the decomposition function.</param>
 	/// <returns>Error code. 0 means success.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate int LineToFunc(Vector2i to, IntPtr user);
+	public delegate int LineToFunc(FTVector to, IntPtr user);
 
 	/// <summary><para>
 	/// A function pointer type used to describe the signature of a ‘conic to’
@@ -65,7 +65,7 @@ namespace SharpFont
 	/// <param name="user">A typeless pointer which is passed from the caller of the decomposition function.</param>
 	/// <returns>Error code. 0 means success.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate int ConicToFunc(Vector2i control, Vector2i to, IntPtr user);
+	public delegate int ConicToFunc(FTVector control, FTVector to, IntPtr user);
 
 	/// <summary><para>
 	/// A function pointer type used to describe the signature of a ‘cubic to’
@@ -79,7 +79,7 @@ namespace SharpFont
 	/// <param name="user">A typeless pointer which is passed from the caller of the decomposition function.</param>
 	/// <returns>Error code. 0 means success.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate int CubicToFunc(Vector2i control1, Vector2i control2, Vector2i to, IntPtr user);
+	public delegate int CubicToFunc(FTVector control1, FTVector control2, FTVector to, IntPtr user);
 
 	/// <summary>
 	/// A structure to hold various function pointers used during outline

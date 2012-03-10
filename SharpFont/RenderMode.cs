@@ -32,7 +32,7 @@ namespace SharpFont
 	/// performed on the outline.
 	/// </para><para>
 	/// For bitmap fonts and embedded bitmaps the 
-	/// <see cref="Bitmap.PixelMode"/> field in the FT_GlyphSlotRec structure
+	/// <see cref="FTBitmap.PixelMode"/> field in the FT_GlyphSlotRec structure
 	/// gives the format of the returned bitmap.
 	/// </para><para>
 	/// All modes except <see cref="RenderMode.Mono"/> use 256 levels of

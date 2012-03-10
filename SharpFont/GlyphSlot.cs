@@ -187,11 +187,11 @@ namespace SharpFont
 		/// format). As specified with FT_LOAD_VERTICAL_LAYOUT, it uses either
 		/// the ‘horiAdvance’ or the ‘vertAdvance’ value of ‘metrics’ field.
 		/// </summary>
-		public Vector2i Advance
+		public FTVector Advance
 		{
 			get
 			{
-				return new Vector2i(rec.advance);
+				return new FTVector(rec.advance);
 			}
 		}
 
@@ -215,11 +215,11 @@ namespace SharpFont
 		/// bitmap buffer can change between calls of FT_Load_Glyph and a few
 		/// other functions.
 		/// </summary>
-		public Bitmap Bitmap
+		public FTBitmap Bitmap
 		{
 			get
 			{
-				return new Bitmap(rec.bitmap);
+				return new FTBitmap(rec.bitmap);
 			}
 		}
 
@@ -381,7 +381,7 @@ namespace SharpFont
 		/// <param name="arg2">The subglyph's second argument (if any).</param>
 		/// <param name="transform">The subglyph transformation (if any).</param>
 		[CLSCompliant(false)]
-		public void GetSubGlyphInfo(uint subIndex, out int index, out SubGlyphFlags flags, out int arg1, out int arg2, out Matrix2i transform)
+		public void GetSubGlyphInfo(uint subIndex, out int index, out SubGlyphFlags flags, out int arg1, out int arg2, out FTMatrix transform)
 		{
 			FT.GetSubGlyphInfo(this, subIndex, out index, out flags, out arg1, out arg2, out transform);
 		}

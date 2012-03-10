@@ -405,11 +405,11 @@ namespace SharpFont
 		/// <summary>
 		/// Gets the current active size for this face.
 		/// </summary>
-		public Size Size
+		public FTSize Size
 		{
 			get
 			{
-				return new Size(rec.size);
+				return new FTSize(rec.size);
 			}
 		}
 
@@ -601,7 +601,7 @@ namespace SharpFont
 		/// </para></remarks>
 		/// <param name="matrix">A pointer to the transformation's 2x2 matrix. Use 0 for the identity matrix.</param>
 		/// <param name="delta">A pointer to the translation vector. Use 0 for the null vector.</param>
-		public void SetTransform(Matrix2i matrix, Vector2i delta)
+		public void SetTransform(FTMatrix matrix, FTVector delta)
 		{
 			FT.SetTransform(this, matrix, delta);
 		}
@@ -632,7 +632,7 @@ namespace SharpFont
 		/// <param name="mode">Determines the scale and dimension of the returned kerning vector.</param>
 		/// <returns>The kerning vector. This is either in font units or in pixels (26.6 format) for scalable formats, and in pixels for fixed-sizes formats.</returns>
 		[CLSCompliant(false)]
-		public Vector2i GetKerning(uint leftGlyph, uint rightGlyph, KerningMode mode)
+		public FTVector GetKerning(uint leftGlyph, uint rightGlyph, KerningMode mode)
 		{
 			return FT.GetKerning(this, leftGlyph, rightGlyph, mode);
 		}

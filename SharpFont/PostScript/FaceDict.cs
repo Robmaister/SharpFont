@@ -100,19 +100,19 @@ namespace SharpFont.PostScript
 			}
 		}
 
-		public Matrix2i FontMatrix
+		public FTMatrix FontMatrix
 		{
 			get
 			{
-				return new Matrix2i(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceDictRec), "font_matrix").ToInt64()));
+				return new FTMatrix(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceDictRec), "font_matrix").ToInt64()));
 			}
 		}
 
-		public Vector2i FontOffset
+		public FTVector FontOffset
 		{
 			get
 			{
-				return new Vector2i(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceDictRec), "font_offset").ToInt64()));
+				return new FTVector(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceDictRec), "font_offset").ToInt64()));
 			}
 		}
 

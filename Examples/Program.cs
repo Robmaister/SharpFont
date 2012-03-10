@@ -22,12 +22,12 @@ SOFTWARE.*/
 
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Threading;
 
 using SharpFont;
-using System.Threading;
-using System.Runtime.InteropServices;
-using System.Drawing.Imaging;
 
 namespace Examples
 {
@@ -59,8 +59,8 @@ namespace Examples
 						face.SetCharSize(0, 32 * 64, 0, 96);
 
 						Console.WriteLine("\nWriting string \"Hello World!\":");
-						System.Drawing.Bitmap bmp = RenderString(face, "Hello World!");
-						bmp.Save("helloworld5.png", System.Drawing.Imaging.ImageFormat.Png);
+						Bitmap bmp = RenderString(face, "Hello World!");
+						bmp.Save("helloworld5.png", ImageFormat.Png);
 						bmp.Dispose();
 
 						Console.WriteLine("Done!\n");
@@ -75,7 +75,7 @@ namespace Examples
 			Console.ReadLine();
 		}
 
-		public static System.Drawing.Bitmap RenderString(Face f, string text)
+		public static Bitmap RenderString(Face f, string text)
 		{
 			int penX = 0, penY = 0;
 			int width = 0;
@@ -102,7 +102,7 @@ namespace Examples
 			}
 
 			//create a new bitmap that fits the string.
-			System.Drawing.Bitmap bmp = new System.Drawing.Bitmap(width, height);
+			Bitmap bmp = new Bitmap(width, height);
 
 			penX = 0;
 			penY = 0;

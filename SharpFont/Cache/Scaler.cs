@@ -34,7 +34,7 @@ namespace SharpFont.Cache
 	/// points to the cache manager.
 	/// </summary>
 	/// <remarks>
-	/// This type is mainly used to retrieve <see cref="Size"/> objects through
+	/// This type is mainly used to retrieve <see cref="FTSize"/> objects through
 	/// the cache manager.
 	/// </remarks>
 	/// <see cref="FTC.ManagerLookupSize"/>

@@ -91,7 +91,7 @@ namespace SharpFont
 		/// Gets a pointer to an array of ‘PointsCount’ FT_Vector elements,
 		/// giving the outline's point coordinates.
 		/// </summary>
-		public Vector2i[] Points
+		public FTVector[] Points
 		{
 			get
 			{
@@ -100,12 +100,12 @@ namespace SharpFont
 				if (count == 0)
 					return null;
 
-				Vector2i[] points = new Vector2i[count];
+				FTVector[] points = new FTVector[count];
 				IntPtr array = rec.points;
 
 				for (int i = 0; i < count; i++)
 				{
-					points[i] = new Vector2i(new IntPtr(array.ToInt64() + IntPtr.Size * i));
+					points[i] = new FTVector(new IntPtr(array.ToInt64() + IntPtr.Size * i));
 				}
 
 				return points;

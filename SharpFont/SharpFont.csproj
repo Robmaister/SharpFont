@@ -115,8 +115,11 @@
     <Compile Include="Internal\OutlineFuncsRec.cs" />
     <Compile Include="Internal\OutlineGlyphRec.cs" />
     <Compile Include="Internal\OutlineRec.cs" />
+    <Compile Include="Internal\RasterFuncsRec.cs" />
+    <Compile Include="Internal\RasterParamsRec.cs" />
     <Compile Include="Internal\SizeMetricsRec.cs" />
     <Compile Include="Internal\SizeRec.cs" />
+    <Compile Include="Internal\SpanRec.cs" />
     <Compile Include="Internal\StreamDescRec.cs" />
     <Compile Include="Internal\StreamRec.cs" />
     <Compile Include="Internal\VectorRec.cs" />
@@ -146,6 +149,10 @@
     <Compile Include="PostScript\Internal\FontInfoRec.cs" />
     <Compile Include="PostScript\Internal\PrivateRec.cs" />
     <Compile Include="PostScript\Private.cs" />
+    <Compile Include="Raster.cs" />
+    <Compile Include="RasterFlags.cs" />
+    <Compile Include="RasterFuncs.cs" />
+    <Compile Include="RasterParams.cs" />
     <Compile Include="StreamDesc.cs" />
     <Compile Include="TrueType\Internal\SfntNameRec.cs" />
     <Compile Include="TrueType\SfntName.cs" />

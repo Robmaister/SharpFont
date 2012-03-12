@@ -452,7 +452,7 @@ namespace SharpFont
 		internal static extern Error FT_Outline_Done_Internal(IntPtr memory, IntPtr outline);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Outline_Copy(IntPtr source, out IntPtr target);
+		internal static extern Error FT_Outline_Copy(IntPtr source, ref IntPtr target);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern void FT_Outline_Translate(IntPtr outline, int xOffset, int yOffset);
@@ -479,10 +479,10 @@ namespace SharpFont
 		internal static extern void FT_Outline_Get_CBox(IntPtr outline, out IntPtr acbox);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Outline_Get_Bitmap(IntPtr library, IntPtr outline, out IntPtr abitmap);
+		internal static extern Error FT_Outline_Get_Bitmap(IntPtr library, IntPtr outline, IntPtr abitmap);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Outline_Render(IntPtr library, IntPtr outline, IntPtr @params);
+		internal static extern Error FT_Outline_Render(IntPtr library, IntPtr outline, IntPtr @params);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Orientation FT_Outline_Get_Orientation(IntPtr outline);
@@ -517,11 +517,7 @@ namespace SharpFont
 		internal static extern Error FT_GlyphSlot_Own_Bitmap(IntPtr slot);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Bitmap_Done(IntPtr library, IntPtr bitmap);
-
-		#endregion
-
-		#region Scanline Converter
+		internal static extern Error FT_Bitmap_Done(IntPtr library, IntPtr bitmap);
 
 		#endregion
 
@@ -557,10 +553,10 @@ namespace SharpFont
 		#region LCD Filtering
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Library_SetLcdFilter(IntPtr library, LcdFilter filter);
+		internal static extern Error FT_Library_SetLcdFilter(IntPtr library, LcdFilter filter);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Library_SetLcdFilterWeights(IntPtr library, byte[] weights);
+		internal static extern Error FT_Library_SetLcdFilterWeights(IntPtr library, byte[] weights);
 
 		#endregion
 

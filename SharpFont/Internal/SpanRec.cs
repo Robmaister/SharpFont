@@ -25,32 +25,13 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-#if WIN64
-using FT_26Dot6 = System.Int32;
-using FT_Fixed = System.Int32;
-using FT_Long = System.Int32;
-using FT_Pos = System.Int32;
-using FT_ULong = System.UInt32;
-#else
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
-using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
-using FT_ULong = System.UIntPtr;
-#endif
-
 namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct OutlineFuncsRec
+	internal struct SpanRec
 	{
-		internal MoveToFunc moveTo;
-		internal LineToFunc lineTo;
-		internal ConicToFunc conicTo;
-		internal CubicToFunc cubicTo;
-		internal int shift;
-		internal FT_Pos delta;
-
-		internal static int SizeInBytes { get { return IntPtr.Size * 4 + sizeof(int) + Marshal.SizeOf(typeof(FT_Pos)); } }
+		internal short x;
+		internal ushort len;
+		internal byte coverage;
 	}
 }

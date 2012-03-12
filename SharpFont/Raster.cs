@@ -25,65 +25,19 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.Internal;
-
 namespace SharpFont
 {
 	/// <summary>
-	/// A structure used to model a single span of gray (or black) pixels when
-	/// rendering a monochrome or anti-aliased bitmap.
+	/// A handle (pointer) to a raster object. Each object can be used
+	/// independently to convert an outline into a bitmap or pixmap.
 	/// </summary>
-	/// <remarks><para>
-	/// This structure is used by the span drawing callback type named
-	/// FT_SpanFunc which takes the y coordinate of the span as a a parameter.
-	/// </para><para>
-	/// The coverage value is always between 0 and 255. If you want less gray
-	/// values, the callback function has to reduce them.
-	/// </para></remarks>
-	public class Span
+	public class Raster
 	{
 		internal IntPtr reference;
-		internal SpanRec rec;
 
-		internal Span(IntPtr reference)
+		internal Raster(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<SpanRec>(reference);
-		}
-
-		/// <summary>
-		/// The span's horizontal start position.
-		/// </summary>
-		public short X
-		{
-			get
-			{
-				return rec.x;
-			}
-		}
-
-		/// <summary>
-		/// The span's length in pixels.
-		/// </summary>
-		[CLSCompliant(false)]
-		public ushort Length
-		{
-			get
-			{
-				return rec.len;
-			}
-		}
-
-		/// <summary>
-		/// The span color/coverage, ranging from 0 (background) to 255
-		/// (foreground). Only used for anti-aliased rendering.
-		/// </summary>
-		public byte Coverage
-		{
-			get
-			{
-				return rec.coverage;
-			}
 		}
 	}
 }

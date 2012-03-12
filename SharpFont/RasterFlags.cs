@@ -23,67 +23,47 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Runtime.InteropServices;
-
-using SharpFont.Internal;
 
 namespace SharpFont
 {
 	/// <summary>
-	/// A structure used to model a single span of gray (or black) pixels when
-	/// rendering a monochrome or anti-aliased bitmap.
+	/// A list of bit flag constants as used in the ‘flags’ field of a
+	/// <see cref="RasterParams"/> structure.
 	/// </summary>
-	/// <remarks><para>
-	/// This structure is used by the span drawing callback type named
-	/// FT_SpanFunc which takes the y coordinate of the span as a a parameter.
-	/// </para><para>
-	/// The coverage value is always between 0 and 255. If you want less gray
-	/// values, the callback function has to reduce them.
-	/// </para></remarks>
-	public class Span
+	public enum RasterFlags
 	{
-		internal IntPtr reference;
-		internal SpanRec rec;
-
-		internal Span(IntPtr reference)
-		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<SpanRec>(reference);
-		}
+		/// <summary>
+		/// This value is 0.
+		/// </summary>
+		Default =	0x0,
 
 		/// <summary>
-		/// The span's horizontal start position.
+		/// This flag is set to indicate that an anti-aliased glyph image
+		/// should be generated. Otherwise, it will be monochrome (1-bit).
 		/// </summary>
-		public short X
-		{
-			get
-			{
-				return rec.x;
-			}
-		}
+		AntiAlias = 0x1,
 
-		/// <summary>
-		/// The span's length in pixels.
-		/// </summary>
-		[CLSCompliant(false)]
-		public ushort Length
-		{
-			get
-			{
-				return rec.len;
-			}
-		}
+		/// <summary><para>
+		/// This flag is set to indicate direct rendering. In this mode, client
+		/// applications must provide their own span callback. This lets them
+		/// directly draw or compose over an existing bitmap. If this bit is
+		/// not set, the target pixmap's buffer must be zeroed before
+		/// rendering.
+		/// </para><para>
+		/// Note that for now, direct rendering is only possible with
+		/// anti-aliased glyphs.
+		/// </para></summary>
+		Direct =	0x2,
 
-		/// <summary>
-		/// The span color/coverage, ranging from 0 (background) to 255
-		/// (foreground). Only used for anti-aliased rendering.
-		/// </summary>
-		public byte Coverage
-		{
-			get
-			{
-				return rec.coverage;
-			}
-		}
+		/// <summary><para>
+		/// This flag is only used in direct rendering mode. If set, the output
+		/// will be clipped to a box specified in the ‘clip_box’ field of the
+		/// <see cref="RasterParams"/> structure.
+		/// </para><para>
+		/// Note that by default, the glyph bitmap is clipped to the target
+		/// pixmap, except in direct rendering mode where all spans are
+		/// generated if no clipping box is set.
+		/// </para></summary>
+		Clip =		0x4
 	}
 }

@@ -30,7 +30,6 @@ using SharpFont.PostScript;
 
 namespace SharpFont
 {
-	
 	public static partial class FT
 	{
 		#region Core API
@@ -523,9 +522,94 @@ namespace SharpFont
 
 		#region Glyph Stroker
 
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern StrokerBorder FT_Outline_GetInsideBorder(IntPtr outline);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern StrokerBorder FT_Outline_GetOutsideBorder(IntPtr outline);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Stroker_New(IntPtr library, out IntPtr astroker);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Stroker_Set(IntPtr stroker, int radius, StrokerLineCap line_cap, StrokerLineJoin line_join, int miter_limit);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Stroker_Rewind(IntPtr stroker);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Stroker_ParseOutline(IntPtr stroker, IntPtr outline, bool opened);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Stroker_BeginSubPath(IntPtr stroker, IntPtr to, bool open);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Stroker_EndSubPath(IntPtr stroker);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Stroker_LineTo(IntPtr stroker, IntPtr to);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Stroker_ConicTo(IntPtr stroker, IntPtr control, IntPtr to);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Stroker_CubicTo(IntPtr stroker, IntPtr control1, IntPtr control2, IntPtr to);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Stroker_GetBorderCounts(IntPtr stroker, StrokerBorder border, out uint anum_points, out uint anum_contours);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Stroker_ExportBorder(IntPtr stroker, StrokerBorder border, IntPtr outline);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Stroker_GetCounts(IntPtr stroker, out uint anum_points, out uint anum_contours);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Stroker_Export(IntPtr stroker, IntPtr outline);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Stroker_Done(IntPtr stroker);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Glyph_Stroke(ref IntPtr pglyph, IntPtr stoker, bool destroy);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Glyph_StrokeBorder(ref IntPtr pglyph, IntPtr stoker, bool inside, bool destroy);
+
 		#endregion
 
 		#region Module Management
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Add_Module(IntPtr library, IntPtr clazz);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern IntPtr FT_Get_Module(IntPtr library, [MarshalAs(UnmanagedType.LPStr)] string module_name);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Remove_Module(IntPtr library, IntPtr module);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Reference_Library(IntPtr library);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_New_Library(IntPtr memory, out IntPtr alibrary);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Done_Library(IntPtr library);
+
+		//TODO figure out the method signature for debug_hook. (FT_DebugHook_Func)
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Set_Debug_Hook(IntPtr library, uint hook_index, IntPtr debug_hook);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_Add_Default_Modules(IntPtr library);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern IntPtr FT_Get_Renderer(IntPtr library, GlyphFormat format);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_Set_Renderer(IntPtr library, IntPtr renderer, uint num_params, IntPtr parameters);
 
 		#endregion
 
@@ -566,20 +650,34 @@ namespace SharpFont
 
 		#region OpenType Validation
 
-		#endregion
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_OpenType_Validate(IntPtr face, OpenTypeValidationFlags validation_flags, out IntPtr BASE_table, out IntPtr GDEF_table, out IntPtr GPOS_table, out IntPtr GSUB_table, out IntPtr JSFT_table);
 
-		#region Incremental Loading
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern void FT_OpenType_Free(IntPtr face, IntPtr table);
 
 		#endregion
 
 		#region The TrueType Engine
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern TrueType.EngineType FT_Get_TrueType_Engine_Type(IntPtr library);
+		internal static extern EngineType FT_Get_TrueType_Engine_Type(IntPtr library);
 
 		#endregion
 
 		#region TrueTypeGX/AAT Validation
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_TrueTypeGX_Validate(IntPtr face, TrueTypeValidationFlags validation_flags, byte[][] tables, uint tableLength);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_TrueTypeGX_Free(IntPtr face, IntPtr table);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_ClassicKern_Validate(IntPtr face, ClassicKernValidationFlags validation_flags, out IntPtr ckern_table);
+
+		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
+		internal static extern Error FT_ClassicKern_Free(IntPtr face, IntPtr table);
 
 		#endregion
 

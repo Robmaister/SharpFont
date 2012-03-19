@@ -69,6 +69,7 @@
     <Compile Include="BDF\Internal\PropertyRec.cs" />
     <Compile Include="BDF\Property.cs" />
     <Compile Include="BDF\PropertyType.cs" />
+    <Compile Include="ClassicKernValidationFlags.cs" />
     <Compile Include="FTBitmap.cs" />
     <Compile Include="BitmapGlyph.cs" />
     <Compile Include="BitmapSize.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="MultipleMasters\MultiMaster.cs" />
     <Compile Include="MultipleMasters\VarAxis.cs" />
     <Compile Include="MultipleMasters\VarNamedStyle.cs" />
+    <Compile Include="OpenTypeValidationFlags.cs" />
     <Compile Include="Orientation.cs" />
     <Compile Include="OutlineGlyph.cs" />
     <Compile Include="PInvokeHelper.cs" />
@@ -154,6 +156,11 @@
     <Compile Include="RasterFuncs.cs" />
     <Compile Include="RasterParams.cs" />
     <Compile Include="StreamDesc.cs" />
+    <Compile Include="Stroker.cs" />
+    <Compile Include="StrokerBorder.cs" />
+    <Compile Include="StrokerLineCap.cs" />
+    <Compile Include="StrokerLineJoin.cs" />
+    <Compile Include="TrueTypeValidationFlags.cs" />
     <Compile Include="TrueType\Internal\SfntNameRec.cs" />
     <Compile Include="TrueType\SfntName.cs" />
     <Compile Include="TrueType\EncodingID.cs" />

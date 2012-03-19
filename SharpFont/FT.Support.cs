@@ -660,7 +660,7 @@ namespace SharpFont
 		/// ‘ftbbox’ component which is dedicated to this single task.
 		/// </para></summary>
 		/// <remarks>
-		/// See <see cref="Ft.GlyphGetCBox"/> for a discussion of tricky fonts.
+		/// See <see cref="FT.GlyphGetCBox"/> for a discussion of tricky fonts.
 		/// </remarks>
 		/// <param name="outline">A pointer to the source outline descriptor.</param>
 		/// <returns>The outline's control box.</returns>
@@ -947,6 +947,353 @@ namespace SharpFont
 		#endregion
 
 		#region Glyph Stroker
+
+		/// <summary>
+		/// Retrieve the <see cref="StrokerBorder"/> value corresponding to the
+		/// ‘inside’ borders of a given outline.
+		/// </summary>
+		/// <param name="outline">The source outline handle.</param>
+		/// <returns>The border index. <see cref="StrokerBorder.Right"/> for empty or invalid outlines.</returns>
+		public static StrokerBorder OutlineGetInsideBorder(Outline outline)
+		{
+			return FT_Outline_GetInsideBorder(outline.reference);
+		}
+
+		/// <summary>
+		/// Retrieve the <see cref="StrokerBorder"/> value corresponding to the
+		/// ‘outside’ borders of a given outline.
+		/// </summary>
+		/// <param name="outline">The source outline handle.</param>
+		/// <returns>The border index. <see cref="StrokerBorder.Left"/> for empty or invalid outlines.</returns>
+		public static StrokerBorder OutlineGetOutsideBorder(Outline outline)
+		{
+			return FT_Outline_GetOutsideBorder(outline.reference);
+		}
+
+		/// <summary>
+		/// Create a new stroker object.
+		/// </summary>
+		/// <param name="library">FreeType library handle.</param>
+		/// <returns>A new stroker object handle. NULL in case of error.</returns>
+		public static Stroker StrokerNew(Library library)
+		{
+			IntPtr strokerRef;
+			Error err = FT_Stroker_New(library.reference, out strokerRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Stroker(strokerRef);
+		}
+
+		/// <summary>
+		/// Reset a stroker object's attributes.
+		/// </summary>
+		/// <remarks>
+		/// The radius is expressed in the same units as the outline
+		/// coordinates.
+		/// </remarks>
+		/// <param name="stroker">The target stroker handle.</param>
+		/// <param name="radius">The border radius.</param>
+		/// <param name="lineCap">The line cap style.</param>
+		/// <param name="lineJoin">The line join style.</param>
+		/// <param name="miterLimit">The miter limit for the <see cref="StrokerLineJoin.MiterFixed"/> and <see cref="StrokerLineJoin.MiterVariable"/> line join styles, expressed as 16.16 fixed point value.</param>
+		public static void StrokerSet(Stroker stroker, int radius, StrokerLineCap lineCap, StrokerLineJoin lineJoin, int miterLimit)
+		{
+			FT_Stroker_Set(stroker.reference, radius, lineCap, lineJoin, miterLimit);
+		}
+
+		/// <summary>
+		/// Reset a stroker object without changing its attributes. You should
+		/// call this function before beginning a new series of calls to
+		/// <see cref="StrokerBeginSubPath"/> or
+		/// <see cref="StrokerEndSubPath"/>.
+		/// </summary>
+		/// <param name="stroker">The target stroker handle.</param>
+		public static void StrokerRewind(Stroker stroker)
+		{
+			FT_Stroker_Rewind(stroker.reference);
+		}
+		
+		/// <summary>
+		/// A convenience function used to parse a whole outline with the
+		/// stroker. The resulting outline(s) can be retrieved later by
+		/// functions like <see cref="StrokerGetCounts"/> and
+		/// <see cref="StrokerExport"/>.
+		/// </summary>
+		/// <remarks><para>
+		/// If ‘opened’ is 0 (the default), the outline is treated as a closed
+		/// path, and the stroker generates two distinct ‘border’ outlines.
+		/// </para><para>
+		/// If ‘opened’ is 1, the outline is processed as an open path, and the
+		/// stroker generates a single ‘stroke’ outline.
+		/// </para><para>
+		/// This function calls <see cref="StrokerRewind"/> automatically.
+		/// </para></remarks>
+		/// <param name="stroker">The target stroker handle.</param>
+		/// <param name="outline">The source outline.</param>
+		/// <param name="opened">A boolean. If 1, the outline is treated as an open path instead of a closed one.</param>
+		public static void StrokerParseOutline(Stroker stroker, Outline outline, bool opened)
+		{
+			Error err = FT_Stroker_ParseOutline(stroker.reference, outline.reference, opened);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Start a new sub-path in the stroker.
+		/// </summary>
+		/// <remarks>
+		/// This function is useful when you need to stroke a path that is not
+		/// stored as an <see cref="Outline"/> object.
+		/// </remarks>
+		/// <param name="stroker">The target stroker handle.</param>
+		/// <param name="to">A pointer to the start vector.</param>
+		/// <param name="open">A boolean. If 1, the sub-path is treated as an open one.</param>
+		public static void StrokerBeginSubPath(Stroker stroker, FTVector to, bool open)
+		{
+			Error err = FT_Stroker_BeginSubPath(stroker.reference, to.reference, open);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Close the current sub-path in the stroker.
+		/// </summary>
+		/// <remarks>
+		/// You should call this function after
+		/// <see cref="StrokerBeginSubPath"/>. If the subpath was not ‘opened’,
+		/// this function ‘draws’ a single line segment to the start position
+		/// when needed.
+		/// </remarks>
+		/// <param name="stroker">The target stroker handle.</param>
+		public static void StrokerEndSubPath(Stroker stroker)
+		{
+			Error err = FT_Stroker_EndSubPath(stroker.reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// ‘Draw’ a single line segment in the stroker's current sub-path,
+		/// from the last position.
+		/// </summary>
+		/// <remarks>
+		/// You should call this function between
+		/// <see cref="StrokerBeginSubPath"/> and
+		/// <see cref="StrokerEndSubPath"/>.
+		/// </remarks>
+		/// <param name="stroker">The target stroker handle.</param>
+		/// <param name="to">A pointer to the destination point.</param>
+		public static void StrokerLineTo(Stroker stroker, FTVector to)
+		{
+			Error err = FT_Stroker_LineTo(stroker.reference, to.reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// ‘Draw’ a single quadratic Bézier in the stroker's current sub-path,
+		/// from the last position.
+		/// </summary>
+		/// <remarks>
+		/// You should call this function between
+		/// <see cref="StrokerBeginSubPath"/> and
+		/// <see cref="StrokerEndSubPath"/>.
+		/// </remarks>
+		/// <param name="stroker">The target stroker handle.</param>
+		/// <param name="control">A pointer to a Bézier control point.</param>
+		/// <param name="to">A pointer to the destination point.</param>
+		public static void StrokerConicTo(Stroker stroker, FTVector control, FTVector to)
+		{
+			Error err = FT_Stroker_ConicTo(stroker.reference, control.reference, to.reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// ‘Draw’ a single cubic Bézier in the stroker's current sub-path,
+		/// from the last position.
+		/// </summary>
+		/// <remarks>
+		/// You should call this function between
+		/// <see cref="StrokerBeginSubPath"/> and
+		/// <see cref="StrokerEndSubPath"/>.
+		/// </remarks>
+		/// <param name="stroker">The target stroker handle.</param>
+		/// <param name="control1">A pointer to the first Bézier control point.</param>
+		/// <param name="control2">A pointer to second Bézier control point.</param>
+		/// <param name="to">A pointer to the destination point.</param>
+		public static void StrokerCubicTo(Stroker stroker, FTVector control1, FTVector control2, FTVector to)
+		{
+			Error err = FT_Stroker_CubicTo(stroker.reference, control1.reference, control2.reference, to.reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Call this function once you have finished parsing your paths with
+		/// the stroker. It returns the number of points and contours necessary
+		/// to export one of the ‘border’ or ‘stroke’ outlines generated by the
+		/// stroker.
+		/// </summary>
+		/// <remarks><para>
+		/// When an outline, or a sub-path, is ‘closed’, the stroker generates
+		/// two independent ‘border’ outlines, named ‘left’ and ‘right’.
+		/// </para><para>
+		/// When the outline, or a sub-path, is ‘opened’, the stroker merges
+		/// the ‘border’ outlines with caps. The ‘left’ border receives all
+		/// points, while the ‘right’ border becomes empty.
+		/// </para><para>
+		/// Use the function <see cref="StrokerGetCounts"/> instead if you want
+		/// to retrieve the counts associated to both borders.
+		/// </para></remarks>
+		/// <param name="stroker">The target stroker handle.</param>
+		/// <param name="border">The border index.</param>
+		/// <param name="pointsCount">The number of points.</param>
+		/// <param name="contoursCount">The number of contours.</param>
+		[CLSCompliant(false)]
+		public static void StrokerGetBorderCounts(Stroker stroker, StrokerBorder border, out uint pointsCount, out uint contoursCount)
+		{
+			Error err = FT_Stroker_GetBorderCounts(stroker.reference, border, out pointsCount, out contoursCount);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary><para>
+		/// Call this function after <see cref="StrokerGetBorderCounts"/> to
+		/// export the corresponding border to your own <see cref="Outline"/>
+		/// structure.
+		/// </para><para>
+		/// Note that this function appends the border points and contours to
+		/// your outline, but does not try to resize its arrays.
+		/// </para></summary>
+		/// <remarks><para>
+		/// Always call this function after
+		/// <see cref="StrokerGetBorderCounts"/> to get sure that there is
+		/// enough room in your <see cref="Outline"/> object to receive all new
+		/// data.
+		/// </para><para>
+		/// When an outline, or a sub-path, is ‘closed’, the stroker generates
+		/// two independent ‘border’ outlines, named ‘left’ and ‘right’
+		/// </para><para>
+		/// When the outline, or a sub-path, is ‘opened’, the stroker merges
+		/// the ‘border’ outlines with caps. The ‘left’ border receives all
+		/// points, while the ‘right’ border becomes empty.
+		/// </para><para>
+		/// Use the function <see cref="StrokerExport"/> instead if you want to
+		/// retrieve all borders at once.
+		/// </para></remarks>
+		/// <param name="stroker">The target stroker handle.</param>
+		/// <param name="border">The border index.</param>
+		/// <param name="outline">The target outline handle.</param>
+		public static void StrokerExportBorder(Stroker stroker, StrokerBorder border, Outline outline)
+		{
+			FT_Stroker_ExportBorder(stroker.reference, border, outline.reference);
+		}
+
+		/// <summary>
+		/// Call this function once you have finished parsing your paths with
+		/// the stroker. It returns the number of points and contours necessary
+		/// to export all points/borders from the stroked outline/path.
+		/// </summary>
+		/// <param name="stroker">The target stroker handle.</param>
+		/// <param name="pointsCount">The number of points.</param>
+		/// <param name="contoursCount">The number of contours.</param>
+		[CLSCompliant(false)]
+		public static void StrokerGetCounts(Stroker stroker, out uint pointsCount, out uint contoursCount)
+		{
+			Error err = FT_Stroker_GetCounts(stroker.reference, out pointsCount, out contoursCount);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary><para>
+		/// Call this function after <see cref="StrokerGetBorderCounts"/> to
+		/// export all borders to your own <see cref="Outline"/> structure.
+		/// </para><para>
+		/// Note that this function appends the border points and contours to
+		/// your outline, but does not try to resize its arrays.
+		/// </para></summary>
+		/// <param name="stroker">The target stroker handle.</param>
+		/// <param name="outline">The target outline handle.</param>
+		public static void StrokerExport(Stroker stroker, Outline outline)
+		{
+			FT_Stroker_Export(stroker.reference, outline.reference);
+		}
+
+		/// <summary>
+		/// Destroy a stroker object.
+		/// </summary>
+		/// <param name="stroker">A stroker handle. Can be NULL.</param>
+		public static void StrokerDone(Stroker stroker)
+		{
+			FT_Stroker_Done(stroker.reference);
+		}
+
+		/// <summary>
+		/// Stroke a given outline glyph object with a given stroker.
+		/// </summary>
+		/// <remarks>
+		/// The source glyph is untouched in case of error.
+		/// </remarks>
+		/// <param name="glyph">Source glyph handle.</param>
+		/// <param name="stroker">A stroker handle.</param>
+		/// <param name="destroy">A Boolean. If 1, the source glyph object is destroyed on success.</param>
+		/// <returns>New glyph handle.</returns>
+		public static Glyph GlyphStroke(Glyph glyph, Stroker stroker, bool destroy)
+		{
+			IntPtr sourceRef = glyph.reference;
+
+			Error err = FT_Glyph_Stroke(ref sourceRef, stroker.reference, destroy);
+
+			if (destroy)
+			{
+				//TODO when Glyph implements IDisposable, dispose the glyph.
+			}
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Glyph(sourceRef);
+		}
+
+		/// <summary>
+		/// Stroke a given outline glyph object with a given stroker, but only
+		/// return either its inside or outside border.
+		/// </summary>
+		/// <remarks>
+		/// The source glyph is untouched in case of error.
+		/// </remarks>
+		/// <param name="glyph">Source glyph handle.</param>
+		/// <param name="stroker">A stroker handle.</param>
+		/// <param name="inside">A Boolean. If 1, return the inside border, otherwise the outside border.</param>
+		/// <param name="destroy">A Boolean. If 1, the source glyph object is destroyed on success.</param>
+		/// <returns>New glyph handle.</returns>
+		public static Glyph GlyphStrokeBorder(Glyph glyph, Stroker stroker, bool inside, bool destroy)
+		{
+			IntPtr sourceRef = glyph.reference;
+
+			Error err = FT_Glyph_StrokeBorder(ref sourceRef, stroker.reference, inside, destroy);
+
+			if (destroy)
+			{
+				//TODO when Glyph implements IDisposable, dispose the glyph.
+			}
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Glyph(sourceRef);
+		}
 
 		#endregion
 

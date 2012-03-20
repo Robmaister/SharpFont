@@ -1358,8 +1358,9 @@ namespace SharpFont
 		/// reference <see cref="Library"/> objects.
 		/// </para></summary>
 		/// <param name="library">A handle to a target library object.</param>
-		public static void ReferenceLibrary(Library library)
+		internal static void ReferenceLibrary(Library library)
 		{
+			//marked as internal because the Library class wraps this funcitonality.
 			Error err = FT_Reference_Library(library.reference);
 
 			if (err != Error.Ok)

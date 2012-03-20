@@ -428,6 +428,134 @@ namespace SharpFont
 
 		#region Public methods
 
+		#region FaceFlags flag checks
+
+		/// <summary>
+		/// A macro that returns true whenever a face object contains
+		/// horizontal metrics (this is true for all font formats though).
+		/// </summary>
+		/// <returns>True if the face has the horizontal flag set, false otherwise.</returns>
+		public bool HasHoriziontal()
+		{
+			return FT.HasHorizontal(FaceFlags);
+		}
+
+		/// <summary>
+		/// A macro that returns true whenever a face object contains vertical
+		/// metrics.
+		/// </summary>
+		/// <returns>True if the face has the vertical flag set, false otherwise.</returns>
+		public bool HasVertical()
+		{
+			return FT.HasVertical(FaceFlags);
+		}
+
+		/// <summary>
+		/// A macro that returns true whenever a face object contains kerning
+		/// data that can be accessed with <see cref="GetKerning"/>.
+		/// </summary>
+		/// <returns>True if the face has the kerning flag set, false otherwise.</returns>
+		public bool HasKerning()
+		{
+			return FT.HasKerning(FaceFlags);
+		}
+
+		/// <summary>
+		/// A macro that returns true whenever a face object contains a 
+		/// scalable font face (true for TrueType, Type 1, Type 42, CID, 
+		/// OpenType/CFF, and PFR font formats.
+		/// </summary>
+		/// <returns>True if the face has the scalable flag set, false otherwise.</returns>
+		public bool IsScalable()
+		{
+			return FT.IsScalable(FaceFlags);
+		}
+
+		/// <summary><para>
+		/// A macro that returns true whenever a face object contains a font 
+		/// whose format is based on the SFNT storage scheme. This usually 
+		/// means: TrueType fonts, OpenType fonts, as well as SFNT-based 
+		/// embedded bitmap fonts.
+		/// </para><para>
+		/// If this macro is true, all functions defined in FT_SFNT_NAMES_H and
+		/// FT_TRUETYPE_TABLES_H are available.
+		/// </para></summary>
+		/// <returns>True if the face has the SFNT flag set, false otherwise.</returns>
+		public bool IsSFNT()
+		{
+			return FT.IsSFNT(FaceFlags);
+		}
+
+		/// <summary>
+		/// A macro that returns true whenever a face object contains a font 
+		/// face that contains fixed-width (or ‘monospace’, ‘fixed-pitch’, 
+		/// etc.) glyphs.
+		/// </summary>
+		/// <returns>True if the face has the fixed width flag set, false otherwise.</returns>
+		public bool IsFixedWidth()
+		{
+			return FT.IsFixedWidth(FaceFlags);
+		}
+
+		/// <summary>
+		/// A macro that returns true whenever a face object contains some 
+		/// embedded bitmaps.
+		/// </summary>
+		/// <returns>True if the face has the fixed sizes flag set, false otherwise.</returns>
+		/// <see cref="Face.AvailableSizes"/>
+		public bool HasFixedSizes()
+		{
+			return FT.HasFixedSizes(FaceFlags);
+		}
+
+		/// <summary>
+		/// A macro that returns true whenever a face object contains some
+		/// glyph names that can be accessed through 
+		/// <see cref="FT.GetGlyphName(Face, uint, int)"/>.
+		/// </summary>
+		/// <returns>True if the face has the glyph names flag set, false otherwise.</returns>
+		public bool HasGlyphNames()
+		{
+			return FT.HasGlyphNames(FaceFlags);
+		}
+
+		/// <summary>
+		/// A macro that returns true whenever a face object contains some 
+		/// multiple masters. The functions provided by FT_MULTIPLE_MASTERS_H
+		/// are then available to choose the exact design you want.
+		/// </summary>
+		/// <returns>True if the face has the multiple masters flag set, false otherwise.</returns>
+		public bool HasMultipleMasters()
+		{
+			return FT.HasMultipleMasters(FaceFlags);
+		}
+
+		/// <summary><para>
+		/// A macro that returns true whenever a face object contains a 
+		/// CID-keyed font. See the discussion of FT_FACE_FLAG_CID_KEYED for 
+		/// more details.
+		/// </para><para>
+		/// If this macro is true, all functions defined in FT_CID_H are 
+		/// available.
+		/// </para></summary>
+		/// <returns>True if the face has the CID-keyed flag set, false otherwise.</returns>
+		public bool IsCIDKeyed()
+		{
+			return FT.IsCIDKeyed(FaceFlags);
+		}
+
+		/// <summary>
+		/// A macro that returns true whenever a face represents a ‘tricky’
+		/// font. See the discussion of FT_FACE_FLAG_TRICKY for more details.
+		/// </summary>
+		/// <returns>True if the face has the tricky flag set, false otherwise.</returns>
+		public bool IsTricky()
+		{
+			return FT.IsTricky(FaceFlags);
+		}
+
+		#endregion
+
 		/// <summary><para>
 		/// Parse all bytecode instructions of a TrueType font file to check
 		/// whether any of the patented opcodes are used. This is only useful
@@ -437,9 +565,7 @@ namespace SharpFont
 		/// Note that this function parses all glyph instructions in the font
 		/// file, which may be slow.
 		/// </para></summary>
-		/// <remarks>
-		/// Since May 2010, TrueType hinting is no longer patented.
-		/// </remarks>
+		/// <remarks>See <see cref="FT.FaceCheckTrueTypePatents"/>.</remarks>
 		/// <returns>True if this is a TrueType font that uses one of the patented opcodes, false otherwise.</returns>
 		public bool CheckTrueTypePatents()
 		{
@@ -451,9 +577,7 @@ namespace SharpFont
 		/// <see cref="Face"/>. Only enable it if you have determined that the
 		/// face doesn't use any patented opcodes.
 		/// </summary>
-		/// <remarks>
-		/// Since May 2010, TrueType hinting is no longer patented.
-		/// </remarks>
+		/// <remarks>See <see cref="FT.FaceSetUnpatentedHinting"/>.</remarks>
 		/// <param name="value">New boolean setting.</param>
 		/// <returns>The old setting value. This will always be false if this is not an SFNT font, or if the unpatented hinter is not compiled in this instance of the library.</returns>
 		/// <see cref="CheckTrueTypePatents"/>
@@ -477,15 +601,7 @@ namespace SharpFont
 		/// attach an AFM file that comes with a Type 1 font to get the kerning
 		/// values and other metrics.
 		/// </summary>
-		/// <remarks><para>
-		/// The meaning of the ‘attach’ (i.e., what really happens when the new
-		/// file is read) is not fixed by FreeType itself. It really depends on
-		/// the font format (and thus the font driver).
-		/// </para><para>
-		/// Client applications are expected to know what they are doing when
-		/// invoking this function. Most drivers simply do not implement file
-		/// attachments.
-		/// </para></remarks>
+		/// <remarks>See <see cref="FT.AttachStream"/>.</remarks>
 		/// <param name="parameters">A pointer to <see cref="OpenArgs"/> which must be filled by the caller.</param>
 		public void AttachStream(OpenArgs parameters)
 		{
@@ -514,16 +630,7 @@ namespace SharpFont
 		/// This function calls FT_Request_Size to request the nominal size (in
 		/// points).
 		/// </summary>
-		/// <remarks><para>
-		/// If either the character width or height is zero, it is set equal to
-		/// the other value.
-		/// </para><para>
-		/// If either the horizontal or vertical resolution is zero, it is set
-		/// equal to the other value.
-		/// </para><para>
-		/// A character width or height smaller than 1pt is set to 1pt; if both
-		/// resolution values are zero, they are set to 72dpi.
-		/// </para></remarks>
+		/// <remarks>See <see cref="FT.SetCharSize"/>.</remarks>
 		/// <param name="width">The nominal width, in 26.6 fractional points.</param>
 		/// <param name="height">The nominal height, in 26.6 fractional points.</param>
 		/// <param name="horizontalResolution">The horizontal resolution in dpi.</param>
@@ -550,15 +657,7 @@ namespace SharpFont
 		/// A function used to load a single glyph into the glyph slot of a
 		/// face object.
 		/// </summary>
-		/// <remarks><para>
-		/// The loaded glyph may be transformed. See
-		/// <see cref="FT.SetTransform"/> for the details.
-		/// </para><para>
-		/// For subsetted CID-keyed fonts, ‘FT_Err_Invalid_Argument’ is
-		/// returned for invalid CID values (this is, for CID values which
-		/// don't have a corresponding glyph in the font). See the discussion
-		/// of the FT_FACE_FLAG_CID_KEYED flag for more details.
-		/// </para></remarks>
+		/// <remarks>See <see cref="FT.LoadGlyph"/>.</remarks>
 		/// <param name="glyphIndex">The index of the glyph in the font file. For CID-keyed fonts (either in PS or in CFF format) this argument specifies the CID value.</param>
 		/// <param name="flags">A flag indicating what to load for this glyph. The FT_LOAD_XXX constants can be used to control the glyph loading process (e.g., whether the outline should be scaled, whether to load bitmaps or not, whether to hint the outline, etc).</param>
 		/// <param name="target">The target to OR with the flags.</param>
@@ -572,10 +671,7 @@ namespace SharpFont
 		/// A function used to load a single glyph into the glyph slot of a
 		/// face object, according to its character code.
 		/// </summary>
-		/// <remarks>
-		/// This function simply calls <see cref="GetCharIndex"/> and
-		/// <see cref="LoadGlyph"/>
-		/// </remarks>
+		/// <remarks>See <see cref="FT.LoadChar"/>.</remarks>
 		/// <param name="charCode">The glyph's character code, according to the current charmap used in the face.</param>
 		/// <param name="flags">A flag indicating what to load for this glyph. The FT_LOAD_XXX constants can be used to control the glyph loading process (e.g., whether the outline should be scaled, whether to load bitmaps or not, whether to hint the outline, etc).</param>
 		/// <param name="target">The target to OR with the flags.</param>
@@ -590,15 +686,7 @@ namespace SharpFont
 		/// images when they are loaded into a glyph slot through
 		/// FT_Load_Glyph.
 		/// </summary>
-		/// <remarks><para>
-		/// The transformation is only applied to scalable image formats after
-		/// the glyph has been loaded. It means that hinting is unaltered by
-		/// the transformation and is performed on the character size given in
-		/// the last call to FT_Set_Char_Size or FT_Set_Pixel_Sizes.
-		/// </para><para>
-		/// Note that this also transforms the ‘face.glyph.advance’ field, but
-		/// not the values in ‘face.glyph.metrics’.
-		/// </para></remarks>
+		/// <remarks>See <see cref="FT.SetTransform"/>.</remarks>
 		/// <param name="matrix">A pointer to the transformation's 2x2 matrix. Use 0 for the identity matrix.</param>
 		/// <param name="delta">A pointer to the translation vector. Use 0 for the null vector.</param>
 		public void SetTransform(FTMatrix matrix, FTVector delta)
@@ -621,12 +709,7 @@ namespace SharpFont
 		/// <summary>
 		/// Return the kerning vector between two glyphs of a same face.
 		/// </summary>
-		/// <remarks>
-		/// Only horizontal layouts (left-to-right &amp; right-to-left) are
-		/// supported by this method. Other layouts, or more sophisticated
-		/// kernings, are out of the scope of this API function -- they can be
-		/// implemented through format-specific interfaces.
-		/// </remarks>
+		/// <remarks>See <see cref="FT.GetKerning"/>.</remarks>
 		/// <param name="leftGlyph">The index of the left glyph in the kern pair.</param>
 		/// <param name="rightGlyph">The index of the right glyph in the kern pair.</param>
 		/// <param name="mode">Determines the scale and dimension of the returned kerning vector.</param>
@@ -652,22 +735,7 @@ namespace SharpFont
 		/// Retrieve the ASCII name of a given glyph in a face. This only works
 		/// for those faces where FT_HAS_GLYPH_NAMES(face) returns 1.
 		/// </summary>
-		/// <remarks><para>
-		/// An error is returned if the face doesn't provide glyph names or if
-		/// the glyph index is invalid. In all cases of failure, the first byte
-		/// of ‘buffer’ is set to 0 to indicate an empty name.
-		/// </para><para>
-		/// The glyph name is truncated to fit within the buffer if it is too
-		/// long. The returned string is always zero-terminated.
-		/// </para><para>
-		/// Be aware that FreeType reorders glyph indices internally so that
-		/// glyph index 0 always corresponds to the ‘missing glyph’ (called
-		/// ‘.notdef’).
-		/// </para><para>
-		/// This function is not compiled within the library if the config
-		/// macro ‘FT_CONFIG_OPTION_NO_GLYPH_NAMES’ is defined in
-		/// ‘include/freetype/config/ftoptions.h’.
-		/// </para></remarks>
+		/// <remarks>See <see cref="FT.GetGlyphName(Face, uint, int)"/>.</remarks>
 		/// <param name="glyphIndex">The glyph index.</param>
 		/// <param name="bufferSize">The maximal number of bytes available in the buffer.</param>
 		/// <returns>The ASCII name of a given glyph in a face.</returns>
@@ -681,22 +749,7 @@ namespace SharpFont
 		/// Retrieve the ASCII name of a given glyph in a face. This only works
 		/// for those faces where FT_HAS_GLYPH_NAMES(face) returns 1.
 		/// </summary>
-		/// <remarks><para>
-		/// An error is returned if the face doesn't provide glyph names or if
-		/// the glyph index is invalid. In all cases of failure, the first byte
-		/// of ‘buffer’ is set to 0 to indicate an empty name.
-		/// </para><para>
-		/// The glyph name is truncated to fit within the buffer if it is too
-		/// long. The returned string is always zero-terminated.
-		/// </para><para>
-		/// Be aware that FreeType reorders glyph indices internally so that
-		/// glyph index 0 always corresponds to the ‘missing glyph’ (called
-		/// ‘.notdef’).
-		/// </para><para>
-		/// This function is not compiled within the library if the config
-		/// macro ‘FT_CONFIG_OPTION_NO_GLYPH_NAMES’ is defined in
-		/// ‘include/freetype/config/ftoptions.h’.
-		/// </para></remarks>
+		/// <remarks>See <see cref="FT.GetGlyphName(Face, uint, byte[])"/></remarks>
 		/// <param name="glyphIndex">The glyph index.</param>
 		/// <param name="buffer">The target buffer where the name is copied to.</param>
 		/// <returns>The ASCII name of a given glyph in a face.</returns>
@@ -710,9 +763,7 @@ namespace SharpFont
 		/// Retrieve the ASCII Postscript name of a given face, if available.
 		/// This only works with Postscript and TrueType fonts.
 		/// </summary>
-		/// <remarks>
-		/// The returned pointer is owned by the face and is destroyed with it.
-		/// </remarks>
+		/// <remarks>See <see cref="FT.GetPostscriptName"/>.</remarks>
 		/// <returns>A pointer to the face's Postscript name. NULL if unavailable.</returns>
 		public string GetPostscriptName()
 		{
@@ -723,15 +774,7 @@ namespace SharpFont
 		/// Select a given charmap by its encoding tag (as listed in
 		/// ‘freetype.h’).
 		/// </summary>
-		/// <remarks><para>
-		/// This function returns an error if no charmap in the face
-		/// corresponds to the encoding queried here.
-		/// </para><para>
-		/// Because many fonts contain more than a single cmap for Unicode
-		/// encoding, this function has some special code to select the one
-		/// which covers Unicode best. It is thus preferable to FT_Set_Charmap
-		/// in this case.
-		/// </para></remarks>
+		/// <remarks>See <see cref="FT.SelectCharmap"/>.</remarks>
 		/// <param name="encoding">A handle to the selected encoding.</param>
 		[CLSCompliant(false)]
 		public void SelectCharmap(Encoding encoding)
@@ -742,10 +785,7 @@ namespace SharpFont
 		/// <summary>
 		/// Select a given charmap for character code to glyph index mapping.
 		/// </summary>
-		/// <remarks>
-		/// This function returns an error if the charmap is not part of the
-		/// face (i.e., if it is not listed in the ‘face->charmaps’ table).
-		/// </remarks>
+		/// <remarks>See <see cref="FT.SetCharmap"/>.</remarks>
 		/// <param name="charmap">A handle to the selected charmap.</param>
 		public void SetCharmap(CharMap charmap)
 		{
@@ -756,13 +796,7 @@ namespace SharpFont
 		/// Return the glyph index of a given character code. This function
 		/// uses a charmap object to do the mapping.
 		/// </summary>
-		/// <remarks>
-		/// If you use FreeType to manipulate the contents of font files
-		/// directly, be aware that the glyph index returned by this function
-		/// doesn't always correspond to the internal indices used within the
-		/// file. This is done to ensure that value 0 always corresponds to the
-		/// ‘missing glyph’.
-		/// </remarks>
+		/// <remarks>See <see cref="GetCharIndex"/>.</remarks>
 		/// <param name="charCode">The character code.</param>
 		/// <returns>The glyph index. 0 means ‘undefined character code’.</returns>
 		[CLSCompliant(false)]
@@ -776,14 +810,7 @@ namespace SharpFont
 		/// current charmap of a given face. It also returns the corresponding
 		/// glyph index.
 		/// </summary>
-		/// <remarks><para>
-		/// You should use this function with FT_Get_Next_Char to be able to
-		/// parse all character codes available in a given charmap.
-		/// </para><para>
-		/// Note that ‘agindex’ is set to 0 if the charmap is empty. The result
-		/// itself can be 0 in two cases: if the charmap is empty or when the
-		/// value 0 is the first valid character code.
-		/// </para></remarks>
+		/// <remarks>See <see cref="FT.GetFirstChar"/>.</remarks>
 		/// <param name="glyphIndex">Glyph index of first character code. 0 if charmap is empty.</param>
 		/// <returns>The charmap's first character code.</returns>
 		[CLSCompliant(false)]
@@ -797,14 +824,7 @@ namespace SharpFont
 		/// current charmap of a given face following the value ‘char_code’, as
 		/// well as the corresponding glyph index.
 		/// </summary>
-		/// <remarks><para>
-		/// You should use this function with FT_Get_First_Char to walk over
-		/// all character codes available in a given charmap. See the note for
-		/// this function for a simple code example.
-		/// </para><para>
-		/// Note that ‘*agindex’ is set to 0 when there are no more codes in
-		/// the charmap.
-		/// </para></remarks>
+		/// <remarks>See <see cref="FT.GetNextChar"/>.</remarks>
 		/// <param name="charCode">The starting character code.</param>
 		/// <param name="glyphIndex">Glyph index of first character code. 0 if charmap is empty.</param>
 		/// <returns>The charmap's next character code.</returns>
@@ -824,6 +844,93 @@ namespace SharpFont
 		public uint GetNameIndex(string name)
 		{
 			return FT.GetNameIndex(this, name);
+		}
+
+		/// <summary>
+		/// Return the fsType flags for a font.
+		/// </summary>
+		/// <remarks>See <see cref="FT.GetFSTypeFlags"/>.</remarks>
+		/// <returns>The fsType flags, FT_FSTYPE_XXX.</returns>
+		[CLSCompliant(false)]
+		public EmbeddingTypes GetFSTypeFlags()
+		{
+			return FT.GetFSTypeFlags(this);
+		}
+
+		/// <summary>
+		/// Return the glyph index of a given character code as modified by the
+		/// variation selector.
+		/// </summary>
+		/// <remarks>See <see cref="FT.FaceGetCharVariantIndex"/>.</remarks>
+		/// <param name="charCode">The character code point in Unicode.</param>
+		/// <param name="variantSelector">The Unicode code point of the variation selector.</param>
+		/// <returns>The glyph index. 0 means either ‘undefined character code’, or ‘undefined selector code’, or ‘no variation selector cmap subtable’, or ‘current CharMap is not Unicode’.</returns>
+		[CLSCompliant(false)]
+		public uint GetCharVariantIndex(uint charCode, uint variantSelector)
+		{
+			return FT.FaceGetCharVariantIndex(this, charCode, variantSelector);
+		}
+
+		/// <summary>
+		/// Check whether this variant of this Unicode character is the one to
+		/// be found in the ‘cmap’.
+		/// </summary>
+		/// <remarks>See <see cref="FT.FaceGetCharVariantIsDefault"/>.</remarks>
+		/// <param name="charCode">The character codepoint in Unicode.</param>
+		/// <param name="variantSelector">The Unicode codepoint of the variation selector.</param>
+		/// <returns>1 if found in the standard (Unicode) cmap, 0 if found in the variation selector cmap, or -1 if it is not a variant.</returns>
+		[CLSCompliant(false)]
+		public int GetCharVariantIsDefault(uint charCode, uint variantSelector)
+		{
+			return FT.FaceGetCharVariantIsDefault(this, charCode, variantSelector);
+		}
+
+		/// <summary>
+		/// Return a zero-terminated list of Unicode variant selectors found in
+		/// the font.
+		/// </summary>
+		/// <remarks>See <see cref="FT.FaceGetVariantSelectors"/>.</remarks>
+		/// <returns>A pointer to an array of selector code points, or NULL if there is no valid variant selector cmap subtable.</returns>
+		[CLSCompliant(false)]
+		public uint[] GetVariantSelectors()
+		{
+			return FT.FaceGetVariantSelectors(this);
+		}
+
+		/// <summary>
+		/// Return a zero-terminated list of Unicode variant selectors found in
+		/// the font.
+		/// </summary>
+		/// <remarks>See <see cref="FT.FaceGetVariantsOfChar"/>.</remarks>
+		/// <param name="charCode">The character codepoint in Unicode.</param>
+		/// <returns>A pointer to an array of variant selector code points which are active for the given character, or NULL if the corresponding list is empty.</returns>
+		[CLSCompliant(false)]
+		public uint[] GetVariantsOfChar(uint charCode)
+		{
+			return FT.FaceGetVariantsOfChar(this, charCode);
+		}
+
+		/// <summary>
+		/// Return a zero-terminated list of Unicode character codes found for
+		/// the specified variant selector.
+		/// </summary>
+		/// <remarks>See <see cref="FT.FaceGetCharsOfVariant"/>.</remarks>
+		/// <param name="variantSelector">The variant selector code point in Unicode.</param>
+		/// <returns>A list of all the code points which are specified by this selector (both default and non-default codes are returned) or NULL if there is no valid cmap or the variant selector is invalid.</returns>
+		[CLSCompliant(false)]
+		public uint[] GetCharsOfVariant(uint variantSelector)
+		{
+			return FT.FaceGetCharsOfVariant(this, variantSelector);
+		}
+
+		/// <summary>
+		/// Create a new size object from a given face object.
+		/// </summary>
+		/// <remarks>See <see cref="FT.NewSize"/>.</remarks>
+		/// <returns>A handle to a new size object.</returns>
+		public FTSize NewSize()
+		{
+			return FT.NewSize(this);
 		}
 
 		#endregion

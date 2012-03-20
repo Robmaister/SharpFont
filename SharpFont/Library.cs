@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 
 using System;
+using SharpFont.TrueType;
 
 namespace SharpFont
 {
@@ -39,10 +40,16 @@ namespace SharpFont
 	/// </para></summary>
 	public sealed class Library : IDisposable
 	{
+		#region Fields
+
 		internal IntPtr reference;
 
-		private bool duplicate;
+		private bool customMemory;
 		private bool disposed;
+
+		#endregion
+
+		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the Library class.
@@ -50,7 +57,7 @@ namespace SharpFont
 		public Library()
 		{
 			//duplicate the error checking code from FT.InitFreeType, it's the
-			//simplest way to create a new Library without copies
+			//simplest way to create a new Library without making copies.
 			IntPtr libraryRef;
 			Error err = FT.FT_Init_FreeType(out libraryRef);
 
@@ -58,13 +65,30 @@ namespace SharpFont
 				throw new FreeTypeException(err);
 
 			reference = libraryRef;
-			duplicate = false;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the Library class.
+		/// </summary>
+		/// <param name="memory">A custom FreeType memory manager.</param>
+		public Library(Memory memory)
+		{
+			IntPtr libraryRef;
+			Error err = FT.FT_New_Library(memory.reference, out libraryRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			reference = libraryRef;
+			customMemory = true;
 		}
 
 		internal Library(IntPtr reference, bool duplicate)
 		{
 			this.reference = reference;
-			this.duplicate = duplicate;
+
+			if (duplicate)
+				FT.ReferenceLibrary(this);
 		}
 
 		/// <summary>
@@ -75,17 +99,14 @@ namespace SharpFont
 			Dispose(false);
 		}
 
+		#endregion
+
+		#region Public Methods
+
 		/// <summary>
 		/// Return the version of the FreeType library being used.
 		/// </summary>
-		/// <remarks><para>
-		/// The reason why this function takes a "library" argument is because
-		/// certain programs implement library initialization in a custom way
-		/// that doesn't use <see cref="FT.InitFreeType"/>.
-		/// </para><para>
-		/// In such cases, the library version might not be available before
-		/// the library object has been created.
-		/// </para></remarks>
+		/// <remarks>See <see cref="FT.LibraryVersion"/>.</remarks>
 		/// <returns>The version of the FreeType library being used.</returns>
 		public Version Version()
 		{
@@ -111,10 +132,7 @@ namespace SharpFont
 		/// This function calls <see cref="OpenFace"/> to open a font which has
 		/// been loaded into memory.
 		/// </summary>
-		/// <remarks>
-		/// You must not deallocate the memory before calling
-		/// <see cref="FT.DoneFace"/>.
-		/// </remarks>
+		/// <remarks>See <see cref="FT.NewMemoryFace"/>.</remarks>
 		/// <param name="file">A pointer to the beginning of the font data.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
 		/// <returns>A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.</returns>
@@ -128,27 +146,7 @@ namespace SharpFont
 		/// Create a <see cref="Face"/> object from a given resource described
 		/// by <see cref="OpenArgs"/>.
 		/// </summary>
-		/// <remarks><para>
-		/// Unlike FreeType 1.x, this function automatically creates a glyph
-		/// slot for the face object which can be accessed directly through
-		/// <see cref="Face.Glyph"/>.
-		/// </para><para>
-		/// OpenFace can be used to quickly check whether the font format of
-		/// a given font resource is supported by FreeType. If the faceIndex
-		/// field is negative, the function's return value is 0 if the font
-		/// format is recognized, or non-zero otherwise; the function returns
-		/// a more or less empty face handle in ‘*aface’ (if ‘aface’ isn't
-		/// NULL). The only useful field in this special case is
-		/// <see cref="Face.FaceCount"/> which gives the number of faces within
-		/// the font file. After examination, the returned FT_Face structure
-		/// should be deallocated with a call to <see cref="FT.DoneFace"/>.
-		/// </para><para>
-		/// Each new face object created with this function also owns a default
-		/// <see cref="FTSize"/> object, accessible as <see cref="Face.Size"/>.
-		/// </para><para>
-		/// See the discussion of reference counters in the description of
-		/// FT_Reference_Face.
-		/// </para></remarks>
+		/// <remarks>See <see cref="FT.OpenFace"/>.</remarks>
 		/// <param name="args">A pointer to an <see cref="OpenArgs"/> structure which must be filled by the caller.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
 		/// <returns>A handle to a new face object. If ‘face_index’ is greater than or equal to zero, it must be non-NULL.</returns>
@@ -157,6 +155,171 @@ namespace SharpFont
 			return FT.OpenFace(this, args, faceIndex);
 		}
 
+		/// <summary>
+		/// Create a new face object from a FOND resource.
+		/// </summary>
+		/// <remarks>See <see cref="FT.NewFaceFromFOND"/>.</remarks>
+		/// <param name="fond">A FOND resource.</param>
+		/// <param name="faceIndex">Only supported for the -1 ‘sanity check’ special case.</param>
+		/// <returns>A handle to a new face object.</returns>
+		public Face NewFaceFromFOND(IntPtr fond, int faceIndex)
+		{
+			return FT.NewFaceFromFOND(this, fond, faceIndex);
+		}
+
+		/// <summary>
+		/// Create a new face object from a given resource and typeface index
+		/// using an FSSpec to the font file.
+		/// </summary>
+		/// <remarks>See <see cref="FT.NewFaceFromFSSpec"/>.</remarks>
+		/// <param name="spec">FSSpec to the font file.</param>
+		/// <param name="faceIndex">The index of the face within the resource. The first face has index 0.</param>
+		/// <returns>A handle to a new face object.</returns>
+		public Face NewFaceFromFSSpec(IntPtr spec, int faceIndex)
+		{
+			return FT.NewFaceFromFSSpec(this, spec, faceIndex);
+		}
+
+		/// <summary>
+		/// Create a new face object from a given resource and typeface index
+		/// using an FSRef to the font file.
+		/// </summary>
+		/// <remarks>See <see cref="FT.NewFaceFromFSRef"/>.</remarks>
+		/// <param name="ref">FSRef to the font file.</param>
+		/// <param name="faceIndex">The index of the face within the resource. The first face has index 0.</param>
+		/// <returns>A handle to a new face object.</returns>
+		public Face NewFaceFromFSRef(IntPtr @ref, int faceIndex)
+		{
+			return FT.NewFaceFromFSRef(this, @ref, faceIndex);
+		}
+
+		/// <summary>
+		/// Add a new module to a given library instance.
+		/// </summary>
+		/// <remarks>See <see cref="FT.AddModule"/>.</remarks>
+		/// <param name="clazz">A pointer to class descriptor for the module.</param>
+		public void AddModule(ModuleClass clazz)
+		{
+			FT.AddModule(this, clazz);
+		}
+
+		/// <summary>
+		/// Find a module by its name.
+		/// </summary>
+		/// <remarks>See <see cref="FT.GetModule"/>.</remarks>
+		/// <param name="moduleName">The module's name (as an ASCII string).</param>
+		/// <returns>A module handle. 0 if none was found.</returns>
+		public Module GetModule(string moduleName)
+		{
+			return FT.GetModule(this, moduleName);
+		}
+
+		/// <summary>
+		/// Remove a given module from a library instance.
+		/// </summary>
+		/// <remarks>See <see cref="FT.RemoveModule"/>.</remarks>
+		/// <param name="module">A handle to a module object.</param>
+		public void RemoveModule(Module module)
+		{
+			FT.RemoveModule(this, module);
+		}
+
+		/// <summary>
+		/// Set a debug hook function for debugging the interpreter of a font
+		/// format.
+		/// </summary>
+		/// <remarks>See <see cref="FT.SetDebugHook"/>.</remarks>
+		/// <param name="hookIndex">The index of the debug hook. You should use the values defined in ‘ftobjs.h’, e.g., ‘FT_DEBUG_HOOK_TRUETYPE’.</param>
+		/// <param name="debugHook">The function used to debug the interpreter.</param>
+		[CLSCompliant(false)]
+		public void SetDebugHook(uint hookIndex, IntPtr debugHook)
+		{
+			FT.SetDebugHook(this, hookIndex, debugHook);
+		}
+
+		/// <summary>
+		/// Add the set of default drivers to a given library object. This is
+		/// only useful when you create a library object with
+		/// <see cref="FT.NewLibrary"/> (usually to plug a custom memory
+		/// manager).
+		/// </summary>
+		public void AddDefaultModules()
+		{
+			FT.AddDefaultModules(this);
+		}
+
+		/// <summary>
+		/// Retrieve the current renderer for a given glyph format.
+		/// </summary>
+		/// <remarks>See <see cref="FT.GetRenderer"/>.</remarks>
+		/// <param name="format">The glyph format.</param>
+		/// <returns>A renderer handle. 0 if none found.</returns>
+		[CLSCompliant(false)]
+		public Renderer GetRenderer(GlyphFormat format)
+		{
+			return FT.GetRenderer(this, format);
+		}
+
+		/// <summary>
+		/// Set the current renderer to use, and set additional mode.
+		/// </summary>
+		/// <remarks>See <see cref="FT.SetRenderer"/>.</remarks>
+		/// <param name="renderer">A handle to the renderer object.</param>
+		/// <param name="numParams">The number of additional parameters.</param>
+		/// <param name="parameters">Additional parameters.</param>
+		[CLSCompliant(false)]
+		public void SetRenderer(Renderer renderer, uint numParams, Parameter[] parameters)
+		{
+			FT.SetRenderer(this, renderer, numParams, parameters);
+		}
+
+		/// <summary>
+		/// This function is used to apply color filtering to LCD decimated
+		/// bitmaps, like the ones used when calling
+		/// <see cref="FT.RenderGlyph"/> with <see cref="RenderMode.LCD"/> or
+		/// <see cref="RenderMode.VerticalLCD"/>.
+		/// </summary>
+		/// <remarks>See <see cref="FT.LibrarySetLcdFilter"/>.</remarks>
+		/// <param name="filter"><para>The filter type.
+		/// </para><para>
+		/// You can use <see cref="LcdFilter.None"/> here to disable this feature, or <see cref="LcdFilter.Default"/> to use a default filter that should work well on most LCD screens.</para></param>
+		public void SetLcdFilter(LcdFilter filter)
+		{
+			FT.LibrarySetLcdFilter(this, filter);
+		}
+
+		/// <summary>
+		/// Use this function to override the filter weights selected by
+		/// <see cref="FT.LibrarySetLcdFilter"/>. By default, FreeType uses the
+		/// quintuple (0x00, 0x55, 0x56, 0x55, 0x00) for
+		/// <see cref="LcdFilter.Light"/>, and (0x10, 0x40, 0x70, 0x40, 0x10)
+		/// for <see cref="LcdFilter.Default"/> and
+		/// <see cref="LcdFilter.Legacy"/>.
+		/// </summary>
+		/// <remarks>See <see cref="FT.LibrarySetLcdFilterWeights"/>.</remarks>
+		/// <param name="weights">A pointer to an array; the function copies the first five bytes and uses them to specify the filter weights.</param>
+		public void SetLcdFilterWeights(byte[] weights)
+		{
+			FT.LibrarySetLcdFilterWeights(this, weights);
+		}
+
+		/// <summary>
+		/// Return an <see cref="EngineType"/> value to indicate which level of
+		/// the TrueType virtual machine a given library instance supports.
+		/// </summary>
+		/// <returns>A value indicating which level is supported.</returns>
+		public EngineType GetTrueTypeEngineType()
+		{
+			return FT.GetTrueTypeEngineType(this);
+		}
+
+		#endregion
+
+		#region IDisposable Members
+
+		/// <summary>
+		/// Disposes the Library.
+		/// </summary>
 		public void Dispose()
 		{
 			Dispose(true);
@@ -167,15 +330,15 @@ namespace SharpFont
 		{
 			if (!disposed)
 			{
-				if (disposing)
-				{
-				}
-
-				if (!duplicate)
+				if (customMemory)
+					FT.DoneLibrary(this);
+				else
 					FT.DoneFreeType(this);
 
 				disposed = true;
 			}
 		}
+
+		#endregion
 	}
 }

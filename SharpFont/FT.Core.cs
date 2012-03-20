@@ -1058,6 +1058,7 @@ namespace SharpFont
 		/// <param name="face">A handle to a target face object.</param>
 		internal static void ReferenceFace(Face face)
 		{
+			//marked as internal because the Face class wraps this funcitonality.
 			Error err = FT_Reference_Face(face.reference);
 
 			if (err != Error.Ok)

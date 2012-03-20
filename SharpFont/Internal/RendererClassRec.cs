@@ -25,16 +25,20 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-namespace SharpFont
+namespace SharpFont.Internal
 {
-	/// <summary>
-	/// An <see cref="FTList"/> iterator function which is called during a list
-	/// finalization by <see cref="FT.ListFinalize"/> to destroy all elements
-	/// in a given list.
-	/// </summary>
-	/// <param name="memory">The current system object.</param>
-	/// <param name="data">The current object to destroy.</param>
-	/// <param name="user">A typeless pointer passed to <see cref="FT.ListIterate"/>. It can be used to point to the iteration's state.</param>
-	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void ListDestructor(IntPtr memory, IntPtr data, IntPtr user);
+	[StructLayout(LayoutKind.Sequential)]
+	internal class RendererClassRec
+	{
+		internal ModuleClassRec root;
+
+		internal GlyphFormat glyph_format;
+
+		internal IntPtr render_glyph;
+		internal IntPtr transform_glyph;
+		internal IntPtr get_glyph_cbox;
+		internal IntPtr set_mode;
+
+		internal IntPtr raster_class;
+	}
 }

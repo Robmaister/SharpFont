@@ -30,6 +30,27 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary>
+	/// An <see cref="FTList"/> iterator function which is called during a list
+	/// parse by <see cref="FT.ListIterate"/>.
+	/// </summary>
+	/// <param name="node">The current iteration list node.</param>
+	/// <param name="user">A typeless pointer passed to <see cref="ListIterator"/>. Can be used to point to the iteration's state.</param>
+	/// <returns>Error code.</returns>
+	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+	public delegate Error ListIterator(IntPtr node, IntPtr user);
+
+	/// <summary>
+	/// An <see cref="FTList"/> iterator function which is called during a list
+	/// finalization by <see cref="FT.ListFinalize"/> to destroy all elements
+	/// in a given list.
+	/// </summary>
+	/// <param name="memory">The current system object.</param>
+	/// <param name="data">The current object to destroy.</param>
+	/// <param name="user">A typeless pointer passed to <see cref="FT.ListIterate"/>. It can be used to point to the iteration's state.</param>
+	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+	public delegate void ListDestructor(IntPtr memory, IntPtr data, IntPtr user);
+
+	/// <summary>
 	/// A structure used to hold a simple doubly-linked list. These are used in
 	/// many parts of FreeType.
 	/// </summary>

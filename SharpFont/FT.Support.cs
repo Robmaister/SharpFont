@@ -1299,6 +1299,202 @@ namespace SharpFont
 
 		#region Module Management
 
+		/// <summary>
+		/// Add a new module to a given library instance.
+		/// </summary>
+		/// <remarks>
+		/// An error will be returned if a module already exists by that name,
+		/// or if the module requires a version of FreeType that is too great.
+		/// </remarks>
+		/// <param name="library">A handle to the library object.</param>
+		/// <param name="clazz">A pointer to class descriptor for the module.</param>
+		public static void AddModule(Library library, ModuleClass clazz)
+		{
+			Error err = FT_Add_Module(library.reference, clazz.reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Find a module by its name.
+		/// </summary>
+		/// <remarks>
+		/// FreeType's internal modules aren't documented very well, and you
+		/// should look up the source code for details.
+		/// </remarks>
+		/// <param name="library">A handle to the library object.</param>
+		/// <param name="moduleName">The module's name (as an ASCII string).</param>
+		/// <returns>A module handle. 0 if none was found.</returns>
+		public static Module GetModule(Library library, string moduleName)
+		{
+			return new Module(FT_Get_Module(library.reference, moduleName));
+		}
+
+		/// <summary>
+		/// Remove a given module from a library instance.
+		/// </summary>
+		/// <remarks>
+		/// The module object is destroyed by the function in case of success.
+		/// </remarks>
+		/// <param name="library">A handle to a library object.</param>
+		/// <param name="module">A handle to a module object.</param>
+		public static void RemoveModule(Library library, Module module)
+		{
+			Error err = FT_Remove_Module(library.reference, module.reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary><para>
+		/// A counter gets initialized to 1 at the time a
+		/// <see cref="Library"/> structure is created. This function
+		/// increments the counter. <see cref="FT.DoneLibrary"/> then only
+		/// destroys a library if the counter is 1, otherwise it simply
+		/// decrements the counter.
+		/// </para><para>
+		/// This function helps in managing life-cycles of structures which
+		/// reference <see cref="Library"/> objects.
+		/// </para></summary>
+		/// <param name="library">A handle to a target library object.</param>
+		public static void ReferenceLibrary(Library library)
+		{
+			Error err = FT_Reference_Library(library.reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary><para>
+		/// This function is used to create a new FreeType library instance
+		/// from a given memory object. It is thus possible to use libraries
+		/// with distinct memory allocators within the same program.
+		/// </para><para>
+		/// Normally, you would call this function (followed by a call to
+		/// <see cref="FT.AddDefaultModules"/> or a series of calls to
+		/// <see cref="FT.AddModule"/>) instead of
+		/// <see cref="FT.InitFreeType"/> to initialize the FreeType library.
+		/// </para><para>
+		/// Don't use <see cref="FT.DoneFreeType"/> but
+		/// <see cref="FT.DoneLibrary"/> to destroy a library instance.
+		/// </para></summary>
+		/// <remarks>
+		/// See the discussion of reference counters in the description of
+		/// <see cref="FT.ReferenceLibrary"/>.
+		/// </remarks>
+		/// <param name="memory">A handle to the original memory object.</param>
+		/// <returns>A pointer to handle of a new library object.</returns>
+		public static Library NewLibrary(Memory memory)
+		{
+			IntPtr libraryRef;
+			Error err = FT_New_Library(memory.reference, out libraryRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Library(libraryRef, false);
+		}
+
+		/// <summary>
+		/// Discard a given library object. This closes all drivers and
+		/// discards all resource objects.
+		/// </summary>
+		/// <remarks>
+		/// See the discussion of reference counters in the description of
+		/// <see cref="FT.ReferenceLibrary"/>.
+		/// </remarks>
+		/// <param name="library">A handle to the target library.</param>
+		public static void DoneLibrary(Library library)
+		{
+			Error err = FT_Done_Library(library.reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Set a debug hook function for debugging the interpreter of a font
+		/// format.
+		/// </summary>
+		/// <remarks><para>
+		/// Currently, four debug hook slots are available, but only two (for
+		/// the TrueType and the Type 1 interpreter) are defined.
+		/// </para><para>
+		/// Since the internal headers of FreeType are no longer installed, the
+		/// symbol ‘FT_DEBUG_HOOK_TRUETYPE’ isn't available publicly. This is a
+		/// bug and will be fixed in a forthcoming release.
+		/// </para></remarks>
+		/// <param name="library">A handle to the library object.</param>
+		/// <param name="hookIndex">The index of the debug hook. You should use the values defined in ‘ftobjs.h’, e.g., ‘FT_DEBUG_HOOK_TRUETYPE’.</param>
+		/// <param name="debugHook">The function used to debug the interpreter.</param>
+		[CLSCompliant(false)]
+		public static void SetDebugHook(Library library, uint hookIndex, IntPtr debugHook)
+		{
+			FT_Set_Debug_Hook(library.reference, hookIndex, debugHook);
+		}
+
+		/// <summary>
+		/// Add the set of default drivers to a given library object. This is
+		/// only useful when you create a library object with
+		/// <see cref="FT.NewLibrary"/> (usually to plug a custom memory
+		/// manager).
+		/// </summary>
+		/// <param name="library">A handle to a new library object.</param>
+		public static void AddDefaultModules(Library library)
+		{
+			FT_Add_Default_Modules(library.reference);
+		}
+
+		/// <summary>
+		/// Retrieve the current renderer for a given glyph format.
+		/// </summary>
+		/// <remarks><para>
+		/// An error will be returned if a module already exists by that name,
+		/// or if the module requires a version of FreeType that is too great.
+		/// </para><para>
+		/// To add a new renderer, simply use <see cref="FT.AddModule"/>. To
+		/// retrieve a renderer by its name, use <see cref="FT.GetModule"/>.
+		/// </para></remarks>
+		/// <param name="library">A handle to the library object.</param>
+		/// <param name="format">The glyph format.</param>
+		/// <returns>A renderer handle. 0 if none found.</returns>
+		[CLSCompliant(false)]
+		public static Renderer GetRenderer(Library library, GlyphFormat format)
+		{
+			return new Renderer(FT_Get_Renderer(library.reference, format));
+		}
+
+		/// <summary>
+		/// Set the current renderer to use, and set additional mode.
+		/// </summary>
+		/// <remarks><para>
+		/// In case of success, the renderer will be used to convert glyph
+		/// images in the renderer's known format into bitmaps.
+		/// </para><para>
+		/// This doesn't change the current renderer for other formats.
+		/// </para><para>
+		/// Currently, only the B/W renderer, if compiled with
+		/// FT_RASTER_OPTION_ANTI_ALIASING (providing a 5-levels anti-aliasing
+		/// mode; this option must be set directly in ‘ftraster.c’ and is
+		/// undefined by default) accepts a single tag ‘pal5’ to set its gray
+		/// palette as a character string with 5 elements. Consequently, the
+		/// third and fourth argument are zero normally.
+		/// </para></remarks>
+		/// <param name="library">A handle to the library object.</param>
+		/// <param name="renderer">A handle to the renderer object.</param>
+		/// <param name="numParams">The number of additional parameters.</param>
+		/// <param name="parameters">Additional parameters.</param>
+		[CLSCompliant(false)]
+		public unsafe static void SetRenderer(Library library, Renderer renderer, uint numParams, Parameter[] parameters)
+		{
+			ParameterRec[] paramRecs = Array.ConvertAll<Parameter, ParameterRec>(parameters, (p => p.rec));
+			fixed (void* ptr = paramRecs)
+			{
+				Error err = FT_Set_Renderer(library.reference, renderer.reference, numParams, (IntPtr)ptr);
+			}
+		}
+
 		#endregion
 
 		#region GZIP Streams

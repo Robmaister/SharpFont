@@ -25,15 +25,26 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-namespace SharpFont
+#if WIN64
+using FT_26Dot6 = System.Int32;
+using FT_Fixed = System.Int32;
+using FT_Long = System.Int32;
+using FT_Pos = System.Int32;
+using FT_ULong = System.UInt32;
+#else
+using FT_26Dot6 = System.IntPtr;
+using FT_Fixed = System.IntPtr;
+using FT_Long = System.IntPtr;
+using FT_Pos = System.IntPtr;
+using FT_ULong = System.UIntPtr;
+#endif
+
+namespace SharpFont.Internal
 {
-	/// <summary>
-	/// An <see cref="FTList"/> iterator function which is called during a list
-	/// parse by <see cref="FT.ListIterate"/>.
-	/// </summary>
-	/// <param name="node">The current iteration list node.</param>
-	/// <param name="user">A typeless pointer passed to <see cref="ListIterator"/>. Can be used to point to the iteration's state.</param>
-	/// <returns>Error code.</returns>
-	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate Error ListIterator(IntPtr node, IntPtr user);
+	[StructLayout(LayoutKind.Sequential)]
+	internal struct ParameterRec
+	{
+		internal FT_ULong tag;
+		internal IntPtr data;
+	}
 }

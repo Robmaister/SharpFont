@@ -25,50 +25,21 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.Internal;
-
 namespace SharpFont
 {
 	/// <summary>
-	/// A simple structure used to pass more or less generic parameters to
-	/// FT_Open_Face.
+	/// A handle to a given FreeType renderer. A renderer is a special module
+	/// in charge of converting a glyph image to a bitmap, when necessary. Each
+	/// renderer supports a given glyph image format, and one or more target
+	/// surface depths.
 	/// </summary>
-	/// <remarks>
-	/// The ID and function of parameters are driver-specific. See the various
-	/// FT_PARAM_TAG_XXX flags for more information.
-	/// </remarks>
-	public sealed class Parameter
+	public class Renderer
 	{
 		internal IntPtr reference;
-		internal ParameterRec rec;
 
-		internal Parameter(IntPtr reference)
+		internal Renderer(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<ParameterRec>(reference);
-		}
-
-		/// <summary>
-		/// A four-byte identification tag.
-		/// </summary>
-		[CLSCompliant(false)]
-		public ParamTag Tag
-		{
-			get
-			{
-				return (ParamTag)rec.tag;
-			}
-		}
-
-		/// <summary>
-		/// A pointer to the parameter data.
-		/// </summary>
-		public IntPtr Data
-		{
-			get
-			{
-				return rec.data;
-			}
 		}
 	}
 }

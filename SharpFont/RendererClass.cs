@@ -30,44 +30,97 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary>
-	/// A simple structure used to pass more or less generic parameters to
-	/// FT_Open_Face.
+	/// The renderer module class descriptor.
 	/// </summary>
-	/// <remarks>
-	/// The ID and function of parameters are driver-specific. See the various
-	/// FT_PARAM_TAG_XXX flags for more information.
-	/// </remarks>
-	public sealed class Parameter
+	public class RendererClass
 	{
 		internal IntPtr reference;
-		internal ParameterRec rec;
+		internal RendererClassRec rec;
 
-		internal Parameter(IntPtr reference)
+		internal RendererClass(IntPtr reference)
 		{
 			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<ParameterRec>(reference);
+			this.rec = PInvokeHelper.PtrToStructure<RendererClassRec>(reference);
 		}
 
 		/// <summary>
-		/// A four-byte identification tag.
+		/// The root <see cref="ModuleClass"/> fields.
 		/// </summary>
-		[CLSCompliant(false)]
-		public ParamTag Tag
+		public ModuleClass Root
 		{
 			get
 			{
-				return (ParamTag)rec.tag;
+				return new ModuleClass(reference);
 			}
 		}
 
 		/// <summary>
-		/// A pointer to the parameter data.
+		/// The glyph image format this renderer handles.
 		/// </summary>
-		public IntPtr Data
+		[CLSCompliant(false)]
+		public GlyphFormat Format
 		{
 			get
 			{
-				return rec.data;
+				return rec.glyph_format;
+			}
+		}
+
+		/// <summary>
+		/// A method used to render the image that is in a given glyph slot
+		/// into a bitmap.
+		/// </summary>
+		public IntPtr RenderGlyph
+		{
+			get
+			{
+				return rec.render_glyph;
+			}
+		}
+
+		/// <summary>
+		/// A method used to transform the image that is in a given glyph slot.
+		/// </summary>
+		public IntPtr TransformGlyph
+		{
+			get
+			{
+				return rec.transform_glyph;
+			}
+		}
+
+		/// <summary>
+		/// A method used to access the glyph's cbox.
+		/// </summary>
+		public IntPtr GetGlyphCBox
+		{
+			get
+			{
+				return rec.get_glyph_cbox;
+			}
+		}
+
+		/// <summary>
+		/// A method used to pass additional parameters.
+		/// </summary>
+		public IntPtr SetMode
+		{
+			get
+			{
+				return rec.set_mode;
+			}
+		}
+
+		/// <summary>
+		/// For <see cref="GlyphFormat.Outline"/> renderers only. This is a
+		/// pointer to its raster's class.
+		/// </summary>
+		public RasterFuncs RasterClass
+		{
+			get
+			{
+				
+				return new RasterFuncs(reference, Marshal.OffsetOf(typeof(RendererClassRec), "raster_class"));
 			}
 		}
 	}

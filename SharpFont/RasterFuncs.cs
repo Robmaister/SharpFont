@@ -124,6 +124,11 @@ namespace SharpFont
 			this.rec = PInvokeHelper.PtrToStructure<RasterFuncsRec>(reference);
 		}
 
+		internal RasterFuncs(IntPtr reference, IntPtr offset)
+			: this(new IntPtr(reference.ToInt64() + offset.ToInt64()))
+		{
+		}
+
 		/// <summary>
 		/// The supported glyph format for this raster.
 		/// </summary>

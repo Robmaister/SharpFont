@@ -25,50 +25,37 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.Internal;
+#if WIN64
+using FT_26Dot6 = System.Int32;
+using FT_Fixed = System.Int32;
+using FT_Long = System.Int32;
+using FT_Pos = System.Int32;
+using FT_ULong = System.UInt32;
+#else
+using FT_26Dot6 = System.IntPtr;
+using FT_Fixed = System.IntPtr;
+using FT_Long = System.IntPtr;
+using FT_Pos = System.IntPtr;
+using FT_ULong = System.UIntPtr;
+#endif
 
-namespace SharpFont
+namespace SharpFont.Internal
 {
-	/// <summary>
-	/// A simple structure used to pass more or less generic parameters to
-	/// FT_Open_Face.
-	/// </summary>
-	/// <remarks>
-	/// The ID and function of parameters are driver-specific. See the various
-	/// FT_PARAM_TAG_XXX flags for more information.
-	/// </remarks>
-	public sealed class Parameter
+	[StructLayout(LayoutKind.Sequential)]
+	internal struct ModuleClassRec
 	{
-		internal IntPtr reference;
-		internal ParameterRec rec;
+		internal uint module_flags;
+		internal FT_Long module_size;
 
-		internal Parameter(IntPtr reference)
-		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<ParameterRec>(reference);
-		}
+		[MarshalAs(UnmanagedType.LPStr)]
+		internal string module_name;
+		internal FT_Fixed module_version;
+		internal FT_Fixed module_requires;
 
-		/// <summary>
-		/// A four-byte identification tag.
-		/// </summary>
-		[CLSCompliant(false)]
-		public ParamTag Tag
-		{
-			get
-			{
-				return (ParamTag)rec.tag;
-			}
-		}
+		internal IntPtr module_interface;
 
-		/// <summary>
-		/// A pointer to the parameter data.
-		/// </summary>
-		public IntPtr Data
-		{
-			get
-			{
-				return rec.data;
-			}
-		}
+		internal ModuleConstructor module_init;
+		internal ModuleDestructor module_done;
+		internal ModuleRequester get_interface;
 	}
 }

@@ -365,6 +365,18 @@ namespace SharpFont
 		}
 
 		/// <summary>
+		/// Convert a given glyph image to a bitmap. It does so by inspecting
+		/// the glyph image format, finding the relevant renderer, and invoking
+		/// it.
+		/// </summary>
+		/// <param name="slot">A handle to the glyph slot containing the image to convert.</param>
+		/// <param name="mode">This is the render mode used to render the glyph image into a bitmap.</param>
+		public void RenderGlyph(RenderMode mode)
+		{
+			FT.RenderGlyph(this, mode);
+		}
+
+		/// <summary>
 		/// Gets a description of a given subglyph. Only use it if
 		/// ‘glyph->format’ is FT_GLYPH_FORMAT_COMPOSITE; an error is returned
 		/// otherwise.
@@ -384,6 +396,18 @@ namespace SharpFont
 		public void GetSubGlyphInfo(uint subIndex, out int index, out SubGlyphFlags flags, out int arg1, out int arg2, out FTMatrix transform)
 		{
 			FT.GetSubGlyphInfo(this, subIndex, out index, out flags, out arg1, out arg2, out transform);
+		}
+
+		/// <summary>
+		/// A function used to extract a glyph image from a slot. Note that the
+		/// created <see cref="Glyph"/> object must be released with
+		/// <see cref="DoneGlyph"/>.
+		/// </summary>
+		/// <param name="slot">A handle to the source glyph slot.</param>
+		/// <returns>A handle to the glyph object.</returns>
+		public Glyph GetGlyph()
+		{
+			return FT.GetGlyph(this);
 		}
 	}
 }

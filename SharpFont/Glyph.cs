@@ -33,8 +33,10 @@ namespace SharpFont
 	/// The root glyph structure contains a given glyph image plus its advance
 	/// width in 16.16 fixed float format.
 	/// </summary>
-	public class Glyph
+	public class Glyph : IDisposable
 	{
+		private bool disposed;
+
 		internal IntPtr reference;
 		internal GlyphRec rec;
 
@@ -48,6 +50,14 @@ namespace SharpFont
 		{
 			this.reference = IntPtr.Zero;
 			this.rec = rec;
+		}
+
+		/// <summary>
+		/// Finalizes an instance of the Glyph class.
+		/// </summary>
+		~Glyph()
+		{
+			Dispose(false);
 		}
 
 		/// <summary>
@@ -81,6 +91,67 @@ namespace SharpFont
 			get
 			{
 				return new FTVector(rec.advance);
+			}
+		}
+
+		/// <summary>
+		/// A function used to copy a glyph image. Note that the created
+		/// <see cref="Glyph"/> object must be released with
+		/// <see cref="FT.DoneGlyph"/>.
+		/// </summary>
+		/// <returns>A handle to the target glyph object. 0 in case of error.</returns>
+		public Glyph Copy()
+		{
+			return FT.GlyphCopy(this);
+		}
+
+		/// <summary>
+		/// Transform a glyph image if its format is scalable.
+		/// </summary>
+		/// <param name="matrix">A pointer to a 2x2 matrix to apply.</param>
+		/// <param name="delta">A pointer to a 2d vector to apply. Coordinates are expressed in 1/64th of a pixel.</param>
+		public void Transform(FTMatrix matrix, FTVector delta)
+		{
+			FT.GlyphTransform(this, matrix, delta);
+		}
+
+		/// <summary><para>
+		/// Return a glyph's ‘control box’. The control box encloses all the
+		/// outline's points, including Bézier control points. Though it
+		/// coincides with the exact bounding box for most glyphs, it can be
+		/// slightly larger in some situations (like when rotating an outline
+		/// which contains Bézier outside arcs).
+		/// </para><para>
+		/// Computing the control box is very fast, while getting the bounding
+		/// box can take much more time as it needs to walk over all segments
+		/// and arcs in the outline. To get the latter, you can use the
+		/// ‘ftbbox’ component which is dedicated to this single task.
+		/// </para></summary>
+		/// <remarks>See <see cref="FT.GlyphGetCBox"/>.</remarks>
+		/// <param name="mode">The mode which indicates how to interpret the returned bounding box values.</param>
+		/// <returns>The glyph coordinate bounding box. Coordinates are expressed in 1/64th of pixels if it is grid-fitted.</returns>
+		[CLSCompliant(false)]
+		public BBox GetCBox(GlyphBBoxMode mode)
+		{
+			return FT.GlyphGetCBox(this, mode);
+		}
+
+		/// <summary>
+		/// Disposes the Glyph.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if (!disposed)
+			{
+				FT.DoneGlyph(this);
+
+				disposed = true;
 			}
 		}
 	}

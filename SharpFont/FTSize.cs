@@ -33,15 +33,28 @@ namespace SharpFont
 	/// FreeType root size class structure. A size object models a face object
 	/// at a given size.
 	/// </summary>
-	public sealed class FTSize
+	public sealed class FTSize : IDisposable
 	{
+		private bool userAlloc;
+		private bool disposed;
+
 		internal IntPtr reference;
 		internal SizeRec rec;
 
-		internal FTSize(IntPtr reference)
+		internal FTSize(IntPtr reference, bool userAlloc)
 		{
 			this.reference = reference;
 			this.rec = PInvokeHelper.PtrToStructure<SizeRec>(reference);
+
+			this.userAlloc = userAlloc;
+		}
+
+		/// <summary>
+		/// Finalizes an instance of the FTSize class.
+		/// </summary>
+		~FTSize()
+		{
+			Dispose(false);
 		}
 
 		/// <summary>
@@ -82,6 +95,44 @@ namespace SharpFont
 			get
 			{
 				return new SizeMetrics(rec.metrics);
+			}
+		}
+
+		/// <summary><para>
+		/// Even though it is possible to create several size objects for a
+		/// given face (see <see cref="FT.NewSize"/> for details), functions
+		/// like <see cref="FT.LoadGlyph"/> or <see cref="FT.LoadChar"/> only
+		/// use the one which has been activated last to determine the ‘current
+		/// character pixel size’.
+		/// </para><para>
+		/// This function can be used to ‘activate’ a previously created size
+		/// object.
+		/// </para></summary>
+		/// <remarks><see cref="FT.ActivateSize"/>.</remarks>
+		/// <param name="size">A handle to a target size object.</param>
+		public void Activate(FTSize size)
+		{
+			FT.ActivateSize(this);
+		}
+
+		/// <summary>
+		/// Diposes the FTSize.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if (!disposed)
+			{
+				//only dispose the user allocated sizes.
+				if (userAlloc)
+					FT.DoneSize(this);
+
+				disposed = true;
 			}
 		}
 	}

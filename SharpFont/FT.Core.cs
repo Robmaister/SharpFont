@@ -1526,7 +1526,7 @@ namespace SharpFont
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new FTSize(sizeRef);
+			return new FTSize(sizeRef, true);
 		}
 
 		/// <summary>
@@ -1541,14 +1541,16 @@ namespace SharpFont
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
+
+			size.reference = IntPtr.Zero;
 		}
 
 		/// <summary><para>
 		/// Even though it is possible to create several size objects for a
-		/// given face (see <see cref="NewSize"/> for details), functions like
-		/// <see cref="LoadGlyph"/> or <see cref="LoadChar"/> only use the one
-		/// which has been activated last to determine the ‘current character
-		/// pixel size’.
+		/// given face (see <see cref="FT.NewSize"/> for details), functions
+		/// like <see cref="FT.LoadGlyph"/> or <see cref="FT.LoadChar"/> only
+		/// use the one which has been activated last to determine the ‘current
+		/// character pixel size’.
 		/// </para><para>
 		/// This function can be used to ‘activate’ a previously created size
 		/// object.

@@ -60,7 +60,7 @@ namespace Examples
 
 						Console.WriteLine("\nWriting string \"Hello World!\":");
 						Bitmap bmp = RenderString(face, "Hello World!");
-						bmp.Save("helloworld5.png", ImageFormat.Png);
+						bmp.Save("helloworld.png", ImageFormat.Png);
 						bmp.Dispose();
 
 						Console.WriteLine("Done!\n");
@@ -72,10 +72,10 @@ namespace Examples
 				Console.Write(e.Error.ToString());
 			}
 
-			Console.ReadLine();
+			Console.ReadKey();
 		}
 
-		public static Bitmap RenderString(Face f, string text)
+		public static Bitmap RenderString(Face face, string text)
 		{
 			int penX = 0, penY = 0;
 			int width = 0;
@@ -86,53 +86,50 @@ namespace Examples
 			{
 				char c = text[i];
 
-				uint glyphIndex = f.GetCharIndex(c);
-				f.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
+				uint glyphIndex = face.GetCharIndex(c);
+				face.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
 
-				width += (int)f.Glyph.Advance.X >> 6;
+				width += (int)face.Glyph.Advance.X >> 6;
 
-				if (FT.HasKerning(f) && i < text.Length - 1)
+				if (face.HasKerning() && i < text.Length - 1)
 				{
 					char cNext = text[i + 1];
-					width += (int)f.GetKerning(glyphIndex, f.GetCharIndex(cNext), KerningMode.Default).X >> 6;
+					width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
 				}
 
-				if (f.Glyph.Metrics.Height >> 6 > height)
-					height = (int)f.Glyph.Metrics.Height >> 6;
+				if (face.Glyph.Metrics.Height >> 6 > height)
+					height = (int)face.Glyph.Metrics.Height >> 6;
 			}
 
 			//create a new bitmap that fits the string.
 			Bitmap bmp = new Bitmap(width, height);
-
-			penX = 0;
-			penY = 0;
 
 			//draw the string
 			for (int i = 0; i < text.Length; i++)
 			{
 				char c = text[i];
 
-				uint glyphIndex = f.GetCharIndex(c);
-				f.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
-				f.RenderGlyph(f.Glyph, RenderMode.Normal);
+				uint glyphIndex = face.GetCharIndex(c);
+				face.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
+				face.Glyph.RenderGlyph(RenderMode.Normal);
 
 				if (c == ' ')
 				{
-					penX += (int)f.Glyph.Advance.X >> 6;
+					penX += (int)face.Glyph.Advance.X >> 6;
 
-					if (FT.HasKerning(f) && i < text.Length - 1)
+					if (FT.HasKerning(face) && i < text.Length - 1)
 					{
 						char cNext = text[i + 1];
-						width += (int)f.GetKerning(glyphIndex, f.GetCharIndex(cNext), KerningMode.Default).X >> 6;
+						width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
 					}
 
-					penY += (int)f.Glyph.Advance.Y >> 6;
+					penY += (int)face.Glyph.Advance.Y >> 6;
 					continue;
 				}
 
-				BitmapData data = bmp.LockBits(new Rectangle(penX, penY + (bmp.Height - f.Glyph.Bitmap.Rows), f.Glyph.Bitmap.Width, f.Glyph.Bitmap.Rows), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
-				byte[] pixelAlphas = new byte[f.Glyph.Bitmap.Width * f.Glyph.Bitmap.Rows];
-				Marshal.Copy(f.Glyph.Bitmap.Buffer, pixelAlphas, 0, pixelAlphas.Length);
+				BitmapData data = bmp.LockBits(new Rectangle(penX, penY + (bmp.Height - face.Glyph.Bitmap.Rows), face.Glyph.Bitmap.Width, face.Glyph.Bitmap.Rows), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+				byte[] pixelAlphas = new byte[face.Glyph.Bitmap.Width * face.Glyph.Bitmap.Rows];
+				Marshal.Copy(face.Glyph.Bitmap.Buffer, pixelAlphas, 0, pixelAlphas.Length);
 
 				for (int j = 0; j < pixelAlphas.Length; j++)
 				{
@@ -142,13 +139,13 @@ namespace Examples
 
 				bmp.UnlockBits(data);
 
-				penX += (int)f.Glyph.Advance.X >> 6;
-				penY += (int)f.Glyph.Advance.Y >> 6;
+				penX += (int)face.Glyph.Advance.X >> 6;
+				penY += (int)face.Glyph.Advance.Y >> 6;
 
-				if (FT.HasKerning(f) && i < text.Length - 1)
+				if (FT.HasKerning(face) && i < text.Length - 1)
 				{
 					char cNext = text[i + 1];
-					width += (int)f.GetKerning(glyphIndex, f.GetCharIndex(cNext), KerningMode.Default).X >> 6;
+					width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
 				}
 			}
 

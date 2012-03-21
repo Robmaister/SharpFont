@@ -409,7 +409,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new FTSize(rec.size);
+				return new FTSize(rec.size, false);
 			}
 		}
 
@@ -695,18 +695,6 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Convert a given glyph image to a bitmap. It does so by inspecting
-		/// the glyph image format, finding the relevant renderer, and invoking
-		/// it.
-		/// </summary>
-		/// <param name="slot">A handle to the glyph slot containing the image to convert.</param>
-		/// <param name="mode">This is the render mode used to render the glyph image into a bitmap.</param>
-		public void RenderGlyph(GlyphSlot slot, RenderMode mode)
-		{
-			FT.RenderGlyph(slot, mode);
-		}
-
-		/// <summary>
 		/// Return the kerning vector between two glyphs of a same face.
 		/// </summary>
 		/// <remarks>See <see cref="FT.GetKerning"/>.</remarks>
@@ -950,10 +938,6 @@ namespace SharpFont
 		{
 			if (!disposed)
 			{
-				if (disposing)
-				{
-				}
-
 				//duplicates will just decrement the reference count, actual
 				//Face not destroyed until all Face copies are destroyed.
 				FT.DoneFace(this);

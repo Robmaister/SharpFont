@@ -153,7 +153,7 @@ namespace SharpFont.Cache
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new FTSize(sizeRef);
+			return new FTSize(sizeRef, false);
 		}
 
 		/// <summary>

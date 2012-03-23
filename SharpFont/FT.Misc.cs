@@ -49,7 +49,9 @@ namespace SharpFont
 		/// for validation.
 		/// </para></remarks>
 		/// <param name="face">A handle to the input face.</param>
-		/// <param name="flags">A bit field which specifies the tables to be validated.</param>
+		/// <param name="flags">
+		/// A bit field which specifies the tables to be validated.
+		/// </param>
 		/// <param name="baseTable">A pointer to the BASE table.</param>
 		/// <param name="gdefTable">A pointer to the GDEF table.</param>
 		/// <param name="gposTable">A pointer to the GPOS table.</param>
@@ -72,7 +74,10 @@ namespace SharpFont
 		/// <see cref="OpenTypeValidate"/> only.
 		/// </remarks>
 		/// <param name="face">A handle to the input face.</param>
-		/// <param name="table">The pointer to the buffer that is allocated by <see cref="OpenTypeValidate"/>.</param>
+		/// <param name="table">
+		/// The pointer to the buffer that is allocated by
+		/// <see cref="OpenTypeValidate"/>.
+		/// </param>
 		public static void OpenTypeFree(Face face, IntPtr table)
 		{
 			FT_OpenType_Free(face.reference, table);
@@ -115,9 +120,17 @@ namespace SharpFont
 		/// validate the sfnt table.
 		/// </para></remarks>
 		/// <param name="face">A handle to the input face.</param>
-		/// <param name="flags">A bit field which specifies the tables to be validated.</param>
-		/// <param name="tables">The array where all validated sfnt tables are stored. The array itself must be allocated by a client.</param>
-		/// <param name="tableLength">The size of the ‘tables’ array. Normally, FT_VALIDATE_GX_LENGTH should be passed.</param>
+		/// <param name="flags">
+		/// A bit field which specifies the tables to be validated.
+		/// </param>
+		/// <param name="tables">
+		/// The array where all validated sfnt tables are stored. The array
+		/// itself must be allocated by a client.
+		/// </param>
+		/// <param name="tableLength">
+		/// The size of the ‘tables’ array. Normally, FT_VALIDATE_GX_LENGTH
+		/// should be passed.
+		/// </param>
 		[CLSCompliant(false)]
 		public static void TrueTypeGXValidate(Face face, TrueTypeValidationFlags flags, byte[][] tables, uint tableLength)
 		{
@@ -132,7 +145,10 @@ namespace SharpFont
 		/// <see cref="FT.TrueTypeGXValidate"/> only.
 		/// </remarks>
 		/// <param name="face">A handle to the input face.</param>
-		/// <param name="table">The pointer to the buffer allocated by <see cref="FT.TrueTypeGXValidate"/>.</param>
+		/// <param name="table">
+		/// The pointer to the buffer allocated by
+		/// <see cref="FT.TrueTypeGXValidate"/>.
+		/// </param>
 		public static void TrueTypeGXFree(Face face, IntPtr table)
 		{
 			FT_TrueTypeGX_Free(face.reference, table);
@@ -155,7 +171,9 @@ namespace SharpFont
 		/// NULL value indicates that the table doesn't exist in the font.
 		/// </remarks>
 		/// <param name="face">A handle to the input face.</param>
-		/// <param name="flags">A bit field which specifies the dialect to be validated.</param>
+		/// <param name="flags">
+		/// A bit field which specifies the dialect to be validated.
+		/// </param>
 		/// <returns>A pointer to the kern table.</returns>
 		[CLSCompliant(false)]
 		public static IntPtr ClassicKernValidate(Face face, ClassicKernValidationFlags flags)
@@ -173,7 +191,10 @@ namespace SharpFont
 		/// <see cref="FT.ClassicKernValidate"/> only.
 		/// </remarks>
 		/// <param name="face">A handle to the input face.</param>
-		/// <param name="table">The pointer to the buffer that is allocated by <see cref="FT.ClassicKernValidate"/>.</param>
+		/// <param name="table">
+		/// The pointer to the buffer that is allocated by
+		/// <see cref="FT.ClassicKernValidate"/>.
+		/// </param>
 		public static void ClassicKernFree(Face face, IntPtr table)
 		{
 			FT_ClassicKern_Free(face.reference, table);

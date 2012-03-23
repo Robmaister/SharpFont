@@ -63,12 +63,30 @@ namespace SharpFont.Cache
 		/// <summary>
 		/// Initializes a new instance of the Manager class.
 		/// </summary>
-		/// <param name="library">The parent FreeType library handle to use.</param>
-		/// <param name="maxFaces">Maximum number of opened <see cref="Face"/> objects managed by this cache instance. Use 0 for defaults.</param>
-		/// <param name="maxSizes">Maximum number of opened <see cref="FTSize"/> objects managed by this cache instance. Use 0 for defaults.</param>
-		/// <param name="maxBytes">Maximum number of bytes to use for cached data nodes. Use 0 for defaults. Note that this value does not account for managed <see cref="Face"/> and <see cref="FTSize"/> objects.</param>
-		/// <param name="requester">An application-provided callback used to translate face IDs into real <see cref="Face"/> objects.</param>
-		/// <param name="requestData">A generic pointer that is passed to the requester each time it is called (see <see cref="FaceRequester"/>).</param>
+		/// <param name="library">
+		/// The parent FreeType library handle to use.
+		/// </param>
+		/// <param name="maxFaces">
+		/// Maximum number of opened <see cref="Face"/> objects managed by this
+		/// cache instance. Use 0 for defaults.
+		/// </param>
+		/// <param name="maxSizes">
+		/// Maximum number of opened <see cref="FTSize"/> objects managed by
+		/// this cache instance. Use 0 for defaults.
+		/// </param>
+		/// <param name="maxBytes">
+		/// Maximum number of bytes to use for cached data nodes. Use 0 for
+		/// defaults. Note that this value does not account for managed
+		/// <see cref="Face"/> and <see cref="FTSize"/> objects.
+		/// </param>
+		/// <param name="requester">
+		/// An application-provided callback used to translate face IDs into
+		/// real <see cref="Face"/> objects.
+		/// </param>
+		/// <param name="requestData">
+		/// A generic pointer that is passed to the requester each time it is
+		/// called (see <see cref="FaceRequester"/>).
+		/// </param>
 		[CLSCompliant(false)]
 		public Manager(Library library, uint maxFaces, uint maxSizes, ulong maxBytes, FaceRequester requester, IntPtr requestData)
 		{
@@ -92,8 +110,8 @@ namespace SharpFont.Cache
 
 		/// <summary>
 		/// Empty a given cache manager. This simply gets rid of all the
-		/// currently cached <see cref="Face"/> and <see cref="FTSize"/> objects
-		/// within the manager.
+		/// currently cached <see cref="Face"/> and <see cref="FTSize"/>
+		/// objects within the manager.
 		/// </summary>
 		public void Reset()
 		{

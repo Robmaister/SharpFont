@@ -59,7 +59,10 @@ namespace SharpFont
 		/// Retrieve the Multiple Master/GX var descriptor of a given font.
 		/// </summary>
 		/// <param name="face">A handle to the source face.</param>
-		/// <returns>The Multiple Masters/GX var descriptor. Allocates a data structure, which the user must free (a single call to FT_FREE will do it).</returns>
+		/// <returns>
+		/// The Multiple Masters/GX var descriptor. Allocates a data structure,
+		/// which the user must free (a single call to FT_FREE will do it).
+		/// </returns>
 		public static MMVar GetMMVar(Face face)
 		{
 			IntPtr varRef;
@@ -73,7 +76,8 @@ namespace SharpFont
 		}
 
 		/// <summary><para>
-		/// For Multiple Masters fonts, choose an interpolated font design through design coordinates.
+		/// For Multiple Masters fonts, choose an interpolated font design
+		/// through design coordinates.
 		/// </para><para>
 		/// This function can't be used with GX fonts.
 		/// </para></summary>
@@ -114,7 +118,10 @@ namespace SharpFont
 		/// design through normalized blend coordinates.
 		/// </summary>
 		/// <param name="face">A handle to the source face.</param>
-		/// <param name="coords">The design coordinates array (each element must be between 0 and 1.0).</param>
+		/// <param name="coords">
+		/// The design coordinates array (each element must be between 0 and
+		/// 1.0).
+		/// </param>
 		public unsafe static void SetMMBlendCoordinates(Face face, long[] coords)
 		{
 			fixed (void* ptr = coords)
@@ -131,7 +138,10 @@ namespace SharpFont
 		/// This is another name of <see cref="SetMMBlendCoordinates"/>.
 		/// </summary>
 		/// <param name="face">A handle to the source face.</param>
-		/// <param name="coords">The design coordinates array (each element must be between 0 and 1.0).</param>
+		/// <param name="coords">
+		/// The design coordinates array (each element must be between 0 and
+		/// 1.0).
+		/// </param>
 		public unsafe static void SetVarBlendCoordinates(Face face, long[] coords)
 		{
 			SetMMBlendCoordinates(face, coords);
@@ -153,9 +163,13 @@ namespace SharpFont
 		/// </para></remarks>
 		/// <param name="face">A handle to the source.</param>
 		/// <param name="tag">The index of the SFNT table.</param>
-		/// <returns><para>A type-less pointer to the table. This will be 0 in case of error, or if the corresponding table was not found OR loaded from the file.
+		/// <returns><para>
+		/// A type-less pointer to the table. This will be 0 in case of error,
+		/// or if the corresponding table was not found OR loaded from the
+		/// file.
 		/// </para><para>
-		/// Use a typecast according to ‘tag’ to access the structure elements.</para></returns>
+		/// Use a typecast according to ‘tag’ to access the structure elements.
+		/// </para></returns>
 		public static object GetSfntTable(Face face, SfntTag tag)
 		{
 			IntPtr tableRef = FT_Get_Sfnt_Table(face.reference, tag);
@@ -205,14 +219,29 @@ namespace SharpFont
 		/// </code>
 		/// </remarks>
 		/// <param name="face">A handle to the source face.</param>
-		/// <param name="tag">The four-byte tag of the table to load. Use the value 0 if you want to access the whole font file. Otherwise, you can use one of the definitions found in the FT_TRUETYPE_TAGS_H file, or forge a new one with FT_MAKE_TAG.</param>
-		/// <param name="offset">The starting offset in the table (or file if tag == 0).</param>
-		/// <param name="buffer">The target buffer address. The client must ensure that the memory array is big enough to hold the data.</param>
-		/// <param name="length"><para>If the ‘length’ parameter is NULL, then try to load the whole table. Return an error code if it fails.
+		/// <param name="tag">
+		/// The four-byte tag of the table to load. Use the value 0 if you want
+		/// to access the whole font file. Otherwise, you can use one of the
+		/// definitions found in the FT_TRUETYPE_TAGS_H file, or forge a new
+		/// one with FT_MAKE_TAG.
+		/// </param>
+		/// <param name="offset">
+		/// The starting offset in the table (or file if tag == 0).
+		/// </param>
+		/// <param name="buffer">
+		/// The target buffer address. The client must ensure that the memory
+		/// array is big enough to hold the data.
+		/// </param>
+		/// <param name="length"><para>
+		/// If the ‘length’ parameter is NULL, then try to load the whole
+		/// table. Return an error code if it fails.
 		/// </para><para>
-		/// Else, if ‘*length’ is 0, exit immediately while returning the table's (or file) full size in it.
+		/// Else, if ‘*length’ is 0, exit immediately while returning the
+		/// table's (or file) full size in it.
 		/// </para><para>
-		/// Else the number of bytes to read from the table or file, from the starting offset.</para></param>
+		/// Else the number of bytes to read from the table or file, from the
+		/// starting offset.
+		/// </para></param>
 		[CLSCompliant(false)]
 		public static void LoadSfntTable(Face face, uint tag, int offset, IntPtr buffer, ref uint length)
 		{
@@ -226,9 +255,19 @@ namespace SharpFont
 		/// Return information on an SFNT table.
 		/// </summary>
 		/// <param name="face">A handle to the source face.</param>
-		/// <param name="tableIndex">The index of an SFNT table. The function returns FT_Err_Table_Missing for an invalid value.</param>
-		/// <param name="tag">The name tag of the SFNT table. If the value is NULL, ‘table_index’ is ignored, and ‘length’ returns the number of SFNT tables in the font.</param>
-		/// <returns>The length of the SFNT table (or the number of SFNT tables, depending on ‘tag’).</returns>
+		/// <param name="tableIndex">
+		/// The index of an SFNT table. The function returns
+		/// FT_Err_Table_Missing for an invalid value.
+		/// </param>
+		/// <param name="tag">
+		/// The name tag of the SFNT table. If the value is NULL, ‘table_index’
+		/// is ignored, and ‘length’ returns the number of SFNT tables in the
+		/// font.
+		/// </param>
+		/// <returns>
+		/// The length of the SFNT table (or the number of SFNT tables,
+		/// depending on ‘tag’).
+		/// </returns>
 		[CLSCompliant(false)]
 		public unsafe static uint SfntTableInfo(Face face, uint tableIndex, SfntTag tag)
 		{
@@ -263,7 +302,10 @@ namespace SharpFont
 		/// language ID values are in ‘freetype/ttnameid.h’.
 		/// </summary>
 		/// <param name="charMap">The target charmap.</param>
-		/// <returns>The language ID of ‘charmap’. If ‘charmap’ doesn't belong to a TrueType/sfnt face, just return 0 as the default value.</returns>
+		/// <returns>
+		/// The language ID of ‘charmap’. If ‘charmap’ doesn't belong to a
+		/// TrueType/sfnt face, just return 0 as the default value.
+		/// </returns>
 		[CLSCompliant(false)]
 		public static uint GetCMapLanguageID(CharMap charMap)
 		{
@@ -274,7 +316,10 @@ namespace SharpFont
 		/// Return TrueType/sfnt specific cmap format.
 		/// </summary>
 		/// <param name="charMap">The target charmap.</param>
-		/// <returns>The format of ‘charmap’. If ‘charmap’ doesn't belong to a TrueType/sfnt face, return -1.</returns>
+		/// <returns>
+		/// The format of ‘charmap’. If ‘charmap’ doesn't belong to a
+		/// TrueType/sfnt face, return -1.
+		/// </returns>
 		public static int GetCMapFormat(CharMap charMap)
 		{
 			return FT_Get_CMap_Format(charMap.reference);
@@ -382,11 +427,22 @@ namespace SharpFont
 		/// the ‘FT_Err_Invalid_Argument’ error code.
 		/// </para></remarks>
 		/// <param name="face">PostScript face handle.</param>
-		/// <param name="key">An enumeration value representing the dictionary key to retrieve.</param>
-		/// <param name="idx">For array values, this specifies the index to be returned.</param>
-		/// <param name="value">A pointer to memory into which to write the value.</param>
-		/// <param name="valueLength">The size, in bytes, of the memory supplied for the value.</param>
-		/// <returns>The amount of memory (in bytes) required to hold the requested value (if it exists, -1 otherwise).</returns>
+		/// <param name="key">
+		/// An enumeration value representing the dictionary key to retrieve.
+		/// </param>
+		/// <param name="idx">
+		/// For array values, this specifies the index to be returned.
+		/// </param>
+		/// <param name="value">
+		/// A pointer to memory into which to write the value.
+		/// </param>
+		/// <param name="valueLength">
+		/// The size, in bytes, of the memory supplied for the value.
+		/// </param>
+		/// <returns>
+		/// The amount of memory (in bytes) required to hold the requested
+		/// value (if it exists, -1 otherwise).
+		/// </returns>
 		[CLSCompliant(false)]
 		public static int GetPSFontValue(Face face, DictionaryKeys key, uint idx, ref IntPtr value, int valueLength)
 		{
@@ -449,8 +505,12 @@ namespace SharpFont
 		/// otherwise.
 		/// </remarks>
 		/// <param name="face">A handle to the input face.</param>
-		/// <param name="encoding">Charset encoding, as a C string, owned by the face.</param>
-		/// <param name="registry">Charset registry, as a C string, owned by the face.</param>
+		/// <param name="encoding">
+		/// Charset encoding, as a C string, owned by the face.
+		/// </param>
+		/// <param name="registry">
+		/// Charset registry, as a C string, owned by the face.
+		/// </param>
 		public static void GetBDFCharsetID(Face face, out string encoding, out string registry)
 		{
 			Error err = FT_Get_BDF_Charset_ID(face.reference, out encoding, out registry);
@@ -506,8 +566,12 @@ namespace SharpFont
 		/// otherwise.
 		/// </remarks>
 		/// <param name="face">A handle to the input face.</param>
-		/// <param name="registry">The registry, as a C string, owned by the face.</param>
-		/// <param name="ordering">The ordering, as a C string, owned by the face.</param>
+		/// <param name="registry">
+		/// The registry, as a C string, owned by the face.
+		/// </param>
+		/// <param name="ordering">
+		/// The ordering, as a C string, owned by the face.
+		/// </param>
 		/// <param name="supplement">The supplement.</param>
 		public static void GetCIDRegistryOrderingSupplement(Face face, out string registry, out string ordering, out int supplement)
 		{
@@ -572,11 +636,27 @@ namespace SharpFont
 		/// If the input face is not a PFR, this function will return an error.
 		/// However, in all cases, it will return valid values.
 		/// </remarks>
-		/// <param name="face">Handle to the input face. It can be a non-PFR face.</param>
-		/// <param name="outlineResolution">Outline resolution. This is equivalent to ‘face->units_per_EM’ for non-PFR fonts. Optional (parameter can be NULL).</param>
-		/// <param name="metricsResolution">Metrics resolution. This is equivalent to ‘outline_resolution’ for non-PFR fonts. Optional (parameter can be NULL).</param>
-		/// <param name="metricsXScale">A 16.16 fixed-point number used to scale distance expressed in metrics units to device sub-pixels. This is equivalent to ‘face->size->x_scale’, but for metrics only. Optional (parameter can be NULL).</param>
-		/// <param name="metricsYScale">Same as ‘ametrics_x_scale’ but for the vertical direction. optional (parameter can be NULL).</param>
+		/// <param name="face">
+		/// Handle to the input face. It can be a non-PFR face.
+		/// </param>
+		/// <param name="outlineResolution">
+		/// Outline resolution. This is equivalent to ‘face->units_per_EM’ for
+		/// non-PFR fonts. Optional (parameter can be NULL).
+		/// </param>
+		/// <param name="metricsResolution">
+		/// Metrics resolution. This is equivalent to ‘outline_resolution’ for
+		/// non-PFR fonts. Optional (parameter can be NULL).
+		/// </param>
+		/// <param name="metricsXScale">
+		/// A 16.16 fixed-point number used to scale distance expressed in
+		/// metrics units to device sub-pixels. This is equivalent to
+		/// ‘face->size->x_scale’, but for metrics only. Optional (parameter
+		/// can be NULL).
+		/// </param>
+		/// <param name="metricsYScale">
+		/// Same as ‘ametrics_x_scale’ but for the vertical direction. optional
+		/// (parameter can be NULL).
+		/// </param>
 		[CLSCompliant(false)]
 		public static void GetPFRMetrics(Face face, out uint outlineResolution, out uint metricsResolution, out int metricsXScale, out int metricsYScale)
 		{
@@ -692,7 +772,10 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="face">The source face handle.</param>
 		/// <param name="ppem">The vertical character pixel size.</param>
-		/// <returns>Bit flags (see <see cref="Gasp"/>), or <see cref="Gasp.NoTable"/> if there is no ‘gasp’ table in the face.</returns>
+		/// <returns>
+		/// Bit flags (see <see cref="Gasp"/>), or <see cref="Gasp.NoTable"/>
+		/// if there is no ‘gasp’ table in the face.
+		/// </returns>
 		[CLSCompliant(false)]
 		public static Gasp GetGasp(Face face, uint ppem)
 		{

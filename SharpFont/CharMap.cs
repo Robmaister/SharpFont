@@ -98,7 +98,10 @@ namespace SharpFont
 		/// <summary>
 		/// Retrieve index of a given charmap.
 		/// </summary>
-		/// <returns>The index into the array of character maps within the face to which ‘charmap’ belongs.</returns>
+		/// <returns>
+		/// The index into the array of character maps within the face to which
+		/// ‘charmap’ belongs.
+		/// </returns>
 		public int GetCharmapIndex()
 		{
 			return FT.GetCharmapIndex(this);

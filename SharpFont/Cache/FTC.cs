@@ -43,13 +43,33 @@ namespace SharpFont.Cache
 		/// <summary>
 		/// Create a new cache manager.
 		/// </summary>
-		/// <param name="library">The parent FreeType library handle to use.</param>
-		/// <param name="maxFaces">Maximum number of opened <see cref="Face"/> objects managed by this cache instance. Use 0 for defaults.</param>
-		/// <param name="maxSizes">Maximum number of opened <see cref="FTSize"/> objects managed by this cache instance. Use 0 for defaults.</param>
-		/// <param name="maxBytes">Maximum number of bytes to use for cached data nodes. Use 0 for defaults. Note that this value does not account for managed <see cref="Face"/> and <see cref="FTSize"/> objects.</param>
-		/// <param name="requester">An application-provided callback used to translate face IDs into real <see cref="Face"/> objects.</param>
-		/// <param name="requestData">A generic pointer that is passed to the requester each time it is called (see <see cref="FaceRequester"/>).</param>
-		/// <returns>A handle to a new manager object. 0 in case of failure.</returns>
+		/// <param name="library">
+		/// The parent FreeType library handle to use.
+		/// </param>
+		/// <param name="maxFaces">
+		/// Maximum number of opened <see cref="Face"/> objects managed by this
+		/// cache instance. Use 0 for defaults.
+		/// </param>
+		/// <param name="maxSizes">
+		/// Maximum number of opened <see cref="FTSize"/> objects managed by
+		/// this cache instance. Use 0 for defaults.
+		/// </param>
+		/// <param name="maxBytes">
+		/// Maximum number of bytes to use for cached data nodes. Use 0 for
+		/// defaults. Note that this value does not account for managed
+		/// <see cref="Face"/> and <see cref="FTSize"/> objects.
+		/// </param>
+		/// <param name="requester">
+		/// An application-provided callback used to translate face IDs into
+		/// real <see cref="Face"/> objects.
+		/// </param>
+		/// <param name="requestData">
+		/// A generic pointer that is passed to the requester each time it is
+		/// called (see <see cref="FaceRequester"/>).
+		/// </param>
+		/// <returns>
+		/// A handle to a new manager object. 0 in case of failure.
+		/// </returns>
 		[CLSCompliant(false)]
 		public static Manager ManagerNew(Library library, uint maxFaces, uint maxSizes, ulong maxBytes, FaceRequester requester, IntPtr requestData)
 		{
@@ -64,8 +84,8 @@ namespace SharpFont.Cache
 
 		/// <summary>
 		/// Empty a given cache manager. This simply gets rid of all the
-		/// currently cached <see cref="Face"/> and <see cref="FTSize"/> objects
-		/// within the manager.
+		/// currently cached <see cref="Face"/> and <see cref="FTSize"/>
+		/// objects within the manager.
 		/// </summary>
 		/// <param name="manager">A handle to the manager.</param>
 		public static void ManagerReset(Manager manager)
@@ -76,7 +96,9 @@ namespace SharpFont.Cache
 		/// <summary>
 		/// Destroy a given manager after emptying it.
 		/// </summary>
-		/// <param name="manager">A handle to the target cache manager object.</param>
+		/// <param name="manager">
+		/// A handle to the target cache manager object.
+		/// </param>
 		public static void ManagerDone(Manager manager)
 		{
 			FTC_Manager_Done(manager.reference);
@@ -216,8 +238,13 @@ namespace SharpFont.Cache
 		/// </summary>
 		/// <param name="cache">A charmap cache handle.</param>
 		/// <param name="faceID">The source face ID.</param>
-		/// <param name="cmapIndex">The index of the charmap in the source face. Any negative value means to use the cache <see cref="Face"/>'s default charmap.</param>
-		/// <param name="charCode">The character code (in the corresponding charmap).</param>
+		/// <param name="cmapIndex">
+		/// The index of the charmap in the source face. Any negative value
+		/// means to use the cache <see cref="Face"/>'s default charmap.
+		/// </param>
+		/// <param name="charCode">
+		/// The character code (in the corresponding charmap).
+		/// </param>
 		/// <returns>Glyph index. 0 means ‘no glyph’.</returns>
 		[CLSCompliant(false)]
 		public static uint CMapCacheLookup(CMapCache cache, IntPtr faceID, int cmapIndex, uint charCode)
@@ -228,7 +255,9 @@ namespace SharpFont.Cache
 		/// <summary>
 		/// Create a new glyph image cache.
 		/// </summary>
-		/// <param name="manager">The parent manager for the image cache.</param>
+		/// <param name="manager">
+		/// The parent manager for the image cache.
+		/// </param>
 		/// <returns>A handle to the new glyph image cache object.</returns>
 		public static ImageCache ImageCacheNew(Manager manager)
 		{
@@ -260,11 +289,20 @@ namespace SharpFont.Cache
 		/// call to one of the caching sub-system APIs. Don't assume that it is
 		/// persistent!
 		/// </para></remarks>
-		/// <param name="cache">A handle to the source glyph image cache.</param>
-		/// <param name="type">A pointer to a glyph image type descriptor.</param>
+		/// <param name="cache">
+		/// A handle to the source glyph image cache.
+		/// </param>
+		/// <param name="type">
+		/// A pointer to a glyph image type descriptor.
+		/// </param>
 		/// <param name="gIndex">The glyph index to retrieve.</param>
-		/// <param name="node">Used to return the address of of the corresponding cache node after incrementing its reference count (see note below).</param>
-		/// <returns>The corresponding FT_Glyph object. 0 in case of failure.</returns>
+		/// <param name="node">
+		/// Used to return the address of of the corresponding cache node after
+		/// incrementing its reference count (see note below).
+		/// </param>
+		/// <returns>
+		/// The corresponding <see cref="Glyph"/> object. 0 in case of failure.
+		/// </returns>
 		[CLSCompliant(false)]
 		public static Glyph ImageCacheLookup(ImageCache cache, ImageType type, uint gIndex, out Node node)
 		{
@@ -301,12 +339,19 @@ namespace SharpFont.Cache
 		/// Calls to FT_Set_Char_Size and friends have no effect on cached
 		/// glyphs; you should always use the FreeType cache API instead.
 		/// </para></remarks>
-		/// <param name="cache">A handle to the source glyph image cache.</param>
+		/// <param name="cache">
+		/// A handle to the source glyph image cache.
+		/// </param>
 		/// <param name="scaler">A pointer to a scaler descriptor.</param>
 		/// <param name="loadFlags">The corresponding load flags.</param>
 		/// <param name="gIndex">The glyph index to retrieve.</param>
-		/// <param name="node">Used to return the address of of the corresponding cache node after incrementing its reference count (see note below).</param>
-		/// <returns>The corresponding <see cref="Glyph"/> object. 0 in case of failure.</returns>
+		/// <param name="node">
+		/// Used to return the address of of the corresponding cache node after
+		/// incrementing its reference count (see note below).
+		/// </param>
+		/// <returns>
+		/// The corresponding <see cref="Glyph"/> object. 0 in case of failure.
+		/// </returns>
 		[CLSCompliant(false)]
 		public static Glyph ImageCacheLookupScaler(ImageCache cache, Scaler scaler, LoadFlags loadFlags, uint gIndex, out Node node)
 		{
@@ -325,7 +370,9 @@ namespace SharpFont.Cache
 		/// Create a new cache to store small glyph bitmaps.
 		/// </summary>
 		/// <param name="manager">A handle to the source cache manager.</param>
-		/// <returns>A handle to the new sbit cache. NULL in case of error.</returns>
+		/// <returns>
+		/// A handle to the new sbit cache. NULL in case of error.
+		/// </returns>
 		public static SBitCache SBitCacheNew(Manager manager)
 		{
 			IntPtr cacheRef;
@@ -362,9 +409,14 @@ namespace SharpFont.Cache
 		/// persistent!
 		/// </para></remarks>
 		/// <param name="cache">A handle to the source sbit cache.</param>
-		/// <param name="type">A pointer to the glyph image type descriptor.</param>
+		/// <param name="type">
+		/// A pointer to the glyph image type descriptor.
+		/// </param>
 		/// <param name="gIndex">The glyph index.</param>
-		/// <param name="node">Used to return the address of of the corresponding cache node after incrementing its reference count (see note below).</param>
+		/// <param name="node">
+		/// Used to return the address of of the corresponding cache node after
+		/// incrementing its reference count (see note below).
+		/// </param>
 		/// <returns>A handle to a small bitmap descriptor.</returns>
 		[CLSCompliant(false)]
 		public static SBit SBitCacheLookup(SBitCache cache, ImageType type, uint gIndex, out Node node)
@@ -407,7 +459,10 @@ namespace SharpFont.Cache
 		/// <param name="scaler">A pointer to the scaler descriptor.</param>
 		/// <param name="loadFlags">The corresponding load flags.</param>
 		/// <param name="gIndex">The glyph index.</param>
-		/// <param name="node">Used to return the address of of the corresponding cache node after incrementing its reference count (see note below).</param>
+		/// <param name="node">
+		/// Used to return the address of of the corresponding cache node after
+		/// incrementing its reference count (see note below).
+		/// </param>
 		/// <returns>A handle to a small bitmap descriptor.</returns>
 		[CLSCompliant(false)]
 		public static SBit SBitCacheLookupScaler(SBitCache cache, Scaler scaler, LoadFlags loadFlags, uint gIndex, out Node node)

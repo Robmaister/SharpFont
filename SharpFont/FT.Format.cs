@@ -25,10 +25,11 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.MultipleMasters;
-using SharpFont.TrueType;
-using SharpFont.PostScript;
 using SharpFont.BDF;
+using SharpFont.Internal;
+using SharpFont.MultipleMasters;
+using SharpFont.PostScript;
+using SharpFont.TrueType;
 
 namespace SharpFont
 {
@@ -688,13 +689,13 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static FTVector GetPFRKerning(Face face, uint left, uint right)
 		{
-			IntPtr vectorRef;
-			Error err = FT_Get_PFR_Kerning(face.reference, left, right, out vectorRef);
+			VectorRec vector;
+			Error err = FT_Get_PFR_Kerning(face.reference, left, right, out vector);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new FTVector(vectorRef);
+			return new FTVector(vector);
 		}
 
 		/// <summary>

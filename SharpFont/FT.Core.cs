@@ -893,16 +893,13 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static FTVector GetKerning(Face face, uint leftGlyph, uint rightGlyph, KerningMode mode)
 		{
-			IntPtr kernRef;
-			Error err = FT_Get_Kerning(face.reference, leftGlyph, rightGlyph, mode, out kernRef);
+			VectorRec kern;
+			Error err = FT_Get_Kerning(face.reference, leftGlyph, rightGlyph, mode, out kern);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			if (kernRef == IntPtr.Zero)
-				return new FTVector(new VectorRec());
-
-			return new FTVector(kernRef);
+			return new FTVector(kern);
 		}
 
 		/// <summary>
@@ -1184,13 +1181,13 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static void GetSubGlyphInfo(GlyphSlot glyph, uint subIndex, out int index, out SubGlyphFlags flags, out int arg1, out int arg2, out FTMatrix transform)
 		{
-			IntPtr matrixRef;
-			Error err = FT_Get_SubGlyph_Info(glyph.reference, subIndex, out index, out flags, out arg1, out arg2, out matrixRef);
+			MatrixRec matrix;
+			Error err = FT_Get_SubGlyph_Info(glyph.reference, subIndex, out index, out flags, out arg1, out arg2, out matrix);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			transform = new FTMatrix(matrixRef);
+			transform = new FTMatrix(matrix);
 		}
 
 		/// <summary>

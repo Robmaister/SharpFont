@@ -25,8 +25,9 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.TrueType;
+using SharpFont.Internal;
 using SharpFont.PostScript;
+using SharpFont.TrueType;
 
 namespace SharpFont
 {
@@ -101,7 +102,7 @@ namespace SharpFont
 		internal static extern Error FT_Render_Glyph(IntPtr slot, RenderMode render_mode);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Get_Kerning(IntPtr face, uint left_glyph, uint right_glyph, KerningMode kern_mode, out IntPtr akerning);
+		internal static extern Error FT_Get_Kerning(IntPtr face, uint left_glyph, uint right_glyph, KerningMode kern_mode, out VectorRec akerning);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Error FT_Get_Track_Kerning(IntPtr face, int point_size, int degree, out int akerning);
@@ -134,7 +135,7 @@ namespace SharpFont
 		internal static extern uint FT_Get_Name_Index(IntPtr face, IntPtr glyph_name);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Get_SubGlyph_Info(IntPtr glyph, uint sub_index, out int p_index, out SubGlyphFlags p_flags, out int p_arg1, out int p_arg2, out IntPtr p_transform);
+		internal static extern Error FT_Get_SubGlyph_Info(IntPtr glyph, uint sub_index, out int p_index, out SubGlyphFlags p_flags, out int p_arg1, out int p_arg2, out MatrixRec p_transform);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern EmbeddingTypes FT_Get_FSType_Flags(IntPtr face);
@@ -318,7 +319,7 @@ namespace SharpFont
 		internal static extern Error FT_Get_PFR_Metrics(IntPtr face, out uint aoutline_resolution, out uint ametrics_resolution, out int ametrics_x_scale, out int ametrics_y_scale);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Get_PFR_Kerning(IntPtr face, uint left, uint right, out IntPtr avector);
+		internal static extern Error FT_Get_PFR_Kerning(IntPtr face, uint left, uint right, out VectorRec avector);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Error FT_Get_PFR_Advance(IntPtr face, uint gindex, out int aadvance);

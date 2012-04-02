@@ -47,6 +47,12 @@ namespace SharpFont
 			this.rec = PInvokeHelper.PtrToStructure<MatrixRec>(reference);
 		}
 
+		internal FTMatrix(MatrixRec rec)
+		{
+			this.reference = IntPtr.Zero;
+			this.rec = rec;
+		}
+
 		/// <summary>
 		/// Matrix coefficient.
 		/// </summary>

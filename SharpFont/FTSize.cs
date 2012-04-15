@@ -51,6 +51,7 @@ namespace SharpFont
 			this.userAlloc = userAlloc;
 
 			this.parentFace = parentFace;
+			parentFace.AddChildSize(this);
 		}
 
 		/// <summary>

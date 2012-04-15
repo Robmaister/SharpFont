@@ -23,6 +23,8 @@ SOFTWARE.*/
 #endregion
 
 using System;
+using System.Collections.Generic;
+
 using SharpFont.TrueType;
 
 namespace SharpFont
@@ -47,6 +49,9 @@ namespace SharpFont
 		private bool customMemory;
 		private bool disposed;
 
+		private List<Face> childFaces;
+		private List<Glyph> childGlyphs;
+
 		#endregion
 
 		#region Constructors
@@ -65,6 +70,9 @@ namespace SharpFont
 				throw new FreeTypeException(err);
 
 			reference = libraryRef;
+
+			childFaces = new List<Face>();
+			childGlyphs = new List<Glyph>();
 		}
 
 		/// <summary>
@@ -81,6 +89,9 @@ namespace SharpFont
 
 			reference = libraryRef;
 			customMemory = true;
+
+			childFaces = new List<Face>();
+			childGlyphs = new List<Glyph>();
 		}
 
 		internal Library(IntPtr reference, bool duplicate)
@@ -89,6 +100,9 @@ namespace SharpFont
 
 			if (duplicate)
 				FT.ReferenceLibrary(this);
+
+			childFaces = new List<Face>();
+			childGlyphs = new List<Glyph>();
 		}
 
 		/// <summary>
@@ -315,6 +329,20 @@ namespace SharpFont
 
 		#endregion
 
+		#region Internal Methods
+
+		internal void AddChildFace(Face child)
+		{
+			childFaces.Add(child);
+		}
+
+		internal void AddChildGlyph(Glyph child)
+		{
+			childGlyphs.Add(child);
+		}
+
+		#endregion
+
 		#region IDisposable Members
 
 		/// <summary>
@@ -330,12 +358,21 @@ namespace SharpFont
 		{
 			if (!disposed)
 			{
+				disposed = true;
+
 				if (customMemory)
 					FT.DoneLibrary(this);
 				else
 					FT.DoneFreeType(this);
 
-				disposed = true;
+				foreach (Face f in childFaces)
+					f.Dispose();
+
+				foreach (Glyph g in childGlyphs)
+					g.Dispose();
+
+				childFaces.Clear();
+				childGlyphs.Clear();
 			}
 		}
 

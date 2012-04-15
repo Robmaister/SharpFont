@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
@@ -47,6 +48,7 @@ namespace SharpFont
 		private bool disposed;
 
 		private Library parentLibrary;
+		private List<FTSize> childSizes;
 
 		#endregion
 
@@ -58,10 +60,13 @@ namespace SharpFont
 		/// <param name="reference">
 		/// A pointer to the unmanaged memory containing the Face.
 		/// </param>
-		/// <param name="duplicate">A value indicating whether </param>
+		/// <param name="parent">The parent <see cref="Library"/>.</param>
 		internal Face(IntPtr reference, Library parent)
 		{
 			Reference = reference;
+			parentLibrary = parent;
+			childSizes = new List<FTSize>();
+			parentLibrary.AddChildFace(this);
 		}
 
 		/// <summary>
@@ -440,7 +445,7 @@ namespace SharpFont
 
 		#endregion
 
-		#region Public methods
+		#region Public Methods
 
 		#region FaceFlags flag checks
 
@@ -1062,6 +1067,15 @@ namespace SharpFont
 
 		#endregion
 
+		#region Internal Methods
+
+		internal void AddChildSize(FTSize child)
+		{
+			childSizes.Add(child);
+		}
+
+		#endregion
+
 		#region IDisposable members
 
 		/// <summary>
@@ -1077,11 +1091,13 @@ namespace SharpFont
 		{
 			if (!disposed)
 			{
-				//duplicates will just decrement the reference count, actual
-				//Face not destroyed until all Face copies are destroyed.
+				disposed = true;
 				FT.DoneFace(this);
 
-				disposed = true;
+				foreach (FTSize s in childSizes)
+					s.Dispose();
+
+				childSizes.Clear();
 			}
 		}
 

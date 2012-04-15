@@ -41,12 +41,16 @@ namespace SharpFont
 		internal IntPtr reference;
 		internal SizeRec rec;
 
-		internal FTSize(IntPtr reference, bool userAlloc)
+		private Face parentFace;
+
+		internal FTSize(IntPtr reference, bool userAlloc, Face parentFace)
 		{
 			this.reference = reference;
 			this.rec = PInvokeHelper.PtrToStructure<SizeRec>(reference);
 
 			this.userAlloc = userAlloc;
+
+			this.parentFace = parentFace;
 		}
 
 		/// <summary>
@@ -64,7 +68,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Face(rec.face, true);
+				return parentFace;
 			}
 		}
 

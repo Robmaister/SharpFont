@@ -81,10 +81,15 @@ namespace SharpFont
 		internal IntPtr reference;
 		internal GlyphSlotRec rec;
 
-		internal GlyphSlot(IntPtr reference)
+		private Face parentFace;
+		private Library parentLibrary;
+
+		internal GlyphSlot(IntPtr reference, Face parentFace, Library parentLibrary)
 		{
 			this.reference = reference;
 			this.rec = PInvokeHelper.PtrToStructure<GlyphSlotRec>(reference);
+			this.parentFace = parentFace;
+			this.parentLibrary = parentLibrary;
 		}
 
 		/// <summary>
@@ -95,7 +100,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Library(rec.library, true);
+				return parentLibrary;
 			}
 		}
 
@@ -106,7 +111,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Face(rec.face, true);
+				return parentFace;
 			}
 		}
 
@@ -119,7 +124,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new GlyphSlot(rec.next);
+				return new GlyphSlot(rec.next, parentFace, parentLibrary);
 			}
 		}
 

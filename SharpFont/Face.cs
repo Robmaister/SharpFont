@@ -41,10 +41,12 @@ namespace SharpFont
 	{
 		#region Fields
 
-		internal IntPtr reference;
-		internal FaceRec rec;
+		private IntPtr reference;
+		private FaceRec rec;
 
 		private bool disposed;
+
+		private Library parentLibrary;
 
 		#endregion
 
@@ -57,13 +59,9 @@ namespace SharpFont
 		/// A pointer to the unmanaged memory containing the Face.
 		/// </param>
 		/// <param name="duplicate">A value indicating whether </param>
-		internal Face(IntPtr reference, bool duplicate)
+		internal Face(IntPtr reference, Library parent)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<FaceRec>(reference);
-
-			if (duplicate)
-				FT.ReferenceFace(this);
+			Reference = reference;
 		}
 
 		/// <summary>
@@ -243,7 +241,7 @@ namespace SharpFont
 
 				for (int i = 0; i < count; i++)
 				{
-					charmaps[i] = new CharMap(new IntPtr(array.ToInt64() + IntPtr.Size * i));
+					charmaps[i] = new CharMap(new IntPtr(array.ToInt64() + IntPtr.Size * i), this);
 				}
 
 				return charmaps;
@@ -265,7 +263,7 @@ namespace SharpFont
 			{
 				//rec.generic = value;
 				value.WriteToUnmanagedMemory(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceRec), "generic").ToInt64()));
-				rec = (FaceRec)Marshal.PtrToStructure(reference, typeof(FaceRec));
+				rec = PInvokeHelper.PtrToStructure<FaceRec>(reference);
 			}
 		}
 
@@ -400,7 +398,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new GlyphSlot(rec.glyph);
+				return new GlyphSlot(rec.glyph, this, parentLibrary);
 			}
 		}
 
@@ -411,7 +409,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new FTSize(rec.size, false);
+				return new FTSize(rec.size, false, this);
 			}
 		}
 
@@ -422,7 +420,21 @@ namespace SharpFont
 		{
 			get
 			{
-				return new CharMap(rec.charmap);
+				return new CharMap(rec.charmap, this);
+			}
+		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<FaceRec>(reference);
 			}
 		}
 

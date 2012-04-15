@@ -32,11 +32,11 @@ namespace SharpFont
 	/// independent from the others; it is the ‘root’ of a set of objects like
 	/// fonts, faces, sizes, etc.
 	/// </para><para>
-	/// It also embeds a memory manager (see FT_Memory), as well as a scan-line
-	/// converter object (see FT_Raster).
+	/// It also embeds a memory manager (see <see cref="Memory"/>), as well as
+	/// a scan-line converter object (see <see cref="Raster"/>).
 	/// </para><para>
 	/// For multi-threading applications each thread should have its own
-	/// FT_Library object.
+	/// <see cref="Library"/> object.
 	/// </para></summary>
 	public sealed class Library : IDisposable
 	{

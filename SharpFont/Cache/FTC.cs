@@ -140,7 +140,8 @@ namespace SharpFont.Cache
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new Face(faceRef, true);
+			//HACK fix this later.
+			return new Face(faceRef, null);
 		}
 
 		/// <summary>
@@ -175,7 +176,8 @@ namespace SharpFont.Cache
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new FTSize(sizeRef, false);
+			//HACK fix this later.
+			return new FTSize(sizeRef, false, null);
 		}
 
 		/// <summary>
@@ -314,7 +316,7 @@ namespace SharpFont.Cache
 				throw new FreeTypeException(err);
 
 			node = new Node(nodeRef);
-			return new Glyph(glyphRef);
+			return new Glyph(glyphRef, null);
 		}
 
 		/// <summary>
@@ -363,7 +365,7 @@ namespace SharpFont.Cache
 				throw new FreeTypeException(err);
 
 			node = new Node(nodeRef);
-			return new Glyph(glyphRef);
+			return new Glyph(glyphRef, null);
 		}
 
 		/// <summary>

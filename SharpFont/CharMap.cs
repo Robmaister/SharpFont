@@ -37,10 +37,13 @@ namespace SharpFont
 		internal IntPtr reference;
 		internal CharMapRec rec;
 
-		internal CharMap(IntPtr reference)
+		private Face parentFace;
+
+		internal CharMap(IntPtr reference, Face parent)
 		{
 			this.reference = reference;
 			this.rec = PInvokeHelper.PtrToStructure<CharMapRec>(reference);
+			this.parentFace = parent;
 		}
 
 		/// <summary>
@@ -50,7 +53,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Face(rec.face, true);
+				return parentFace;
 			}
 		}
 

@@ -48,7 +48,7 @@ namespace SharpFont
 		{
 			IntPtr masterRef;
 
-			Error err = FT_Get_Multi_Master(face.reference, out masterRef);
+			Error err = FT_Get_Multi_Master(face.Reference, out masterRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -68,7 +68,7 @@ namespace SharpFont
 		{
 			IntPtr varRef;
 
-			Error err = FT_Get_MM_Var(face.reference, out varRef);
+			Error err = FT_Get_MM_Var(face.Reference, out varRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -89,7 +89,7 @@ namespace SharpFont
 			fixed (void* ptr = coords)
 			{
 				IntPtr coordsPtr = (IntPtr)ptr;
-				Error err = FT_Set_MM_Design_Coordinates(face.reference, (uint)coords.Length, coordsPtr);
+				Error err = FT_Set_MM_Design_Coordinates(face.Reference, (uint)coords.Length, coordsPtr);
 
 				if (err != Error.Ok)
 					throw new FreeTypeException(err);
@@ -107,7 +107,7 @@ namespace SharpFont
 			fixed (void* ptr = coords)
 			{
 				IntPtr coordsPtr = (IntPtr)ptr;
-				Error err = FT_Set_Var_Design_Coordinates(face.reference, (uint)coords.Length, coordsPtr);
+				Error err = FT_Set_Var_Design_Coordinates(face.Reference, (uint)coords.Length, coordsPtr);
 
 				if (err != Error.Ok)
 					throw new FreeTypeException(err);
@@ -128,7 +128,7 @@ namespace SharpFont
 			fixed (void* ptr = coords)
 			{
 				IntPtr coordsPtr = (IntPtr)ptr;
-				Error err = FT_Set_MM_Blend_Coordinates(face.reference, (uint)coords.Length, coordsPtr);
+				Error err = FT_Set_MM_Blend_Coordinates(face.Reference, (uint)coords.Length, coordsPtr);
 
 				if (err != Error.Ok)
 					throw new FreeTypeException(err);
@@ -173,7 +173,7 @@ namespace SharpFont
 		/// </para></returns>
 		public static object GetSfntTable(Face face, SfntTag tag)
 		{
-			IntPtr tableRef = FT_Get_Sfnt_Table(face.reference, tag);
+			IntPtr tableRef = FT_Get_Sfnt_Table(face.Reference, tag);
 
 			if (tableRef == IntPtr.Zero)
 				return null;
@@ -246,7 +246,7 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static void LoadSfntTable(Face face, uint tag, int offset, IntPtr buffer, ref uint length)
 		{
-			Error err = FT_Load_Sfnt_Table(face.reference, tag, offset, buffer, ref length);
+			Error err = FT_Load_Sfnt_Table(face.Reference, tag, offset, buffer, ref length);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -273,7 +273,7 @@ namespace SharpFont
 		public unsafe static uint SfntTableInfo(Face face, uint tableIndex, SfntTag tag)
 		{
 			uint length;
-			Error err = FT_Sfnt_Table_Info(face.reference, tableIndex, &tag, out length);
+			Error err = FT_Sfnt_Table_Info(face.Reference, tableIndex, &tag, out length);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -290,7 +290,7 @@ namespace SharpFont
 		public unsafe static uint SfntTableInfo(Face face)
 		{
 			uint length;
-			Error err = FT_Sfnt_Table_Info(face.reference, 0, null, out length);
+			Error err = FT_Sfnt_Table_Info(face.Reference, 0, null, out length);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -343,7 +343,7 @@ namespace SharpFont
 		/// <returns>Boolean. True if glyph names are reliable.</returns>
 		public static bool HasPSGlyphNames(Face face)
 		{
-			return FT_Has_PS_Glyph_Names(face.reference);
+			return FT_Has_PS_Glyph_Names(face.Reference);
 		}
 
 		/// <summary>
@@ -362,7 +362,7 @@ namespace SharpFont
 		public static FontInfo GetPSFontInfo(Face face)
 		{
 			IntPtr fontInfoRef;
-			Error err = FT_Get_PS_Font_Info(face.reference, out fontInfoRef);
+			Error err = FT_Get_PS_Font_Info(face.Reference, out fontInfoRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -386,7 +386,7 @@ namespace SharpFont
 		public static Private GetPSFontPrivate(Face face)
 		{
 			IntPtr privateRef;
-			Error err = FT_Get_PS_Font_Private(face.reference, out privateRef);
+			Error err = FT_Get_PS_Font_Private(face.Reference, out privateRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -447,7 +447,7 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static int GetPSFontValue(Face face, DictionaryKeys key, uint idx, ref IntPtr value, int valueLength)
 		{
-			return FT_Get_PS_Font_Value(face.reference, key, idx, ref value, valueLength);
+			return FT_Get_PS_Font_Value(face.Reference, key, idx, ref value, valueLength);
 		}
 
 		#endregion
@@ -462,7 +462,7 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static uint GetSfntNameCount(Face face)
 		{
-			return FT_Get_Sfnt_Name_Count(face.reference);
+			return FT_Get_Sfnt_Name_Count(face.Reference);
 		}
 
 		/// <summary>
@@ -485,7 +485,7 @@ namespace SharpFont
 		{
 			IntPtr nameRef;
 
-			Error err = FT_Get_Sfnt_Name(face.reference, idx, out nameRef);
+			Error err = FT_Get_Sfnt_Name(face.Reference, idx, out nameRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -514,7 +514,7 @@ namespace SharpFont
 		/// </param>
 		public static void GetBDFCharsetID(Face face, out string encoding, out string registry)
 		{
-			Error err = FT_Get_BDF_Charset_ID(face.reference, out encoding, out registry);
+			Error err = FT_Get_BDF_Charset_ID(face.Reference, out encoding, out registry);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -546,7 +546,7 @@ namespace SharpFont
 		{
 			IntPtr propertyRef;
 
-			Error err = FT_Get_BDF_Property(face.reference, propertyName, out propertyRef);
+			Error err = FT_Get_BDF_Property(face.Reference, propertyName, out propertyRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -576,7 +576,7 @@ namespace SharpFont
 		/// <param name="supplement">The supplement.</param>
 		public static void GetCIDRegistryOrderingSupplement(Face face, out string registry, out string ordering, out int supplement)
 		{
-			Error err = FT_Get_CID_Registry_Ordering_Supplement(face.reference, out registry, out ordering, out supplement);
+			Error err = FT_Get_CID_Registry_Ordering_Supplement(face.Reference, out registry, out ordering, out supplement);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -596,7 +596,7 @@ namespace SharpFont
 		public static bool GetCIDIsInternallyCIDKeyed(Face face)
 		{
 			byte is_cid;
-			Error err = FT_Get_CID_Is_Internally_CID_Keyed(face.reference, out is_cid);
+			Error err = FT_Get_CID_Is_Internally_CID_Keyed(face.Reference, out is_cid);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -618,7 +618,7 @@ namespace SharpFont
 		public static uint GetCIDFromGlyphIndex(Face face, uint glyphIndex)
 		{
 			uint cid;
-			Error err = FT_Get_CID_From_Glyph_Index(face.reference, glyphIndex, out cid);
+			Error err = FT_Get_CID_From_Glyph_Index(face.Reference, glyphIndex, out cid);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -661,7 +661,7 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static void GetPFRMetrics(Face face, out uint outlineResolution, out uint metricsResolution, out int metricsXScale, out int metricsYScale)
 		{
-			Error err = FT_Get_PFR_Metrics(face.reference, out outlineResolution, out metricsResolution, out metricsXScale, out metricsYScale);
+			Error err = FT_Get_PFR_Metrics(face.Reference, out outlineResolution, out metricsResolution, out metricsXScale, out metricsYScale);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -690,7 +690,7 @@ namespace SharpFont
 		public static FTVector GetPFRKerning(Face face, uint left, uint right)
 		{
 			VectorRec vector;
-			Error err = FT_Get_PFR_Kerning(face.reference, left, right, out vector);
+			Error err = FT_Get_PFR_Kerning(face.Reference, left, right, out vector);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -714,7 +714,7 @@ namespace SharpFont
 		public static int GetPFRAdvance(Face face, uint glyphIndex)
 		{
 			int advance;
-			Error err = FT_Get_PFR_Advance(face.reference, glyphIndex, out advance);
+			Error err = FT_Get_PFR_Advance(face.Reference, glyphIndex, out advance);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -738,7 +738,7 @@ namespace SharpFont
 		public static FNT.Header GetWinFNTHeader(Face face)
 		{
 			IntPtr headerRef;
-			Error err = FT_Get_WinFNT_Header(face.reference, out headerRef);
+			Error err = FT_Get_WinFNT_Header(face.Reference, out headerRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -760,7 +760,7 @@ namespace SharpFont
 		/// <returns>Font format string. NULL in case of error.</returns>
 		public static string GetX11FontFormat(Face face)
 		{
-			return Marshal.PtrToStringAnsi(FT_Get_X11_Font_Format(face.reference));
+			return Marshal.PtrToStringAnsi(FT_Get_X11_Font_Format(face.Reference));
 		}
 
 		#endregion
@@ -780,7 +780,7 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static Gasp GetGasp(Face face, uint ppem)
 		{
-			return FT_Get_Gasp(face.reference, ppem);
+			return FT_Get_Gasp(face.Reference, ppem);
 		}
 
 		#endregion

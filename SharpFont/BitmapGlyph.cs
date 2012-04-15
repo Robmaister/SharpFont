@@ -62,7 +62,8 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Glyph(rec.root);
+				//HACK fix this later.
+				return new Glyph(rec.root, null);
 			}
 		}
 

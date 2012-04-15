@@ -60,7 +60,7 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static void OpenTypeValidate(Face face, OpenTypeValidationFlags flags, out IntPtr baseTable, out IntPtr gdefTable, out IntPtr gposTable, out IntPtr gsubTable, out IntPtr jstfTable)
 		{
-			Error err = FT_OpenType_Validate(face.reference, flags, out baseTable, out gdefTable, out gposTable, out gsubTable, out jstfTable);
+			Error err = FT_OpenType_Validate(face.Reference, flags, out baseTable, out gdefTable, out gposTable, out gsubTable, out jstfTable);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -80,7 +80,7 @@ namespace SharpFont
 		/// </param>
 		public static void OpenTypeFree(Face face, IntPtr table)
 		{
-			FT_OpenType_Free(face.reference, table);
+			FT_OpenType_Free(face.Reference, table);
 		}
 
 		#endregion
@@ -134,7 +134,7 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static void TrueTypeGXValidate(Face face, TrueTypeValidationFlags flags, byte[][] tables, uint tableLength)
 		{
-			FT_TrueTypeGX_Validate(face.reference, flags, tables, tableLength);
+			FT_TrueTypeGX_Validate(face.Reference, flags, tables, tableLength);
 		}
 
 		/// <summary>
@@ -151,7 +151,7 @@ namespace SharpFont
 		/// </param>
 		public static void TrueTypeGXFree(Face face, IntPtr table)
 		{
-			FT_TrueTypeGX_Free(face.reference, table);
+			FT_TrueTypeGX_Free(face.Reference, table);
 		}
 
 		/// <summary><para>
@@ -179,7 +179,7 @@ namespace SharpFont
 		public static IntPtr ClassicKernValidate(Face face, ClassicKernValidationFlags flags)
 		{
 			IntPtr ckernRef;
-			FT_ClassicKern_Validate(face.reference, flags, out ckernRef);
+			FT_ClassicKern_Validate(face.Reference, flags, out ckernRef);
 			return ckernRef;
 		}
 
@@ -197,7 +197,7 @@ namespace SharpFont
 		/// </param>
 		public static void ClassicKernFree(Face face, IntPtr table)
 		{
-			FT_ClassicKern_Free(face.reference, table);
+			FT_ClassicKern_Free(face.Reference, table);
 		}
 
 		#endregion

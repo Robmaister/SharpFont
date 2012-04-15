@@ -40,13 +40,17 @@ namespace SharpFont
 		internal IntPtr reference;
 		internal GlyphRec rec;
 
-		internal Glyph(IntPtr reference)
+		private Library parentLibrary;
+
+		internal Glyph(IntPtr reference, Library parentLibrary)
 		{
 			this.reference = reference;
 			this.rec = PInvokeHelper.PtrToStructure<GlyphRec>(reference);
+
+			this.parentLibrary = parentLibrary;
 		}
 
-		internal Glyph(GlyphRec rec)
+		internal Glyph(GlyphRec rec, Library parentLibrary)
 		{
 			this.reference = IntPtr.Zero;
 			this.rec = rec;
@@ -67,7 +71,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Library(rec.library, true);
+				return parentLibrary;
 			}
 		}
 

@@ -774,7 +774,7 @@ namespace SharpFont
 		public static int GetAdvance(Face face, uint glyphIndex, LoadFlags flags)
 		{
 			int padvance;
-			Error err = FT_Get_Advance(face.reference, glyphIndex, flags, out padvance);
+			Error err = FT_Get_Advance(face.Reference, glyphIndex, flags, out padvance);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -808,7 +808,7 @@ namespace SharpFont
 		public unsafe static int[] GetAdvances(Face face, uint start, uint count, LoadFlags flags)
 		{
 			IntPtr advPtr;
-			Error err = FT_Get_Advances(face.reference, start, count, flags, out advPtr);
+			Error err = FT_Get_Advances(face.Reference, start, count, flags, out advPtr);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1263,7 +1263,10 @@ namespace SharpFont
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new Glyph(sourceRef);
+			if (sourceRef == glyph.reference)
+				return glyph;
+			else
+				return new Glyph(sourceRef, glyph.Library);
 		}
 
 		/// <summary>
@@ -1292,7 +1295,10 @@ namespace SharpFont
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new Glyph(sourceRef);
+			if (sourceRef == glyph.reference)
+				return glyph;
+			else
+				return new Glyph(sourceRef, glyph.Library);
 		}
 
 		#endregion

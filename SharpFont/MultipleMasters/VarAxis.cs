@@ -35,14 +35,23 @@ namespace SharpFont.MultipleMasters
 	/// </summary>
 	public class VarAxis
 	{
-		internal IntPtr reference;
-		internal VarAxisRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private VarAxisRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal VarAxis(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<VarAxisRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets the axis's name. Not always meaningful for GX.
@@ -115,5 +124,21 @@ namespace SharpFont.MultipleMasters
 				return rec.strid;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<VarAxisRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

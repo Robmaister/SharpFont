@@ -35,11 +35,36 @@ namespace SharpFont.Cache
 	/// </summary>
 	public class SBitCache
 	{
-		internal IntPtr reference;
+		#region Fields
+
+		private IntPtr reference;
+
+		#endregion
+
+		#region Constructors
 
 		internal SBitCache(IntPtr reference)
 		{
-			this.reference = reference;
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+			}
+		}
+
+		#endregion
 	}
 }

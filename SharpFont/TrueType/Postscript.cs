@@ -37,14 +37,23 @@ namespace SharpFont.TrueType
 	/// </summary>
 	public class Postscript
 	{
-		internal IntPtr reference;
-		internal PostscriptRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private PostscriptRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal Postscript(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<PostscriptRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		public int FormatType
 		{
@@ -122,5 +131,21 @@ namespace SharpFont.TrueType
 				return (uint)rec.maxMemType1;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<PostscriptRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

@@ -50,20 +50,28 @@ namespace SharpFont
 	/// </para></remarks>
 	public sealed class SizeMetrics
 	{
-		internal IntPtr reference;
-		internal SizeMetricsRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private SizeMetricsRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal SizeMetrics(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<SizeMetricsRec>(reference);
+			Reference = reference;
 		}
 
 		internal SizeMetrics(SizeMetricsRec metricsInternal)
 		{
-			this.reference = IntPtr.Zero;
-			this.rec = metricsInternal;
+			rec = metricsInternal;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// The width of the scaled EM square in pixels, hence the term ‘ppem’
@@ -164,5 +172,21 @@ namespace SharpFont
 				return (int)rec.max_advance;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<SizeMetricsRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

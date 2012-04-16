@@ -59,7 +59,7 @@ namespace SharpFont.Internal
 		internal GlyphMetricsRec metrics;
 		internal FT_Fixed linearHoriAdvance;
 		internal FT_Fixed linearVertAdvance;
-		internal VectorRec advance;
+		internal FTVector advance;
 
 		internal GlyphFormat format;
 

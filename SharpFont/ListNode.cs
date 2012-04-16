@@ -34,14 +34,23 @@ namespace SharpFont
 	/// </summary>
 	public class ListNode
 	{
-		internal IntPtr reference;
-		internal ListNodeRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private ListNodeRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal ListNode(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<ListNodeRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// The previous element in the list. NULL if first.
@@ -81,5 +90,21 @@ namespace SharpFont
 				return rec.data;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<ListNodeRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

@@ -65,19 +65,28 @@ namespace SharpFont
 	/// </summary>
 	public class Memory
 	{
-		internal IntPtr reference;
-		internal MemoryRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private MemoryRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal Memory(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<MemoryRec>(reference);
+			Reference = reference;
 		}
 
 		internal Memory(IntPtr reference, IntPtr offset)
 			: this(new IntPtr(reference.ToInt64() + offset.ToInt64()))
 		{
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// A generic typeless pointer for user data.
@@ -122,5 +131,21 @@ namespace SharpFont
 				return rec.realloc;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<MemoryRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

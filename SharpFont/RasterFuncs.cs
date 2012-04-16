@@ -115,19 +115,28 @@ namespace SharpFont
 	/// </summary>
 	public class RasterFuncs
 	{
-		internal IntPtr reference;
-		internal RasterFuncsRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private RasterFuncsRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal RasterFuncs(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<RasterFuncsRec>(reference);
+			Reference = reference;
 		}
 
 		internal RasterFuncs(IntPtr reference, IntPtr offset)
 			: this(new IntPtr(reference.ToInt64() + offset.ToInt64()))
 		{
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// The supported glyph format for this raster.
@@ -196,5 +205,21 @@ namespace SharpFont
 				return rec.raster_done;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<RasterFuncsRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

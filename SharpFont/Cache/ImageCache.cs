@@ -28,11 +28,36 @@ namespace SharpFont.Cache
 {
 	public class ImageCache
 	{
-		internal IntPtr reference;
+		#region Fields
+
+		private IntPtr reference;
+
+		#endregion
+
+		#region Constructors
 
 		internal ImageCache(IntPtr reference)
 		{
-			this.reference = reference;
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+			}
+		}
+
+		#endregion
 	}
 }

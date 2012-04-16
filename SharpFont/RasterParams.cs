@@ -106,14 +106,23 @@ namespace SharpFont
 	/// </para></remarks>
 	public class RasterParams
 	{
-		internal IntPtr reference;
-		internal RasterParamsRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private RasterParamsRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal RasterParams(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<RasterParamsRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// The target bitmap.
@@ -216,5 +225,21 @@ namespace SharpFont
 				return new BBox(rec.clip_box);
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<RasterParamsRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

@@ -151,12 +151,9 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="vec">The target vector to transform.</param>
 		/// <param name="matrix">A pointer to the source 2x2 matrix.</param>
-		public static void VectorTransform(FTVector vec, FTMatrix matrix)
+		public unsafe static void VectorTransform(FTVector vec, FTMatrix matrix)
 		{
-			FT_Vector_Transform(ref vec.reference, matrix.reference);
-
-			//update the vector record.
-			vec.rec = PInvokeHelper.PtrToStructure<VectorRec>(vec.reference);
+			FT_Vector_Transform(ref vec, ref matrix);
 		}
 
 		/// <summary>
@@ -169,10 +166,7 @@ namespace SharpFont
 		/// <param name="b">A pointer to matrix ‘b’.</param>
 		public static void MatrixMultiply(FTMatrix a, FTMatrix b)
 		{
-			FT_Matrix_Multiply(a.reference, ref b.reference);
-
-			//update the matrix record.
-			b.rec = PInvokeHelper.PtrToStructure<MatrixRec>(b.reference);
+			FT_Matrix_Multiply(ref a, ref b);
 		}
 
 		/// <summary>
@@ -181,12 +175,10 @@ namespace SharpFont
 		/// <param name="matrix">A pointer to the target matrix. Remains untouched in case of error.</param>
 		public static void MatrixInvert(FTMatrix matrix)
 		{
-			Error err = FT_Matrix_Invert(ref matrix.reference);
+			Error err = FT_Matrix_Invert(ref matrix);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
-
-			matrix.rec = PInvokeHelper.PtrToStructure<MatrixRec>(matrix.reference);
 		}
 
 		/// <summary>
@@ -263,10 +255,10 @@ namespace SharpFont
 		/// <returns>The address of target vector.</returns>
 		public static FTVector VectorUnit(int angle)
 		{
-			IntPtr vecRef;
-			FT_Vector_Unit(out vecRef, angle);
+			FTVector vec;
+			FT_Vector_Unit(out vec, angle);
 
-			return new FTVector(vecRef);
+			return vec;
 		}
 
 		/// <summary>
@@ -276,7 +268,7 @@ namespace SharpFont
 		/// <param name="angle">The address of angle.</param>
 		public static void VectorRotate(FTVector vec, int angle)
 		{
-			FT_Vector_Rotate(ref vec.reference, angle);
+			FT_Vector_Rotate(ref vec, angle);
 		}
 
 		/// <summary>
@@ -286,7 +278,7 @@ namespace SharpFont
 		/// <returns>The vector length, expressed in the same units that the original vector coordinates.</returns>
 		public static int VectorLength(FTVector vec)
 		{
-			return FT_Vector_Length(vec.reference);
+			return FT_Vector_Length(ref vec);
 		}
 
 		/// <summary>
@@ -297,7 +289,7 @@ namespace SharpFont
 		/// <param name="angle">The vector angle.</param>
 		public static void VectorPolarize(FTVector vec, out int length, out int angle)
 		{
-			FT_Vector_Polarize(vec.reference, out length, out angle);
+			FT_Vector_Polarize(ref vec, out length, out angle);
 		}
 
 		/// <summary>
@@ -308,10 +300,10 @@ namespace SharpFont
 		/// <returns>The address of source vector.</returns>
 		public static FTVector VectorFromPolar(int length, int angle)
 		{
-			IntPtr vecRef;
-			FT_Vector_From_Polar(out vecRef, length, angle);
+			FTVector vec;
+			FT_Vector_From_Polar(out vec, length, angle);
 
-			return new FTVector(vecRef);
+			return vec;
 		}
 
 		#endregion
@@ -326,7 +318,7 @@ namespace SharpFont
 		/// <returns>List node. NULL if it wasn't found.</returns>
 		public static ListNode ListFind(FTList list, IntPtr data)
 		{
-			return new ListNode(FT_List_Find(list.reference, data));
+			return new ListNode(FT_List_Find(list.Reference, data));
 		}
 
 		/// <summary>
@@ -336,7 +328,7 @@ namespace SharpFont
 		/// <param name="node">The node to append.</param>
 		public static void ListAdd(FTList list, ListNode node)
 		{
-			FT_List_Add(list.reference, node.reference);
+			FT_List_Add(list.Reference, node.Reference);
 		}
 
 		/// <summary>
@@ -346,7 +338,7 @@ namespace SharpFont
 		/// <param name="node">The node to insert.</param>
 		public static void ListInsert(FTList list, ListNode node)
 		{
-			FT_List_Insert(list.reference, node.reference);
+			FT_List_Insert(list.Reference, node.Reference);
 		}
 
 		/// <summary>
@@ -357,7 +349,7 @@ namespace SharpFont
 		/// <param name="node">The node to remove.</param>
 		public static void ListRemove(FTList list, ListNode node)
 		{
-			FT_List_Remove(list.reference, node.reference);
+			FT_List_Remove(list.Reference, node.Reference);
 		}
 
 		/// <summary>
@@ -367,7 +359,7 @@ namespace SharpFont
 		/// <param name="node">The node to move.</param>
 		public static void ListUp(FTList list, ListNode node)
 		{
-			FT_List_Up(list.reference, node.reference);
+			FT_List_Up(list.Reference, node.Reference);
 		}
 
 		/// <summary>
@@ -380,7 +372,7 @@ namespace SharpFont
 		/// <param name="user">A user-supplied field which is passed as the second argument to the iterator.</param>
 		public static void ListIterate(FTList list, ListIterator iterator, IntPtr user)
 		{
-			Error err = FT_List_Iterate(list.reference, Marshal.GetFunctionPointerForDelegate(iterator), user);
+			Error err = FT_List_Iterate(list.Reference, Marshal.GetFunctionPointerForDelegate(iterator), user);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -400,7 +392,7 @@ namespace SharpFont
 		/// <param name="user">A user-supplied field which is passed as the last argument to the destructor.</param>
 		public static void ListFinalize(FTList list, ListDestructor destroy, Memory memory, IntPtr user)
 		{
-			FT_List_Finalize(list.reference, Marshal.GetFunctionPointerForDelegate(destroy), memory.reference, user);
+			FT_List_Finalize(list.Reference, Marshal.GetFunctionPointerForDelegate(destroy), memory.Reference, user);
 		}
 
 		#endregion
@@ -422,7 +414,7 @@ namespace SharpFont
 		public static Outline OutlineNew(Library library, uint numPoints, int numContours)
 		{
 			IntPtr outlineRef;
-			Error err = FT_Outline_New(library.reference, numPoints, numContours, out outlineRef);
+			Error err = FT_Outline_New(library.Reference, numPoints, numContours, out outlineRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -441,7 +433,7 @@ namespace SharpFont
 		public static Outline OutlineNew(Memory memory, uint numPoints, int numContours)
 		{
 			IntPtr outlineRef;
-			Error err = FT_Outline_New_Internal(memory.reference, numPoints, numContours, out outlineRef);
+			Error err = FT_Outline_New_Internal(memory.Reference, numPoints, numContours, out outlineRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -464,7 +456,7 @@ namespace SharpFont
 		/// <param name="outline">A pointer to the outline object to be discarded.</param>
 		public static void OutlineDone(Library library, Outline outline)
 		{
-			Error err = FT_Outline_Done(library.reference, outline.reference);
+			Error err = FT_Outline_Done(library.Reference, outline.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -482,7 +474,7 @@ namespace SharpFont
 		/// <param name="outline">A pointer to the outline object to be discarded.</param>
 		public static void OutlineDone(Memory memory, Outline outline)
 		{
-			Error err = FT_Outline_Done_Internal(memory.reference, outline.reference);
+			Error err = FT_Outline_Done_Internal(memory.Reference, outline.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -497,8 +489,9 @@ namespace SharpFont
 		/// <param name="target">A handle to the target outline.</param>
 		public static void OutlineCopy(Outline source, ref Outline target)
 		{
-			Error err = FT_Outline_Copy(source.reference, ref target.reference);
-			target.rec = PInvokeHelper.PtrToStructure<OutlineRec>(target.reference);
+			IntPtr targetRef = target.Reference;
+			Error err = FT_Outline_Copy(source.Reference, ref targetRef);
+			target.Reference = targetRef;
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -512,7 +505,7 @@ namespace SharpFont
 		/// <param name="yOffset">The vertical offset.</param>
 		public static void OutlineTranslate(Outline outline, int xOffset, int yOffset)
 		{
-			FT_Outline_Translate(outline.reference, xOffset, yOffset);
+			FT_Outline_Translate(outline.Reference, xOffset, yOffset);
 		}
 
 		/// <summary>
@@ -527,7 +520,7 @@ namespace SharpFont
 		/// <param name="matrix">A pointer to the transformation matrix.</param>
 		public static void OutlineTransform(Outline outline, FTMatrix matrix)
 		{
-			FT_Outline_Transform(outline.reference, matrix.reference);
+			FT_Outline_Transform(outline.Reference, ref matrix);
 		}
 
 		/// <summary><para>
@@ -556,7 +549,7 @@ namespace SharpFont
 		/// <param name="strength">How strong the glyph is emboldened. Expressed in 26.6 pixel format.</param>
 		public static void OutlineEmbolden(Outline outline, int strength)
 		{
-			Error err = FT_Outline_Embolden(outline.reference, strength);
+			Error err = FT_Outline_Embolden(outline.Reference, strength);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -577,7 +570,7 @@ namespace SharpFont
 		/// <param name="outline">A pointer to the target outline descriptor.</param>
 		public static void OutlineReverse(Outline outline)
 		{
-			FT_Outline_Reverse(outline.reference);
+			FT_Outline_Reverse(outline.Reference);
 		}
 
 		/// <summary>
@@ -586,7 +579,7 @@ namespace SharpFont
 		/// <param name="outline">A handle to a source outline.</param>
 		public static void OutlineCheck(Outline outline)
 		{
-			Error err = FT_Outline_Check(outline.reference);
+			Error err = FT_Outline_Check(outline.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -611,7 +604,7 @@ namespace SharpFont
 		public static BBox OutlineGetBBox(Outline outline)
 		{
 			IntPtr bboxRef;
-			Error err = FT_Outline_Get_BBox(outline.reference, out bboxRef);
+			Error err = FT_Outline_Get_BBox(outline.Reference, out bboxRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -639,7 +632,7 @@ namespace SharpFont
 			Marshal.WriteInt32(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "shift"), funcInterface.Shift);
 			Marshal.WriteInt32(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "delta"), funcInterface.Delta);
 
-			Error err = FT_Outline_Decompose(outline.reference, funcInterfaceRef, user);
+			Error err = FT_Outline_Decompose(outline.Reference, funcInterfaceRef, user);
 
 			Marshal.FreeHGlobal(funcInterfaceRef);
 
@@ -668,7 +661,7 @@ namespace SharpFont
 		{
 			IntPtr cboxRef;
 
-			FT_Outline_Get_CBox(outline.reference, out cboxRef);
+			FT_Outline_Get_CBox(outline.Reference, out cboxRef);
 
 			return new BBox(cboxRef);
 		}
@@ -693,7 +686,7 @@ namespace SharpFont
 		/// <param name="bitmap">A pointer to the target bitmap descriptor.</param>
 		public static void OutlineGetBitmap(Library library, Outline outline, FTBitmap bitmap)
 		{
-			Error err = FT_Outline_Get_Bitmap(library.reference, outline.reference, bitmap.reference);
+			Error err = FT_Outline_Get_Bitmap(library.Reference, outline.Reference, bitmap.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -723,7 +716,7 @@ namespace SharpFont
 		/// <param name="params">A pointer to an <see cref="RasterParams"/> structure used to describe the rendering operation.</param>
 		public static void OutlineRender(Library library, Outline outline, RasterParams @params)
 		{
-			Error err = FT_Outline_Render(library.reference, outline.reference, @params.reference);
+			Error err = FT_Outline_Render(library.Reference, outline.Reference, @params.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -742,7 +735,7 @@ namespace SharpFont
 		/// <returns>The orientation.</returns>
 		public static Orientation OutlineGetOrientation(Outline outline)
 		{
-			return FT_Outline_Get_Orientation(outline.reference);
+			return FT_Outline_Get_Orientation(outline.Reference);
 		}
 
 		#endregion
@@ -848,7 +841,7 @@ namespace SharpFont
 		public static FTBitmap BitmapCopy(Library library, FTBitmap source)
 		{
 			IntPtr bitmapRef;
-			Error err = FT_Bitmap_Copy(library.reference, source.reference, out bitmapRef);
+			Error err = FT_Bitmap_Copy(library.Reference, source.Reference, out bitmapRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -875,7 +868,7 @@ namespace SharpFont
 		/// <param name="yStrength">How strong the glyph is emboldened vertically. Expressed in 26.6 pixel format.</param>
 		public static void BitmapEmbolden(Library library, FTBitmap bitmap, int xStrength, int yStrength)
 		{
-			Error err = FT_Bitmap_Embolden(library.reference, bitmap.reference, xStrength, yStrength);
+			Error err = FT_Bitmap_Embolden(library.Reference, bitmap.Reference, xStrength, yStrength);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -903,7 +896,7 @@ namespace SharpFont
 		public static FTBitmap BitmapConvert(Library library, FTBitmap source, int alignment)
 		{
 			IntPtr bitmapRef;
-			Error err = FT_Bitmap_Convert(library.reference, source.reference, out bitmapRef, alignment);
+			Error err = FT_Bitmap_Convert(library.Reference, source.Reference, out bitmapRef, alignment);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -921,7 +914,7 @@ namespace SharpFont
 		/// <param name="slot">The glyph slot.</param>
 		public static void GlyphSlotOwnBitmap(GlyphSlot slot)
 		{
-			Error err = FT_GlyphSlot_Own_Bitmap(slot.reference);
+			Error err = FT_GlyphSlot_Own_Bitmap(slot.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -938,7 +931,7 @@ namespace SharpFont
 		/// <param name="bitmap">The bitmap object to be freed.</param>
 		public static void BitmapDone(Library library, FTBitmap bitmap)
 		{
-			Error err = FT_Bitmap_Done(library.reference, bitmap.reference);
+			Error err = FT_Bitmap_Done(library.Reference, bitmap.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -956,7 +949,7 @@ namespace SharpFont
 		/// <returns>The border index. <see cref="StrokerBorder.Right"/> for empty or invalid outlines.</returns>
 		public static StrokerBorder OutlineGetInsideBorder(Outline outline)
 		{
-			return FT_Outline_GetInsideBorder(outline.reference);
+			return FT_Outline_GetInsideBorder(outline.Reference);
 		}
 
 		/// <summary>
@@ -967,7 +960,7 @@ namespace SharpFont
 		/// <returns>The border index. <see cref="StrokerBorder.Left"/> for empty or invalid outlines.</returns>
 		public static StrokerBorder OutlineGetOutsideBorder(Outline outline)
 		{
-			return FT_Outline_GetOutsideBorder(outline.reference);
+			return FT_Outline_GetOutsideBorder(outline.Reference);
 		}
 
 		/// <summary>
@@ -978,7 +971,7 @@ namespace SharpFont
 		public static Stroker StrokerNew(Library library)
 		{
 			IntPtr strokerRef;
-			Error err = FT_Stroker_New(library.reference, out strokerRef);
+			Error err = FT_Stroker_New(library.Reference, out strokerRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1000,7 +993,7 @@ namespace SharpFont
 		/// <param name="miterLimit">The miter limit for the <see cref="StrokerLineJoin.MiterFixed"/> and <see cref="StrokerLineJoin.MiterVariable"/> line join styles, expressed as 16.16 fixed point value.</param>
 		public static void StrokerSet(Stroker stroker, int radius, StrokerLineCap lineCap, StrokerLineJoin lineJoin, int miterLimit)
 		{
-			FT_Stroker_Set(stroker.reference, radius, lineCap, lineJoin, miterLimit);
+			FT_Stroker_Set(stroker.Reference, radius, lineCap, lineJoin, miterLimit);
 		}
 
 		/// <summary>
@@ -1012,7 +1005,7 @@ namespace SharpFont
 		/// <param name="stroker">The target stroker handle.</param>
 		public static void StrokerRewind(Stroker stroker)
 		{
-			FT_Stroker_Rewind(stroker.reference);
+			FT_Stroker_Rewind(stroker.Reference);
 		}
 		
 		/// <summary>
@@ -1035,7 +1028,7 @@ namespace SharpFont
 		/// <param name="opened">A boolean. If 1, the outline is treated as an open path instead of a closed one.</param>
 		public static void StrokerParseOutline(Stroker stroker, Outline outline, bool opened)
 		{
-			Error err = FT_Stroker_ParseOutline(stroker.reference, outline.reference, opened);
+			Error err = FT_Stroker_ParseOutline(stroker.Reference, outline.Reference, opened);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1053,7 +1046,7 @@ namespace SharpFont
 		/// <param name="open">A boolean. If 1, the sub-path is treated as an open one.</param>
 		public static void StrokerBeginSubPath(Stroker stroker, FTVector to, bool open)
 		{
-			Error err = FT_Stroker_BeginSubPath(stroker.reference, to.reference, open);
+			Error err = FT_Stroker_BeginSubPath(stroker.Reference, ref to, open);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1071,7 +1064,7 @@ namespace SharpFont
 		/// <param name="stroker">The target stroker handle.</param>
 		public static void StrokerEndSubPath(Stroker stroker)
 		{
-			Error err = FT_Stroker_EndSubPath(stroker.reference);
+			Error err = FT_Stroker_EndSubPath(stroker.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1090,7 +1083,7 @@ namespace SharpFont
 		/// <param name="to">A pointer to the destination point.</param>
 		public static void StrokerLineTo(Stroker stroker, FTVector to)
 		{
-			Error err = FT_Stroker_LineTo(stroker.reference, to.reference);
+			Error err = FT_Stroker_LineTo(stroker.Reference, ref to);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1110,7 +1103,7 @@ namespace SharpFont
 		/// <param name="to">A pointer to the destination point.</param>
 		public static void StrokerConicTo(Stroker stroker, FTVector control, FTVector to)
 		{
-			Error err = FT_Stroker_ConicTo(stroker.reference, control.reference, to.reference);
+			Error err = FT_Stroker_ConicTo(stroker.Reference, ref control, ref to);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1131,7 +1124,7 @@ namespace SharpFont
 		/// <param name="to">A pointer to the destination point.</param>
 		public static void StrokerCubicTo(Stroker stroker, FTVector control1, FTVector control2, FTVector to)
 		{
-			Error err = FT_Stroker_CubicTo(stroker.reference, control1.reference, control2.reference, to.reference);
+			Error err = FT_Stroker_CubicTo(stroker.Reference, ref control1, ref control2, ref to);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1161,7 +1154,7 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static void StrokerGetBorderCounts(Stroker stroker, StrokerBorder border, out uint pointsCount, out uint contoursCount)
 		{
-			Error err = FT_Stroker_GetBorderCounts(stroker.reference, border, out pointsCount, out contoursCount);
+			Error err = FT_Stroker_GetBorderCounts(stroker.Reference, border, out pointsCount, out contoursCount);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1196,7 +1189,7 @@ namespace SharpFont
 		/// <param name="outline">The target outline handle.</param>
 		public static void StrokerExportBorder(Stroker stroker, StrokerBorder border, Outline outline)
 		{
-			FT_Stroker_ExportBorder(stroker.reference, border, outline.reference);
+			FT_Stroker_ExportBorder(stroker.Reference, border, outline.Reference);
 		}
 
 		/// <summary>
@@ -1210,7 +1203,7 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static void StrokerGetCounts(Stroker stroker, out uint pointsCount, out uint contoursCount)
 		{
-			Error err = FT_Stroker_GetCounts(stroker.reference, out pointsCount, out contoursCount);
+			Error err = FT_Stroker_GetCounts(stroker.Reference, out pointsCount, out contoursCount);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1227,7 +1220,7 @@ namespace SharpFont
 		/// <param name="outline">The target outline handle.</param>
 		public static void StrokerExport(Stroker stroker, Outline outline)
 		{
-			FT_Stroker_Export(stroker.reference, outline.reference);
+			FT_Stroker_Export(stroker.Reference, outline.Reference);
 		}
 
 		/// <summary>
@@ -1236,7 +1229,7 @@ namespace SharpFont
 		/// <param name="stroker">A stroker handle. Can be NULL.</param>
 		public static void StrokerDone(Stroker stroker)
 		{
-			FT_Stroker_Done(stroker.reference);
+			FT_Stroker_Done(stroker.Reference);
 		}
 
 		/// <summary>
@@ -1251,9 +1244,9 @@ namespace SharpFont
 		/// <returns>New glyph handle.</returns>
 		public static Glyph GlyphStroke(Glyph glyph, Stroker stroker, bool destroy)
 		{
-			IntPtr sourceRef = glyph.reference;
+			IntPtr sourceRef = glyph.Reference;
 
-			Error err = FT_Glyph_Stroke(ref sourceRef, stroker.reference, destroy);
+			Error err = FT_Glyph_Stroke(ref sourceRef, stroker.Reference, destroy);
 
 			if (destroy)
 			{
@@ -1263,7 +1256,7 @@ namespace SharpFont
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			if (sourceRef == glyph.reference)
+			if (sourceRef == glyph.Reference)
 				return glyph;
 			else
 				return new Glyph(sourceRef, glyph.Library);
@@ -1283,9 +1276,9 @@ namespace SharpFont
 		/// <returns>New glyph handle.</returns>
 		public static Glyph GlyphStrokeBorder(Glyph glyph, Stroker stroker, bool inside, bool destroy)
 		{
-			IntPtr sourceRef = glyph.reference;
+			IntPtr sourceRef = glyph.Reference;
 
-			Error err = FT_Glyph_StrokeBorder(ref sourceRef, stroker.reference, inside, destroy);
+			Error err = FT_Glyph_StrokeBorder(ref sourceRef, stroker.Reference, inside, destroy);
 
 			if (destroy)
 			{
@@ -1295,7 +1288,7 @@ namespace SharpFont
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			if (sourceRef == glyph.reference)
+			if (sourceRef == glyph.Reference)
 				return glyph;
 			else
 				return new Glyph(sourceRef, glyph.Library);
@@ -1316,7 +1309,7 @@ namespace SharpFont
 		/// <param name="clazz">A pointer to class descriptor for the module.</param>
 		public static void AddModule(Library library, ModuleClass clazz)
 		{
-			Error err = FT_Add_Module(library.reference, clazz.reference);
+			Error err = FT_Add_Module(library.Reference, clazz.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1334,7 +1327,7 @@ namespace SharpFont
 		/// <returns>A module handle. 0 if none was found.</returns>
 		public static Module GetModule(Library library, string moduleName)
 		{
-			return new Module(FT_Get_Module(library.reference, moduleName));
+			return new Module(FT_Get_Module(library.Reference, moduleName));
 		}
 
 		/// <summary>
@@ -1347,7 +1340,7 @@ namespace SharpFont
 		/// <param name="module">A handle to a module object.</param>
 		public static void RemoveModule(Library library, Module module)
 		{
-			Error err = FT_Remove_Module(library.reference, module.reference);
+			Error err = FT_Remove_Module(library.Reference, module.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1367,7 +1360,7 @@ namespace SharpFont
 		internal static void ReferenceLibrary(Library library)
 		{
 			//marked as internal because the Library class wraps this funcitonality.
-			Error err = FT_Reference_Library(library.reference);
+			Error err = FT_Reference_Library(library.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1395,7 +1388,7 @@ namespace SharpFont
 		public static Library NewLibrary(Memory memory)
 		{
 			IntPtr libraryRef;
-			Error err = FT_New_Library(memory.reference, out libraryRef);
+			Error err = FT_New_Library(memory.Reference, out libraryRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1414,10 +1407,7 @@ namespace SharpFont
 		/// <param name="library">A handle to the target library.</param>
 		public static void DoneLibrary(Library library)
 		{
-			Error err = FT_Done_Library(library.reference);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
+			library.Dispose();
 		}
 
 		/// <summary>
@@ -1438,7 +1428,7 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static void SetDebugHook(Library library, uint hookIndex, IntPtr debugHook)
 		{
-			FT_Set_Debug_Hook(library.reference, hookIndex, debugHook);
+			FT_Set_Debug_Hook(library.Reference, hookIndex, debugHook);
 		}
 
 		/// <summary>
@@ -1450,7 +1440,7 @@ namespace SharpFont
 		/// <param name="library">A handle to a new library object.</param>
 		public static void AddDefaultModules(Library library)
 		{
-			FT_Add_Default_Modules(library.reference);
+			FT_Add_Default_Modules(library.Reference);
 		}
 
 		/// <summary>
@@ -1469,7 +1459,7 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static Renderer GetRenderer(Library library, GlyphFormat format)
 		{
-			return new Renderer(FT_Get_Renderer(library.reference, format));
+			return new Renderer(FT_Get_Renderer(library.Reference, format));
 		}
 
 		/// <summary>
@@ -1495,10 +1485,10 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public unsafe static void SetRenderer(Library library, Renderer renderer, uint numParams, Parameter[] parameters)
 		{
-			ParameterRec[] paramRecs = Array.ConvertAll<Parameter, ParameterRec>(parameters, (p => p.rec));
+			ParameterRec[] paramRecs = Array.ConvertAll<Parameter, ParameterRec>(parameters, (p => p.Record));
 			fixed (void* ptr = paramRecs)
 			{
-				Error err = FT_Set_Renderer(library.reference, renderer.reference, numParams, (IntPtr)ptr);
+				Error err = FT_Set_Renderer(library.Reference, renderer.Reference, numParams, (IntPtr)ptr);
 			}
 		}
 
@@ -1535,7 +1525,7 @@ namespace SharpFont
 		/// <param name="source">The source stream.</param>
 		public static void StreamOpenGzip(FTStream stream, FTStream source)
 		{
-			Error err = FT_Stream_OpenGzip(stream.reference, source.reference);
+			Error err = FT_Stream_OpenGzip(stream.Reference, source.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1574,7 +1564,7 @@ namespace SharpFont
 		/// <param name="source">The source stream.</param>
 		public static void StreamOpenLZW(FTStream stream, FTStream source)
 		{
-			Error err = FT_Stream_OpenLZW(stream.reference, source.reference);
+			Error err = FT_Stream_OpenLZW(stream.Reference, source.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1613,7 +1603,7 @@ namespace SharpFont
 		/// <param name="source">The source stream.</param>
 		public static void StreamOpenBzip2(FTStream stream, FTStream source)
 		{
-			Error err = FT_Stream_OpenBzip2(stream.reference, source.reference);
+			Error err = FT_Stream_OpenBzip2(stream.Reference, source.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1664,7 +1654,7 @@ namespace SharpFont
 		/// You can use <see cref="LcdFilter.None"/> here to disable this feature, or <see cref="LcdFilter.Default"/> to use a default filter that should work well on most LCD screens.</para></param>
 		public static void LibrarySetLcdFilter(Library library, LcdFilter filter)
 		{
-			Error err = FT_Library_SetLcdFilter(library.reference, filter);
+			Error err = FT_Library_SetLcdFilter(library.Reference, filter);
 
 			//TODO since LCD Filtering isn't enabled by default, catch the EntryPointNotFoundException and throw an exception telling the user to recompile freetype with the proper #define.
 
@@ -1695,7 +1685,7 @@ namespace SharpFont
 		/// <param name="weights">A pointer to an array; the function copies the first five bytes and uses them to specify the filter weights.</param>
 		public static void LibrarySetLcdFilterWeights(Library library, byte[] weights)
 		{
-			Error err = FT_Library_SetLcdFilterWeights(library.reference, weights);
+			Error err = FT_Library_SetLcdFilterWeights(library.Reference, weights);
 
 			//TODO since LCD Filtering isn't enabled by default, catch the EntryPointNotFoundException and throw an exception telling the user to recompile freetype with the proper #define.
 

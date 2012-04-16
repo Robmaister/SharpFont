@@ -27,6 +27,20 @@ using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
 
+#if WIN64
+using FT_26Dot6 = System.Int32;
+using FT_Fixed = System.Int32;
+using FT_Long = System.Int32;
+using FT_Pos = System.Int32;
+using FT_ULong = System.UInt32;
+#else
+using FT_26Dot6 = System.IntPtr;
+using FT_Fixed = System.IntPtr;
+using FT_Long = System.IntPtr;
+using FT_Pos = System.IntPtr;
+using FT_ULong = System.UIntPtr;
+#endif
+
 namespace SharpFont
 {
 	/// <summary>
@@ -36,21 +50,47 @@ namespace SharpFont
 	///     y' = x*yx + y*yy
 	///     </code>
 	/// </summary>
-	public sealed class FTMatrix
+	[StructLayout(LayoutKind.Sequential)]
+	public struct FTMatrix
 	{
-		internal IntPtr reference;
-		internal MatrixRec rec;
+		private FT_Fixed xx, xy;
+		private FT_Fixed yx, yy;
 
-		internal FTMatrix(IntPtr reference)
+		public FTMatrix(int xx, int xy, int yx, int yy)
+			: this()
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<MatrixRec>(reference);
+#if WIN64
+			this.xx = xx;
+			this.xy = xy;
+			this.yx = yx;
+			this.yy = yy;
+#else
+			this.xx = (IntPtr)xx;
+			this.xy = (IntPtr)xy;
+			this.yx = (IntPtr)yx;
+			this.yy = (IntPtr)yy;
+#endif
 		}
 
-		internal FTMatrix(MatrixRec rec)
+		public FTMatrix(FTVector row0, FTVector row1)
+			: this(row0.X, row0.Y, row1.X, row1.Y)
 		{
-			this.reference = IntPtr.Zero;
-			this.rec = rec;
+		}
+
+		internal FTMatrix(IntPtr reference)
+			: this()
+		{
+#if WIN64
+			xx = Marshal.ReadInt32(reference);
+			xy = Marshal.ReadInt32(reference, sizeof(int));
+			yx = Marshal.ReadInt32(reference, sizeof(int) * 2);
+			yy = Marshal.ReadInt32(reference, sizeof(int) * 3);
+#else
+			xx = Marshal.ReadIntPtr(reference);
+			xy = Marshal.ReadIntPtr(reference, IntPtr.Size);
+			yx = Marshal.ReadIntPtr(reference, IntPtr.Size * 2);
+			yy = Marshal.ReadIntPtr(reference, IntPtr.Size * 3);
+#endif
 		}
 
 		/// <summary>
@@ -60,13 +100,16 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)rec.xx;
+				return (int)xx;
 			}
 
 			set
 			{
-				//TODO fix this.
-				//Marshal.WriteInt32(reference, 0, value);
+#if WIN64
+				xx = value;
+#else
+				xx = (IntPtr)value;
+#endif
 			}
 		}
 
@@ -77,13 +120,16 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)rec.xy;
+				return (int)xy;
 			}
 
 			set
 			{
-				//TODO fix this.
-				//Marshal.WriteInt32(reference, 4, value);
+#if WIN64
+				xy = value;
+#else
+				xy = (IntPtr)value;
+#endif
 			}
 		}
 
@@ -94,13 +140,16 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)rec.yx;
+				return (int)yx;
 			}
 
 			set
 			{
-				//TODO fix this.
-				//Marshal.WriteInt32(reference, 8, value);
+#if WIN64
+				yx = value;
+#else
+				yx = (IntPtr)value;
+#endif
 			}
 		}
 
@@ -111,13 +160,16 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)rec.yy;
+				return (int)yy;
 			}
 
 			set
 			{
-				//TODO fix this.
-				//Marshal.WriteInt32(reference, 12, value);
+#if WIN64
+				yy = value;
+#else
+				yy = (IntPtr)value;
+#endif
 			}
 		}
 	}

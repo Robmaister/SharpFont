@@ -40,12 +40,39 @@ namespace SharpFont.Cache
 	/// <seealso cref="FTC.ImageCacheLookup"/>
 	public class Node
 	{
-		internal IntPtr reference;
+		#region Fields
+
+		private IntPtr reference;
+
+		#endregion
+
+		#region Constructors
 
 		internal Node(IntPtr reference)
 		{
-			this.reference = reference;
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+			}
+		}
+
+		#endregion
+
+		#region Public Methods
 
 		/// <summary>
 		/// Decrement a cache node's internal reference count. When the count
@@ -57,5 +84,7 @@ namespace SharpFont.Cache
 		{
 			FTC.NodeUnref(this, manager);
 		}
+
+		#endregion
 	}
 }

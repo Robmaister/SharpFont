@@ -35,14 +35,23 @@ namespace SharpFont.TrueType
 	/// </summary>
 	public class PCLT
 	{
-		internal IntPtr reference;
-		internal PCLTRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private PCLTRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal PCLT(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<PCLTRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		public int Version
 		{
@@ -170,5 +179,21 @@ namespace SharpFont.TrueType
 				return rec.Reserved;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<PCLTRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

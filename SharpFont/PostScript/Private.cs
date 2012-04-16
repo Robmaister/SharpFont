@@ -36,14 +36,23 @@ namespace SharpFont.PostScript
 	/// </summary>
 	public class Private
 	{
-		internal IntPtr reference;
-		internal PrivateRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private PrivateRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal Private(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<PrivateRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		public int UniqueID
 		{
@@ -246,5 +255,21 @@ namespace SharpFont.PostScript
 				return rec.min_feature;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<PrivateRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

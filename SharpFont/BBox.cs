@@ -35,19 +35,28 @@ namespace SharpFont
 	/// </summary>
 	public sealed class BBox
 	{
-		internal IntPtr reference;
-		internal BBoxRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private BBoxRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal BBox(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<BBoxRec>(reference);
+			Reference = reference;
 		}
 
 		internal BBox(BBoxRec bboxInt)
 		{
 			this.rec = bboxInt;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets the horizontal minimum (left-most).
@@ -92,5 +101,21 @@ namespace SharpFont
 				return (int)rec.yMax;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<BBoxRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

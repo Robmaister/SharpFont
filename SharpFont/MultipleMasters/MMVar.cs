@@ -37,14 +37,23 @@ namespace SharpFont.MultipleMasters
 	/// </para></summary>
 	public class MMVar
 	{
-		internal IntPtr reference;
-		internal MMVarRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private MMVarRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal MMVar(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<MMVarRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets the number of axes. The maximum value is 4 for MM; no limit in GX.
@@ -109,5 +118,21 @@ namespace SharpFont.MultipleMasters
 				return new VarNamedStyle(rec.namedstyle);
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<MMVarRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

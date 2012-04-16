@@ -34,14 +34,23 @@ namespace SharpFont.PostScript
 	/// </summary>
 	public class FaceInfo
 	{
-		internal IntPtr reference;
-		internal FaceInfoRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private FaceInfoRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal FaceInfo(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<FaceInfoRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		public string CIDFontName
 		{
@@ -187,5 +196,21 @@ namespace SharpFont.PostScript
 				return (uint)rec.data_offset;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<FaceInfoRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

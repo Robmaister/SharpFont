@@ -64,9 +64,11 @@ namespace SharpFont
 		internal Face(IntPtr reference, Library parent)
 		{
 			Reference = reference;
+
 			parentLibrary = parent;
-			childSizes = new List<FTSize>();
 			parentLibrary.AddChildFace(this);
+
+			childSizes = new List<FTSize>();
 		}
 
 		/// <summary>
@@ -82,6 +84,17 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
+		/// Gets a value indicating whether the object has been disposed.
+		/// </summary>
+		public bool IsDisposed
+		{
+			get
+			{
+				return disposed;
+			}
+		}
+
+		/// <summary>
 		/// Gets the number of faces in the font file. Some font formats can
 		/// have multiple faces in a font file.
 		/// </summary>
@@ -89,6 +102,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FaceCount", "Cannot access a disposed object.");
+
 				return (int)rec.num_faces;
 			}
 		}
@@ -101,6 +117,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FaceIndex", "Cannot access a disposed object.");
+
 				return (int)rec.face_index;
 			}
 		}
@@ -114,6 +133,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FaceFlags", "Cannot access a disposed object.");
+
 				return (FaceFlags)rec.face_flags;
 			}
 		}
@@ -126,6 +148,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("StyleFlags", "Cannot access a disposed object.");
+
 				return (StyleFlags)rec.style_flags;
 			}
 		}
@@ -142,6 +167,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("GlyphCount", "Cannot access a disposed object.");
+
 				return (int)rec.num_glyphs;
 			}
 		}
@@ -159,6 +187,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FamilyName", "Cannot access a disposed object.");
+
 				return rec.family_name;
 			}
 		}
@@ -176,6 +207,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("StyleName", "Cannot access a disposed object.");
+
 				return rec.style_name;
 			}
 		}
@@ -189,6 +223,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FixedSizesCount", "Cannot access a disposed object.");
+
 				return rec.num_fixed_sizes;
 			}
 		}
@@ -201,6 +238,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("AvailableSizes", "Cannot access a disposed object.");
+
 				int count = FixedSizesCount;
 
 				if (count == 0)
@@ -225,6 +265,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("CharmapsCount", "Cannot access a disposed object.");
+
 				return rec.num_charmaps;
 			}
 		}
@@ -236,6 +279,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("CharMaps", "Cannot access a disposed object.");
+
 				int count = CharmapsCount;
 
 				if (count == 0)
@@ -261,14 +307,20 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Generic", "Cannot access a disposed object.");
+
 				return new Generic(rec.generic);
 			}
 
 			set
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Generic", "Cannot access a disposed object.");
+
 				//rec.generic = value;
 				value.WriteToUnmanagedMemory(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceRec), "generic").ToInt64()));
-				rec = PInvokeHelper.PtrToStructure<FaceRec>(reference);
+				Reference = reference;
 			}
 		}
 
@@ -286,6 +338,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("BBox", "Cannot access a disposed object.");
+
 				return new BBox(rec.bbox);
 			}
 		}
@@ -300,6 +355,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("UnitsPerEM", "Cannot access a disposed object.");
+
 				return rec.units_per_EM;
 			}
 		}
@@ -313,6 +371,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Ascender", "Cannot access a disposed object.");
+
 				return rec.ascender;
 			}
 		}
@@ -327,6 +388,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Descender", "Cannot access a disposed object.");
+
 				return rec.descender;
 			}
 		}
@@ -340,6 +404,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Height", "Cannot access a disposed object.");
+
 				return rec.height;
 			}
 		}
@@ -353,6 +420,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("MaxAdvanceWidth", "Cannot access a disposed object.");
+
 				return rec.max_advance_width;
 			}
 		}
@@ -367,6 +437,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("MaxAdvanceHeight", "Cannot access a disposed object.");
+
 				return rec.max_advance_height;
 			}
 		}
@@ -380,6 +453,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("UnderlinePosition", "Cannot access a disposed object.");
+
 				return rec.underline_position;
 			}
 		}
@@ -392,6 +468,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("UnderlineThickness", "Cannot access a disposed object.");
+
 				return rec.underline_thickness;
 			}
 		}
@@ -403,6 +482,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Glyph", "Cannot access a disposed object.");
+
 				return new GlyphSlot(rec.glyph, this, parentLibrary);
 			}
 		}
@@ -414,6 +496,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Size", "Cannot access a disposed object.");
+
 				return new FTSize(rec.size, false, this);
 			}
 		}
@@ -425,6 +510,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("CharMap", "Cannot access a disposed object.");
+
 				return new CharMap(rec.charmap, this);
 			}
 		}
@@ -433,11 +521,17 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
+
 				return reference;
 			}
 
 			set
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
+
 				reference = value;
 				rec = PInvokeHelper.PtrToStructure<FaceRec>(reference);
 			}
@@ -1092,12 +1186,19 @@ namespace SharpFont
 			if (!disposed)
 			{
 				disposed = true;
-				FT.DoneFace(this);
-
+				
 				foreach (FTSize s in childSizes)
 					s.Dispose();
 
 				childSizes.Clear();
+
+				Error err = FT.FT_Done_Face(reference);
+
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+
+				reference = IntPtr.Zero;
+				rec = null;
 			}
 		}
 

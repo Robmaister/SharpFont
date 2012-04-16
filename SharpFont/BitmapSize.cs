@@ -46,19 +46,28 @@ namespace SharpFont
 	/// </para></remarks>
 	public sealed class BitmapSize
 	{
-		internal IntPtr reference;
-		internal BitmapSizeRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private BitmapSizeRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal BitmapSize(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<BitmapSizeRec>(reference);
+			Reference = reference;
 		}
 
 		internal BitmapSize(BitmapSizeRec bmpSizeInt)
 		{
 			this.rec = bmpSizeInt;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets the vertical distance, in pixels, between two consecutive
@@ -116,5 +125,21 @@ namespace SharpFont
 				return (int)rec.y_ppem;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<BitmapSizeRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

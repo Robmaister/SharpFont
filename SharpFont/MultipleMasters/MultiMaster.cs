@@ -37,14 +37,23 @@ namespace SharpFont.MultipleMasters
 	/// </para></summary>
 	public class MultiMaster
 	{
-		internal IntPtr reference;
-		internal MultiMasterRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private MultiMasterRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal MultiMaster(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<MultiMasterRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets the number of axes. Cannot exceed 4.
@@ -87,5 +96,21 @@ namespace SharpFont.MultipleMasters
 				return axis;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<MultiMasterRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

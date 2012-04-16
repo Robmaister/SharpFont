@@ -42,9 +42,18 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal struct VectorRec
+	internal class OpenArgsRec
 	{
-		internal FT_Pos x;
-		internal FT_Pos y;
+		internal OpenFlags flags;
+		internal IntPtr memory_base;
+		internal FT_Long memory_size;
+
+		[MarshalAs(UnmanagedType.LPStr)]
+		internal string pathname;
+
+		internal IntPtr stream;
+		internal IntPtr driver;
+		internal int num_params;
+		internal IntPtr @params;
 	}
 }

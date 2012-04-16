@@ -34,14 +34,23 @@ namespace SharpFont.BDF
 	/// </summary>
 	public class Property
 	{
-		internal IntPtr reference;
-		internal PropertyRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private PropertyRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal Property(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<PropertyRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// The property type.
@@ -93,5 +102,21 @@ namespace SharpFont.BDF
 				return rec.cardinal;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<PropertyRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

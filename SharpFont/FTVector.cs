@@ -24,27 +24,56 @@ SOFTWARE.*/
 
 using System;
 using System.Runtime.InteropServices;
+
 using SharpFont.Internal;
+
+#if WIN64
+using FT_26Dot6 = System.Int32;
+using FT_Fixed = System.Int32;
+using FT_Long = System.Int32;
+using FT_Pos = System.Int32;
+using FT_ULong = System.UInt32;
+#else
+using FT_26Dot6 = System.IntPtr;
+using FT_Fixed = System.IntPtr;
+using FT_Long = System.IntPtr;
+using FT_Pos = System.IntPtr;
+using FT_ULong = System.UIntPtr;
+#endif
 
 namespace SharpFont
 {
 	/// <summary>
 	/// A simple structure used to store a 2D vector.
 	/// </summary>
-	public sealed class FTVector
+	[StructLayout(LayoutKind.Sequential)]
+	public struct FTVector
 	{
-		internal IntPtr reference;
-		internal VectorRec rec;
+		private FT_Long x;
+		private FT_Long y;
 
-		internal FTVector(IntPtr reference)
+		public FTVector(int x, int y)
+			: this()
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<VectorRec>(reference);
+#if WIN64
+			this.x = x;
+			this.y = y;
+#else
+			this.x = (IntPtr)x;
+			this.y = (IntPtr)y;
+#endif
 		}
 
-		internal FTVector(VectorRec vInt)
+		internal FTVector(IntPtr reference)
+			: this()
 		{
-			this.rec = vInt;
+#if WIN64
+			this.x = Marshal.ReadInt32(reference);
+			this.y = Marshal.ReadInt32(reference, sizeof(int));
+#else
+			this.x = Marshal.ReadIntPtr(reference);
+			this.y = Marshal.ReadIntPtr(reference, IntPtr.Size);
+#endif
 		}
 
 		/// <summary>
@@ -54,7 +83,16 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)rec.x;
+				return (int)x;
+			}
+
+			set
+			{
+#if WIN64
+				x = value;
+#else
+				x = (IntPtr)value;
+#endif
 			}
 		}
 
@@ -65,7 +103,16 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)rec.y;
+				return (int)y;
+			}
+
+			set
+			{
+#if WIN64
+				y = value;
+#else
+				y = (IntPtr)value;
+#endif
 			}
 		}
 	}

@@ -39,14 +39,23 @@ namespace SharpFont.TrueType
 	/// </remarks>
 	public class MaxProfile
 	{
-		internal IntPtr reference;
-		internal MaxProfileRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private MaxProfileRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal MaxProfile(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<MaxProfileRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets the version number.
@@ -236,5 +245,21 @@ namespace SharpFont.TrueType
 				return rec.maxComponentDepth;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<MaxProfileRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

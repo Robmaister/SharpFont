@@ -34,14 +34,23 @@ namespace SharpFont.FNT
 	/// </summary>
 	public class Header
 	{
-		internal IntPtr reference;
-		internal HeaderRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private HeaderRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal Header(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<HeaderRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		[CLSCompliant(false)]
 		public ushort Version
@@ -359,5 +368,21 @@ namespace SharpFont.FNT
 				#endif
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<HeaderRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

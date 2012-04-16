@@ -35,14 +35,23 @@ namespace SharpFont.TrueType
 	/// </summary>
 	public class Header
 	{
-		internal IntPtr reference;
-		internal HeaderRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private HeaderRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal Header(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<HeaderRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		public int TableVersion
 		{
@@ -191,5 +200,21 @@ namespace SharpFont.TrueType
 				return rec.Glyph_Data_Format;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<HeaderRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

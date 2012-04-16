@@ -35,18 +35,23 @@ namespace SharpFont
 	/// </summary>
 	public sealed class FTSize : IDisposable
 	{
+		#region Fields
+
 		private bool userAlloc;
 		private bool disposed;
 
-		internal IntPtr reference;
-		internal SizeRec rec;
+		private IntPtr reference;
+		private SizeRec rec;
 
 		private Face parentFace;
 
+		#endregion
+
+		#region Constructors
+
 		internal FTSize(IntPtr reference, bool userAlloc, Face parentFace)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<SizeRec>(reference);
+			Reference = reference;
 
 			this.userAlloc = userAlloc;
 
@@ -62,6 +67,21 @@ namespace SharpFont
 			Dispose(false);
 		}
 
+		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// Gets a value indicating whether the object has been disposed.
+		/// </summary>
+		public bool IsDisposed
+		{
+			get
+			{
+				return disposed;
+			}
+		}
+
 		/// <summary>
 		/// Gets a handle to the parent face object.
 		/// </summary>
@@ -69,6 +89,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Face", "Cannot access a disposed object.");
+
 				return parentFace;
 			}
 		}
@@ -82,13 +105,19 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Generic", "Cannot access a disposed object.");
+
 				return new Generic(rec.generic);
 			}
 
 			set
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Generic", "Cannot access a disposed object.");
+
 				value.WriteToUnmanagedMemory(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceRec), "generic").ToInt64()));
-				rec = (SizeRec)Marshal.PtrToStructure(reference, typeof(SizeRec));
+				Reference = reference; //update rec.
 			}
 		}
 
@@ -99,9 +128,36 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Metrics", "Cannot access a disposed object.");
+
 				return new SizeMetrics(rec.metrics);
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				if (disposed)
+					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
+
+				return reference;
+			}
+
+			set
+			{
+				if (disposed)
+					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
+
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<SizeRec>(reference);
+			}
+		}
+
+		#endregion
+
+		#region Public Methods
 
 		/// <summary><para>
 		/// Even though it is possible to create several size objects for a
@@ -129,16 +185,30 @@ namespace SharpFont
 			GC.SuppressFinalize(this);
 		}
 
+		#endregion
+
+		#region Private Methods
+
 		private void Dispose(bool disposing)
 		{
 			if (!disposed)
 			{
+				disposed = true;
+
 				//only dispose the user allocated sizes.
 				if (userAlloc)
-					FT.DoneSize(this);
+				{
+					Error err = FT.FT_Done_Size(reference);
 
-				disposed = true;
+					if (err != Error.Ok)
+						throw new FreeTypeException(err);
+				}
+
+				reference = IntPtr.Zero;
+				rec = null;
 			}
 		}
+
+		#endregion
 	}
 }

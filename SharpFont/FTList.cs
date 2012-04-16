@@ -56,14 +56,23 @@ namespace SharpFont
 	/// </summary>
 	public class FTList
 	{
-		internal IntPtr reference;
-		internal ListRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private ListRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal FTList(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<ListRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// The head (first element) of doubly-linked list.
@@ -86,5 +95,21 @@ namespace SharpFont
 				return new ListNode(rec.tail);
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<ListRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

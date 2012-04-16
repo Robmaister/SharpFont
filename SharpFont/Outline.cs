@@ -40,19 +40,28 @@ namespace SharpFont
 	/// </remarks>
 	public sealed class Outline
 	{
-		internal IntPtr reference;
-		internal OutlineRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private OutlineRec rec;
+
+		#endregion
+
+		#region Constructor
 
 		internal Outline(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<OutlineRec>(reference);
+			Reference = reference;
 		}
 
 		internal Outline(OutlineRec outlineInt)
 		{
 			this.rec = outlineInt;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets the size of the Outline, in bytes.
@@ -189,5 +198,21 @@ namespace SharpFont
 				return rec.flags;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<OutlineRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

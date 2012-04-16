@@ -74,7 +74,7 @@ namespace SharpFont.Cache
 		public static Manager ManagerNew(Library library, uint maxFaces, uint maxSizes, ulong maxBytes, FaceRequester requester, IntPtr requestData)
 		{
 			IntPtr managerRef;
-			Error err = FTC_Manager_New(library.reference, maxFaces, maxSizes, maxBytes, requester, requestData, out managerRef);
+			Error err = FTC_Manager_New(library.Reference, maxFaces, maxSizes, maxBytes, requester, requestData, out managerRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -90,7 +90,7 @@ namespace SharpFont.Cache
 		/// <param name="manager">A handle to the manager.</param>
 		public static void ManagerReset(Manager manager)
 		{
-			FTC_Manager_Reset(manager.reference);
+			FTC_Manager_Reset(manager.Reference);
 		}
 
 		/// <summary>
@@ -101,8 +101,7 @@ namespace SharpFont.Cache
 		/// </param>
 		public static void ManagerDone(Manager manager)
 		{
-			FTC_Manager_Done(manager.reference);
-			manager.reference = IntPtr.Zero;
+			manager.Dispose();
 		}
 
 		/// <summary>
@@ -135,7 +134,7 @@ namespace SharpFont.Cache
 		public static Face ManagerLookupFace(Manager manager, IntPtr faceID)
 		{
 			IntPtr faceRef;
-			Error err = FTC_Manager_LookupFace(manager.reference, faceID, out faceRef);
+			Error err = FTC_Manager_LookupFace(manager.Reference, faceID, out faceRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -171,7 +170,7 @@ namespace SharpFont.Cache
 		{
 			IntPtr sizeRef;
 
-			Error err = FTC_Manager_LookupSize(manager.reference, scaler.reference, out sizeRef);
+			Error err = FTC_Manager_LookupSize(manager.Reference, scaler.Reference, out sizeRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -189,7 +188,7 @@ namespace SharpFont.Cache
 		/// <param name="manager">The cache manager handle.</param>
 		public static void NodeUnref(Node node, Manager manager)
 		{
-			FTC_Node_Unref(node.reference, manager.reference);
+			FTC_Node_Unref(node.Reference, manager.Reference);
 		}
 
 		/// <summary>
@@ -210,7 +209,7 @@ namespace SharpFont.Cache
 		/// <param name="faceID">The FTC_FaceID to be removed.</param>
 		public static void ManagerRemoveFaceID(Manager manager, IntPtr faceID)
 		{
-			FTC_Manager_RemoveFaceID(manager.reference, faceID);
+			FTC_Manager_RemoveFaceID(manager.Reference, faceID);
 		}
 
 		/// <summary>
@@ -226,7 +225,7 @@ namespace SharpFont.Cache
 		{
 			IntPtr cacheRef;
 
-			Error err = FTC_CMapCache_New(manager.reference, out cacheRef);
+			Error err = FTC_CMapCache_New(manager.Reference, out cacheRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -251,7 +250,7 @@ namespace SharpFont.Cache
 		[CLSCompliant(false)]
 		public static uint CMapCacheLookup(CMapCache cache, IntPtr faceID, int cmapIndex, uint charCode)
 		{
-			return FTC_CMapCache_Lookup(cache.reference, faceID, cmapIndex, charCode);
+			return FTC_CMapCache_Lookup(cache.Reference, faceID, cmapIndex, charCode);
 		}
 
 		/// <summary>
@@ -265,7 +264,7 @@ namespace SharpFont.Cache
 		{
 			IntPtr cacheRef;
 
-			Error err = FTC_ImageCache_New(manager.reference, out cacheRef);
+			Error err = FTC_ImageCache_New(manager.Reference, out cacheRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -310,7 +309,7 @@ namespace SharpFont.Cache
 		{
 			IntPtr glyphRef, nodeRef;
 
-			Error err = FTC_ImageCache_Lookup(cache.reference, type.reference, gIndex, out glyphRef, out nodeRef);
+			Error err = FTC_ImageCache_Lookup(cache.Reference, type.Reference, gIndex, out glyphRef, out nodeRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -359,7 +358,7 @@ namespace SharpFont.Cache
 		{
 			IntPtr glyphRef, nodeRef;
 
-			Error err = FTC_ImageCache_LookupScaler(cache.reference, scaler.reference, loadFlags, gIndex, out glyphRef, out nodeRef);
+			Error err = FTC_ImageCache_LookupScaler(cache.Reference, scaler.Reference, loadFlags, gIndex, out glyphRef, out nodeRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -379,7 +378,7 @@ namespace SharpFont.Cache
 		{
 			IntPtr cacheRef;
 
-			Error err = FTC_SBitCache_New(manager.reference, out cacheRef);
+			Error err = FTC_SBitCache_New(manager.Reference, out cacheRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -425,7 +424,7 @@ namespace SharpFont.Cache
 		{
 			IntPtr sbitRef, nodeRef;
 
-			Error err = FTC_SBitCache_Lookup(cache.reference, type.reference, gIndex, out sbitRef, out nodeRef);
+			Error err = FTC_SBitCache_Lookup(cache.Reference, type.Reference, gIndex, out sbitRef, out nodeRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -471,7 +470,7 @@ namespace SharpFont.Cache
 		{
 			IntPtr sbitRef, nodeRef;
 
-			Error err = FTC_SBitCache_LookupScaler(cache.reference, scaler.reference, loadFlags, gIndex, out sbitRef, out nodeRef);
+			Error err = FTC_SBitCache_LookupScaler(cache.Reference, scaler.Reference, loadFlags, gIndex, out sbitRef, out nodeRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);

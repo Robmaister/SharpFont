@@ -111,9 +111,9 @@
     <Compile Include="Internal\GlyphSlotRec.cs" />
     <Compile Include="Internal\ListNodeRec.cs" />
     <Compile Include="Internal\ListRec.cs" />
-    <Compile Include="Internal\MatrixRec.cs" />
     <Compile Include="Internal\MemoryRec.cs" />
     <Compile Include="Internal\ModuleClassRec.cs" />
+    <Compile Include="Internal\OpenArgsRec.cs" />
     <Compile Include="Internal\OutlineFuncsRec.cs" />
     <Compile Include="Internal\OutlineGlyphRec.cs" />
     <Compile Include="Internal\OutlineRec.cs" />
@@ -126,7 +126,6 @@
     <Compile Include="Internal\SpanRec.cs" />
     <Compile Include="Internal\StreamDescRec.cs" />
     <Compile Include="Internal\StreamRec.cs" />
-    <Compile Include="Internal\VectorRec.cs" />
     <Compile Include="LcdFilter.cs" />
     <Compile Include="ListNode.cs" />
     <Compile Include="Memory.cs" />

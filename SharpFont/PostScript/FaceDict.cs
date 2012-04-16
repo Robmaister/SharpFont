@@ -34,14 +34,23 @@ namespace SharpFont.PostScript
 	/// </summary>
 	public class FaceDict
 	{
-		internal IntPtr reference;
-		internal FaceDictRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private FaceDictRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal FaceDict(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<FaceDictRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		public Private PrivateDictionary
 		{
@@ -141,5 +150,21 @@ namespace SharpFont.PostScript
 				return rec.sd_bytes;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<FaceDictRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

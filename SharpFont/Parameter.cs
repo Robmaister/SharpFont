@@ -39,14 +39,23 @@ namespace SharpFont
 	/// </remarks>
 	public sealed class Parameter
 	{
-		internal IntPtr reference;
-		internal ParameterRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private ParameterRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal Parameter(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<ParameterRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// A four-byte identification tag.
@@ -70,5 +79,37 @@ namespace SharpFont
 				return rec.data;
 			}
 		}
+
+		public static int SizeInBytes
+		{
+			get
+			{
+				return Marshal.SizeOf(typeof(Parameter));
+			}
+		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<ParameterRec>(reference);
+			}
+		}
+
+		internal ParameterRec Record
+		{
+			get
+			{
+				return rec;
+			}
+		}
+
+		#endregion
 	}
 }

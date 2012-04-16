@@ -54,7 +54,13 @@ namespace SharpFont
 	/// </para></summary>
 	public class Generic
 	{
+		#region Fields
+
 		private GenericRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the Generic class.
@@ -69,18 +75,22 @@ namespace SharpFont
 
 		internal Generic(GenericRec genInternal)
 		{
-			this.rec = genInternal;
+			rec = genInternal;
 		}
 
 		internal Generic(IntPtr reference)
 		{
-			this.rec = PInvokeHelper.PtrToStructure<GenericRec>(reference);
+			rec = PInvokeHelper.PtrToStructure<GenericRec>(reference);
 		}
 
 		internal Generic(IntPtr reference, int offset)
 			: this(new IntPtr(reference.ToInt64() + offset))
 		{
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets or sets a typeless pointer to any client-specified data. This
@@ -111,11 +121,17 @@ namespace SharpFont
 		/// </summary>
 		public static int SizeInBytes { get { return IntPtr.Size * 2; } }
 
+		#endregion
+
+		#region Internal Methods
+
 		//TODO make this private and build it into the setters if the reference isn't IntPtr.Zero.
 		internal void WriteToUnmanagedMemory(IntPtr location)
 		{
 			Marshal.WriteIntPtr(location, rec.data);
 			Marshal.WriteIntPtr(location, IntPtr.Size, Marshal.GetFunctionPointerForDelegate(rec.finalizer));
 		}
+
+		#endregion
 	}
 }

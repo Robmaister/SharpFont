@@ -43,19 +43,28 @@ namespace SharpFont
 	/// </remarks>
 	public sealed class FTBitmap
 	{
-		internal IntPtr reference;
-		internal BitmapRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private BitmapRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal FTBitmap(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<BitmapRec>(reference);
+			Reference = reference;
 		}
 
 		internal FTBitmap(BitmapRec bmpInt)
 		{
 			this.rec = bmpInt;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/*/// <summary>
 		/// Gets the size of a Bitmap, in bytes.
@@ -176,5 +185,21 @@ namespace SharpFont
 				return rec.palette;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<BitmapRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

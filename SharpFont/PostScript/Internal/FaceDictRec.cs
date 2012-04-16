@@ -55,8 +55,8 @@ namespace SharpFont.PostScript.Internal
 
 		internal byte paint_type;
 		internal byte font_type;
-		internal MatrixRec font_matrix;
-		internal VectorRec font_offset;
+		internal FTMatrix font_matrix;
+		internal FTVector font_offset;
 
 		internal uint num_subrs;
 		internal FT_ULong subrmap_offset;

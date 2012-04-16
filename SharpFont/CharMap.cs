@@ -34,17 +34,26 @@ namespace SharpFont
 	/// </summary>
 	public sealed class CharMap
 	{
-		internal IntPtr reference;
-		internal CharMapRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private CharMapRec rec;
 
 		private Face parentFace;
 
+		#endregion
+
+		#region Constructors
+
 		internal CharMap(IntPtr reference, Face parent)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<CharMapRec>(reference);
+			Reference = reference;
 			this.parentFace = parent;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets a handle to the parent face object.
@@ -98,6 +107,24 @@ namespace SharpFont
 			}
 		}
 
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<CharMapRec>(reference);
+			}
+		}
+
+		#endregion
+
+		#region Public Methods
+
 		/// <summary>
 		/// Retrieve index of a given charmap.
 		/// </summary>
@@ -109,5 +136,7 @@ namespace SharpFont
 		{
 			return FT.GetCharmapIndex(this);
 		}
+
+		#endregion
 	}
 }

@@ -310,7 +310,7 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static uint GetCMapLanguageID(CharMap charMap)
 		{
-			return FT_Get_CMap_Language_ID(charMap.reference);
+			return FT_Get_CMap_Language_ID(charMap.Reference);
 		}
 
 		/// <summary>
@@ -323,7 +323,7 @@ namespace SharpFont
 		/// </returns>
 		public static int GetCMapFormat(CharMap charMap)
 		{
-			return FT_Get_CMap_Format(charMap.reference);
+			return FT_Get_CMap_Format(charMap.Reference);
 		}
 
 		#endregion
@@ -689,13 +689,13 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static FTVector GetPFRKerning(Face face, uint left, uint right)
 		{
-			VectorRec vector;
+			FTVector vector;
 			Error err = FT_Get_PFR_Kerning(face.Reference, left, right, out vector);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new FTVector(vector);
+			return vector;
 		}
 
 		/// <summary>

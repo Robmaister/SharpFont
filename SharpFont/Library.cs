@@ -44,7 +44,7 @@ namespace SharpFont
 	{
 		#region Fields
 
-		internal IntPtr reference;
+		private IntPtr reference;
 
 		private bool customMemory;
 		private bool disposed;
@@ -56,10 +56,20 @@ namespace SharpFont
 
 		#region Constructors
 
+		private Library(bool duplicate)
+		{
+			childFaces = new List<Face>();
+			childGlyphs = new List<Glyph>();
+
+			if (duplicate)
+				FT.ReferenceLibrary(this);
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the Library class.
 		/// </summary>
 		public Library()
+			: this(false)
 		{
 			//duplicate the error checking code from FT.InitFreeType, it's the
 			//simplest way to create a new Library without making copies.
@@ -69,10 +79,7 @@ namespace SharpFont
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			reference = libraryRef;
-
-			childFaces = new List<Face>();
-			childGlyphs = new List<Glyph>();
+			Reference = libraryRef;
 		}
 
 		/// <summary>
@@ -80,29 +87,22 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="memory">A custom FreeType memory manager.</param>
 		public Library(Memory memory)
+			: this(false)
 		{
 			IntPtr libraryRef;
-			Error err = FT.FT_New_Library(memory.reference, out libraryRef);
+			Error err = FT.FT_New_Library(memory.Reference, out libraryRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			reference = libraryRef;
+			Reference = libraryRef;
 			customMemory = true;
-
-			childFaces = new List<Face>();
-			childGlyphs = new List<Glyph>();
 		}
 
 		internal Library(IntPtr reference, bool duplicate)
+			: this(duplicate)
 		{
-			this.reference = reference;
-
-			if (duplicate)
-				FT.ReferenceLibrary(this);
-
-			childFaces = new List<Face>();
-			childGlyphs = new List<Glyph>();
+			Reference = reference;
 		}
 
 		/// <summary>
@@ -115,19 +115,58 @@ namespace SharpFont
 
 		#endregion
 
-		#region Public Methods
+		#region Properties
+
+		/// <summary>
+		/// Gets a value indicating whether the object has been disposed.
+		/// </summary>
+		public bool IsDisposed
+		{
+			get
+			{
+				return disposed;
+			}
+		}
 
 		/// <summary>
 		/// Return the version of the FreeType library being used.
 		/// </summary>
 		/// <remarks>See <see cref="FT.LibraryVersion"/>.</remarks>
-		/// <returns>The version of the FreeType library being used.</returns>
-		public Version Version()
+		public Version Version
 		{
-			int major, minor, patch;
-			FT.LibraryVersion(this, out major, out minor, out patch);
-			return new Version(major, minor, patch);
+			get
+			{
+				if (disposed)
+					throw new ObjectDisposedException("Version", "Cannot access a disposed object.");
+
+				int major, minor, patch;
+				FT.LibraryVersion(this, out major, out minor, out patch);
+				return new Version(major, minor, patch);
+			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				if (disposed)
+					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
+
+				return reference;
+			}
+
+			set
+			{
+				if (disposed)
+					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
+
+				reference = value;
+			}
+		}
+
+		#endregion
+
+		#region Public Methods
 
 		/// <summary>
 		/// This function calls <see cref="OpenFace"/> to open a font by its 
@@ -153,7 +192,7 @@ namespace SharpFont
 		/// <see cref="OpenFace"/>
 		public Face NewMemoryFace(byte[] file, int faceIndex)
 		{
-			return FT.NewMemoryFace(this, ref file, faceIndex);
+			return FT.NewMemoryFace(this, file, faceIndex);
 		}
 
 		/// <summary>
@@ -360,11 +399,7 @@ namespace SharpFont
 			{
 				disposed = true;
 
-				if (customMemory)
-					FT.DoneLibrary(this);
-				else
-					FT.DoneFreeType(this);
-
+				//dipose all the children before disposing the library.
 				foreach (Face f in childFaces)
 					f.Dispose();
 
@@ -373,6 +408,13 @@ namespace SharpFont
 
 				childFaces.Clear();
 				childGlyphs.Clear();
+
+				Error err = (customMemory) ? FT.FT_Done_Library(reference) : FT.FT_Done_FreeType(reference);
+
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+
+				reference = IntPtr.Zero;
 			}
 		}
 

@@ -32,12 +32,22 @@ namespace SharpFont
 	/// </summary>
 	public sealed class Data
 	{
-		internal IntPtr reference;
+		#region Fields
+
+		private IntPtr reference;
+
+		#endregion
+
+		#region Constructors
 
 		internal Data(IntPtr reference)
 		{
-			this.reference = reference;
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// The data.
@@ -60,5 +70,20 @@ namespace SharpFont
 				return Marshal.ReadInt32(reference, IntPtr.Size);
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+			}
+		}
+
+		#endregion
 	}
 }

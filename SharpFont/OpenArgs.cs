@@ -25,6 +25,8 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
+using SharpFont.Internal;
+
 namespace SharpFont
 {
 	/// <summary>
@@ -49,7 +51,7 @@ namespace SharpFont
 	/// </description></item>
 	/// <item><description>
 	/// Otherwise, if the <see cref="OpenFlags.Pathname"/> bit is set, assume
-	/// that this is a normal file and use <see cref="Pathname"/> to open it.
+	/// that this is a normal file and use <see cref="PathName"/> to open it.
 	/// </description></item>
 	/// <item><description>
 	/// If the <see cref="OpenFlags.Driver"/> bit is set,
@@ -62,19 +64,30 @@ namespace SharpFont
 	/// ignored otherwise.
 	/// </description></item>
 	/// </list>
-	/// Ideally, both the <see cref="Pathname"/> and <see cref="Params"/>
+	/// Ideally, both the <see cref="PathName"/> and <see cref="Params"/>
 	/// fields should be tagged as ‘const’; this is missing for API backwards
 	/// compatibility. In other words, applications should treat them as
 	/// read-only.
 	/// </remarks>
 	public sealed class OpenArgs
 	{
-		internal IntPtr reference;
+		#region Fields
+
+		private IntPtr reference;
+		private OpenArgsRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal OpenArgs(IntPtr reference)
 		{
-			this.reference = reference;
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// A set of bit flags indicating how to use the structure.
@@ -83,7 +96,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (OpenFlags)Marshal.ReadInt32(reference, 0);
+				return rec.flags;
 			}
 		}
 
@@ -94,7 +107,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadIntPtr(reference, 4);
+				return rec.memory_base;
 			}
 		}
 
@@ -105,20 +118,18 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 4
-					+ IntPtr.Size);
+				return (int)rec.memory_size;
 			}
 		}
 
 		/// <summary>
 		/// A pointer to an 8-bit file pathname.
 		/// </summary>
-		public string Pathname
+		public string PathName
 		{
 			get
 			{
-				return Marshal.PtrToStringAnsi(Marshal.ReadIntPtr(reference, 8
-					+ IntPtr.Size));
+				return rec.pathname;
 			}
 		}
 
@@ -129,8 +140,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new FTStream(Marshal.ReadIntPtr(reference, 8
-					+ IntPtr.Size * 2));
+				return new FTStream(rec.stream);
 			}
 		}
 
@@ -144,8 +154,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Module(Marshal.ReadIntPtr(reference, 8
-					+ IntPtr.Size * 3));
+				return new Module(rec.driver);
 			}
 		}
 
@@ -156,14 +165,48 @@ namespace SharpFont
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 8
-					+ IntPtr.Size * 4);
+				return rec.num_params;
 			}
 		}
 
 		/// <summary>
 		/// Extra parameters passed to the font driver when opening a new face.
 		/// </summary>
-		public IntPtr Params;
+		public Parameter[] Params
+		{
+			get
+			{
+				int count = ParamsCount;
+
+				if (count == 0)
+					return null;
+
+				Parameter[] parameters = new Parameter[count];
+				IntPtr array = rec.@params;
+
+				for (int i = 0; i < count; i++)
+				{
+					parameters[i] = new Parameter(new IntPtr(array.ToInt64() + Parameter.SizeInBytes * i));
+				}
+
+				return parameters;
+			}
+		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<OpenArgsRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

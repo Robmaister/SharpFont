@@ -43,14 +43,23 @@ namespace SharpFont.TrueType
 	/// <see cref="MicrosoftEncodingID"/>
 	public class SfntName
 	{
-		internal IntPtr reference;
-		internal SfntNameRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private SfntNameRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal SfntName(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<SfntNameRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// The platform ID for ‘string’.
@@ -116,5 +125,21 @@ namespace SharpFont.TrueType
 				return string.Empty;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<SfntNameRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

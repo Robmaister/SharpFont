@@ -96,13 +96,13 @@ namespace SharpFont
 		internal static extern Error FT_Load_Char(IntPtr face, uint char_code, int load_flags);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Set_Transform(IntPtr face, IntPtr matrix, IntPtr delta);
+		internal static extern void FT_Set_Transform(IntPtr face, ref FTMatrix matrix, ref FTVector delta);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Error FT_Render_Glyph(IntPtr slot, RenderMode render_mode);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Get_Kerning(IntPtr face, uint left_glyph, uint right_glyph, KerningMode kern_mode, out VectorRec akerning);
+		internal static extern Error FT_Get_Kerning(IntPtr face, uint left_glyph, uint right_glyph, KerningMode kern_mode, out FTVector akerning);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Error FT_Get_Track_Kerning(IntPtr face, int point_size, int degree, out int akerning);
@@ -135,7 +135,7 @@ namespace SharpFont
 		internal static extern uint FT_Get_Name_Index(IntPtr face, IntPtr glyph_name);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Get_SubGlyph_Info(IntPtr glyph, uint sub_index, out int p_index, out SubGlyphFlags p_flags, out int p_arg1, out int p_arg2, out MatrixRec p_transform);
+		internal static extern Error FT_Get_SubGlyph_Info(IntPtr glyph, uint sub_index, out int p_index, out SubGlyphFlags p_flags, out int p_arg1, out int p_arg2, out FTMatrix p_transform);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern EmbeddingTypes FT_Get_FSType_Flags(IntPtr face);
@@ -170,13 +170,13 @@ namespace SharpFont
 		internal static extern Error FT_Glyph_Copy(IntPtr source, out IntPtr target);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Glyph_Transform(IntPtr glyph, IntPtr matrix, IntPtr delta);
+		internal static extern Error FT_Glyph_Transform(IntPtr glyph, ref FTMatrix matrix, ref FTVector delta);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern void FT_Glyph_Get_CBox(IntPtr glyph, GlyphBBoxMode bbox_mode, out IntPtr acbox);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Glyph_To_Bitmap(ref IntPtr the_glyph, RenderMode render_mode, IntPtr origin, bool destroy);
+		internal static extern Error FT_Glyph_To_Bitmap(ref IntPtr the_glyph, RenderMode render_mode, ref FTVector origin, bool destroy);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern void FT_Done_Glyph(IntPtr glyph);
@@ -319,7 +319,7 @@ namespace SharpFont
 		internal static extern Error FT_Get_PFR_Metrics(IntPtr face, out uint aoutline_resolution, out uint ametrics_resolution, out int ametrics_x_scale, out int ametrics_y_scale);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Get_PFR_Kerning(IntPtr face, uint left, uint right, out VectorRec avector);
+		internal static extern Error FT_Get_PFR_Kerning(IntPtr face, uint left, uint right, out FTVector avector);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Error FT_Get_PFR_Advance(IntPtr face, uint gindex, out int aadvance);
@@ -372,13 +372,13 @@ namespace SharpFont
 		internal static extern int FT_FloorFix(int a);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Vector_Transform(ref IntPtr vec, IntPtr matrix);
+		internal static extern void FT_Vector_Transform(ref FTVector vec, ref FTMatrix matrix);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Matrix_Multiply(IntPtr a, ref IntPtr b);
+		internal static extern void FT_Matrix_Multiply(ref FTMatrix a, ref FTMatrix b);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Matrix_Invert(ref IntPtr matrix);
+		internal static extern Error FT_Matrix_Invert(ref FTMatrix matrix);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern int FT_Sin(int angle);
@@ -396,19 +396,19 @@ namespace SharpFont
 		internal static extern int FT_Angle_Diff(int angle1, int angle2);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Vector_Unit(out IntPtr vec, int angle);
+		internal static extern void FT_Vector_Unit(out FTVector vec, int angle);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Vector_Rotate(ref IntPtr vec, int angle);
+		internal static extern void FT_Vector_Rotate(ref FTVector vec, int angle);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern int FT_Vector_Length(IntPtr vec);
+		internal static extern int FT_Vector_Length(ref FTVector vec);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Vector_Polarize(IntPtr vec, out int length, out int angle);
+		internal static extern void FT_Vector_Polarize(ref FTVector vec, out int length, out int angle);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Vector_From_Polar(out IntPtr vec, int length, int angle);
+		internal static extern void FT_Vector_From_Polar(out FTVector vec, int length, int angle);
 
 		#endregion
 
@@ -458,7 +458,7 @@ namespace SharpFont
 		internal static extern void FT_Outline_Translate(IntPtr outline, int xOffset, int yOffset);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_Outline_Transform(IntPtr outline, IntPtr matrix);
+		internal static extern void FT_Outline_Transform(IntPtr outline, ref FTMatrix matrix);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Error FT_Outline_Embolden(IntPtr outline, int strength);
@@ -542,19 +542,19 @@ namespace SharpFont
 		internal static extern Error FT_Stroker_ParseOutline(IntPtr stroker, IntPtr outline, bool opened);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Stroker_BeginSubPath(IntPtr stroker, IntPtr to, bool open);
+		internal static extern Error FT_Stroker_BeginSubPath(IntPtr stroker, ref FTVector to, bool open);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Error FT_Stroker_EndSubPath(IntPtr stroker);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Stroker_LineTo(IntPtr stroker, IntPtr to);
+		internal static extern Error FT_Stroker_LineTo(IntPtr stroker, ref FTVector to);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Stroker_ConicTo(IntPtr stroker, IntPtr control, IntPtr to);
+		internal static extern Error FT_Stroker_ConicTo(IntPtr stroker, ref FTVector control, ref FTVector to);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_Stroker_CubicTo(IntPtr stroker, IntPtr control1, IntPtr control2, IntPtr to);
+		internal static extern Error FT_Stroker_CubicTo(IntPtr stroker, ref FTVector control1, ref FTVector control2, ref FTVector to);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
 		internal static extern Error FT_Stroker_GetBorderCounts(IntPtr stroker, StrokerBorder border, out uint anum_points, out uint anum_contours);

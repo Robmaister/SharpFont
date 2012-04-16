@@ -34,14 +34,23 @@ namespace SharpFont
 	/// </summary>
 	public class RendererClass
 	{
-		internal IntPtr reference;
-		internal RendererClassRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private RendererClassRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal RendererClass(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<RendererClassRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// The root <see cref="ModuleClass"/> fields.
@@ -123,5 +132,21 @@ namespace SharpFont
 				return new RasterFuncs(reference, Marshal.OffsetOf(typeof(RendererClassRec), "raster_class"));
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<RendererClassRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

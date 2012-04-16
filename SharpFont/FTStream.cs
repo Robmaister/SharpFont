@@ -57,14 +57,23 @@ namespace SharpFont
 	/// </summary>
 	public sealed class FTStream
 	{
-		internal IntPtr reference;
-		internal StreamRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private StreamRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal FTStream(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<StreamRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// For memory-based streams, this is the address of the first stream
@@ -187,5 +196,21 @@ namespace SharpFont
 				return rec.limit;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<StreamRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

@@ -95,7 +95,7 @@ namespace SharpFont
 		/// <returns>A value indicating which level is supported.</returns>
 		public static EngineType GetTrueTypeEngineType(Library library)
 		{
-			return FT_Get_TrueType_Engine_Type(library.reference);
+			return FT_Get_TrueType_Engine_Type(library.Reference);
 		}
 
 		#endregion

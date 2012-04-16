@@ -46,14 +46,23 @@ namespace SharpFont
 	/// </para></remarks>
 	public class BitmapGlyph
 	{
-		internal IntPtr reference;
-		internal BitmapGlyphRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private BitmapGlyphRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal BitmapGlyph(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<BitmapGlyphRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// The root <see cref="Glyph"/> fields.
@@ -102,5 +111,21 @@ namespace SharpFont
 				return new FTBitmap(rec.bitmap);
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<BitmapGlyphRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

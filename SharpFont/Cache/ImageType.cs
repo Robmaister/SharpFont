@@ -34,14 +34,23 @@ namespace SharpFont.Cache
 	/// </summary>
 	public class ImageType
 	{
-		internal IntPtr reference;
-		internal ImageTypeRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private ImageTypeRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal ImageType(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<ImageTypeRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets the face ID.
@@ -87,5 +96,21 @@ namespace SharpFont.Cache
 				return rec.flags;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<ImageTypeRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

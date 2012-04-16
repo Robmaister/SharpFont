@@ -42,14 +42,23 @@ namespace SharpFont
 	/// </para></remarks>
 	public class Span
 	{
-		internal IntPtr reference;
-		internal SpanRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private SpanRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal Span(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<SpanRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// The span's horizontal start position.
@@ -85,5 +94,21 @@ namespace SharpFont
 				return rec.coverage;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<SpanRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

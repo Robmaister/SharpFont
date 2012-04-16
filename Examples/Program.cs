@@ -41,7 +41,7 @@ namespace Examples
 			{
 				using (Library lib = new Library())
 				{
-					Console.WriteLine("FreeType version: " + lib.Version() + "\n");
+					Console.WriteLine("FreeType version: " + lib.Version + "\n");
 
 					using (Face face = lib.NewFace(@"Fonts/Cousine-Regular-Latin.ttf", 0))
 					{

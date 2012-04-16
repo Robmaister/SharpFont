@@ -421,7 +421,7 @@ namespace SharpFont
 		/// <param name="apatch">The patch version number.</param>
 		public static void LibraryVersion(Library library, out int amajor, out int aminor, out int apatch)
 		{
-			FT_Library_Version(library.reference, out amajor, out aminor, out apatch);
+			FT_Library_Version(library.Reference, out amajor, out aminor, out apatch);
 		}
 
 		/// <summary><para>
@@ -443,6 +443,9 @@ namespace SharpFont
 		/// </returns>
 		public static bool FaceCheckTrueTypePatents(Face face)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			return FT_Face_CheckTrueTypePatents(face.Reference);
 		}
 
@@ -464,6 +467,9 @@ namespace SharpFont
 		/// <see cref="FaceCheckTrueTypePatents"/>
 		public static bool FaceSetUnpatentedHinting(Face face, bool value)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			return FT_Face_SetUnpatentedHinting(face.Reference, value);
 		}
 
@@ -496,12 +502,7 @@ namespace SharpFont
 		/// </param>
 		public static void DoneFreeType(Library library)
 		{
-			Error err = FT_Done_FreeType(library.reference);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
-
-			library.reference = IntPtr.Zero;
+			library.Dispose();
 		}
 
 		/// <summary>
@@ -520,8 +521,11 @@ namespace SharpFont
 		/// <see cref="OpenFace"/>
 		public static Face NewFace(Library library, string filepathname, int faceIndex)
 		{
+			if (library.IsDisposed)
+				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
+
 			IntPtr faceRef;
-			Error err = FT_New_Face(library.reference, filepathname, faceIndex, out faceRef);
+			Error err = FT_New_Face(library.Reference, filepathname, faceIndex, out faceRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -549,13 +553,16 @@ namespace SharpFont
 		/// equal to zero, it must be non-NULL.
 		/// </returns>
 		/// <see cref="OpenFace"/>
-		public static unsafe Face NewMemoryFace(Library library, ref byte[] fileBase, int faceIndex)
+		public static unsafe Face NewMemoryFace(Library library, byte[] fileBase, int faceIndex)
 		{
+			if (library.IsDisposed)
+				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
+
 			fixed (byte* ptr = fileBase)
 			{
 				IntPtr faceRef;
 
-				Error err = FT_New_Memory_Face(library.reference, new IntPtr(ptr), fileBase.Length, faceIndex, out faceRef);
+				Error err = FT_New_Memory_Face(library.Reference, new IntPtr(ptr), fileBase.Length, faceIndex, out faceRef);
 
 				if (err != Error.Ok)
 					throw new FreeTypeException(err);
@@ -603,9 +610,12 @@ namespace SharpFont
 		/// </returns>
 		public static Face OpenFace(Library library, OpenArgs args, int faceIndex)
 		{
+			if (library.IsDisposed)
+				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
+
 			IntPtr faceRef;
 
-			Error err = FT_Open_Face(library.reference, args.reference, faceIndex, out faceRef);
+			Error err = FT_Open_Face(library.Reference, args.Reference, faceIndex, out faceRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -620,6 +630,9 @@ namespace SharpFont
 		/// <param name="path">The pathname.</param>
 		public static void AttachFile(Face face, string path)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			Error err = FT_Attach_File(face.Reference, path);
 
 			if (err != Error.Ok)
@@ -648,7 +661,10 @@ namespace SharpFont
 		/// </param>
 		public static void AttachStream(Face face, OpenArgs parameters)
 		{
-			Error err = FT_Attach_Stream(face.Reference, parameters.reference);
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
+			Error err = FT_Attach_Stream(face.Reference, parameters.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -661,12 +677,7 @@ namespace SharpFont
 		/// <param name="face">A handle to a target face object.</param>
 		public static void DoneFace(Face face)
 		{
-			Error err = FT_Done_Face(face.Reference);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
-
-			face.Reference = IntPtr.Zero;
+			face.Dispose();
 		}
 
 		/// <summary>
@@ -680,6 +691,9 @@ namespace SharpFont
 		/// </param>
 		public static void SelectSize(Face face, int strikeIndex)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			Error err = FT_Select_Size(face.Reference, strikeIndex);
 
 			if (err != Error.Ok)
@@ -695,7 +709,10 @@ namespace SharpFont
 		/// </param>
 		public static void RequestSize(Face face, SizeRequest request)
 		{
-			Error err = FT_Request_Size(face.Reference, request.reference);
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
+			Error err = FT_Request_Size(face.Reference, request.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -729,6 +746,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static void SetCharSize(Face face, int charWidth, int charHeight, uint horizontalRes, uint verticalRes)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			Error err = FT_Set_Char_Size(face.Reference, charWidth, charHeight, horizontalRes, verticalRes);
 
 			if (err != Error.Ok)
@@ -745,6 +765,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static void SetPixelSizes(Face face, uint pixelWidth, uint pixelHeight)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			Error err = FT_Set_Pixel_Sizes(face.Reference, pixelWidth, pixelHeight);
 
 			if (err != Error.Ok)
@@ -782,6 +805,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static void LoadGlyph(Face face, uint glyphIndex, LoadFlags flags, LoadTarget target)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			Error err = FT_Load_Glyph(face.Reference, glyphIndex, (int)flags | (int)target);
 
 			if (err != Error.Ok)
@@ -813,6 +839,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static void LoadChar(Face face, uint charCode, LoadFlags flags, LoadTarget target)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			Error err = FT_Load_Char(face.Reference, charCode, (int)flags | (int)target);
 
 			if (err != Error.Ok)
@@ -843,7 +872,10 @@ namespace SharpFont
 		/// </param>
 		public static void SetTransform(Face face, FTMatrix matrix, FTVector delta)
 		{
-			FT_Set_Transform(face.Reference, matrix.reference, delta.reference);
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
+			FT_Set_Transform(face.Reference, ref matrix, ref delta);
 		}
 
 		/// <summary>
@@ -860,7 +892,7 @@ namespace SharpFont
 		/// </param>
 		public static void RenderGlyph(GlyphSlot slot, RenderMode mode)
 		{
-			Error err = FT_Render_Glyph(slot.reference, mode);
+			Error err = FT_Render_Glyph(slot.Reference, mode);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -893,13 +925,16 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static FTVector GetKerning(Face face, uint leftGlyph, uint rightGlyph, KerningMode mode)
 		{
-			VectorRec kern;
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
+			FTVector kern;
 			Error err = FT_Get_Kerning(face.Reference, leftGlyph, rightGlyph, mode, out kern);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new FTVector(kern);
+			return kern;
 		}
 
 		/// <summary>
@@ -913,6 +948,9 @@ namespace SharpFont
 		/// <returns>The kerning in 16.16 fractional points.</returns>
 		public static int GetTrackKerning(Face face, int pointSize, int degree)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			int kerning;
 
 			Error err = FT_Get_Track_Kerning(face.Reference, pointSize, degree, out kerning);
@@ -952,6 +990,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static string GetGlyphName(Face face, uint glyphIndex, int bufferSize)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			return GetGlyphName(face, glyphIndex, new byte[bufferSize]);
 		}
 
@@ -984,6 +1025,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static unsafe string GetGlyphName(Face face, uint glyphIndex, byte[] buffer)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			fixed (byte* ptr = buffer)
 			{
 				IntPtr intptr = new IntPtr(ptr);
@@ -1009,6 +1053,9 @@ namespace SharpFont
 		/// </returns>
 		public static string GetPostscriptName(Face face)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			return Marshal.PtrToStringAnsi(FT_Get_Postscript_Name(face.Reference));
 		}
 
@@ -1030,6 +1077,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static void SelectCharmap(Face face, Encoding encoding)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			Error err = FT_Select_Charmap(face.Reference, encoding);
 
 			if (err != Error.Ok)
@@ -1047,7 +1097,10 @@ namespace SharpFont
 		/// <param name="charmap">A handle to the selected charmap.</param>
 		public static void SetCharmap(Face face, CharMap charmap)
 		{
-			Error err = FT_Set_Charmap(face.Reference, charmap.reference);
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
+			Error err = FT_Set_Charmap(face.Reference, charmap.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1063,7 +1116,7 @@ namespace SharpFont
 		/// </returns>
 		public static int GetCharmapIndex(CharMap charmap)
 		{
-			return FT_Get_Charmap_Index(charmap.reference);
+			return FT_Get_Charmap_Index(charmap.Reference);
 		}
 
 		/// <summary>
@@ -1085,6 +1138,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static uint GetCharIndex(Face face, uint charCode)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			return FT_Get_Char_Index(face.Reference, charCode);
 		}
 
@@ -1109,6 +1165,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static uint GetFirstChar(Face face, out uint glyphIndex)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			return FT_Get_First_Char(face.Reference, out glyphIndex);
 		}
 
@@ -1134,6 +1193,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static uint GetNextChar(Face face, uint charCode, out uint glyphIndex)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			return FT_Get_Next_Char(face.Reference, charCode, out glyphIndex);
 		}
 
@@ -1149,6 +1211,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static uint GetNameIndex(Face face, string name)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			return FT_Get_Name_Index(face.Reference, Marshal.StringToHGlobalAuto(name));
 		}
 
@@ -1181,13 +1246,10 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static void GetSubGlyphInfo(GlyphSlot glyph, uint subIndex, out int index, out SubGlyphFlags flags, out int arg1, out int arg2, out FTMatrix transform)
 		{
-			MatrixRec matrix;
-			Error err = FT_Get_SubGlyph_Info(glyph.reference, subIndex, out index, out flags, out arg1, out arg2, out matrix);
+			Error err = FT_Get_SubGlyph_Info(glyph.Reference, subIndex, out index, out flags, out arg1, out arg2, out transform);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
-
-			transform = new FTMatrix(matrix);
 		}
 
 		/// <summary>
@@ -1203,6 +1265,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static EmbeddingTypes GetFSTypeFlags(Face face)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			return FT_Get_FSType_Flags(face.Reference);
 		}
 
@@ -1218,6 +1283,9 @@ namespace SharpFont
 		/// <param name="face">A handle to a target face object.</param>
 		internal static void ReferenceFace(Face face)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			//marked as internal because the Face class wraps this funcitonality.
 			Error err = FT_Reference_Face(face.Reference);
 
@@ -1257,6 +1325,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static uint FaceGetCharVariantIndex(Face face, uint charCode, uint variantSelector)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			return FT_Face_GetCharVariantIndex(face.Reference, charCode, variantSelector);
 		}
 
@@ -1280,6 +1351,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static int FaceGetCharVariantIsDefault(Face face, uint charCode, uint variantSelector)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			return FT_Face_GetCharVariantIsDefault(face.Reference, charCode, variantSelector);
 		}
 
@@ -1300,6 +1374,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static uint[] FaceGetVariantSelectors(Face face)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			IntPtr ptr = FT_Face_GetVariantSelectors(face.Reference);
 
 			List<uint> list = new List<uint>();
@@ -1335,6 +1412,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static uint[] FaceGetVariantsOfChar(Face face, uint charCode)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			IntPtr ptr = FT_Face_GetVariantsOfChar(face.Reference, charCode);
 
 			List<uint> list = new List<uint>();
@@ -1372,6 +1452,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static uint[] FaceGetCharsOfVariant(Face face, uint variantSelector)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			IntPtr ptr = FT_Face_GetCharsOfVariant(face.Reference, variantSelector);
 
 			List<uint> list = new List<uint>();
@@ -1403,7 +1486,7 @@ namespace SharpFont
 		{
 			IntPtr glyphRef;
 
-			Error err = FT_Get_Glyph(slot.reference, out glyphRef);
+			Error err = FT_Get_Glyph(slot.Reference, out glyphRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1422,9 +1505,12 @@ namespace SharpFont
 		/// </returns>
 		public static Glyph GlyphCopy(Glyph source)
 		{
+			if (source.IsDisposed)
+				throw new ObjectDisposedException("source", "Cannot access a disposed object.");
+
 			IntPtr glyphRef;
 
-			Error err = FT_Glyph_Copy(source.reference, out glyphRef);
+			Error err = FT_Glyph_Copy(source.Reference, out glyphRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1443,7 +1529,10 @@ namespace SharpFont
 		/// </param>
 		public static void GlyphTransform(Glyph glyph, FTMatrix matrix, FTVector delta)
 		{
-			Error err = FT_Glyph_Transform(glyph.reference, matrix.reference, delta.reference);
+			if (glyph.IsDisposed)
+				throw new ObjectDisposedException("glyph", "Cannot access a disposed object.");
+
+			Error err = FT_Glyph_Transform(glyph.Reference, ref matrix, ref delta);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1516,9 +1605,12 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public static BBox GlyphGetCBox(Glyph glyph, GlyphBBoxMode mode)
 		{
+			if (glyph.IsDisposed)
+				throw new ObjectDisposedException("glyph", "Cannot access a disposed object.");
+
 			IntPtr cboxRef;
 
-			FT_Glyph_Get_CBox(glyph.reference, mode, out cboxRef);
+			FT_Glyph_Get_CBox(glyph.Reference, mode, out cboxRef);
 
 			return new BBox(cboxRef);
 		}
@@ -1555,7 +1647,14 @@ namespace SharpFont
 		/// </param>
 		public static void GlyphToBitmap(Glyph glyph, RenderMode renderMode, FTVector origin, bool destroy)
 		{
-			Error err = FT_Glyph_To_Bitmap(ref glyph.reference, renderMode, origin.reference, destroy);
+			if (glyph.IsDisposed)
+				throw new ObjectDisposedException("glyph", "Cannot access a disposed object.");
+
+			IntPtr glyphRef = glyph.Reference;
+
+			Error err = FT_Glyph_To_Bitmap(ref glyphRef, renderMode, ref origin, destroy);
+
+			glyph.Reference = glyphRef;
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1567,7 +1666,7 @@ namespace SharpFont
 		/// <param name="glyph">A handle to the target glyph object.</param>
 		public static void DoneGlyph(Glyph glyph)
 		{
-			FT_Done_Glyph(glyph.reference);
+			glyph.Dispose();
 		}
 
 		#endregion
@@ -1593,9 +1692,12 @@ namespace SharpFont
 		/// <returns>A handle to a new face object.</returns>
 		public static Face NewFaceFromFOND(Library library, IntPtr fond, int faceIndex)
 		{
+			if (library.IsDisposed)
+				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
+
 			IntPtr faceRef;
 
-			Error err = FT_New_Face_From_FOND(library.reference, fond, faceIndex, out faceRef);
+			Error err = FT_New_Face_From_FOND(library.Reference, fond, faceIndex, out faceRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1699,9 +1801,12 @@ namespace SharpFont
 		/// <returns>A handle to a new face object.</returns>
 		public static Face NewFaceFromFSSpec(Library library, IntPtr spec, int faceIndex)
 		{
+			if (library.IsDisposed)
+				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
+
 			IntPtr faceRef;
 
-			Error err = FT_New_Face_From_FSSpec(library.reference, spec, faceIndex, out faceRef);
+			Error err = FT_New_Face_From_FSSpec(library.Reference, spec, faceIndex, out faceRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1726,9 +1831,12 @@ namespace SharpFont
 		/// <returns>A handle to a new face object.</returns>
 		public static Face NewFaceFromFSRef(Library library, IntPtr @ref, int faceIndex)
 		{
+			if (library.IsDisposed)
+				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
+
 			IntPtr faceRef;
 
-			Error err = FT_New_Face_From_FSRef(library.reference, @ref, faceIndex, out faceRef);
+			Error err = FT_New_Face_From_FSRef(library.Reference, @ref, faceIndex, out faceRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1753,6 +1861,9 @@ namespace SharpFont
 		/// <returns>A handle to a new size object.</returns>
 		public static FTSize NewSize(Face face)
 		{
+			if (face.IsDisposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
 			IntPtr sizeRef;
 
 			Error err = FT_New_Size(face.Reference, out sizeRef);
@@ -1771,12 +1882,7 @@ namespace SharpFont
 		/// <param name="size">A handle to a target size object.</param>
 		public static void DoneSize(FTSize size)
 		{
-			Error err = FT_Done_Size(size.reference);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
-
-			size.reference = IntPtr.Zero;
+			size.Dispose();
 		}
 
 		/// <summary><para>
@@ -1796,7 +1902,10 @@ namespace SharpFont
 		/// <param name="size">A handle to a target size object.</param>
 		public static void ActivateSize(FTSize size)
 		{
-			Error err = FT_Activate_Size(size.reference);
+			if (size.IsDisposed)
+				throw new ObjectDisposedException("size", "Cannot access a disposed object.");
+
+			Error err = FT_Activate_Size(size.Reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);

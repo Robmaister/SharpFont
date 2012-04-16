@@ -36,14 +36,23 @@ namespace SharpFont.PostScript
 	/// </summary>
 	public class FontInfo
 	{
-		internal IntPtr reference;
-		internal FontInfoRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private FontInfoRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal FontInfo(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<FontInfoRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		public string Version
 		{
@@ -117,5 +126,21 @@ namespace SharpFont.PostScript
 				return rec.underline_thickness;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<FontInfoRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

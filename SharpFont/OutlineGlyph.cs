@@ -49,14 +49,23 @@ namespace SharpFont
 	/// </para></remarks>
 	public class OutlineGlyph
 	{
-		internal IntPtr reference;
-		internal OutlineGlyphRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private OutlineGlyphRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal OutlineGlyph(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<OutlineGlyphRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// The root <see cref="Glyph"/> fields.
@@ -80,5 +89,21 @@ namespace SharpFont
 				return new Outline(rec.outline);
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<OutlineGlyphRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

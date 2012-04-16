@@ -40,14 +40,23 @@ namespace SharpFont.Cache
 	/// <see cref="FTC.ManagerLookupSize"/>
 	public class Scaler
 	{
-		internal IntPtr reference;
-		internal ScalerRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private ScalerRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal Scaler(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<ScalerRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets the source face ID.
@@ -122,5 +131,21 @@ namespace SharpFont.Cache
 				return rec.y_res;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<ScalerRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

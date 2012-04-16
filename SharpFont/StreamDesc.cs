@@ -35,19 +35,28 @@ namespace SharpFont
 	/// </summary>
 	public class StreamDesc
 	{
-		internal IntPtr reference;
-		internal StreamDescRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private StreamDescRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal StreamDesc(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<StreamDescRec>(reference);
+			Reference = reference;
 		}
 
 		internal StreamDesc(IntPtr reference, IntPtr offset)
 			: this(new IntPtr(reference.ToInt64() + offset.ToInt64()))
 		{
 		}
+
+		#endregion
+
+		#region Properties
 
 		public int Value
 		{
@@ -64,5 +73,21 @@ namespace SharpFont
 				return rec.pointer;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<StreamDescRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

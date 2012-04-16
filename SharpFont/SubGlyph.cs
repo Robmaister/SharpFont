@@ -40,16 +40,41 @@ namespace SharpFont
 	/// </para></remarks>
 	public sealed class SubGlyph
 	{
-		internal IntPtr reference;
+		#region Fields
+
+		private IntPtr reference;
+
+		#endregion
+
+		#region Constructors
 
 		internal SubGlyph(IntPtr reference)
 		{
-			this.reference = reference;
+			Reference = reference;
 		}
 
 		internal SubGlyph(IntPtr reference, int offset)
 		{
-			this.reference = new IntPtr(reference.ToInt64() + offset);
+			Reference = new IntPtr(reference.ToInt64() + offset);
 		}
+
+		#endregion
+
+		#region Properties
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+			}
+		}
+
+		#endregion
 	}
 }

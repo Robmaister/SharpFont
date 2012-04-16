@@ -38,14 +38,23 @@ namespace SharpFont.TrueType
 	/// </para></summary>
 	public class OS2
 	{
-		internal IntPtr reference;
-		internal OS2Rec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private OS2Rec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal OS2(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<OS2Rec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		[CLSCompliant(false)]
 		public ushort Version
@@ -362,5 +371,21 @@ namespace SharpFont.TrueType
 				return rec.usMaxContext;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<OS2Rec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

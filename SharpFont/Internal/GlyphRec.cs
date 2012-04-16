@@ -33,6 +33,6 @@ namespace SharpFont.Internal
 		internal IntPtr library;
 		private IntPtr clazz;
 		internal GlyphFormat format;
-		internal VectorRec advance;
+		internal FTVector advance;
 	}
 }

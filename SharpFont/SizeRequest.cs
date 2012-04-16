@@ -37,12 +37,22 @@ namespace SharpFont
 	[StructLayout(LayoutKind.Sequential)]
 	public sealed class SizeRequest
 	{
-		internal IntPtr reference;
+		#region Fields
+
+		private IntPtr reference;
+
+		#endregion
+
+		#region Constructors
 
 		internal SizeRequest(IntPtr reference)
 		{
-			this.reference = reference;
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// See <see cref="SizeRequestType"/>.
@@ -102,5 +112,20 @@ namespace SharpFont
 				return (uint)Marshal.ReadInt32(reference, 16);
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+			}
+		}
+
+		#endregion
 	}
 }

@@ -58,14 +58,23 @@ namespace SharpFont
 	/// </summary>
 	public class ModuleClass
 	{
-		internal IntPtr reference;
-		internal ModuleClassRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private ModuleClassRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal ModuleClass(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<ModuleClassRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Bit flags describing the module.
@@ -164,5 +173,21 @@ namespace SharpFont
 				return rec.get_interface;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<ModuleClassRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

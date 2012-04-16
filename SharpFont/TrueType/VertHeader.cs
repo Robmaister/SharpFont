@@ -43,14 +43,23 @@ namespace SharpFont.TrueType
 	/// </para></remarks>
 	public class VertHeader
 	{
-		internal IntPtr reference;
-		internal VertHeaderRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private VertHeaderRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal VertHeader(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<VertHeaderRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets the table version.
@@ -250,5 +259,21 @@ namespace SharpFont.TrueType
 				return rec.short_metrics;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<VertHeaderRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

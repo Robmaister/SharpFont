@@ -36,14 +36,23 @@ namespace SharpFont.MultipleMasters
 	/// </para></summary>
 	public class VarNamedStyle
 	{
-		internal IntPtr reference;
-		internal VarNamedStyleRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private VarNamedStyleRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal VarNamedStyle(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<VarNamedStyleRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets the design coordinates for this style. This is an array with one
@@ -68,5 +77,21 @@ namespace SharpFont.MultipleMasters
 				return rec.strid;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<VarNamedStyleRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

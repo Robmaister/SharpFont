@@ -78,19 +78,28 @@ namespace SharpFont
 	/// </example>
 	public sealed class GlyphSlot
 	{
-		internal IntPtr reference;
-		internal GlyphSlotRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private GlyphSlotRec rec;
 
 		private Face parentFace;
 		private Library parentLibrary;
 
+		#endregion
+
+		#region Constructors
+
 		internal GlyphSlot(IntPtr reference, Face parentFace, Library parentLibrary)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<GlyphSlotRec>(reference);
+			Reference = reference;
 			this.parentFace = parentFace;
 			this.parentLibrary = parentLibrary;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets a handle to the FreeType library instance this slot belongs
@@ -196,7 +205,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new FTVector(rec.advance);
+				return rec.advance;
 			}
 		}
 
@@ -369,12 +378,29 @@ namespace SharpFont
 			}
 		}
 
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<GlyphSlotRec>(reference);
+			}
+		}
+
+		#endregion
+
+		#region Public Methods
+
 		/// <summary>
 		/// Convert a given glyph image to a bitmap. It does so by inspecting
 		/// the glyph image format, finding the relevant renderer, and invoking
 		/// it.
 		/// </summary>
-		/// <param name="slot">A handle to the glyph slot containing the image to convert.</param>
 		/// <param name="mode">This is the render mode used to render the glyph image into a bitmap.</param>
 		public void RenderGlyph(RenderMode mode)
 		{
@@ -406,13 +432,14 @@ namespace SharpFont
 		/// <summary>
 		/// A function used to extract a glyph image from a slot. Note that the
 		/// created <see cref="Glyph"/> object must be released with
-		/// <see cref="DoneGlyph"/>.
+		/// <see cref="FT.DoneGlyph"/>.
 		/// </summary>
-		/// <param name="slot">A handle to the source glyph slot.</param>
 		/// <returns>A handle to the glyph object.</returns>
 		public Glyph GetGlyph()
 		{
 			return FT.GetGlyph(this);
 		}
+
+		#endregion
 	}
 }

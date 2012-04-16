@@ -35,17 +35,22 @@ namespace SharpFont
 	/// </summary>
 	public class Glyph : IDisposable
 	{
+		#region Fields
+
 		private bool disposed;
 
-		internal IntPtr reference;
-		internal GlyphRec rec;
+		private IntPtr reference;
+		private GlyphRec rec;
 
 		private Library parentLibrary;
 
+		#endregion
+
+		#region Constructors
+
 		internal Glyph(IntPtr reference, Library parentLibrary)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<GlyphRec>(reference);
+			Reference = reference;
 
 			this.parentLibrary = parentLibrary;
 			parentLibrary.AddChildGlyph(this);
@@ -53,7 +58,6 @@ namespace SharpFont
 
 		internal Glyph(GlyphRec rec, Library parentLibrary)
 		{
-			this.reference = IntPtr.Zero;
 			this.rec = rec;
 
 			this.parentLibrary = parentLibrary;
@@ -68,6 +72,21 @@ namespace SharpFont
 			Dispose(false);
 		}
 
+		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// Gets a value indicating whether the object has been disposed.
+		/// </summary>
+		public bool IsDisposed
+		{
+			get
+			{
+				return disposed;
+			}
+		}
+
 		/// <summary>
 		/// A handle to the FreeType library object.
 		/// </summary>
@@ -75,6 +94,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
 				return parentLibrary;
 			}
 		}
@@ -87,6 +109,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Format", "Cannot access a disposed object.");
+
 				return rec.format;
 			}
 		}
@@ -98,9 +123,36 @@ namespace SharpFont
 		{
 			get
 			{
-				return new FTVector(rec.advance);
+				if (disposed)
+					throw new ObjectDisposedException("Advance", "Cannot access a disposed object.");
+
+				return rec.advance;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				if (disposed)
+					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
+
+				return reference;
+			}
+
+			set
+			{
+				if (disposed)
+					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
+
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<GlyphRec>(reference);
+			}
+		}
+
+		#endregion
+
+		#region Public Methods
 
 		/// <summary>
 		/// A function used to copy a glyph image. Note that the created
@@ -153,14 +205,22 @@ namespace SharpFont
 			GC.SuppressFinalize(this);
 		}
 
+		#endregion
+
+		#region Private Methods
+
 		private void Dispose(bool disposing)
 		{
 			if (!disposed)
 			{
-				FT.DoneGlyph(this);
-
 				disposed = true;
+
+				FT.FT_Done_Glyph(reference);
+
+				reference = IntPtr.Zero;
 			}
 		}
+
+		#endregion
 	}
 }

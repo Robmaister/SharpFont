@@ -37,20 +37,28 @@ namespace SharpFont.MultipleMasters
 	/// </para></summary>
 	public class MMAxis
 	{
-		internal IntPtr reference;
-		internal MMAxisRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private MMAxisRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal MMAxis(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<MMAxisRec>(reference);
+			Reference = reference;
 		}
 
 		internal MMAxis(MMAxisRec axisInternal)
 		{
-			this.reference = IntPtr.Zero;
 			this.rec = axisInternal;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets the axis's name.
@@ -84,5 +92,21 @@ namespace SharpFont.MultipleMasters
 				return (int)rec.maximum;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<MMAxisRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

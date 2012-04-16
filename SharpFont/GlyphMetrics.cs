@@ -41,19 +41,28 @@ namespace SharpFont
 	/// </remarks>
 	public sealed class GlyphMetrics
 	{
-		internal IntPtr reference;
-		internal GlyphMetricsRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private GlyphMetricsRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal GlyphMetrics(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<GlyphMetricsRec>(reference);
+			Reference = reference;
 		}
 
 		internal GlyphMetrics(GlyphMetricsRec glyphMetInt)
 		{
 			this.rec = glyphMetInt;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/*/// <summary>
 		/// Gets the size of a GlyphMetrics, in bytes.
@@ -155,5 +164,21 @@ namespace SharpFont
 				return (int)rec.vertAdvance;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<GlyphMetricsRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

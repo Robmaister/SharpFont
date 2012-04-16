@@ -47,7 +47,7 @@ namespace SharpFont.Cache
 	{
 		#region Fields
 
-		internal IntPtr reference;
+		private IntPtr reference;
 
 		private bool disposed;
 
@@ -57,7 +57,7 @@ namespace SharpFont.Cache
 
 		internal Manager(IntPtr reference)
 		{
-			this.reference = reference;
+			Reference = reference;
 		}
 
 		/// <summary>
@@ -90,7 +90,7 @@ namespace SharpFont.Cache
 		[CLSCompliant(false)]
 		public Manager(Library library, uint maxFaces, uint maxSizes, ulong maxBytes, FaceRequester requester, IntPtr requestData)
 		{
-			Error err = FTC.FTC_Manager_New(library.reference, maxFaces, maxSizes, maxBytes, requester, requestData, out reference);
+			Error err = FTC.FTC_Manager_New(library.Reference, maxFaces, maxSizes, maxBytes, requester, requestData, out reference);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -102,6 +102,40 @@ namespace SharpFont.Cache
 		~Manager()
 		{
 			Dispose(false);
+		}
+
+		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// Gets a value indicating whether the object has been disposed.
+		/// </summary>
+		public bool IsDisposed
+		{
+			get
+			{
+				return disposed;
+			}
+		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				if (disposed)
+					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
+
+				return reference;
+			}
+
+			set
+			{
+				if (disposed)
+					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
+
+				reference = value;
+			}
 		}
 
 		#endregion
@@ -213,14 +247,10 @@ namespace SharpFont.Cache
 		{
 			if (!disposed)
 			{
-				if (disposing)
-				{
-				}
-
-				//TODO what happens when user calls FTC.ManagerDone from their code? fix this.
-				FTC.ManagerDone(this);
-
 				disposed = true;
+
+				FTC.FTC_Manager_Done(reference);
+				reference = IntPtr.Zero;
 			}
 		}
 

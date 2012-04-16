@@ -37,14 +37,23 @@ namespace SharpFont.Cache
 	/// </summary>
 	public class SBit
 	{
-		internal IntPtr reference;
-		internal SBitRec rec;
+		#region Fields
+
+		private IntPtr reference;
+		private SBitRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		internal SBit(IntPtr reference)
 		{
-			this.reference = reference;
-			this.rec = PInvokeHelper.PtrToStructure<SBitRec>(reference);
+			Reference = reference;
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets the bitmap width in pixels.
@@ -159,5 +168,21 @@ namespace SharpFont.Cache
 				return rec.buffer;
 			}
 		}
+
+		internal IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+
+			set
+			{
+				reference = value;
+				rec = PInvokeHelper.PtrToStructure<SBitRec>(reference);
+			}
+		}
+
+		#endregion
 	}
 }

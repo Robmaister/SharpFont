@@ -34,5 +34,7 @@ namespace SharpFont.Internal
 		internal AllocFunc alloc;
 		internal FreeFunc free;
 		internal ReallocFunc realloc;
+
+		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(MemoryRec)); } }
 	}
 }

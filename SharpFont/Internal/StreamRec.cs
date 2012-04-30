@@ -56,5 +56,7 @@ namespace SharpFont.Internal
 		internal IntPtr memory;
 		internal IntPtr cursor;
 		internal IntPtr limit;
+
+		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(StreamRec)); } }
 	}
 }

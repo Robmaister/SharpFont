@@ -35,14 +35,14 @@ namespace SharpFont
 	/// <param name="module">The module to initialize.</param>
 	/// <returns>FreeType error code.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate Error ModuleConstructor(IntPtr module);
+	public delegate Error ModuleConstructor([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ModuleMarshaler))] Module module);
 
 	/// <summary>
 	/// A function used to finalize (not destroy) a given module object.
 	/// </summary>
 	/// <param name="module">The module to finalize.</param>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void ModuleDestructor(IntPtr module);
+	public delegate void ModuleDestructor([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ModuleMarshaler))] Module module);
 
 	/// <summary>
 	/// A function used to query a given module for a specific interface.
@@ -51,7 +51,7 @@ namespace SharpFont
 	/// <param name="name">The name of the interface in the module.</param>
 	/// <returns>The interface.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr ModuleRequester(IntPtr module, [MarshalAs(UnmanagedType.LPStr)] string name);
+	public delegate IntPtr ModuleRequester([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ModuleMarshaler))] Module module, [MarshalAs(UnmanagedType.LPStr)] string name);
 
 	/// <summary>
 	/// The module class descriptor.

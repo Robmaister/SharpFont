@@ -27,13 +27,54 @@ using System.Runtime.InteropServices;
 
 namespace SharpFont.Internal
 {
-	[StructLayout(LayoutKind.Sequential)]
-	internal struct SpanRec
+	internal sealed class RasterParamsMarshaler : ICustomMarshaler
 	{
-		internal short x;
-		internal ushort len;
-		internal byte coverage;
+		private static readonly RasterParamsMarshaler instance = new RasterParamsMarshaler();
 
-		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(SpanRec)); } }
+		private RasterParamsMarshaler()
+		{
+		}
+
+		public static ICustomMarshaler GetInstance(string cookie)
+		{
+			return instance;
+		}
+
+		public void CleanUpManagedData(object ManagedObj)
+		{
+			if (ManagedObj == null)
+				throw new ArgumentNullException("ManagedObj");
+
+			if (ManagedObj.GetType() != typeof(RasterParams))
+				throw new ArgumentException("Managed object is not a RasterParams.");
+		}
+
+		public void CleanUpNativeData(IntPtr pNativeData)
+		{
+			//Do nothing.
+		}
+
+		public int GetNativeDataSize()
+		{
+			return RasterParamsRec.SizeInBytes;
+		}
+
+		public IntPtr MarshalManagedToNative(object ManagedObj)
+		{
+			if (ManagedObj == null)
+				throw new ArgumentNullException("ManagedObj");
+
+			if (ManagedObj.GetType() != typeof(RasterParams))
+				throw new ArgumentException("Managed object is not a RasterParams.");
+
+			//TODO if we have any setters in ListNode, marshal them.
+
+			return ((RasterParams)ManagedObj).Reference;
+		}
+
+		public object MarshalNativeToManaged(IntPtr pNativeData)
+		{
+			return new RasterParams(pNativeData);
+		}
 	}
 }

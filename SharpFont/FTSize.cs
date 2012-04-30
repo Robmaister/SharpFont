@@ -39,6 +39,7 @@ namespace SharpFont
 
 		private bool userAlloc;
 		private bool disposed;
+		private bool duplicate;
 
 		private IntPtr reference;
 		private SizeRec rec;
@@ -55,8 +56,15 @@ namespace SharpFont
 
 			this.userAlloc = userAlloc;
 
-			this.parentFace = parentFace;
-			parentFace.AddChildSize(this);
+			if (parentFace != null)
+			{
+				this.parentFace = parentFace;
+				parentFace.AddChildSize(this);
+			}
+			else
+			{
+				duplicate = true;
+			}
 		}
 
 		/// <summary>
@@ -195,8 +203,8 @@ namespace SharpFont
 			{
 				disposed = true;
 
-				//only dispose the user allocated sizes.
-				if (userAlloc)
+				//only dispose the user allocated sizes that are not duplicates.
+				if (userAlloc && !duplicate)
 				{
 					Error err = FT.FT_Done_Size(reference);
 

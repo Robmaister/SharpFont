@@ -27,13 +27,54 @@ using System.Runtime.InteropServices;
 
 namespace SharpFont.Internal
 {
-	[StructLayout(LayoutKind.Sequential)]
-	internal struct SpanRec
+	internal sealed class ModuleMarshaler : ICustomMarshaler
 	{
-		internal short x;
-		internal ushort len;
-		internal byte coverage;
+		private static readonly ModuleMarshaler instance = new ModuleMarshaler();
 
-		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(SpanRec)); } }
+		private ModuleMarshaler()
+		{
+		}
+
+		public static ICustomMarshaler GetInstance(string cookie)
+		{
+			return instance;
+		}
+
+		public void CleanUpManagedData(object ManagedObj)
+		{
+			if (ManagedObj == null)
+				throw new ArgumentNullException("ManagedObj");
+
+			if (ManagedObj.GetType() != typeof(Module))
+				throw new ArgumentException("Managed object is not a Module.");
+		}
+
+		public void CleanUpNativeData(IntPtr pNativeData)
+		{
+			//Do nothing.
+		}
+
+		public int GetNativeDataSize()
+		{
+			return 0;
+		}
+
+		public IntPtr MarshalManagedToNative(object ManagedObj)
+		{
+			if (ManagedObj == null)
+				throw new ArgumentNullException("ManagedObj");
+
+			if (ManagedObj.GetType() != typeof(Module))
+				throw new ArgumentException("Managed object is not a Module.");
+
+			//TODO if we have any setters in ListNode, marshal them.
+
+			return ((Module)ManagedObj).Reference;
+		}
+
+		public object MarshalNativeToManaged(IntPtr pNativeData)
+		{
+			return new Module(pNativeData);
+		}
 	}
 }

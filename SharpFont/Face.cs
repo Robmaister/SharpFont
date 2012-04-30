@@ -46,6 +46,7 @@ namespace SharpFont
 		private FaceRec rec;
 
 		private bool disposed;
+		private bool duplicate;
 
 		private Library parentLibrary;
 		private List<FTSize> childSizes;
@@ -65,8 +66,15 @@ namespace SharpFont
 		{
 			Reference = reference;
 
-			parentLibrary = parent;
-			parentLibrary.AddChildFace(this);
+			if (parent != null)
+			{
+				parentLibrary = parent;
+				parentLibrary.AddChildFace(this);
+			}
+			else //if there's no parent, this is a Marshalled duplicate.
+			{
+				duplicate = true;
+			}
 
 			childSizes = new List<FTSize>();
 		}
@@ -1192,10 +1200,13 @@ namespace SharpFont
 
 				childSizes.Clear();
 
-				Error err = FT.FT_Done_Face(reference);
+				if (!duplicate)
+				{
+					Error err = FT.FT_Done_Face(reference);
 
-				if (err != Error.Ok)
-					throw new FreeTypeException(err);
+					if (err != Error.Ok)
+						throw new FreeTypeException(err);
+				}
 
 				reference = IntPtr.Zero;
 				rec = null;

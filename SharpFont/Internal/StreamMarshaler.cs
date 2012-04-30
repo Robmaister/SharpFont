@@ -27,13 +27,54 @@ using System.Runtime.InteropServices;
 
 namespace SharpFont.Internal
 {
-	[StructLayout(LayoutKind.Sequential)]
-	internal struct SpanRec
+	internal sealed class StreamMarshaler : ICustomMarshaler
 	{
-		internal short x;
-		internal ushort len;
-		internal byte coverage;
+		private static readonly StreamMarshaler instance = new StreamMarshaler();
 
-		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(SpanRec)); } }
+		private StreamMarshaler()
+		{
+		}
+
+		public static ICustomMarshaler GetInstance(string cookie)
+		{
+			return instance;
+		}
+
+		public void CleanUpManagedData(object ManagedObj)
+		{
+			if (ManagedObj == null)
+				throw new ArgumentNullException("ManagedObj");
+
+			if (ManagedObj.GetType() != typeof(FTStream))
+				throw new ArgumentException("Managed object is not a FTStream.");
+		}
+
+		public void CleanUpNativeData(IntPtr pNativeData)
+		{
+			//Do nothing.
+		}
+
+		public int GetNativeDataSize()
+		{
+			return StreamRec.SizeInBytes;
+		}
+
+		public IntPtr MarshalManagedToNative(object ManagedObj)
+		{
+			if (ManagedObj == null)
+				throw new ArgumentNullException("ManagedObj");
+
+			if (ManagedObj.GetType() != typeof(FTStream))
+				throw new ArgumentException("Managed object is not a FTStream.");
+
+			//TODO if we have any setters in FTStream, marshal them.
+
+			return ((FTStream)ManagedObj).Reference;
+		}
+
+		public object MarshalNativeToManaged(IntPtr pNativeData)
+		{
+			return new FTStream(pNativeData);
+		}
 	}
 }

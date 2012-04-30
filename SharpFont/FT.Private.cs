@@ -430,10 +430,10 @@ namespace SharpFont
 		internal static extern void FT_List_Up(IntPtr list, IntPtr node);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern Error FT_List_Iterate(IntPtr list, IntPtr iterator, IntPtr user);
+		internal static extern Error FT_List_Iterate(IntPtr list, ListIterator iterator, IntPtr user);
 
 		[DllImport("freetype.dll", CallingConvention = CallingConvention.Cdecl)]
-		internal static extern void FT_List_Finalize(IntPtr list, IntPtr destroy, IntPtr memory, IntPtr user);
+		internal static extern void FT_List_Finalize(IntPtr list, ListDestructor destroy, IntPtr memory, IntPtr user);
 
 		#endregion
 

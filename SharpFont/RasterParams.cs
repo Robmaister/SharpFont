@@ -55,7 +55,7 @@ namespace SharpFont
 	/// <param name="spans">A table of ‘count’ spans to draw on the scanline.</param>
 	/// <param name="user">User-supplied data that is passed to the callback.</param>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void RasterSpanFunc(int y, int count, IntPtr spans, IntPtr user);
+	public delegate void RasterSpanFunc(int y, int count, [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SpanMarshaler))] Span spans, IntPtr user);
 
 	/// <summary><para>
 	/// THIS TYPE IS DEPRECATED. DO NOT USE IT.

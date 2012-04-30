@@ -372,7 +372,7 @@ namespace SharpFont
 		/// <param name="user">A user-supplied field which is passed as the second argument to the iterator.</param>
 		public static void ListIterate(FTList list, ListIterator iterator, IntPtr user)
 		{
-			Error err = FT_List_Iterate(list.Reference, Marshal.GetFunctionPointerForDelegate(iterator), user);
+			Error err = FT_List_Iterate(list.Reference, iterator, user);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -392,7 +392,7 @@ namespace SharpFont
 		/// <param name="user">A user-supplied field which is passed as the last argument to the destructor.</param>
 		public static void ListFinalize(FTList list, ListDestructor destroy, Memory memory, IntPtr user)
 		{
-			FT_List_Finalize(list.Reference, Marshal.GetFunctionPointerForDelegate(destroy), memory.Reference, user);
+			FT_List_Finalize(list.Reference, destroy, memory.Reference, user);
 		}
 
 		#endregion

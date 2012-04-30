@@ -99,6 +99,6 @@ namespace SharpFont.Internal
 
 		private IntPtr @internal;
 
-		internal static int SizeInBytes { get { return 24 + Marshal.SizeOf(typeof(FT_Long)) * 5 + IntPtr.Size * 13 + Generic.SizeInBytes + BBoxRec.SizeInBytes; } }
+		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(FaceRec)); } }
 	}
 }

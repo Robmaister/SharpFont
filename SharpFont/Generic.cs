@@ -119,7 +119,7 @@ namespace SharpFont
 		/// <summary>
 		/// Gets the size of a Generic, in bytes.
 		/// </summary>
-		public static int SizeInBytes { get { return IntPtr.Size * 2; } }
+		public static int SizeInBytes { get { return Marshal.SizeOf(typeof(GenericRec)); } }
 
 		#endregion
 

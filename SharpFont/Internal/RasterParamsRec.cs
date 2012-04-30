@@ -39,5 +39,7 @@ namespace SharpFont.Internal
 		internal RasterBitSetFunc bit_set;
 		internal IntPtr user;
 		internal BBoxRec clip_box;
+
+		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(RasterParamsRec)); } }
 	}
 }

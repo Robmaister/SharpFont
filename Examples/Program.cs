@@ -158,6 +158,7 @@ namespace Examples
 		/// <param name="face">Pointer to the face</param>
 		public static void OnFaceDestroyed(IntPtr face)
 		{
+			//Console.WriteLine(face.FamilyName);
 			Console.WriteLine("Face destroyed!");
 		}
 	}

@@ -70,8 +70,8 @@ namespace SharpFont.BDF
 		{
 			get
 			{
-				//only this property throws an exception because the pointer
-				//could be to unmanaged memory not owned by the process.
+				// only this property throws an exception because the pointer could be to unmanaged memory not owned by
+				// the process.
 				if (rec.type != PropertyType.Atom)
 					throw new InvalidOperationException("The property type is not Atom.");
 
@@ -91,8 +91,7 @@ namespace SharpFont.BDF
 		}
 
 		/// <summary>
-		/// An unsigned integer, if type is
-		/// <see cref="PropertyType.Cardinal"/>.
+		/// An unsigned integer, if type is <see cref="PropertyType.Cardinal"/>.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint Cardinal

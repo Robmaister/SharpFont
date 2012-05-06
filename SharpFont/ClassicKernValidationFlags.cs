@@ -39,12 +39,12 @@ namespace SharpFont
 		/// <summary>
 		/// Handle the ‘kern’ table as a classic Microsoft kern table.
 		/// </summary>
-		Microsoft = 	0x4000 << 0,
+		Microsoft = 0x4000 << 0,
 
 		/// <summary>
 		/// Handle the ‘kern’ table as a classic Apple kern table.
 		/// </summary>
-		Apple = 		0x4000 << 1,
+		Apple = 0x4000 << 1,
 
 		/// <summary>
 		/// Handle the ‘kern’ as either classic Apple or Microsoft kern table.

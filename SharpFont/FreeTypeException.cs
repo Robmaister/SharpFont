@@ -133,7 +133,7 @@ namespace SharpFont
 				case Error.BbxTooBig: return "`BBX' too big.";
 				case Error.CorruptedFontHeader: return "Font header corrupted or missing fields.";
 				case Error.CorruptedFontGlyphs: return "Font glyphs corrupted or missing fields.";
-				default: return "Encountered an unknown error. Most likely this is a new error that hasn't been added to SharpFont yet. Error:" + (int)err;
+				default: return "Encountered an unknown error. Most likely this is a new error that hasn't been included in SharpFont yet. Error:" + (int)err;
 			}
 		}
 	}

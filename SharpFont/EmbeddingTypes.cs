@@ -47,14 +47,14 @@ namespace SharpFont
 		/// Fonts with no fsType bit set may be embedded and permanently
 		/// installed on the remote system by an application.
 		/// </summary>
-		Installable =			0x0000,
+		Installable = 0x0000,
 
 		/// <summary>
 		/// Fonts that have only this bit set must not be modified, embedded
 		/// or exchanged in any manner without first obtaining permission of
 		/// the font software copyright owner.
 		/// </summary>
-		RestrictedLicense =	0x0002,
+		RestrictedLicense = 0x0002,
 
 		/// <summary>
 		/// If this bit is set, the font may be embedded and temporarily loaded
@@ -62,7 +62,7 @@ namespace SharpFont
 		/// fonts must be opened ‘read-only’; no edits can be applied to the
 		/// document.
 		/// </summary>
-		PreviewAndPrint =		0x0004,
+		PreviewAndPrint = 0x0004,
 
 		/// <summary>
 		/// If this bit is set, the font may be embedded but must only be
@@ -70,19 +70,19 @@ namespace SharpFont
 		/// &amp; Print fonts, documents containing editable fonts may be
 		/// opened for reading, editing is permitted, and changes may be saved.
 		/// </summary>
-		Editable =				0x0008,
+		Editable = 0x0008,
 
 		/// <summary>
 		/// If this bit is set, the font may not be subsetted prior to
 		/// embedding.
 		/// </summary>
-		NoSubsetting =					0x0100,
+		NoSubsetting = 0x0100,
 
 		/// <summary>
 		/// If this bit is set, only bitmaps contained in the font may be
 		/// embedded; no outline data may be embedded. If there are no bitmaps
 		/// available in the font, then the font is unembeddable.
 		/// </summary>
-		BitmapOnly =			0x0200
+		BitmapOnly = 0x0200
 	}
 }

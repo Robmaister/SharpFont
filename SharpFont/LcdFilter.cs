@@ -35,13 +35,13 @@ namespace SharpFont
 		/// Do not perform filtering. When used with subpixel rendering, this
 		/// results in sometimes severe color fringes.
 		/// </summary>
-		None =		0,
+		None = 0,
 
 		/// <summary>
 		/// The default filter reduces color fringes considerably, at the cost
 		/// of a slight blurriness in the output.
 		/// </summary>
-		Default =	1,
+		Default = 1,
 
 		/// <summary>
 		/// The light filter is a variant that produces less blurriness at the
@@ -49,7 +49,7 @@ namespace SharpFont
 		/// be better, depending on taste, your monitor, or your personal
 		/// vision.
 		/// </summary>
-		Light =		2,
+		Light = 2,
 
 		/// <summary><para>
 		/// This filter corresponds to the original libXft color filter. It
@@ -61,6 +61,6 @@ namespace SharpFont
 		/// This filter is only provided for comparison purposes, and might be
 		/// disabled or stay unsupported in the future.
 		/// </para></summary>
-		Legacy =	16
+		Legacy = 16
 	}
 }

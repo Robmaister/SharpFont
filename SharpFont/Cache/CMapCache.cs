@@ -27,8 +27,8 @@ using System;
 namespace SharpFont.Cache
 {
 	/// <summary>
-	/// An opaque handle used to model a charmap cache. This cache is to hold
-	/// character codes -> glyph indices mappings.
+	/// An opaque handle used to model a charmap cache. This cache is to hold character codes -> glyph indices
+	/// mappings.
 	/// </summary>
 	public class CMapCache
 	{

@@ -27,21 +27,16 @@ using System;
 namespace SharpFont.Cache
 {
 	/// <summary><para>
-	/// This object corresponds to one instance of the cache-subsystem. It is
-	/// used to cache one or more <see cref="Face"/> objects, along with
-	/// corresponding <see cref="FTSize"/> objects.
+	/// This object corresponds to one instance of the cache-subsystem. It is used to cache one or more
+	/// <see cref="Face"/> objects, along with corresponding <see cref="FTSize"/> objects.
 	/// </para><para>
-	/// The manager intentionally limits the total number of opened
-	/// <see cref="Face"/> and <see cref="FTSize"/> objects to control memory
-	/// usage. See the ‘max_faces’ and ‘max_sizes’ parameters of
-	/// <see cref="FTC.ManagerNew"/>.
+	/// The manager intentionally limits the total number of opened <see cref="Face"/> and <see cref="FTSize"/> objects
+	/// to control memory usage. See the ‘max_faces’ and ‘max_sizes’ parameters of <see cref="FTC.ManagerNew"/>.
 	/// </para><para>
-	/// The manager is also used to cache ‘nodes’ of various types while
-	/// limiting their total memory usage.
+	/// The manager is also used to cache ‘nodes’ of various types while limiting their total memory usage.
 	/// </para><para>
-	/// All limitations are enforced by keeping lists of managed objects in
-	/// most-recently-used order, and flushing old nodes to make room for new
-	/// ones.
+	/// All limitations are enforced by keeping lists of managed objects in most-recently-used order, and flushing old
+	/// nodes to make room for new ones.
 	/// </para></summary>
 	public sealed class Manager : IDisposable
 	{
@@ -143,9 +138,8 @@ namespace SharpFont.Cache
 		#region Public Members
 
 		/// <summary>
-		/// Empty a given cache manager. This simply gets rid of all the
-		/// currently cached <see cref="Face"/> and <see cref="FTSize"/>
-		/// objects within the manager.
+		/// Empty a given cache manager. This simply gets rid of all the currently cached <see cref="Face"/> and
+		/// <see cref="FTSize"/> objects within the manager.
 		/// </summary>
 		public void Reset()
 		{
@@ -153,29 +147,9 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// Retrieve the FT_Face object that corresponds to a given face ID
-		/// through a cache manager.
+		/// Retrieve the <see cref="Face"/> object that corresponds to a given face ID through a cache manager.
 		/// </summary>
-		/// <remarks><para>
-		/// The returned FT_Face object is always owned by the manager. You
-		/// should never try to discard it yourself.
-		/// </para><para>
-		/// The FT_Face object doesn't necessarily have a current size object
-		/// (i.e., face->size can be 0). If you need a specific ‘font size’,
-		/// use FTC_Manager_LookupSize instead.
-		/// </para><para>
-		/// Never change the face's transformation matrix (i.e., never call the
-		/// FT_Set_Transform function) on a returned face! If you need to
-		/// transform glyphs, do it yourself after glyph loading.
-		/// </para><para>
-		/// When you perform a lookup, out-of-memory errors are detected within
-		/// the lookup and force incremental flushes of the cache until enough
-		/// memory is released for the lookup to succeed.
-		/// </para><para>
-		/// If a lookup fails with ‘FT_Err_Out_Of_Memory’ the cache has already
-		/// been completely flushed, and still no memory was available for the
-		/// operation.
-		/// </para></remarks>
+		/// <remarks>See <see cref="FTC.ManagerLookupFace"/>.</remarks>
 		/// <param name="faceID">The ID of the face object.</param>
 		/// <returns>A handle to the face object.</returns>
 		public Face LookupFace(IntPtr faceID)
@@ -184,25 +158,10 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// Retrieve the <see cref="FTSize"/> object that corresponds to a given
-		/// <see cref="Scaler"/> pointer through a cache manager.
+		/// Retrieve the <see cref="FTSize"/> object that corresponds to a given <see cref="Scaler"/> pointer through a
+		/// cache manager.
 		/// </summary>
-		/// <remarks><para>
-		/// The returned <see cref="FTSize"/> object is always owned by the
-		/// manager. You should never try to discard it by yourself.
-		/// </para><para>
-		/// You can access the parent <see cref="Face"/> object simply as
-		/// ‘size->face’ if you need it. Note that this object is also owned by
-		/// the manager.
-		/// </para><para>
-		/// When you perform a lookup, out-of-memory errors are detected within
-		/// the lookup and force incremental flushes of the cache until enough
-		/// memory is released for the lookup to succeed.
-		/// </para><para>
-		/// If a lookup fails with ‘FT_Err_Out_Of_Memory’ the cache has already
-		/// been completely flushed, and still no memory is available for the
-		/// operation.
-		/// </para></remarks>
+		/// <remarks>See <see cref="FTC.ManagerLookupSize"/>.</remarks>
 		/// <param name="scaler">A scaler handle.</param>
 		/// <returns>A handle to the size object.</returns>
 		public FTSize LookupSize(Scaler scaler)
@@ -211,19 +170,10 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// A special function used to indicate to the cache manager that a
-		/// given FTC_FaceID is no longer valid, either because its content
-		/// changed, or because it was deallocated or uninstalled.
+		/// A special function used to indicate to the cache manager that a given FTC_FaceID is no longer valid, either
+		/// because its content changed, or because it was deallocated or uninstalled.
 		/// </summary>
-		/// <remarks><para>
-		/// This function flushes all nodes from the cache corresponding to
-		/// this ‘face_id’, with the exception of nodes with a non-null
-		/// reference count.
-		/// </para><para>
-		/// Such nodes are however modified internally so as to never appear in
-		/// later lookups with the same ‘face_id’ value, and to be immediately
-		/// destroyed when released by all their users.
-		/// </para></remarks>
+		/// <remarks>See <see cref="FTC.ManagerRemoveFaceID"/>.</remarks>
 		/// <param name="faceID">The FTC_FaceID to be removed.</param>
 		public void RemoveFaceID(IntPtr faceID)
 		{

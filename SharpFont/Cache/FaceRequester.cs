@@ -28,17 +28,15 @@ using System.Runtime.InteropServices;
 namespace SharpFont.Cache
 {
 	/// <summary>
-	/// A callback function provided by client applications. It is used by the
-	/// cache manager to translate a given FTC_FaceID into a new valid
-	/// <see cref="Face"/> object, on demand.
+	/// A callback function provided by client applications. It is used by the cache manager to translate a given
+	/// FTC_FaceID into a new valid <see cref="Face"/> object, on demand.
 	/// </summary>
 	/// <remarks><para>
-	/// The third parameter ‘req_data’ is the same as the one passed by the
-	/// client when <see cref="FTC.ManagerNew"/> is called.
+	/// The third parameter ‘req_data’ is the same as the one passed by the client when <see cref="FTC.ManagerNew"/> is
+	/// called.
 	/// </para><para>
-	/// The face requester should not perform funny things on the returned face
-	/// object, like creating a new <see cref="FTSize"/> for it, or setting a
-	/// transformation through <see cref="FT.SetTransform"/>!
+	/// The face requester should not perform funny things on the returned face object, like creating a new
+	/// <see cref="FTSize"/> for it, or setting a transformation through <see cref="FT.SetTransform"/>!
 	/// </para></remarks>
 	/// <param name="faceID">The face ID to resolve.</param>
 	/// <param name="library">A handle to a FreeType library object.</param>

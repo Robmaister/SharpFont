@@ -64,7 +64,7 @@ namespace SharpFont
 		/// standard gray-level rendering. For monochrome output, use 
 		/// FT_LOAD_TARGET_MONO instead.
 		/// </summary>
-		Normal =		(RenderMode.Normal & 15) << 16,
+		Normal = (RenderMode.Normal & 15) << 16,
 
 		/// <summary><para>
 		/// A lighter hinting algorithm for non-monochrome modes. Many
@@ -73,25 +73,25 @@ namespace SharpFont
 		/// </para><para>
 		/// As a special exception, this target implies FT_LOAD_FORCE_AUTOHINT.
 		/// </para></summary>
-		Light =			(RenderMode.Light & 15) << 16,
+		Light = (RenderMode.Light & 15) << 16,
 
 		/// <summary>
 		/// Strong hinting algorithm that should only be used for monochrome
 		/// output. The result is probably unpleasant if the glyph is rendered
 		/// in non-monochrome modes.
 		/// </summary>
-		Mono =			(RenderMode.Mono & 15) << 16,
+		Mono = (RenderMode.Mono & 15) << 16,
 
 		/// <summary>
 		/// A variant of FT_LOAD_TARGET_NORMAL optimized for horizontally 
 		/// decimated LCD displays.
 		/// </summary>
-		LCD =			(RenderMode.LCD & 15) << 16,
+		LCD = (RenderMode.LCD & 15) << 16,
 
 		/// <summary>
 		/// A variant of FT_LOAD_TARGET_NORMAL optimized for vertically 
 		/// decimated LCD displays.
 		/// </summary>
-		VerticalLCD =	(RenderMode.VerticalLCD & 15) << 16
+		VerticalLCD = (RenderMode.VerticalLCD & 15) << 16
 	}
 }

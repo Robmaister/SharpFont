@@ -35,7 +35,7 @@ namespace SharpFont
 		/// <summary>
 		/// This value is 0.
 		/// </summary>
-		Default =	0x0,
+		Default = 0x0,
 
 		/// <summary>
 		/// This flag is set to indicate that an anti-aliased glyph image
@@ -53,7 +53,7 @@ namespace SharpFont
 		/// Note that for now, direct rendering is only possible with
 		/// anti-aliased glyphs.
 		/// </para></summary>
-		Direct =	0x2,
+		Direct = 0x2,
 
 		/// <summary><para>
 		/// This flag is only used in direct rendering mode. If set, the output
@@ -64,6 +64,6 @@ namespace SharpFont
 		/// pixmap, except in direct rendering mode where all spans are
 		/// generated if no clipping box is set.
 		/// </para></summary>
-		Clip =		0x4
+		Clip = 0x4
 	}
 }

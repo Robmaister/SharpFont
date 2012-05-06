@@ -68,7 +68,7 @@ namespace SharpFont
 		/// bitmaps. The following flags are used to modify this default 
 		/// behaviour to more specific and useful cases.
 		/// </summary>
-		Default =					0x0000,
+		Default = 0x0000,
 
 		/// <summary><para>
 		/// Don't scale the outline glyph loaded, but keep it in font units.
@@ -76,7 +76,7 @@ namespace SharpFont
 		/// This flag implies FT_LOAD_NO_HINTING and FT_LOAD_NO_BITMAP, and
 		/// unsets FT_LOAD_RENDER.
 		/// </para></summary>
-		NoScale =					0x0001,
+		NoScale = 0x0001,
 
 		/// <summary><para>
 		/// Disable hinting. This generally generates ‘blurrier’ bitmap glyph 
@@ -85,7 +85,7 @@ namespace SharpFont
 		/// </para><para>
 		/// This flag is implied by FT_LOAD_NO_SCALE.
 		/// </para></summary>
-		NoHinting =					0x0002,
+		NoHinting = 0x0002,
 
 		/// <summary><para>
 		/// Call FT_Render_Glyph after the glyph is loaded. By default, the 
@@ -94,7 +94,7 @@ namespace SharpFont
 		/// </para><para>
 		/// This flag is unset by FT_LOAD_NO_SCALE.
 		/// </para></summary>
-		Render =					0x0004,
+		Render = 0x0004,
 
 		/// <summary><para>
 		/// Ignore bitmap strikes when loading. Bitmap-only fonts ignore this
@@ -102,26 +102,26 @@ namespace SharpFont
 		/// </para><para>
 		/// FT_LOAD_NO_SCALE always sets this flag.
 		/// </para></summary>
-		NoBitmap =					0x0008,
+		NoBitmap = 0x0008,
 
 		/// <summary>
 		/// Load the glyph for vertical text layout. Don't use it as it is 
 		/// problematic currently.
 		/// </summary>
-		VerticalLayout =			0x0010,
+		VerticalLayout = 0x0010,
 
 		/// <summary>
 		/// Indicates that the auto-hinter is preferred over the font's native
 		/// hinter. See also the note below.
 		/// </summary>
-		ForceAutohint =				0x0020,
+		ForceAutohint = 0x0020,
 
 		/// <summary>
 		/// Indicates that the font driver should crop the loaded bitmap glyph 
 		/// (i.e., remove all space around its black bits). Not all drivers 
 		/// implement this.
 		/// </summary>
-		CropBitmap =				0x0040,
+		CropBitmap = 0x0040,
 
 		/// <summary>
 		/// Indicates that the font driver should perform pedantic 
@@ -129,12 +129,12 @@ namespace SharpFont
 		/// broken glyphs in fonts. By default, FreeType tries to handle broken
 		/// fonts also.
 		/// </summary>
-		Pedantic =					0x0080,
+		Pedantic = 0x0080,
 
 		/// <summary>
 		/// Ignored. Deprecated.
 		/// </summary>
-		IgnoreGlobalAdvanceWidth =	0x0200,
+		IgnoreGlobalAdvanceWidth = 0x0200,
 
 		/// <summary><para>
 		/// This flag is only used internally. It merely indicates that the 
@@ -148,13 +148,13 @@ namespace SharpFont
 		/// </para><para>
 		/// This flag implies FT_LOAD_NO_SCALE and FT_LOAD_IGNORE_TRANSFORM.
 		/// </para></summary>
-		NoRecurse =					0x0400,
+		NoRecurse = 0x0400,
 
 		/// <summary>
 		/// Indicates that the transform matrix set by FT_Set_Transform should 
 		/// be ignored.
 		/// </summary>
-		IgnoreTransform =			0x0800,
+		IgnoreTransform = 0x0800,
 
 		/// <summary><para>
 		/// This flag is used with FT_LOAD_RENDER to indicate that you want to
@@ -165,19 +165,19 @@ namespace SharpFont
 		/// should rather use FT_LOAD_TARGET_MONO so that the 
 		/// monochrome-optimized hinting algorithm is used.
 		/// </para></summary>
-		Monochrome =				0x1000,
+		Monochrome = 0x1000,
 
 		/// <summary>
 		/// Indicates that the ‘linearHoriAdvance’ and ‘linearVertAdvance’ 
 		/// fields of FT_GlyphSlotRec should be kept in font units. See 
 		/// FT_GlyphSlotRec for details.
 		/// </summary>
-		LinearDesign =				0x2000,
+		LinearDesign = 0x2000,
 
 		/// <summary>
 		/// Disable auto-hinter. See also the note below.
 		/// </summary>
-		NoAutohint =				0x8000,
+		NoAutohint = 0x8000,
 
 		/// <summary><para>
 		/// A bit-flag to be OR-ed with the ‘flags’ parameter of the
@@ -194,6 +194,6 @@ namespace SharpFont
 		/// Normal and bytecode hinted modes, which require loading, scaling,
 		/// and hinting of the glyph outline, are extremely slow by comparison.
 		/// </para></summary>
-		AdvanceFlagFastOnly =		0x20000000
+		AdvanceFlagFastOnly = 0x20000000
 	}
 }

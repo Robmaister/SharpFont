@@ -27,11 +27,10 @@ using System;
 namespace SharpFont
 {
 	/// <summary>
-	/// A list of bit-field constants used within the ‘flags’ field of the
-	/// FT_Open_Args structure.
+	/// A list of bit-field constants used within the ‘flags’ field of the <see cref="OpenArgs"/> structure.
 	/// </summary>
 	/// <remarks>
-	/// The ‘FT_OPEN_MEMORY’, ‘FT_OPEN_STREAM’, and ‘FT_OPEN_PATHNAME’ flags
+	/// The <see cref="OpenFlags.Memory"/>, <see cref="OpenFlags.Stream"/>, and <see cref="OpenFlags.Pathname"/> flags
 	/// are mutually exclusive.
 	/// </remarks>
 	[Flags]

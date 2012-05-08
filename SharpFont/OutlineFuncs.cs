@@ -30,8 +30,8 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary><para>
-	/// A function pointer type used to describe the signature of a ‘move to’
-	/// function during outline walking/decomposition.
+	/// A function pointer type used to describe the signature of a ‘move to’ function during outline
+	/// walking/decomposition.
 	/// </para><para>
 	/// A ‘move to’ is emitted to start a new contour in an outline.
 	/// </para></summary>
@@ -42,8 +42,8 @@ namespace SharpFont
 	public delegate int MoveToFunc(FTVector to, IntPtr user);
 
 	/// <summary><para>
-	/// A function pointer type used to describe the signature of a ‘line to’
-	/// function during outline walking/decomposition.
+	/// A function pointer type used to describe the signature of a ‘line to’ function during outline
+	/// walking/decomposition.
 	/// </para><para>
 	/// A ‘line to’ is emitted to indicate a segment in the outline.
 	/// </para></summary>
@@ -54,13 +54,14 @@ namespace SharpFont
 	public delegate int LineToFunc(FTVector to, IntPtr user);
 
 	/// <summary><para>
-	/// A function pointer type used to describe the signature of a ‘conic to’
-	/// function during outline walking or decomposition.
+	/// A function pointer type used to describe the signature of a ‘conic to’ function during outline walking or
+	/// decomposition.
 	/// </para><para>
-	/// A ‘conic to’ is emitted to indicate a second-order Bézier arc in the
-	/// outline.
+	/// A ‘conic to’ is emitted to indicate a second-order Bézier arc in the outline.
 	/// </para></summary>
-	/// <param name="control">An intermediate control point between the last position and the new target in ‘to’.</param>
+	/// <param name="control">
+	/// An intermediate control point between the last position and the new target in ‘to’.
+	/// </param>
 	/// <param name="to">A pointer to the target end point of the conic arc.</param>
 	/// <param name="user">A typeless pointer which is passed from the caller of the decomposition function.</param>
 	/// <returns>Error code. 0 means success.</returns>
@@ -68,8 +69,8 @@ namespace SharpFont
 	public delegate int ConicToFunc(FTVector control, FTVector to, IntPtr user);
 
 	/// <summary><para>
-	/// A function pointer type used to describe the signature of a ‘cubic to’
-	/// function during outline walking or decomposition.
+	/// A function pointer type used to describe the signature of a ‘cubic to’ function during outline walking or
+	/// decomposition.
 	/// </para><para>
 	/// A ‘cubic to’ is emitted to indicate a third-order Bézier arc.
 	/// </para></summary>
@@ -82,19 +83,17 @@ namespace SharpFont
 	public delegate int CubicToFunc(FTVector control1, FTVector control2, FTVector to, IntPtr user);
 
 	/// <summary>
-	/// A structure to hold various function pointers used during outline
-	/// decomposition in order to emit segments, conic, and cubic Béziers.
+	/// A structure to hold various function pointers used during outline decomposition in order to emit segments,
+	/// conic, and cubic Béziers.
 	/// </summary>
 	/// <remarks>
-	/// The point coordinates sent to the emitters are the transformed version
-	/// of the original coordinates (this is important for high accuracy during
-	/// scan-conversion). The transformation is simple:
+	/// The point coordinates sent to the emitters are the transformed version of the original coordinates (this is
+	/// important for high accuracy during scan-conversion). The transformation is simple:
 	/// <code>
-	///    x' = (x &lt;&lt; shift) - delta
-	///    y' = (x &lt;&lt; shift) - delta
+	/// x' = (x &lt;&lt; shift) - delta
+	/// y' = (x &lt;&lt; shift) - delta
 	/// </code>
-	/// Set the values of ‘shift’ and ‘delta’ to 0 to get the original point
-	/// coordinates.
+	/// Set the values of ‘shift’ and ‘delta’ to 0 to get the original point coordinates.
 	/// </remarks>
 	public class OutlineFuncs
 	{
@@ -196,8 +195,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets or sets the shift that is applied to coordinates before they
-		/// are sent to the emitter.
+		/// Gets or sets the shift that is applied to coordinates before they are sent to the emitter.
 		/// </summary>
 		public int Shift
 		{
@@ -213,8 +211,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets or sets the delta that is applied to coordinates before they
-		/// are sent to the emitter, but after the shift.
+		/// Gets or sets the delta that is applied to coordinates before they are sent to the emitter, but after the
+		/// shift.
 		/// </summary>
 		public int Delta
 		{

@@ -52,6 +52,11 @@ namespace SharpFont
 		private FT_Long x;
 		private FT_Long y;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FTVector"/> struct.
+		/// </summary>
+		/// <param name="x">The horizontal coordinate.</param>
+		/// <param name="y">The vertical coordinate.</param>
 		public FTVector(int x, int y)
 			: this()
 		{

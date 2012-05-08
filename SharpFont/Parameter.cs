@@ -30,12 +30,11 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary>
-	/// A simple structure used to pass more or less generic parameters to
-	/// FT_Open_Face.
+	/// A simple structure used to pass more or less generic parameters to <see cref="FT.OpenFace"/>.
 	/// </summary>
 	/// <remarks>
-	/// The ID and function of parameters are driver-specific. See the various
-	/// FT_PARAM_TAG_XXX flags for more information.
+	/// The ID and function of parameters are driver-specific. See the various <see cref="ParamTag"/> flags for more
+	/// information.
 	/// </remarks>
 	public sealed class Parameter
 	{
@@ -80,13 +79,7 @@ namespace SharpFont
 			}
 		}
 
-		public static int SizeInBytes
-		{
-			get
-			{
-				return Marshal.SizeOf(typeof(Parameter));
-			}
-		}
+		public static int SizeInBytes { get { return ParameterRec.SizeInBytes; } }
 
 		internal IntPtr Reference
 		{

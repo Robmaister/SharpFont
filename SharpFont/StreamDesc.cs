@@ -30,8 +30,8 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary>
-	/// A union type used to store either a long or a pointer. This is used to
-	/// store a file descriptor or a ‘FILE*’ in an input stream.
+	/// A union type used to store either a long or a pointer. This is used to store a file descriptor or a ‘FILE*’ in
+	/// an input stream.
 	/// </summary>
 	public class StreamDesc
 	{
@@ -58,6 +58,9 @@ namespace SharpFont
 
 		#region Properties
 
+		/// <summary>
+		/// Gets the <see cref="StreamDesc"/> as a file descriptor.
+		/// </summary>
 		public int Value
 		{
 			get
@@ -66,6 +69,9 @@ namespace SharpFont
 			}
 		}
 
+		/// <summary>
+		/// Gets the <see cref="StreamDesc"/> as an input stream (FILE*).
+		/// </summary>
 		public IntPtr Pointer
 		{
 			get

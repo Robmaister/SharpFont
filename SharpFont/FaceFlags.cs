@@ -46,7 +46,7 @@ namespace SharpFont
 
 		/// <summary>
 		/// Indicates that the face contains bitmap strikes. See also <see cref="Face.FixedSizesCount"/> and
-		/// <see cref="Face.AvaliableSizes"/>.
+		/// <see cref="Face.AvailableSizes"/>.
 		/// </summary>
 		FixedSizes = 0x0002,
 
@@ -85,9 +85,9 @@ namespace SharpFont
 		MultipleMasters = 0x0100,
 
 		/// <summary>
-		/// Indicates that the font contains glyph names that can be retrieved through <see cref="FT.GetGlyphName"/>.
-		/// Note that some TrueType fonts contain broken glyph name tables. Use the function
-		/// <see cref="FT.HasPSGlyphNames"/> when needed.
+		/// Indicates that the font contains glyph names that can be retrieved through
+		/// <see cref="FT.GetGlyphName(Face, uint, int)"/>. Note that some TrueType fonts contain broken glyph name
+		/// tables. Use the function <see cref="FT.HasPSGlyphNames"/> when needed.
 		/// </summary>
 		GlyphNames = 0x0200,
 
@@ -108,7 +108,7 @@ namespace SharpFont
 		/// Set if the font is CID-keyed. In that case, the font is not accessed by glyph indices but by CID values.
 		/// For subsetted CID-keyed fonts this has the consequence that not all index values are a valid argument to
 		/// <see cref="FT.LoadGlyph"/>. Only the CID values for which corresponding glyphs in the subsetted font exist
-		/// make <see cref="FT.LoadGLyph"/> return successfully; in all other cases you get an
+		/// make <see cref="FT.LoadGlyph"/> return successfully; in all other cases you get an
 		/// <see cref="Error.InvalidArgument"/> error.
 		/// </para><para>
 		/// Note that CID-keyed fonts which are in an SFNT wrapper don't have this flag set since the glyphs are

@@ -31,8 +31,8 @@ namespace SharpFont
 	/// A structure used to model a size request.
 	/// </summary>
 	/// <remarks>
-	/// If <see cref="Width"/> is zero, then the horizontal scaling value is
-	/// set equal to the vertical scaling value, and vice versa.
+	/// If <see cref="Width"/> is zero, then the horizontal scaling value is set equal to the vertical scaling value,
+	/// and vice versa.
 	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
 	public sealed class SizeRequest
@@ -88,8 +88,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The horizontal resolution. If set to zero, <see cref="Width"/> is
-		/// treated as a 26.6 fractional pixel value.
+		/// The horizontal resolution. If set to zero, <see cref="Width"/> is treated as a 26.6 fractional pixel value.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint HorizontalResolution
@@ -101,8 +100,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The horizontal resolution. If set to zero, <see cref="Height"/> is
-		/// treated as a 26.6 fractional pixel value.
+		/// The horizontal resolution. If set to zero, <see cref="Height"/> is treated as a 26.6 fractional pixel
+		/// value.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint VerticalResolution

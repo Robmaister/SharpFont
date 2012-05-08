@@ -30,9 +30,8 @@ using SharpFont.PostScript.Internal;
 namespace SharpFont.PostScript
 {
 	/// <summary>
-	/// A structure used to model a Type 1 or Type 2 FontInfo dictionary. Note
-	/// that for Multiple Master fonts, each instance has its own FontInfo
-	/// dictionary.
+	/// A structure used to model a Type 1 or Type 2 FontInfo dictionary. Note that for Multiple Master fonts, each
+	/// instance has its own FontInfo dictionary.
 	/// </summary>
 	public class FontInfo
 	{

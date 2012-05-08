@@ -28,9 +28,8 @@ using System.Runtime.InteropServices;
 namespace SharpFont.Cache
 {
 	/// <summary>
-	/// A handle to a small bitmap cache. These are special cache objects used
-	/// to store small glyph bitmaps (and anti-aliased pixmaps) in a much more
-	/// efficient way than the traditional glyph image cache implemented by
+	/// A handle to a small bitmap cache. These are special cache objects used to store small glyph bitmaps (and
+	/// anti-aliased pixmaps) in a much more efficient way than the traditional glyph image cache implemented by
 	/// <see cref="ImageCache"/>.
 	/// </summary>
 	public class SBitCache

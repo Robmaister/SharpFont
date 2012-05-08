@@ -30,8 +30,7 @@ using SharpFont.TrueType.Internal;
 namespace SharpFont.TrueType
 {
 	/// <summary>
-	/// A structure used to model a TrueType font header table. All fields
-	/// follow the TrueType specification.
+	/// A structure used to model a TrueType font header table. All fields follow the TrueType specification.
 	/// </summary>
 	public class Header
 	{

@@ -33,20 +33,17 @@ namespace SharpFont
 	/// The size metrics structure gives the metrics of a size object.
 	/// </summary>
 	/// <remarks><para>
-	/// The scaling values, if relevant, are determined first during a size
-	/// changing operation. The remaining fields are then set by the driver.
-	/// For scalable formats, they are usually set to scaled values of the
-	/// corresponding fields in <see cref="Face"/>.
+	/// The scaling values, if relevant, are determined first during a size changing operation. The remaining fields
+	/// are then set by the driver. For scalable formats, they are usually set to scaled values of the corresponding
+	/// fields in <see cref="Face"/>.
 	/// </para><para>
-	/// Note that due to glyph hinting, these values might not be exact for
-	/// certain fonts. Thus they must be treated as unreliable with an error
-	/// margin of at least one pixel!
+	/// Note that due to glyph hinting, these values might not be exact for certain fonts. Thus they must be treated as
+	/// unreliable with an error margin of at least one pixel!
 	/// </para><para>
-	/// Indeed, the only way to get the exact metrics is to render all glyphs.
-	/// As this would be a definite performance hit, it is up to client
-	/// applications to perform such computations.
+	/// Indeed, the only way to get the exact metrics is to render all glyphs. As this would be a definite performance
+	/// hit, it is up to client applications to perform such computations.
 	/// </para><para>
-	/// The SizeMetrics structure is valid for bitmap fonts also.
+	/// The <see cref="SizeMetrics"/> structure is valid for bitmap fonts also.
 	/// </para></remarks>
 	public sealed class SizeMetrics
 	{
@@ -74,8 +71,8 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// The width of the scaled EM square in pixels, hence the term ‘ppem’
-		/// (pixels per EM). It is also referred to as ‘nominal width’.
+		/// The width of the scaled EM square in pixels, hence the term ‘ppem’ (pixels per EM). It is also referred to
+		/// as ‘nominal width’.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort NominalWidth
@@ -87,8 +84,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The height of the scaled EM square in pixels, hence the term ‘ppem’
-		/// (pixels per EM). It is also referred to as ‘nominal width’.
+		/// The height of the scaled EM square in pixels, hence the term ‘ppem’ (pixels per EM). It is also referred to
+		/// as ‘nominal height’.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort NominalHeight
@@ -100,9 +97,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A 16.16 fractional scaling value used to convert horizontal metrics
-		/// from font units to 26.6 fractional pixels. Only relevant for
-		/// scalable font formats.
+		/// A 16.16 fractional scaling value used to convert horizontal metrics from font units to 26.6 fractional
+		/// pixels. Only relevant for scalable font formats.
 		/// </summary>
 		public int ScaleX
 		{
@@ -113,9 +109,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A 16.16 fractional scaling value used to convert vertical metrics
-		/// from font units to 26.6 fractional pixels. Only relevant for
-		/// scalable font formats.
+		/// A 16.16 fractional scaling value used to convert vertical metrics from font units to 26.6 fractional
+		/// pixels. Only relevant for scalable font formats.
 		/// </summary>
 		public int ScaleY
 		{

@@ -122,8 +122,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The version of FreeType this module requires, as a 16.16 fixed
-		/// number (major.minor). Starts at version 2.0, i.e., 0x20000.
+		/// The version of FreeType this module requires, as a 16.16 fixed number (major.minor). Starts at version 2.0,
+		/// i.e., 0x20000.
 		/// </summary>
 		public int Requires
 		{

@@ -30,34 +30,30 @@ namespace SharpFont
 	/// A list of values and/or bit-flags returned by the FT_Get_Gasp function.
 	/// </summary>
 	/// <remarks><para>
-	/// The bit-flags ‘FT_GASP_DO_GRIDFIT’ and ‘FT_GASP_DO_GRAY’ are to be used
-	/// for standard font rasterization only. Independently of that,
-	/// ‘FT_GASP_SYMMETRIC_SMOOTHING’ and ‘FT_GASP_SYMMETRIC_GRIDFIT’ are to be
-	/// used if ClearType is enabled (and ‘FT_GASP_DO_GRIDFIT’ and
-	/// ‘FT_GASP_DO_GRAY’ are consequently ignored).
+	/// The bit-flags <see cref="Gasp.DoGridfit"/> and <see cref="Gasp.DoGray"/> are to be used for standard font
+	/// rasterization only. Independently of that, <see cref="Gasp.SymmetricSmoothing"/> and
+	/// <see cref="Gasp.SymmetricGridfit"/> are to be used if ClearType is enabled (and <see cref="Gasp.DoGridfit"/>
+	/// and <see cref="Gasp.DoGray"/> are consequently ignored).
 	/// </para><para>
-	/// ‘ClearType’ is Microsoft's implementation of LCD rendering, partly
-	/// protected by patents.
+	/// ‘ClearType’ is Microsoft's implementation of LCD rendering, partly protected by patents.
 	/// </para></remarks>
 	[Flags]
 	public enum Gasp
 	{
 		/// <summary>
-		/// This special value means that there is no GASP table in this face.
-		/// It is up to the client to decide what to do.
+		/// This special value means that there is no GASP table in this face. It is up to the client to decide what to
+		/// do.
 		/// </summary>
 		NoTable = -1,
 
 		/// <summary>
-		/// Grid-fitting and hinting should be performed at the specified ppem.
-		/// This really means TrueType bytecode interpretation. If this bit is
-		/// not set, no hinting gets applied.
+		/// Grid-fitting and hinting should be performed at the specified ppem. This really means TrueType bytecode
+		/// interpretation. If this bit is not set, no hinting gets applied.
 		/// </summary>
 		DoGridfit = 0x01,
 
 		/// <summary>
-		/// Anti-aliased rendering should be performed at the specified ppem.
-		/// If not set, do monochrome rendering.
+		/// Anti-aliased rendering should be performed at the specified ppem. If not set, do monochrome rendering.
 		/// </summary>
 		DoGray = 0x02,
 

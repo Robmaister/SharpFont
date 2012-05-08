@@ -46,5 +46,7 @@ namespace SharpFont.Internal
 	{
 		internal FT_ULong tag;
 		internal IntPtr data;
+
+		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(ParameterRec)); } }
 	}
 }

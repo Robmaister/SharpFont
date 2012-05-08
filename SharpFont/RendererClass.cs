@@ -76,8 +76,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A method used to render the image that is in a given glyph slot
-		/// into a bitmap.
+		/// A method used to render the image that is in a given glyph slot into a bitmap.
 		/// </summary>
 		public IntPtr RenderGlyph
 		{
@@ -121,8 +120,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// For <see cref="GlyphFormat.Outline"/> renderers only. This is a
-		/// pointer to its raster's class.
+		/// For <see cref="GlyphFormat.Outline"/> renderers only. This is a pointer to its raster's class.
 		/// </summary>
 		public RasterFuncs RasterClass
 		{

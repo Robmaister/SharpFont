@@ -29,27 +29,23 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary>
-	/// FreeType root glyph slot class structure. A glyph slot is a container
-	/// where individual glyphs can be loaded, be they in outline or bitmap 
-	/// format.
+	/// FreeType root glyph slot class structure. A glyph slot is a container where individual glyphs can be loaded, be
+	/// they in outline or bitmap format.
 	/// </summary>
 	/// <remarks><para>
-	/// If FT_Load_Glyph is called with default flags (see FT_LOAD_DEFAULT) the
-	/// glyph image is loaded in the glyph slot in its native format (e.g., an
-	/// outline glyph for TrueType and Type 1 formats).
+	/// If <see cref="FT.LoadGlyph"/> is called with default flags (see <see cref="LoadFlags.Default"/>) the glyph
+	/// image is loaded in the glyph slot in its native format (e.g., an outline glyph for TrueType and Type 1
+	/// formats).
 	/// </para><para>
-	/// This image can later be converted into a bitmap by calling 
-	/// FT_Render_Glyph. This function finds the current renderer for the
-	/// native image's format, then invokes it.
+	/// This image can later be converted into a bitmap by calling <see cref="FT.RenderGlyph"/>. This function finds
+	/// the current renderer for the native image's format, then invokes it.
 	/// </para><para>
-	/// The renderer is in charge of transforming the native image through the
-	/// slot's face transformation fields, then converting it into a bitmap
-	/// that is returned in ‘slot->bitmap’.
+	/// The renderer is in charge of transforming the native image through the slot's face transformation fields, then
+	/// converting it into a bitmap that is returned in ‘slot->bitmap’.
 	/// </para><para>
-	/// Note that ‘slot->bitmap_left’ and ‘slot->bitmap_top’ are also used to 
-	/// specify the position of the bitmap relative to the current pen position
-	/// (e.g., coordinates (0,0) on the baseline). Of course, ‘slot->format’ is
-	/// also changed to FT_GLYPH_FORMAT_BITMAP.
+	/// Note that ‘slot->bitmap_left’ and ‘slot->bitmap_top’ are also used to specify the position of the bitmap
+	/// relative to the current pen position (e.g., coordinates (0,0) on the baseline). Of course, ‘slot->format’ is
+	/// also changed to <see cref="GlyphFormat.Bitmap"/>.
 	/// </para></remarks>
 	/// <example>
 	/// <code>
@@ -102,8 +98,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// Gets a handle to the FreeType library instance this slot belongs
-		/// to.
+		/// Gets a handle to the FreeType library instance this slot belongs to.
 		/// </summary>
 		public Library Library
 		{
@@ -125,9 +120,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// In some cases (like some font tools), several glyph slots per face
-		/// object can be a good thing. As this is rare, the glyph slots are
-		/// listed through a direct, single-linked list using its ‘next’ field.
+		/// In some cases (like some font tools), several glyph slots per face object can be a good thing. As this is
+		/// rare, the glyph slots are listed through a direct, single-linked list using its ‘next’ field.
 		/// </summary>
 		public GlyphSlot Next
 		{
@@ -138,9 +132,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets a typeless pointer which is unused by the FreeType library or
-		/// any of its drivers. It can be used by client applications to link
-		/// their own data to each glyph slot object.
+		/// Gets a typeless pointer which is unused by the FreeType library or any of its drivers. It can be used by
+		/// client applications to link their own data to each glyph slot object.
 		/// </summary>
 		public Generic Generic
 		{
@@ -151,13 +144,11 @@ namespace SharpFont
 		}
 
 		/// <summary><para>
-		/// Gets the metrics of the last loaded glyph in the slot. The returned
-		/// values depend on the last load flags (see the FT_Load_Glyph API
-		/// function) and can be expressed either in 26.6 fractional pixels or
+		/// Gets the metrics of the last loaded glyph in the slot. The returned values depend on the last load flags
+		/// (see the <see cref="FT.LoadGlyph"/> API function) and can be expressed either in 26.6 fractional pixels or
 		/// font units.
 		/// </para><para>
-		/// Note that even when the glyph image is transformed, the metrics are
-		/// not.
+		/// Note that even when the glyph image is transformed, the metrics are not.
 		/// </para></summary>
 		public GlyphMetrics Metrics
 		{
@@ -168,10 +159,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets the advance width of the unhinted glyph. Its value is
-		/// expressed in 16.16 fractional pixels, unless FT_LOAD_LINEAR_DESIGN
-		/// is set when loading the glyph. This field can be important to
-		/// perform correct WYSIWYG layout. Only relevant for outline glyphs.
+		/// Gets the advance width of the unhinted glyph. Its value is expressed in 16.16 fractional pixels, unless
+		/// <see cref="LoadFlags.LinearDesign"/> is set when loading the glyph. This field can be important to perform
+		/// correct WYSIWYG layout. Only relevant for outline glyphs.
 		/// </summary>
 		public int LinearHorizontalAdvance
 		{
@@ -182,10 +172,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets the advance height of the unhinted glyph. Its value is
-		/// expressed in 16.16 fractional pixels, unless FT_LOAD_LINEAR_DESIGN
-		/// is set when loading the glyph. This field can be important to
-		/// perform correct WYSIWYG layout. Only relevant for outline glyphs.
+		/// Gets the advance height of the unhinted glyph. Its value is expressed in 16.16 fractional pixels, unless
+		/// <see cref="LoadFlags.LinearDesign"/> is set when loading the glyph. This field can be important to perform
+		/// correct WYSIWYG layout. Only relevant for outline glyphs.
 		/// </summary>
 		public int LinearVerticalAdvance
 		{
@@ -196,10 +185,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This shorthand is, depending on FT_LOAD_IGNORE_TRANSFORM, the
-		/// transformed advance width for the glyph (in 26.6 fractional pixel
-		/// format). As specified with FT_LOAD_VERTICAL_LAYOUT, it uses either
-		/// the ‘horiAdvance’ or the ‘vertAdvance’ value of ‘metrics’ field.
+		/// This shorthand is, depending on <see cref="LoadFlags.IgnoreTransform"/>, the transformed advance width for
+		/// the glyph (in 26.6 fractional pixel format). As specified with <see cref="LoadFlags.VerticalLayout"/>, it
+		/// uses either the ‘horiAdvance’ or the ‘vertAdvance’ value of ‘metrics’ field.
 		/// </summary>
 		public FTVector Advance
 		{
@@ -210,9 +198,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field indicates the format of the image contained in the glyph
-		/// slot. Typically FT_GLYPH_FORMAT_BITMAP, FT_GLYPH_FORMAT_OUTLINE, or
-		/// FT_GLYPH_FORMAT_COMPOSITE, but others are possible.
+		/// This field indicates the format of the image contained in the glyph slot. Typically
+		/// <see cref="GlyphFormat.Bitmap"/>, <see cref="GlyphFormat.Outline"/>, or
+		/// <see cref="GlyphFormat.Composite"/>, but others are possible.
 		/// </summary>
 		[CLSCompliant(false)]
 		public GlyphFormat Format
@@ -224,10 +212,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is used as a bitmap descriptor when the slot format is
-		/// FT_GLYPH_FORMAT_BITMAP. Note that the address and content of the
-		/// bitmap buffer can change between calls of FT_Load_Glyph and a few
-		/// other functions.
+		/// This field is used as a bitmap descriptor when the slot format is <see cref="GlyphFormat.Bitmap"/>. Note
+		/// that the address and content of the bitmap buffer can change between calls of <see cref="FT.LoadGlyph"/>
+		/// and a few other functions.
 		/// </summary>
 		public FTBitmap Bitmap
 		{
@@ -238,8 +225,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This is the bitmap's left bearing expressed in integer pixels. Of
-		/// course, this is only valid if the format is FT_GLYPH_FORMAT_BITMAP.
+		/// This is the bitmap's left bearing expressed in integer pixels. Of course, this is only valid if the format
+		/// is <see cref="GlyphFormat.Bitmap"/>.
 		/// </summary>
 		public int BitmapLeft
 		{
@@ -250,9 +237,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This is the bitmap's top bearing expressed in integer pixels.
-		/// Remember that this is the distance from the baseline to the
-		/// top-most glyph scanline, upwards y coordinates being positive.
+		/// This is the bitmap's top bearing expressed in integer pixels. Remember that this is the distance from the
+		/// baseline to the top-most glyph scanline, upwards y coordinates being positive.
 		/// </summary>
 		public int BitmapTop
 		{
@@ -263,10 +249,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets the outline descriptor for the current glyph image if its
-		/// format is FT_GLYPH_FORMAT_OUTLINE. Once a glyph is loaded,
-		/// ‘outline’ can be transformed, distorted, embolded, etc. However, it
-		/// must not be freed.
+		/// Gets the outline descriptor for the current glyph image if its format is <see cref="GlyphFormat.Outline"/>.
+		/// Once a glyph is loaded, ‘outline’ can be transformed, distorted, embolded, etc. However, it must not be
+		/// freed.
 		/// </summary>
 		public Outline Outline
 		{
@@ -277,9 +262,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets the number of subglyphs in a composite glyph. This field is
-		/// only valid for the composite glyph format that should normally only
-		/// be loaded with the FT_LOAD_NO_RECURSE flag. For now this is
+		/// Gets the number of subglyphs in a composite glyph. This field is only valid for the composite glyph format
+		/// that should normally only be loaded with the <see cref="LoadFlags.NoRecurse"/> flag. For now this is
 		/// internal to FreeType.
 		/// </summary>
 		[CLSCompliant(false)]
@@ -292,9 +276,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets an array of subglyph descriptors for composite glyphs. There
-		/// are ‘num_subglyphs’ elements in there. Currently internal to
-		/// FreeType.
+		/// Gets an array of subglyph descriptors for composite glyphs. There are ‘num_subglyphs’ elements in there.
+		/// Currently internal to FreeType.
 		/// </summary>
 		public SubGlyph[] Subglyphs
 		{
@@ -318,9 +301,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Certain font drivers can also return the control data for a given
-		/// glyph image (e.g. TrueType bytecode, Type 1 charstrings, etc.).
-		/// This field is a pointer to such data.
+		/// Certain font drivers can also return the control data for a given glyph image (e.g. TrueType bytecode, Type
+		/// 1 charstrings, etc.). This field is a pointer to such data.
 		/// </summary>
 		public IntPtr ControlData
 		{
@@ -342,8 +324,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets the difference between hinted and unhinted left side bearing
-		/// while autohinting is active. Zero otherwise.
+		/// Gets the difference between hinted and unhinted left side bearing while autohinting is active. Zero
+		/// otherwise.
 		/// </summary>
 		public int DeltaLSB
 		{
@@ -354,8 +336,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets the difference between hinted and unhinted right side bearing
-		/// while autohinting is active. Zero otherwise.
+		/// Gets the difference between hinted and unhinted right side bearing while autohinting is active. Zero
+		/// otherwise.
 		/// </summary>
 		public int DeltaRSB
 		{
@@ -366,9 +348,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Really wicked formats can use this pointer to present their own
-		/// glyph image to client applications. Note that the application needs
-		/// to know about the image format.
+		/// Really wicked formats can use this pointer to present their own glyph image to client applications. Note
+		/// that the application needs to know about the image format.
 		/// </summary>
 		public IntPtr Other
 		{
@@ -408,14 +389,12 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets a description of a given subglyph. Only use it if
-		/// ‘glyph->format’ is FT_GLYPH_FORMAT_COMPOSITE; an error is returned
-		/// otherwise.
+		/// Gets a description of a given subglyph. Only use it if ‘glyph->format’ is
+		/// <see cref="GlyphFormat.Composite"/>; an error is returned otherwise.
 		/// </summary>
 		/// <remarks>
-		/// The values of ‘*p_arg1’, ‘*p_arg2’, and ‘*p_transform’ must be
-		/// interpreted depending on the flags returned in ‘*p_flags’. See the
-		/// TrueType specification for details.
+		/// The values of ‘*p_arg1’, ‘*p_arg2’, and ‘*p_transform’ must be interpreted depending on the flags returned
+		/// in ‘*p_flags’. See the TrueType specification for details.
 		/// </remarks>
 		/// <param name="subIndex">The index of the subglyph. Must be less than ‘glyph->num_subglyphs’.</param>
 		/// <param name="index">The glyph index of the subglyph.</param>
@@ -430,9 +409,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A function used to extract a glyph image from a slot. Note that the
-		/// created <see cref="Glyph"/> object must be released with
-		/// <see cref="FT.DoneGlyph"/>.
+		/// A function used to extract a glyph image from a slot. Note that the created <see cref="Glyph"/> object must
+		/// be released with <see cref="FT.DoneGlyph"/>.
 		/// </summary>
 		/// <returns>A handle to the glyph object.</returns>
 		public Glyph GetGlyph()

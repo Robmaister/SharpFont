@@ -27,8 +27,8 @@ using System;
 namespace SharpFont
 {
 	/// <summary>
-	/// A list of constants used to describe subglyphs. Please refer to the
-	/// TrueType specification for the meaning of the various flags.
+	/// A list of constants used to describe subglyphs. Please refer to the TrueType specification for the meaning of
+	/// the various flags.
 	/// </summary>
 	[Flags]
 	public enum SubGlyphFlags

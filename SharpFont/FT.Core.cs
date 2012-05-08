@@ -434,8 +434,7 @@ namespace SharpFont
 		/// <param name="filepathname">A path to the font file.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
 		/// <returns>
-		/// A handle to a new face object. If <see cref="faceIndex"/> is greater than or equal to zero, it must be
-		/// non-NULL.
+		/// A handle to a new face object. If ‘faceIndex’ is greater than or equal to zero, it must be non-NULL.
 		/// </returns>
 		/// <see cref="OpenFace"/>
 		public static Face NewFace(Library library, string filepathname, int faceIndex)
@@ -462,8 +461,7 @@ namespace SharpFont
 		/// <param name="fileBase">A pointer to the beginning of the font data.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
 		/// <returns>
-		/// A handle to a new face object. If <see cref="faceIndex"/> is greater than or equal to zero, it must be
-		/// non-NULL.
+		/// A handle to a new face object. If ‘faceIndex’ is greater than or equal to zero, it must be non-NULL.
 		/// </returns>
 		/// <see cref="OpenFace"/>
 		public static unsafe Face NewMemoryFace(Library library, byte[] fileBase, int faceIndex)
@@ -492,11 +490,11 @@ namespace SharpFont
 		/// accessed directly through <see cref="Face.Glyph"/>.
 		/// </para><para>
 		/// OpenFace can be used to quickly check whether the font format of a given font resource is supported by
-		/// FreeType. If the <see cref="faceIndex"/> field is negative, the function's return value is 0 if the font
-		/// format is recognized, or non-zero otherwise; the function returns a more or less empty face handle in
-		/// ‘*aface’ (if ‘aface’ isn't NULL). The only useful field in this special case is
-		/// <see cref="Face.FaceCount"/> which gives the number of faces within the font file. After examination, the
-		/// returned <see cref="Face"/> structure should be deallocated with a call to <see cref="DoneFace"/>.
+		/// FreeType. If the ‘faceIndex’ field is negative, the function's return value is 0 if the font format is
+		/// recognized, or non-zero otherwise; the function returns a more or less empty face handle in ‘*aface’ (if
+		/// ‘aface’ isn't NULL). The only useful field in this special case is <see cref="Face.FaceCount"/> which gives
+		/// the number of faces within the font file. After examination, the returned <see cref="Face"/> structure
+		/// should be deallocated with a call to <see cref="DoneFace"/>.
 		/// </para><para>
 		/// Each new face object created with this function also owns a default <see cref="FTSize"/> object, accessible
 		/// as <see cref="Face.Size"/>.
@@ -509,8 +507,7 @@ namespace SharpFont
 		/// </param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
 		/// <returns>
-		/// A handle to a new face object. If <see cref="faceIndex"/> is greater than or equal to zero, it must be
-		/// non-NULL.
+		/// A handle to a new face object. If ‘faceIndex’ is greater than or equal to zero, it must be non-NULL.
 		/// </returns>
 		public static Face OpenFace(Library library, OpenArgs args, int faceIndex)
 		{
@@ -994,7 +991,7 @@ namespace SharpFont
 
 		/// <summary>
 		/// This function is used to return the next character code in the current charmap of a given face following
-		/// the value <see cref="charCode"/>, as well as the corresponding glyph index.
+		/// the value ‘charCode’, as well as the corresponding glyph index.
 		/// </summary>
 		/// <remarks><para>
 		/// You should use this function with <see cref="FT.GetFirstChar"/> to walk over all character codes available

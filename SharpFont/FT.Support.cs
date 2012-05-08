@@ -54,36 +54,35 @@ namespace SharpFont
 		public const int AnglePI4 = AnglePI / 4;
 
 		/// <summary><para>
-		/// A very simple function used to perform the computation ‘(a*b)/c’
-		/// with maximal accuracy (it uses a 64-bit intermediate integer
-		/// whenever necessary).
+		/// A very simple function used to perform the computation ‘(a*b)/c’ with maximal accuracy (it uses a 64-bit
+		/// intermediate integer whenever necessary).
 		/// </para><para>
-		/// This function isn't necessarily as fast as some processor specific
-		/// operations, but is at least completely portable.
+		/// This function isn't necessarily as fast as some processor specific operations, but is at least completely
+		/// portable.
 		/// </para></summary>
 		/// <param name="a">The first multiplier.</param>
 		/// <param name="b">The second multiplier.</param>
 		/// <param name="c">The divisor.</param>
-		/// <returns>The result of ‘(a*b)/c’. This function never traps when trying to divide by zero; it simply returns ‘MaxInt’ or ‘MinInt’ depending on the signs of ‘a’ and ‘b’.</returns>
+		/// <returns>
+		/// The result of ‘(a*b)/c’. This function never traps when trying to divide by zero; it simply returns
+		/// ‘MaxInt’ or ‘MinInt’ depending on the signs of ‘a’ and ‘b’.
+		/// </returns>
 		public static int MulDiv(int a, int b, int c)
 		{
 			return FT_MulDiv(a, b, c);
 		}
 
 		/// <summary>
-		/// A very simple function used to perform the computation
-		/// ‘(a*b)/0x10000’ with maximal accuracy. Most of the time this is
-		/// used to multiply a given value by a 16.16 fixed float factor.
+		/// A very simple function used to perform the computation ‘(a*b)/0x10000’ with maximal accuracy. Most of the
+		/// time this is used to multiply a given value by a 16.16 fixed float factor.
 		/// </summary>
 		/// <remarks><para>
-		/// This function has been optimized for the case where the absolute
-		/// value of ‘a’ is less than 2048, and ‘b’ is a 16.16 scaling factor.
-		/// As this happens mainly when scaling from notional units to
-		/// fractional pixels in FreeType, it resulted in noticeable speed
-		/// improvements between versions 2.x and 1.x.
+		/// This function has been optimized for the case where the absolute value of ‘a’ is less than 2048, and ‘b’ is
+		/// a 16.16 scaling factor. As this happens mainly when scaling from notional units to fractional pixels in
+		/// FreeType, it resulted in noticeable speed improvements between versions 2.x and 1.x.
 		/// </para><para>
-		/// As a conclusion, always try to place a 16.16 factor as the second
-		/// argument of this function; this can make a great difference.
+		/// As a conclusion, always try to place a 16.16 factor as the second argument of this function; this can make
+		/// a great difference.
 		/// </para></remarks>
 		/// <param name="a">The first multiplier.</param>
 		/// <param name="b">The second multiplier. Use a 16.16 factor here whenever possible (see note below).</param>
@@ -94,14 +93,12 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A very simple function used to perform the computation
-		/// ‘(a*0x10000)/b’ with maximal accuracy. Most of the time, this is
-		/// used to divide a given value by a 16.16 fixed float factor.
+		/// A very simple function used to perform the computation ‘(a*0x10000)/b’ with maximal accuracy. Most of the
+		/// time, this is used to divide a given value by a 16.16 fixed float factor.
 		/// </summary>
 		/// <remarks>
-		/// The optimization for <see cref="DivFix"/> is simple: If (a &lt;&lt;
-		/// 16) fits in 32 bits, then the division is computed directly.
-		/// Otherwise, we use a specialized version of <see cref="MulDiv"/>.
+		/// The optimization for <see cref="DivFix"/> is simple: If (a &lt;&lt; 16) fits in 32 bits, then the division
+		/// is computed directly. Otherwise, we use a specialized version of <see cref="MulDiv"/>.
 		/// </remarks>
 		/// <param name="a">The first multiplier.</param>
 		/// <param name="b">The second multiplier. Use a 16.16 factor here whenever possible (see note below).</param>
@@ -122,8 +119,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A very simple function used to compute the ceiling function of a
-		/// 16.16 fixed number.
+		/// A very simple function used to compute the ceiling function of a 16.16 fixed number.
 		/// </summary>
 		/// <param name="a">The number for which the ceiling function is to be computed.</param>
 		/// <returns>The result of ‘(a + 0x10000 - 1) &amp; -0x10000’.</returns>
@@ -133,8 +129,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A very simple function used to compute the floor function of a
-		/// 16.16 fixed number.
+		/// A very simple function used to compute the floor function of a 16.16 fixed number.
 		/// </summary>
 		/// <param name="a">The number for which the floor function is to be computed.</param>
 		/// <returns>The result of ‘a &amp; -0x10000’.</returns>
@@ -185,8 +180,7 @@ namespace SharpFont
 		/// Return the sinus of a given angle in fixed point format.
 		/// </summary>
 		/// <remarks>
-		/// If you need both the sinus and cosinus for a given angle, use the
-		/// function <see cref="VectorUnit"/>.
+		/// If you need both the sinus and cosinus for a given angle, use the function <see cref="VectorUnit"/>.
 		/// </remarks>
 		/// <param name="angle">The input angle.</param>
 		/// <returns>The sinus value.</returns>
@@ -199,8 +193,7 @@ namespace SharpFont
 		/// Return the cosinus of a given angle in fixed point format.
 		/// </summary>
 		/// <remarks>
-		/// If you need both the sinus and cosinus for a given angle, use the
-		/// function <see cref="VectorUnit"/>.
+		/// If you need both the sinus and cosinus for a given angle, use the function <see cref="VectorUnit"/>.
 		/// </remarks>
 		/// <param name="angle">The input angle.</param>
 		/// <returns>The cosinus value.</returns>
@@ -220,8 +213,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Return the arc-tangent corresponding to a given vector (x,y) in the
-		/// 2d plane.
+		/// Return the arc-tangent corresponding to a given vector (x,y) in the 2d plane.
 		/// </summary>
 		/// <param name="x">The horizontal vector coordinate.</param>
 		/// <param name="y">The vertical vector coordinate.</param>
@@ -232,8 +224,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Return the difference between two angles. The result is always
-		/// constrained to the [-PI..PI] interval.
+		/// Return the difference between two angles. The result is always constrained to the [-PI..PI] interval.
 		/// </summary>
 		/// <param name="angle1">First angle.</param>
 		/// <param name="angle2">Second angle.</param>
@@ -244,12 +235,10 @@ namespace SharpFont
 		}
 		
 		/// <summary><para>
-		/// Return the unit vector corresponding to a given angle. After the
-		/// call, the value of ‘vec.x’ will be ‘sin(angle)’, and the value of
-		/// ‘vec.y’ will be ‘cos(angle)’.
+		/// Return the unit vector corresponding to a given angle. After the call, the value of ‘vec.x’ will be
+		/// ‘sin(angle)’, and the value of ‘vec.y’ will be ‘cos(angle)’.
 		/// </para><para>
-		/// This function is useful to retrieve both the sinus and cosinus of a
-		/// given angle quickly.
+		/// This function is useful to retrieve both the sinus and cosinus of a given angle quickly.
 		/// </para></summary>
 		/// <param name="angle">The address of angle.</param>
 		/// <returns>The address of target vector.</returns>
@@ -342,8 +331,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Remove a node from a list. This function doesn't check whether the
-		/// node is in the list!
+		/// Remove a node from a list. This function doesn't check whether the node is in the list!
 		/// </summary>
 		/// <param name="list">A pointer to the parent list.</param>
 		/// <param name="node">The node to remove.</param>
@@ -363,9 +351,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Parse a list and calls a given iterator function on each element.
-		/// Note that parsing is stopped as soon as one of the iterator calls
-		/// returns a non-zero value.
+		/// Parse a list and calls a given iterator function on each element. Note that parsing is stopped as soon as
+		/// one of the iterator calls returns a non-zero value.
 		/// </summary>
 		/// <param name="list">A handle to the list.</param>
 		/// <param name="iterator">An iterator function, called on each node of the list.</param>
@@ -382,9 +369,8 @@ namespace SharpFont
 		/// Destroy all elements in the list as well as the list itself.
 		/// </summary>
 		/// <remarks>
-		/// This function expects that all nodes added by
-		/// <see cref="FT.ListAdd"/> or <see cref="FT.ListInsert"/> have been
-		/// dynamically allocated.
+		/// This function expects that all nodes added by <see cref="FT.ListAdd"/> or <see cref="FT.ListInsert"/> have
+		/// been dynamically allocated.
 		/// </remarks>
 		/// <param name="list">A handle to the list.</param>
 		/// <param name="destroy">A list destructor that will be applied to each element of the list.</param>
@@ -403,10 +389,12 @@ namespace SharpFont
 		/// Create a new outline of a given size.
 		/// </summary>
 		/// <remarks>
-		/// The reason why this function takes a ‘library’ parameter is simply
-		/// to use the library's memory allocator.
+		/// The reason why this function takes a ‘library’ parameter is simply to use the library's memory allocator.
 		/// </remarks>
-		/// <param name="library">A handle to the library object from where the outline is allocated. Note however that the new outline will not necessarily be freed, when destroying the library, by <see cref="FT.DoneFreeType"/>.</param>
+		/// <param name="library">
+		/// A handle to the library object from where the outline is allocated. Note however that the new outline will
+		/// not necessarily be freed, when destroying the library, by <see cref="FT.DoneFreeType"/>.
+		/// </param>
 		/// <param name="numPoints">The maximal number of points within the outline.</param>
 		/// <param name="numContours">The maximal number of contours within the outline.</param>
 		/// <returns>A handle to the new outline.</returns>
@@ -442,15 +430,12 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Destroy an outline created with
-		/// <see cref="OutlineNew(Library, uint, int)"/>.
+		/// Destroy an outline created with <see cref="OutlineNew(Library, uint, int)"/>.
 		/// </summary>
 		/// <remarks><para>
-		/// If the outline's ‘owner’ field is not set, only the outline
-		/// descriptor will be released.
+		/// If the outline's ‘owner’ field is not set, only the outline descriptor will be released.
 		/// </para><para>
-		/// The reason why this function takes an ‘library’ parameter is simply
-		/// to use ft_mem_free().
+		/// The reason why this function takes an ‘library’ parameter is simply to use ft_mem_free().
 		/// </para></remarks>
 		/// <param name="library">A handle of the library object used to allocate the outline.</param>
 		/// <param name="outline">A pointer to the outline object to be discarded.</param>
@@ -463,12 +448,10 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Destroy an outline created with
-		/// <see cref="OutlineNew(Library, uint, int)"/>.
+		/// Destroy an outline created with <see cref="OutlineNew(Library, uint, int)"/>.
 		/// </summary>
 		/// <remarks>
-		/// If the outline's ‘owner’ field is not set, only the outline
-		/// descriptor will be released.
+		/// If the outline's ‘owner’ field is not set, only the outline descriptor will be released.
 		/// </remarks>
 		/// <param name="memory">A handle of the library object used to allocate the outline.</param>
 		/// <param name="outline">A pointer to the outline object to be discarded.</param>
@@ -481,9 +464,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Copy an outline into another one. Both objects must have the same
-		/// sizes (number of points &amp; number of contours) when this function is
-		/// called.
+		/// Copy an outline into another one. Both objects must have the same sizes (number of points &amp; number of
+		/// contours) when this function is called.
 		/// </summary>
 		/// <param name="source">A handle to the source outline.</param>
 		/// <param name="target">A handle to the target outline.</param>
@@ -509,12 +491,11 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Apply a simple 2x2 matrix to all of an outline's points. Useful for
-		/// applying rotations, slanting, flipping, etc.
+		/// Apply a simple 2x2 matrix to all of an outline's points. Useful for applying rotations, slanting, flipping,
+		/// etc.
 		/// </summary>
 		/// <remarks>
-		/// You can use <see cref="FT.OutlineTranslate"/> if you need to
-		/// translate the outline's points.
+		/// You can use <see cref="FT.OutlineTranslate"/> if you need to translate the outline's points.
 		/// </remarks>
 		/// <param name="outline">A pointer to the target outline descriptor.</param>
 		/// <param name="matrix">A pointer to the transformation matrix.</param>
@@ -524,21 +505,17 @@ namespace SharpFont
 		}
 
 		/// <summary><para>
-		/// Embolden an outline. The new outline will be at most 4 times
-		/// ‘strength’ pixels wider and higher. You may think of the left and
-		/// bottom borders as unchanged.
+		/// Embolden an outline. The new outline will be at most 4 times ‘strength’ pixels wider and higher. You may
+		/// think of the left and bottom borders as unchanged.
 		/// </para><para>
-		/// Negative ‘strength’ values to reduce the outline thickness are
-		/// possible also.
+		/// Negative ‘strength’ values to reduce the outline thickness are possible also.
 		/// </para></summary>
 		/// <remarks><para>
-		/// The used algorithm to increase or decrease the thickness of the
-		/// glyph doesn't change the number of points; this means that certain
-		/// situations like acute angles or intersections are sometimes handled
-		/// incorrectly.
+		/// The used algorithm to increase or decrease the thickness of the glyph doesn't change the number of points;
+		/// this means that certain situations like acute angles or intersections are sometimes handled incorrectly.
 		/// </para><para>
-		/// If you need ‘better’ metrics values you should call
-		/// <see cref="FT.OutlineGetCBox"/> or <see cref="FT.OutlineGetBBox"/>.
+		/// If you need ‘better’ metrics values you should call <see cref="FT.OutlineGetCBox"/> or
+		/// <see cref="FT.OutlineGetBBox"/>.
 		/// </para></remarks>
 		/// <example>
 		/// FT_Load_Glyph( face, index, FT_LOAD_DEFAULT );
@@ -556,16 +533,13 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Reverse the drawing direction of an outline. This is used to ensure
-		/// consistent fill conventions for mirrored glyphs.
+		/// Reverse the drawing direction of an outline. This is used to ensure consistent fill conventions for
+		/// mirrored glyphs.
 		/// </summary>
 		/// <remarks><para>
-		/// This function toggles the bit flag
-		/// <see cref="OutlineFlags.ReverseFill"/> in the outline's ‘flags’
-		/// field.
+		/// This function toggles the bit flag <see cref="OutlineFlags.ReverseFill"/> in the outline's ‘flags’ field.
 		/// </para><para>
-		/// It shouldn't be used by a normal client application, unless it
-		/// knows what it is doing.
+		/// It shouldn't be used by a normal client application, unless it knows what it is doing.
 		/// </para></remarks>
 		/// <param name="outline">A pointer to the target outline descriptor.</param>
 		public static void OutlineReverse(Outline outline)
@@ -586,18 +560,15 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Compute the exact bounding box of an outline. This is slower than
-		/// computing the control box. However, it uses an advanced algorithm
-		/// which returns very quickly when the two boxes coincide. Otherwise,
-		/// the outline Bézier arcs are traversed to extract their extrema.
+		/// Compute the exact bounding box of an outline. This is slower than computing the control box. However, it
+		/// uses an advanced algorithm which returns very quickly when the two boxes coincide. Otherwise, the outline
+		/// Bézier arcs are traversed to extract their extrema.
 		/// </summary>
 		/// <remarks>
-		/// If the font is tricky and the glyph has been loaded with
-		/// <see cref="LoadFlags.NoScale"/>, the resulting BBox is meaningless.
-		/// To get reasonable values for the BBox it is necessary to load the
-		/// glyph at a large ppem value (so that the hinting instructions can
-		/// properly shift and scale the subglyphs), then extracting the BBox
-		/// which can be eventually converted back to font units.
+		/// If the font is tricky and the glyph has been loaded with <see cref="LoadFlags.NoScale"/>, the resulting
+		/// BBox is meaningless. To get reasonable values for the BBox it is necessary to load the glyph at a large
+		/// ppem value (so that the hinting instructions can properly shift and scale the subglyphs), then extracting
+		/// the BBox which can be eventually converted back to font units.
 		/// </remarks>
 		/// <param name="outline">A pointer to the source outline.</param>
 		/// <returns>The outline's exact bounding box.</returns>
@@ -613,13 +584,17 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Walk over an outline's structure to decompose it into individual
-		/// segments and Bézier arcs. This function also emits ‘move to’
-		/// operations to indicate the start of new contours in the outline.
+		/// Walk over an outline's structure to decompose it into individual segments and Bézier arcs. This function
+		/// also emits ‘move to’ operations to indicate the start of new contours in the outline.
 		/// </summary>
 		/// <param name="outline">A pointer to the source target.</param>
-		/// <param name="funcInterface">A table of ‘emitters’, i.e., function pointers called during decomposition to indicate path operations.</param>
-		/// <param name="user">A typeless pointer which is passed to each emitter during the decomposition. It can be used to store the state during the decomposition.</param>
+		/// <param name="funcInterface">
+		/// A table of ‘emitters’, i.e., function pointers called during decomposition to indicate path operations.
+		/// </param>
+		/// <param name="user">
+		/// A typeless pointer which is passed to each emitter during the decomposition. It can be used to store the
+		/// state during the decomposition.
+		/// </param>
 		public static void OutlineDecompose(Outline outline, OutlineFuncs funcInterface, IntPtr user)
 		{
 			//TODO cleanup/move to the outlinefuncs class?
@@ -641,20 +616,15 @@ namespace SharpFont
 		}
 
 		/// <summary><para>
-		/// Return an outline's ‘control box’. The control box encloses all the
-		/// outline's points, including Bézier control points. Though it
-		/// coincides with the exact bounding box for most glyphs, it can be
-		/// slightly larger in some situations (like when rotating an outline
-		/// which contains Bézier outside arcs).
+		/// Return an outline's ‘control box’. The control box encloses all the outline's points, including Bézier
+		/// control points. Though it coincides with the exact bounding box for most glyphs, it can be slightly larger
+		/// in some situations (like when rotating an outline which contains Bézier outside arcs).
 		/// </para><para>
-		/// Computing the control box is very fast, while getting the bounding
-		/// box can take much more time as it needs to walk over all segments
-		/// and arcs in the outline. To get the latter, you can use the
-		/// ‘ftbbox’ component which is dedicated to this single task.
+		/// Computing the control box is very fast, while getting the bounding box can take much more time as it needs
+		/// to walk over all segments and arcs in the outline. To get the latter, you can use the ‘ftbbox’ component
+		/// which is dedicated to this single task.
 		/// </para></summary>
-		/// <remarks>
-		/// See <see cref="FT.GlyphGetCBox"/> for a discussion of tricky fonts.
-		/// </remarks>
+		/// <remarks>See <see cref="FT.GlyphGetCBox"/> for a discussion of tricky fonts.</remarks>
 		/// <param name="outline">A pointer to the source outline descriptor.</param>
 		/// <returns>The outline's control box.</returns>
 		public static BBox OutlineGetCBox(Outline outline)
@@ -667,19 +637,16 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Render an outline within a bitmap. The outline's image is simply
-		/// OR-ed to the target bitmap.
+		/// Render an outline within a bitmap. The outline's image is simply OR-ed to the target bitmap.
 		/// </summary>
 		/// <remarks><para>
-		/// This function does NOT CREATE the bitmap, it only renders an
-		/// outline image within the one you pass to it! Consequently, the
-		/// various fields in ‘abitmap’ should be set accordingly.
+		/// This function does NOT CREATE the bitmap, it only renders an outline image within the one you pass to it!
+		/// Consequently, the various fields in ‘abitmap’ should be set accordingly.
 		/// </para><para>
 		/// It will use the raster corresponding to the default glyph format.
 		/// </para><para>
-		/// The value of the ‘num_grays’ field in ‘abitmap’ is ignored. If you
-		/// select the gray-level rasterizer, and you want less than 256 gray
-		/// levels, you have to use <see cref="FT.OutlineRender"/> directly.
+		/// The value of the ‘num_grays’ field in ‘abitmap’ is ignored. If you select the gray-level rasterizer, and
+		/// you want less than 256 gray levels, you have to use <see cref="FT.OutlineRender"/> directly.
 		/// </para></remarks>
 		/// <param name="library">A handle to a FreeType library object.</param>
 		/// <param name="outline">A pointer to the source outline descriptor.</param>
@@ -693,27 +660,25 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Render an outline within a bitmap using the current scan-convert.
-		/// This function uses an <see cref="RasterParams"/> structure as an
-		/// argument, allowing advanced features like direct composition,
+		/// Render an outline within a bitmap using the current scan-convert. This function uses an
+		/// <see cref="RasterParams"/> structure as an argument, allowing advanced features like direct composition,
 		/// translucency, etc.
 		/// </summary>
 		/// <remarks><para>
-		/// You should know what you are doing and how
-		/// <see cref="RasterParams"/> works to use this function.
+		/// You should know what you are doing and how <see cref="RasterParams"/> works to use this function.
 		/// </para><para>
-		/// The field ‘params.source’ will be set to ‘outline’ before the scan
-		/// converter is called, which means that the value you give to it is
-		/// actually ignored.
+		/// The field ‘params.source’ will be set to ‘outline’ before the scan converter is called, which means that
+		/// the value you give to it is actually ignored.
 		/// </para><para>
-		/// The gray-level rasterizer always uses 256 gray levels. If you want
-		/// less gray levels, you have to provide your own span callback. See
-		/// the <see cref="RasterFlags.Direct"/> value of the ‘flags’ field in
-		/// the <see cref="RasterParams"/> structure for more details.
+		/// The gray-level rasterizer always uses 256 gray levels. If you want less gray levels, you have to provide
+		/// your own span callback. See the <see cref="RasterFlags.Direct"/> value of the ‘flags’ field in the
+		/// <see cref="RasterParams"/> structure for more details.
 		/// </para></remarks>
 		/// <param name="library">A handle to a FreeType library object.</param>
 		/// <param name="outline">A pointer to the source outline descriptor.</param>
-		/// <param name="params">A pointer to an <see cref="RasterParams"/> structure used to describe the rendering operation.</param>
+		/// <param name="params">
+		/// A pointer to an <see cref="RasterParams"/> structure used to describe the rendering operation.
+		/// </param>
 		public static void OutlineRender(Library library, Outline outline, RasterParams @params)
 		{
 			Error err = FT_Outline_Render(library.Reference, outline.Reference, @params.Reference);
@@ -723,13 +688,11 @@ namespace SharpFont
 		}
 
 		/// <summary><para>
-		/// This function analyzes a glyph outline and tries to compute its
-		/// fill orientation (see <see cref="Orientation"/>). This is done by
-		/// computing the direction of each global horizontal and/or vertical
-		/// extrema within the outline.
+		/// This function analyzes a glyph outline and tries to compute its fill orientation (see 
+		/// <see cref="Orientation"/>). This is done by computing the direction of each global horizontal and/or
+		/// vertical extrema within the outline.
 		/// </para><para>
-		/// Note that this will return <see cref="Orientation.TrueType"/> for
-		/// empty outlines.
+		/// Note that this will return <see cref="Orientation.TrueType"/> for empty outlines.
 		/// </para></summary>
 		/// <param name="outline">A handle to the source outline.</param>
 		/// <returns>The orientation.</returns>
@@ -743,26 +706,28 @@ namespace SharpFont
 		#region Quick retrieval of advance values
 
 		/// <summary>
-		/// Retrieve the advance value of a given glyph outline in a
-		/// <see cref="Face"/>. By default, the unhinted advance is returned in
-		/// font units.
+		/// Retrieve the advance value of a given glyph outline in a <see cref="Face"/>. By default, the unhinted
+		/// advance is returned in font units.
 		/// </summary>
 		/// <remarks><para>
-		/// This function may fail if you use
-		/// <see cref="LoadFlags.AdvanceFlagFastOnly"/> and if the
-		/// corresponding font backend doesn't have a quick way to retrieve the
-		/// advances.
+		/// This function may fail if you use <see cref="LoadFlags.AdvanceFlagFastOnly"/> and if the corresponding font
+		/// backend doesn't have a quick way to retrieve the advances.
 		/// </para><para>
-		/// A scaled advance is returned in 16.16 format but isn't transformed
-		/// by the affine transformation specified by
-		/// <see cref="SetTransform"/>.
+		/// A scaled advance is returned in 16.16 format but isn't transformed by the affine transformation specified
+		/// by <see cref="SetTransform"/>.
 		/// </para></remarks>
 		/// <param name="face">The source <see cref="Face"/> handle.</param>
 		/// <param name="glyphIndex">The glyph index.</param>
-		/// <param name="flags">A set of bit flags similar to those used when calling <see cref="LoadGlyph"/>, used to determine what kind of advances you need.</param>
-		/// <returns><para>The advance value, in either font units or 16.16 format.
+		/// <param name="flags">
+		/// A set of bit flags similar to those used when calling <see cref="LoadGlyph"/>, used to determine what kind
+		/// of advances you need.
+		/// </param>
+		/// <returns><para>
+		/// The advance value, in either font units or 16.16 format.
 		/// </para><para>
-		/// If <see cref="LoadFlags.VerticalLayout"/> is set, this is the vertical advance corresponding to a vertical layout. Otherwise, it is the horizontal advance in a horizontal layout.</para></returns>
+		/// If <see cref="LoadFlags.VerticalLayout"/> is set, this is the vertical advance corresponding to a vertical
+		/// layout. Otherwise, it is the horizontal advance in a horizontal layout.
+		/// </para></returns>
 		[CLSCompliant(false)]
 		public static int GetAdvance(Face face, uint glyphIndex, LoadFlags flags)
 		{
@@ -850,22 +815,24 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Embolden a bitmap. The new bitmap will be about ‘xStrength’ pixels
-		/// wider and ‘yStrength’ pixels higher. The left and bottom borders
-		/// are kept unchanged.
+		/// Embolden a bitmap. The new bitmap will be about ‘xStrength’ pixels wider and ‘yStrength’ pixels higher. The
+		/// left and bottom borders are kept unchanged.
 		/// </summary>
 		/// <remarks><para>
-		/// The current implementation restricts ‘xStrength’ to be less than or
-		/// equal to 8 if bitmap is of pixel_mode <see cref="PixelMode.Mono"/>.
+		/// The current implementation restricts ‘xStrength’ to be less than or equal to 8 if bitmap is of pixel_mode
+		/// <see cref="PixelMode.Mono"/>.
 		/// </para><para>
-		/// If you want to embolden the bitmap owned by a
-		/// <see cref="GlyphSlot"/>, you should call
+		/// If you want to embolden the bitmap owned by a <see cref="GlyphSlot"/>, you should call
 		/// <see cref="FT.GlyphSlotOwnBitmap"/> on the slot first.
 		/// </para></remarks>
 		/// <param name="library">A handle to a library object.</param>
 		/// <param name="bitmap">A handle to the target bitmap.</param>
-		/// <param name="xStrength">How strong the glyph is emboldened horizontally. Expressed in 26.6 pixel format.</param>
-		/// <param name="yStrength">How strong the glyph is emboldened vertically. Expressed in 26.6 pixel format.</param>
+		/// <param name="xStrength">
+		/// How strong the glyph is emboldened horizontally. Expressed in 26.6 pixel format.
+		/// </param>
+		/// <param name="yStrength">
+		/// How strong the glyph is emboldened vertically. Expressed in 26.6 pixel format.
+		/// </param>
 		public static void BitmapEmbolden(Library library, FTBitmap bitmap, int xStrength, int yStrength)
 		{
 			Error err = FT_Bitmap_Embolden(library.Reference, bitmap.Reference, xStrength, yStrength);
@@ -875,23 +842,22 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Convert a bitmap object with depth 1bpp, 2bpp, 4bpp, or 8bpp to a
-		/// bitmap object with depth 8bpp, making the number of used bytes per
-		/// line (a.k.a. the ‘pitch’) a multiple of ‘alignment’.
+		/// Convert a bitmap object with depth 1bpp, 2bpp, 4bpp, or 8bpp to a bitmap object with depth 8bpp, making the
+		/// number of used bytes per line (a.k.a. the ‘pitch’) a multiple of ‘alignment’.
 		/// </summary>
 		/// <remarks><para>
-		/// It is possible to call <see cref="FT.BitmapConvert"/> multiple
-		/// times without calling <see cref="FT.BitmapDone"/> (the memory is
-		/// simply reallocated).
+		/// It is possible to call <see cref="FT.BitmapConvert"/> multiple times without calling
+		/// <see cref="FT.BitmapDone"/> (the memory is simply reallocated).
 		/// </para><para>
 		/// Use <see cref="BitmapDone"/> to finally remove the bitmap object.
 		/// </para><para>
-		/// The ‘library’ argument is taken to have access to FreeType's memory
-		/// handling functions.
+		/// The ‘library’ argument is taken to have access to FreeType's memory handling functions.
 		/// </para></remarks>
 		/// <param name="library">A handle to a library object.</param>
 		/// <param name="source">The source bitmap.</param>
-		/// <param name="alignment">The pitch of the bitmap is a multiple of this parameter. Common values are 1, 2, or 4.</param>
+		/// <param name="alignment">
+		/// The pitch of the bitmap is a multiple of this parameter. Common values are 1, 2, or 4.
+		/// </param>
 		/// <returns>The target bitmap.</returns>
 		public static FTBitmap BitmapConvert(Library library, FTBitmap source, int alignment)
 		{
@@ -908,8 +874,7 @@ namespace SharpFont
 		/// Make sure that a glyph slot owns ‘slot->bitmap’.
 		/// </summary>
 		/// <remarks>
-		/// This function is to be used in combination with
-		/// <see cref="FT.BitmapEmbolden"/>.
+		/// This function is to be used in combination with <see cref="FT.BitmapEmbolden"/>.
 		/// </remarks>
 		/// <param name="slot">The glyph slot.</param>
 		public static void GlyphSlotOwnBitmap(GlyphSlot slot)
@@ -924,8 +889,7 @@ namespace SharpFont
 		/// Destroy a bitmap object created with <see cref="FT.BitmapNew"/>.
 		/// </summary>
 		/// <remarks>
-		/// The ‘library’ argument is taken to have access to FreeType's memory
-		/// handling functions.
+		/// The ‘library’ argument is taken to have access to FreeType's memory handling functions.
 		/// </remarks>
 		/// <param name="library">A handle to a library object.</param>
 		/// <param name="bitmap">The bitmap object to be freed.</param>
@@ -942,8 +906,7 @@ namespace SharpFont
 		#region Glyph Stroker
 
 		/// <summary>
-		/// Retrieve the <see cref="StrokerBorder"/> value corresponding to the
-		/// ‘inside’ borders of a given outline.
+		/// Retrieve the <see cref="StrokerBorder"/> value corresponding to the ‘inside’ borders of a given outline.
 		/// </summary>
 		/// <param name="outline">The source outline handle.</param>
 		/// <returns>The border index. <see cref="StrokerBorder.Right"/> for empty or invalid outlines.</returns>
@@ -953,8 +916,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Retrieve the <see cref="StrokerBorder"/> value corresponding to the
-		/// ‘outside’ borders of a given outline.
+		/// Retrieve the <see cref="StrokerBorder"/> value corresponding to the ‘outside’ borders of a given outline.
 		/// </summary>
 		/// <param name="outline">The source outline handle.</param>
 		/// <returns>The border index. <see cref="StrokerBorder.Left"/> for empty or invalid outlines.</returns>
@@ -983,24 +945,24 @@ namespace SharpFont
 		/// Reset a stroker object's attributes.
 		/// </summary>
 		/// <remarks>
-		/// The radius is expressed in the same units as the outline
-		/// coordinates.
+		/// The radius is expressed in the same units as the outline coordinates.
 		/// </remarks>
 		/// <param name="stroker">The target stroker handle.</param>
 		/// <param name="radius">The border radius.</param>
 		/// <param name="lineCap">The line cap style.</param>
 		/// <param name="lineJoin">The line join style.</param>
-		/// <param name="miterLimit">The miter limit for the <see cref="StrokerLineJoin.MiterFixed"/> and <see cref="StrokerLineJoin.MiterVariable"/> line join styles, expressed as 16.16 fixed point value.</param>
+		/// <param name="miterLimit">
+		/// The miter limit for the <see cref="StrokerLineJoin.MiterFixed"/> and
+		/// <see cref="StrokerLineJoin.MiterVariable"/> line join styles, expressed as 16.16 fixed point value.
+		/// </param>
 		public static void StrokerSet(Stroker stroker, int radius, StrokerLineCap lineCap, StrokerLineJoin lineJoin, int miterLimit)
 		{
 			FT_Stroker_Set(stroker.Reference, radius, lineCap, lineJoin, miterLimit);
 		}
 
 		/// <summary>
-		/// Reset a stroker object without changing its attributes. You should
-		/// call this function before beginning a new series of calls to
-		/// <see cref="StrokerBeginSubPath"/> or
-		/// <see cref="StrokerEndSubPath"/>.
+		/// Reset a stroker object without changing its attributes. You should call this function before beginning a
+		/// new series of calls to <see cref="FT.StrokerBeginSubPath"/> or <see cref="FT.StrokerEndSubPath"/>.
 		/// </summary>
 		/// <param name="stroker">The target stroker handle.</param>
 		public static void StrokerRewind(Stroker stroker)
@@ -1009,23 +971,23 @@ namespace SharpFont
 		}
 		
 		/// <summary>
-		/// A convenience function used to parse a whole outline with the
-		/// stroker. The resulting outline(s) can be retrieved later by
-		/// functions like <see cref="StrokerGetCounts"/> and
-		/// <see cref="StrokerExport"/>.
+		/// A convenience function used to parse a whole outline with the stroker. The resulting outline(s) can be
+		/// retrieved later by functions like <see cref="FT.StrokerGetCounts"/> and <see cref="FT.StrokerExport"/>.
 		/// </summary>
 		/// <remarks><para>
-		/// If ‘opened’ is 0 (the default), the outline is treated as a closed
-		/// path, and the stroker generates two distinct ‘border’ outlines.
+		/// If ‘opened’ is 0 (the default), the outline is treated as a closed path, and the stroker generates two
+		/// distinct ‘border’ outlines.
 		/// </para><para>
-		/// If ‘opened’ is 1, the outline is processed as an open path, and the
-		/// stroker generates a single ‘stroke’ outline.
+		/// If ‘opened’ is 1, the outline is processed as an open path, and the stroker generates a single ‘stroke’
+		/// outline.
 		/// </para><para>
-		/// This function calls <see cref="StrokerRewind"/> automatically.
+		/// This function calls <see cref="FT.StrokerRewind"/> automatically.
 		/// </para></remarks>
 		/// <param name="stroker">The target stroker handle.</param>
 		/// <param name="outline">The source outline.</param>
-		/// <param name="opened">A boolean. If 1, the outline is treated as an open path instead of a closed one.</param>
+		/// <param name="opened">
+		/// A boolean. If 1, the outline is treated as an open path instead of a closed one.
+		/// </param>
 		public static void StrokerParseOutline(Stroker stroker, Outline outline, bool opened)
 		{
 			Error err = FT_Stroker_ParseOutline(stroker.Reference, outline.Reference, opened);
@@ -1038,8 +1000,8 @@ namespace SharpFont
 		/// Start a new sub-path in the stroker.
 		/// </summary>
 		/// <remarks>
-		/// This function is useful when you need to stroke a path that is not
-		/// stored as an <see cref="Outline"/> object.
+		/// This function is useful when you need to stroke a path that is not stored as an <see cref="Outline"/>
+		/// object.
 		/// </remarks>
 		/// <param name="stroker">The target stroker handle.</param>
 		/// <param name="to">A pointer to the start vector.</param>
@@ -1056,10 +1018,8 @@ namespace SharpFont
 		/// Close the current sub-path in the stroker.
 		/// </summary>
 		/// <remarks>
-		/// You should call this function after
-		/// <see cref="StrokerBeginSubPath"/>. If the subpath was not ‘opened’,
-		/// this function ‘draws’ a single line segment to the start position
-		/// when needed.
+		/// You should call this function after <see cref="FT.StrokerBeginSubPath"/>. If the subpath was not ‘opened’,
+		/// this function ‘draws’ a single line segment to the start position when needed.
 		/// </remarks>
 		/// <param name="stroker">The target stroker handle.</param>
 		public static void StrokerEndSubPath(Stroker stroker)
@@ -1071,13 +1031,11 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// ‘Draw’ a single line segment in the stroker's current sub-path,
-		/// from the last position.
+		/// ‘Draw’ a single line segment in the stroker's current sub-path, from the last position.
 		/// </summary>
 		/// <remarks>
-		/// You should call this function between
-		/// <see cref="StrokerBeginSubPath"/> and
-		/// <see cref="StrokerEndSubPath"/>.
+		/// You should call this function between <see cref="FT.StrokerBeginSubPath"/> and
+		/// <see cref="FT.StrokerEndSubPath"/>.
 		/// </remarks>
 		/// <param name="stroker">The target stroker handle.</param>
 		/// <param name="to">A pointer to the destination point.</param>
@@ -1090,13 +1048,11 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// ‘Draw’ a single quadratic Bézier in the stroker's current sub-path,
-		/// from the last position.
+		/// ‘Draw’ a single quadratic Bézier in the stroker's current sub-path, from the last position.
 		/// </summary>
 		/// <remarks>
-		/// You should call this function between
-		/// <see cref="StrokerBeginSubPath"/> and
-		/// <see cref="StrokerEndSubPath"/>.
+		/// You should call this function between <see cref="FT.StrokerBeginSubPath"/> and
+		/// <see cref="FT.StrokerEndSubPath"/>.
 		/// </remarks>
 		/// <param name="stroker">The target stroker handle.</param>
 		/// <param name="control">A pointer to a Bézier control point.</param>
@@ -1110,13 +1066,11 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// ‘Draw’ a single cubic Bézier in the stroker's current sub-path,
-		/// from the last position.
+		/// ‘Draw’ a single cubic Bézier in the stroker's current sub-path, from the last position.
 		/// </summary>
 		/// <remarks>
-		/// You should call this function between
-		/// <see cref="StrokerBeginSubPath"/> and
-		/// <see cref="StrokerEndSubPath"/>.
+		/// You should call this function between <see cref="FT.StrokerBeginSubPath"/> and
+		/// <see cref="FT.StrokerEndSubPath"/>.
 		/// </remarks>
 		/// <param name="stroker">The target stroker handle.</param>
 		/// <param name="control1">A pointer to the first Bézier control point.</param>
@@ -1131,21 +1085,18 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Call this function once you have finished parsing your paths with
-		/// the stroker. It returns the number of points and contours necessary
-		/// to export one of the ‘border’ or ‘stroke’ outlines generated by the
-		/// stroker.
+		/// Call this function once you have finished parsing your paths with the stroker. It returns the number of
+		/// points and contours necessary to export one of the ‘border’ or ‘stroke’ outlines generated by the stroker.
 		/// </summary>
 		/// <remarks><para>
-		/// When an outline, or a sub-path, is ‘closed’, the stroker generates
-		/// two independent ‘border’ outlines, named ‘left’ and ‘right’.
+		/// When an outline, or a sub-path, is ‘closed’, the stroker generates two independent ‘border’ outlines, named
+		/// ‘left’ and ‘right’.
 		/// </para><para>
-		/// When the outline, or a sub-path, is ‘opened’, the stroker merges
-		/// the ‘border’ outlines with caps. The ‘left’ border receives all
-		/// points, while the ‘right’ border becomes empty.
+		/// When the outline, or a sub-path, is ‘opened’, the stroker merges the ‘border’ outlines with caps. The
+		/// ‘left’ border receives all points, while the ‘right’ border becomes empty.
 		/// </para><para>
-		/// Use the function <see cref="StrokerGetCounts"/> instead if you want
-		/// to retrieve the counts associated to both borders.
+		/// Use the function <see cref="FT.StrokerGetCounts"/> instead if you want to retrieve the counts associated to
+		/// both borders.
 		/// </para></remarks>
 		/// <param name="stroker">The target stroker handle.</param>
 		/// <param name="border">The border index.</param>
@@ -1161,28 +1112,23 @@ namespace SharpFont
 		}
 
 		/// <summary><para>
-		/// Call this function after <see cref="StrokerGetBorderCounts"/> to
-		/// export the corresponding border to your own <see cref="Outline"/>
-		/// structure.
+		/// Call this function after <see cref="StrokerGetBorderCounts"/> to export the corresponding border to your
+		/// own <see cref="Outline"/> structure.
 		/// </para><para>
-		/// Note that this function appends the border points and contours to
-		/// your outline, but does not try to resize its arrays.
+		/// Note that this function appends the border points and contours to your outline, but does not try to resize
+		/// its arrays.
 		/// </para></summary>
 		/// <remarks><para>
-		/// Always call this function after
-		/// <see cref="StrokerGetBorderCounts"/> to get sure that there is
-		/// enough room in your <see cref="Outline"/> object to receive all new
-		/// data.
+		/// Always call this function after <see cref="FT.StrokerGetBorderCounts"/> to get sure that there is enough
+		/// room in your <see cref="Outline"/> object to receive all new data.
 		/// </para><para>
-		/// When an outline, or a sub-path, is ‘closed’, the stroker generates
-		/// two independent ‘border’ outlines, named ‘left’ and ‘right’
+		/// When an outline, or a sub-path, is ‘closed’, the stroker generates two independent ‘border’ outlines, named
+		/// ‘left’ and ‘right’.
 		/// </para><para>
-		/// When the outline, or a sub-path, is ‘opened’, the stroker merges
-		/// the ‘border’ outlines with caps. The ‘left’ border receives all
-		/// points, while the ‘right’ border becomes empty.
+		/// When the outline, or a sub-path, is ‘opened’, the stroker merges the ‘border’ outlines with caps. The
+		/// ‘left’ border receives all points, while the ‘right’ border becomes empty.
 		/// </para><para>
-		/// Use the function <see cref="StrokerExport"/> instead if you want to
-		/// retrieve all borders at once.
+		/// Use the function <see cref="FT.StrokerExport"/> instead if you want to retrieve all borders at once.
 		/// </para></remarks>
 		/// <param name="stroker">The target stroker handle.</param>
 		/// <param name="border">The border index.</param>
@@ -1193,9 +1139,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Call this function once you have finished parsing your paths with
-		/// the stroker. It returns the number of points and contours necessary
-		/// to export all points/borders from the stroked outline/path.
+		/// Call this function once you have finished parsing your paths with the stroker. It returns the number of
+		/// points and contours necessary to export all points/borders from the stroked outline/path.
 		/// </summary>
 		/// <param name="stroker">The target stroker handle.</param>
 		/// <param name="pointsCount">The number of points.</param>
@@ -1210,11 +1155,11 @@ namespace SharpFont
 		}
 
 		/// <summary><para>
-		/// Call this function after <see cref="StrokerGetBorderCounts"/> to
-		/// export all borders to your own <see cref="Outline"/> structure.
+		/// Call this function after <see cref="FT.StrokerGetBorderCounts"/> to export all borders to your own
+		/// <see cref="Outline"/> structure.
 		/// </para><para>
-		/// Note that this function appends the border points and contours to
-		/// your outline, but does not try to resize its arrays.
+		/// Note that this function appends the border points and contours to your outline, but does not try to resize
+		/// its arrays.
 		/// </para></summary>
 		/// <param name="stroker">The target stroker handle.</param>
 		/// <param name="outline">The target outline handle.</param>
@@ -1263,8 +1208,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Stroke a given outline glyph object with a given stroker, but only
-		/// return either its inside or outside border.
+		/// Stroke a given outline glyph object with a given stroker, but only return either its inside or outside
+		/// border.
 		/// </summary>
 		/// <remarks>
 		/// The source glyph is untouched in case of error.
@@ -1302,8 +1247,8 @@ namespace SharpFont
 		/// Add a new module to a given library instance.
 		/// </summary>
 		/// <remarks>
-		/// An error will be returned if a module already exists by that name,
-		/// or if the module requires a version of FreeType that is too great.
+		/// An error will be returned if a module already exists by that name, or if the module requires a version of
+		/// FreeType that is too great.
 		/// </remarks>
 		/// <param name="library">A handle to the library object.</param>
 		/// <param name="clazz">A pointer to class descriptor for the module.</param>
@@ -1319,8 +1264,8 @@ namespace SharpFont
 		/// Find a module by its name.
 		/// </summary>
 		/// <remarks>
-		/// FreeType's internal modules aren't documented very well, and you
-		/// should look up the source code for details.
+		/// FreeType's internal modules aren't documented very well, and you should look up the source code for
+		/// details.
 		/// </remarks>
 		/// <param name="library">A handle to the library object.</param>
 		/// <param name="moduleName">The module's name (as an ASCII string).</param>
@@ -1347,14 +1292,11 @@ namespace SharpFont
 		}
 
 		/// <summary><para>
-		/// A counter gets initialized to 1 at the time a
-		/// <see cref="Library"/> structure is created. This function
-		/// increments the counter. <see cref="FT.DoneLibrary"/> then only
-		/// destroys a library if the counter is 1, otherwise it simply
-		/// decrements the counter.
+		/// A counter gets initialized to 1 at the time a <see cref="Library"/> structure is created. This function
+		/// increments the counter. <see cref="FT.DoneLibrary"/> then only destroys a library if the counter is 1,
+		/// otherwise it simply decrements the counter.
 		/// </para><para>
-		/// This function helps in managing life-cycles of structures which
-		/// reference <see cref="Library"/> objects.
+		/// This function helps in managing life-cycles of structures which reference <see cref="Library"/> objects.
 		/// </para></summary>
 		/// <param name="library">A handle to a target library object.</param>
 		internal static void ReferenceLibrary(Library library)
@@ -1367,21 +1309,17 @@ namespace SharpFont
 		}
 
 		/// <summary><para>
-		/// This function is used to create a new FreeType library instance
-		/// from a given memory object. It is thus possible to use libraries
-		/// with distinct memory allocators within the same program.
+		/// This function is used to create a new FreeType library instance from a given memory object. It is thus
+		/// possible to use libraries with distinct memory allocators within the same program.
 		/// </para><para>
-		/// Normally, you would call this function (followed by a call to
-		/// <see cref="FT.AddDefaultModules"/> or a series of calls to
-		/// <see cref="FT.AddModule"/>) instead of
-		/// <see cref="FT.InitFreeType"/> to initialize the FreeType library.
+		/// Normally, you would call this function (followed by a call to <see cref="FT.AddDefaultModules"/> or a
+		/// series of calls to <see cref="FT.AddModule"/>) instead of <see cref="FT.InitFreeType"/> to initialize the
+		/// FreeType library.
 		/// </para><para>
-		/// Don't use <see cref="FT.DoneFreeType"/> but
-		/// <see cref="FT.DoneLibrary"/> to destroy a library instance.
+		/// Don't use <see cref="FT.DoneFreeType"/> but <see cref="FT.DoneLibrary"/> to destroy a library instance.
 		/// </para></summary>
 		/// <remarks>
-		/// See the discussion of reference counters in the description of
-		/// <see cref="FT.ReferenceLibrary"/>.
+		/// See the discussion of reference counters in the description of <see cref="FT.ReferenceLibrary"/>.
 		/// </remarks>
 		/// <param name="memory">A handle to the original memory object.</param>
 		/// <returns>A pointer to handle of a new library object.</returns>
@@ -1397,12 +1335,10 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Discard a given library object. This closes all drivers and
-		/// discards all resource objects.
+		/// Discard a given library object. This closes all drivers and discards all resource objects.
 		/// </summary>
 		/// <remarks>
-		/// See the discussion of reference counters in the description of
-		/// <see cref="FT.ReferenceLibrary"/>.
+		/// See the discussion of reference counters in the description of <see cref="FT.ReferenceLibrary"/>.
 		/// </remarks>
 		/// <param name="library">A handle to the target library.</param>
 		public static void DoneLibrary(Library library)
@@ -1411,16 +1347,14 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Set a debug hook function for debugging the interpreter of a font
-		/// format.
+		/// Set a debug hook function for debugging the interpreter of a font format.
 		/// </summary>
 		/// <remarks><para>
-		/// Currently, four debug hook slots are available, but only two (for
-		/// the TrueType and the Type 1 interpreter) are defined.
+		/// Currently, four debug hook slots are available, but only two (for the TrueType and the Type 1 interpreter)
+		/// are defined.
 		/// </para><para>
-		/// Since the internal headers of FreeType are no longer installed, the
-		/// symbol ‘FT_DEBUG_HOOK_TRUETYPE’ isn't available publicly. This is a
-		/// bug and will be fixed in a forthcoming release.
+		/// Since the internal headers of FreeType are no longer installed, the symbol ‘FT_DEBUG_HOOK_TRUETYPE’ isn't
+		/// available publicly. This is a bug and will be fixed in a forthcoming release.
 		/// </para></remarks>
 		/// <param name="library">A handle to the library object.</param>
 		/// <param name="hookIndex">The index of the debug hook. You should use the values defined in ‘ftobjs.h’, e.g., ‘FT_DEBUG_HOOK_TRUETYPE’.</param>
@@ -1432,10 +1366,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Add the set of default drivers to a given library object. This is
-		/// only useful when you create a library object with
-		/// <see cref="FT.NewLibrary"/> (usually to plug a custom memory
-		/// manager).
+		/// Add the set of default drivers to a given library object. This is only useful when you create a library
+		/// object with <see cref="FT.NewLibrary"/> (usually to plug a custom memory manager).
 		/// </summary>
 		/// <param name="library">A handle to a new library object.</param>
 		public static void AddDefaultModules(Library library)
@@ -1447,11 +1379,11 @@ namespace SharpFont
 		/// Retrieve the current renderer for a given glyph format.
 		/// </summary>
 		/// <remarks><para>
-		/// An error will be returned if a module already exists by that name,
-		/// or if the module requires a version of FreeType that is too great.
+		/// An error will be returned if a module already exists by that name, or if the module requires a version of
+		/// FreeType that is too great.
 		/// </para><para>
-		/// To add a new renderer, simply use <see cref="FT.AddModule"/>. To
-		/// retrieve a renderer by its name, use <see cref="FT.GetModule"/>.
+		/// To add a new renderer, simply use <see cref="FT.AddModule"/>. To retrieve a renderer by its name, use
+		/// <see cref="FT.GetModule"/>.
 		/// </para></remarks>
 		/// <param name="library">A handle to the library object.</param>
 		/// <param name="format">The glyph format.</param>
@@ -1466,17 +1398,15 @@ namespace SharpFont
 		/// Set the current renderer to use, and set additional mode.
 		/// </summary>
 		/// <remarks><para>
-		/// In case of success, the renderer will be used to convert glyph
-		/// images in the renderer's known format into bitmaps.
+		/// In case of success, the renderer will be used to convert glyph images in the renderer's known format into
+		/// bitmaps.
 		/// </para><para>
 		/// This doesn't change the current renderer for other formats.
 		/// </para><para>
-		/// Currently, only the B/W renderer, if compiled with
-		/// FT_RASTER_OPTION_ANTI_ALIASING (providing a 5-levels anti-aliasing
-		/// mode; this option must be set directly in ‘ftraster.c’ and is
-		/// undefined by default) accepts a single tag ‘pal5’ to set its gray
-		/// palette as a character string with 5 elements. Consequently, the
-		/// third and fourth argument are zero normally.
+		/// Currently, only the B/W renderer, if compiled with FT_RASTER_OPTION_ANTI_ALIASING (providing a 5-levels
+		/// anti-aliasing mode; this option must be set directly in ‘ftraster.c’ and is undefined by default) accepts a
+		/// single tag ‘pal5’ to set its gray palette as a character string with 5 elements. Consequently, the third
+		/// and fourth argument are zero normally.
 		/// </para></remarks>
 		/// <param name="library">A handle to the library object.</param>
 		/// <param name="renderer">A handle to the renderer object.</param>
@@ -1497,29 +1427,25 @@ namespace SharpFont
 		#region GZIP Streams
 
 		/// <summary>
-		/// Open a new stream to parse gzip-compressed font files. This is
-		/// mainly used to support the compressed ‘*.pcf.gz’ fonts that come
-		/// with XFree86.
+		/// Open a new stream to parse gzip-compressed font files. This is mainly used to support the compressed
+		/// ‘*.pcf.gz’ fonts that come with XFree86.
 		/// </summary>
 		/// <remarks><para>
 		/// The source stream must be opened before calling this function.
 		/// </para><para>
-		/// Calling the internal function ‘FT_Stream_Close’ on the new stream
-		/// will not call ‘FT_Stream_Close’ on the source stream. None of the
-		/// stream objects will be released to the heap.
+		/// Calling the internal function ‘FT_Stream_Close’ on the new stream will not call ‘FT_Stream_Close’ on the
+		/// source stream. None of the stream objects will be released to the heap.
 		/// </para><para>
-		/// The stream implementation is very basic and resets the
-		/// decompression process each time seeking backwards is needed within
-		/// the stream.
+		/// The stream implementation is very basic and resets the decompression process each time seeking backwards is
+		/// needed within the stream.
 		/// </para><para>
-		/// In certain builds of the library, gzip compression recognition is
-		/// automatically handled when calling <see cref="NewFace"/> or
-		/// <see cref="OpenFace"/>. This means that if no font driver is
-		/// capable of handling the raw compressed file, the library will try
-		/// to open a gzipped stream from it and re-open the face with it.
+		/// In certain builds of the library, gzip compression recognition is automatically handled when calling
+		/// <see cref="FT.NewFace"/> or <see cref="FT.OpenFace"/>. This means that if no font driver is capable of
+		/// handling the raw compressed file, the library will try to open a gzipped stream from it and re-open the
+		/// face with it.
 		/// </para><para>
-		/// This function may return <see cref="Error.UnimplementedFeature"/>
-		/// if your build of FreeType was not compiled with zlib support.
+		/// This function may return <see cref="Error.UnimplementedFeature"/> if your build of FreeType was not
+		/// compiled with zlib support.
 		/// </para></remarks>
 		/// <param name="stream">The target embedding stream.</param>
 		/// <param name="source">The source stream.</param>
@@ -1536,29 +1462,25 @@ namespace SharpFont
 		#region LZW Streams
 
 		/// <summary>
-		/// Open a new stream to parse LZW-compressed font files. This is
-		/// mainly used to support the compressed ‘*.pcf.Z’ fonts that come
-		/// with XFree86.
+		/// Open a new stream to parse LZW-compressed font files. This is mainly used to support the compressed
+		/// ‘*.pcf.Z’ fonts that come with XFree86.
 		/// </summary>
 		/// <remarks><para>
 		/// The source stream must be opened before calling this function.
 		/// </para><para>
-		/// Calling the internal function ‘FT_Stream_Close’ on the new stream
-		/// will not call ‘FT_Stream_Close’ on the source stream. None of the
-		/// stream objects will be released to the heap.
+		/// Calling the internal function ‘FT_Stream_Close’ on the new stream will not call ‘FT_Stream_Close’ on the
+		/// source stream. None of the stream objects will be released to the heap.
 		/// </para><para>
-		/// The stream implementation is very basic and resets the
-		/// decompression process each time seeking backwards is needed within
-		/// the stream.
+		/// The stream implementation is very basic and resets the decompression process each time seeking backwards is
+		/// needed within the stream.
 		/// </para><para>
-		/// In certain builds of the library, LZW compression recognition is
-		/// automatically handled when calling <see cref="NewFace"/> or
-		/// <see cref="OpenFace"/>. This means that if no font driver is
-		/// capable of handling the raw compressed file, the library will try
-		/// to open a LZW stream from it and re-open the face with it.
+		/// In certain builds of the library, LZW compression recognition is automatically handled when calling
+		/// <see cref="FT.NewFace"/> or <see cref="FT.OpenFace"/>. This means that if no font driver is capable of
+		/// handling the raw compressed file, the library will try to open a LZW stream from it and re-open the face
+		/// with it.
 		/// </para><para>
-		/// This function may return <see cref="Error.UnimplementedFeature"/>
-		/// if your build of FreeType was not compiled with LZW support.
+		/// This function may return <see cref="Error.UnimplementedFeature"/> if your build of FreeType was not
+		/// compiled with LZW support.
 		/// </para></remarks>
 		/// <param name="stream">The target embedding stream.</param>
 		/// <param name="source">The source stream.</param>
@@ -1575,29 +1497,25 @@ namespace SharpFont
 		#region BZIP2 Streams
 
 		/// <summary>
-		/// Open a new stream to parse bzip2-compressed font files. This is
-		/// mainly used to support the compressed ‘*.pcf.bz2’ fonts that come
-		/// with XFree86.
+		/// Open a new stream to parse bzip2-compressed font files. This is mainly used to support the compressed
+		/// ‘*.pcf.bz2’ fonts that come with XFree86.
 		/// </summary>
 		/// <remarks><para>
 		/// The source stream must be opened before calling this function.
 		/// </para><para>
-		/// Calling the internal function ‘FT_Stream_Close’ on the new stream
-		/// will not call ‘FT_Stream_Close’ on the source stream. None of the
-		/// stream objects will be released to the heap.
+		/// Calling the internal function ‘FT_Stream_Close’ on the new stream will not call ‘FT_Stream_Close’ on the
+		/// source stream. None of the stream objects will be released to the heap.
 		/// </para><para>
-		/// The stream implementation is very basic and resets the
-		/// decompression process each time seeking backwards is needed within
-		/// the stream.
+		/// The stream implementation is very basic and resets the decompression process each time seeking backwards is
+		/// needed within the stream.
 		/// </para><para>
-		/// In certain builds of the library, bzip2 compression recognition is
-		/// automatically handled when calling <see cref="NewFace"/> or
-		/// <see cref="OpenFace"/>. This means that if no font driver is
-		/// capable of handling the raw compressed file, the library will try
-		/// to open a bzip2 stream from it and re-open the face with it.
+		/// In certain builds of the library, bzip2 compression recognition is automatically handled when calling
+		/// <see cref="FT.NewFace"/> or <see cref="FT.OpenFace"/>. This means that if no font driver is capable of
+		/// handling the raw compressed file, the library will try to open a bzip2 stream from it and re-open the face
+		/// with it.
 		/// </para><para>
-		/// This function may return <see cref="Error.UnimplementedFeature"/>
-		/// if your build of FreeType was not compiled with bzip2 support.
+		/// This function may return <see cref="Error.UnimplementedFeature"/> if your build of FreeType was not
+		/// compiled with bzip2 support.
 		/// </para></remarks>
 		/// <param name="stream">The target embedding stream.</param>
 		/// <param name="source">The source stream.</param>
@@ -1614,80 +1532,64 @@ namespace SharpFont
 		#region LCD Filtering
 
 		/// <summary>
-		/// This function is used to apply color filtering to LCD decimated
-		/// bitmaps, like the ones used when calling
-		/// <see cref="FT.RenderGlyph"/> with <see cref="RenderMode.LCD"/> or
-		/// <see cref="RenderMode.VerticalLCD"/>.
+		/// This function is used to apply color filtering to LCD decimated bitmaps, like the ones used when calling
+		/// <see cref="FT.RenderGlyph"/> with <see cref="RenderMode.LCD"/> or <see cref="RenderMode.VerticalLCD"/>.
 		/// </summary>
 		/// <remarks><para>
-		/// This feature is always disabled by default. Clients must make an
-		/// explicit call to this function with a ‘filter’ value other than
-		/// <see cref="LcdFilter.None"/> in order to enable it.
+		/// This feature is always disabled by default. Clients must make an explicit call to this function with a
+		/// ‘filter’ value other than <see cref="LcdFilter.None"/> in order to enable it.
 		/// </para><para>
-		/// Due to <b>PATENTS</b> covering subpixel rendering, this function
-		/// doesn't do anything except returning
-		/// <see cref="Error.UnimplementedFeature"/> if the configuration macro
-		/// FT_CONFIG_OPTION_SUBPIXEL_RENDERING is not defined in your build of
-		/// the library, which should correspond to all default builds of
-		/// FreeType.
+		/// Due to <b>PATENTS</b> covering subpixel rendering, this function doesn't do anything except returning
+		/// <see cref="Error.UnimplementedFeature"/> if the configuration macro FT_CONFIG_OPTION_SUBPIXEL_RENDERING is
+		/// not defined in your build of the library, which should correspond to all default builds of FreeType.
 		/// </para><para>
-		/// The filter affects glyph bitmaps rendered through
-		/// <see cref="FT.RenderGlyph"/>, <see cref="FT.OutlineGetBitmap"/>,
-		/// <see cref="FT.LoadGlyph"/>, and <see cref="FT.LoadChar"/>.
+		/// The filter affects glyph bitmaps rendered through <see cref="FT.RenderGlyph"/>,
+		/// <see cref="FT.OutlineGetBitmap"/>, <see cref="FT.LoadGlyph"/>, and <see cref="FT.LoadChar"/>.
 		/// </para><para>
-		/// It does not affect the output of <see cref="FT.OutlineRender"/> and
-		/// <see cref="FT.OutlineGetBitmap"/>.
+		/// It does not affect the output of <see cref="FT.OutlineRender"/> and <see cref="FT.OutlineGetBitmap"/>.
 		/// </para><para>
-		/// If this feature is activated, the dimensions of LCD glyph bitmaps
-		/// are either larger or taller than the dimensions of the
-		/// corresponding outline with regards to the pixel grid. For example,
-		/// for <see cref="RenderMode.LCD"/>, the filter adds up to 3 pixels to
-		/// the left, and up to 3 pixels to the right.
+		/// If this feature is activated, the dimensions of LCD glyph bitmaps are either larger or taller than the
+		/// dimensions of the corresponding outline with regards to the pixel grid. For example, for
+		/// <see cref="RenderMode.LCD"/>, the filter adds up to 3 pixels to the left, and up to 3 pixels to the right.
 		/// </para><para>
-		/// The bitmap offset values are adjusted correctly, so clients
-		/// shouldn't need to modify their layout and glyph positioning code
-		/// when enabling the filter.
+		/// The bitmap offset values are adjusted correctly, so clients shouldn't need to modify their layout and glyph
+		/// positioning code when enabling the filter.
 		/// </para></remarks>
 		/// <param name="library">A handle to the target library instance.</param>
-		/// <param name="filter"><para>The filter type.
+		/// <param name="filter"><para>
+		/// The filter type.
 		/// </para><para>
-		/// You can use <see cref="LcdFilter.None"/> here to disable this feature, or <see cref="LcdFilter.Default"/> to use a default filter that should work well on most LCD screens.</para></param>
+		/// You can use <see cref="LcdFilter.None"/> here to disable this feature, or <see cref="LcdFilter.Default"/>
+		/// to use a default filter that should work well on most LCD screens.
+		/// </para></param>
 		public static void LibrarySetLcdFilter(Library library, LcdFilter filter)
 		{
 			Error err = FT_Library_SetLcdFilter(library.Reference, filter);
-
-			//TODO since LCD Filtering isn't enabled by default, catch the EntryPointNotFoundException and throw an exception telling the user to recompile freetype with the proper #define.
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 		}
 
 		/// <summary>
-		/// Use this function to override the filter weights selected by
-		/// <see cref="FT.LibrarySetLcdFilter"/>. By default, FreeType uses the
-		/// quintuple (0x00, 0x55, 0x56, 0x55, 0x00) for
-		/// <see cref="LcdFilter.Light"/>, and (0x10, 0x40, 0x70, 0x40, 0x10)
-		/// for <see cref="LcdFilter.Default"/> and
-		/// <see cref="LcdFilter.Legacy"/>.
+		/// Use this function to override the filter weights selected by <see cref="FT.LibrarySetLcdFilter"/>. By
+		/// default, FreeType uses the quintuple (0x00, 0x55, 0x56, 0x55, 0x00) for <see cref="LcdFilter.Light"/>, and
+		/// (0x10, 0x40, 0x70, 0x40, 0x10) for <see cref="LcdFilter.Default"/> and <see cref="LcdFilter.Legacy"/>.
 		/// </summary>
 		/// <remarks><para>
-		/// Due to <b>PATENTS</b> covering subpixel rendering, this function
-		/// doesn't do anything except returning
-		/// <see cref="Error.UnimplementedFeature"/> if the configuration macro
-		/// FT_CONFIG_OPTION_SUBPIXEL_RENDERING is not defined in your build of
-		/// the library, which should correspond to all default builds of
-		/// FreeType.
+		/// Due to <b>PATENTS</b> covering subpixel rendering, this function doesn't do anything except returning
+		/// <see cref="Error.UnimplementedFeature"/> if the configuration macro FT_CONFIG_OPTION_SUBPIXEL_RENDERING is
+		/// not defined in your build of the library, which should correspond to all default builds of FreeType.
 		/// </para><para>
-		/// This function must be called after
-		/// <see cref="FT.LibrarySetLcdFilter"/> to have any effect.
+		/// This function must be called after <see cref="FT.LibrarySetLcdFilter"/> to have any effect.
 		/// </para></remarks>
 		/// <param name="library">A handle to the target library instance.</param>
-		/// <param name="weights">A pointer to an array; the function copies the first five bytes and uses them to specify the filter weights.</param>
+		/// <param name="weights">
+		/// A pointer to an array; the function copies the first five bytes and uses them to specify the filter
+		/// weights.
+		/// </param>
 		public static void LibrarySetLcdFilterWeights(Library library, byte[] weights)
 		{
 			Error err = FT_Library_SetLcdFilterWeights(library.Reference, weights);
-
-			//TODO since LCD Filtering isn't enabled by default, catch the EntryPointNotFoundException and throw an exception telling the user to recompile freetype with the proper #define.
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);

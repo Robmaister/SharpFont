@@ -27,8 +27,8 @@ using System;
 namespace SharpFont.PostScript
 {
 	/// <summary>
-	/// An enumeration used in calls to <see cref="FT.GetPSFontValue"/> to
-	/// identify the Type 1 dictionary entry to retrieve.
+	/// An enumeration used in calls to <see cref="FT.GetPSFontValue"/> to identify the Type 1 dictionary entry to
+	/// retrieve.
 	/// </summary>
 	/// <see href="http://partners.adobe.com/public/developer/en/font/T1_SPEC.PDF"/>
 	public enum DictionaryKeys
@@ -38,15 +38,18 @@ namespace SharpFont.PostScript
 		/// </summary>
 		FontType,
 
-		/// <summary>The font's matrix. Typically scaled 1000:1.</summary>
+		/// <summary>
+		/// The font's matrix. Typically scaled 1000:1.
+		/// </summary>
 		FontMatrix,
 
-		/// <summary>The font's general bounding box.</summary>
+		/// <summary>
+		/// The font's general bounding box.
+		/// </summary>
 		FontBBox,
 		
 		/// <summary>
-		/// The font's method of painting characters. Type 1 only
-		/// supports fill (0) and outline (2).
+		/// The font's method of painting characters. Type 1 only supports fill (0) and outline (2).
 		/// </summary>
 		PaintType,
 
@@ -81,47 +84,40 @@ namespace SharpFont.PostScript
 		Subr,
 
 		/// <summary>
-		/// An array with only one real number entry expressing the dominant
-		/// width of horizontal stems (measured vertically in character space
-		/// units).
+		/// An array with only one real number entry expressing the dominant width of horizontal stems (measured
+		/// vertically in character space units).
 		/// </summary>
 		StdHW,
 
 		/// <summary>
-		/// An array with only one real number entry expressing the dominant
-		/// width of vertical stems (measured horizontally in character space
-		/// units).
+		/// An array with only one real number entry expressing the dominant width of vertical stems (measured
+		/// horizontally in character space units).
 		/// </summary>
 		StdVW,
 
 		/// <summary>
-		/// The number of BlueValues the font defines. The value must be at
-		/// least 0 and at most 14. (7 integer pairs).
+		/// The number of BlueValues the font defines. The value must be at least 0 and at most 14. (7 integer pairs).
 		/// </summary>
 		NumBlueValues,
 
 		/// <summary>
-		/// An array of integer pairs. The first pair must be the base
-		/// overshoot position and the base-line.
+		/// An array of integer pairs. The first pair must be the base overshoot position and the base-line.
 		/// </summary>
 		BlueValue,
 
 		/// <summary>
-		/// An optional entry that speciﬁes the number of character space units
-		/// to extend (in both directions) the effect of an alignment zone on a
-		/// horizontal stem. The default value is 1.
+		/// An optional entry that speciﬁes the number of character space units to extend (in both directions) the
+		/// effect of an alignment zone on a horizontal stem. The default value is 1.
 		/// </summary>
 		BlueFuzz,
 
 		/// <summary>
-		/// The number of OtherBlue values. The value must be at least 0 and at
-		/// most 10 (5 integer pairs).
+		/// The number of OtherBlue values. The value must be at least 0 and at most 10 (5 integer pairs).
 		/// </summary>
 		NumOtherBlues,
 
 		/// <summary>
-		/// An optional array of integer pairs very similar to those in
-		/// <see cref="BlueValue"/>.
+		/// An optional array of integer pairs very similar to those in <see cref="BlueValue"/>.
 		/// </summary>
 		OtherBlue,
 
@@ -131,8 +127,7 @@ namespace SharpFont.PostScript
 		NumFamilyBlues,
 
 		/// <summary>
-		/// An array of integer pairs very similar to those in
-		/// <see cref="BlueValue"/>.
+		/// An array of integer pairs very similar to those in <see cref="BlueValue"/>.
 		/// </summary>
 		FamilyBlue,
 
@@ -142,21 +137,19 @@ namespace SharpFont.PostScript
 		NumFamilyOtherBlues,
 
 		/// <summary>
-		/// An array of integer pairs very similar to those in 
-		/// <see cref="OtherBlue"/>.
+		/// An array of integer pairs very similar to those in <see cref="OtherBlue"/>.
 		/// </summary>
 		FamilyOtherBlue,
 
 		/// <summary>
-		/// An optional entry that controls the point size at which overshoot
-		/// suppression ceases. The default value is 0.039625.
+		/// An optional entry that controls the point size at which overshoot suppression ceases. The default value is
+		/// 0.039625.
 		/// </summary>
 		BlueScale,
 
 		/// <summary>
-		/// An optional entry that indicates a character space distance beyond
-		/// the ﬂat position of alignment zones at which overshoot enforcement
-		/// for character features occurs. The default value is 7.
+		/// An optional entry that indicates a character space distance beyond the ﬂat position of alignment zones at
+		/// which overshoot enforcement for character features occurs. The default value is 7.
 		/// </summary>
 		BlueShift,
 
@@ -166,10 +159,8 @@ namespace SharpFont.PostScript
 		NumStemSnapH,
 
 		/// <summary>
-		/// An array of up to 12 real numbers of the most common widths
-		/// (including the dominant width given in the StdHW array) for
-		/// horizontal stems (measured vertically). These widths must be sorted
-		/// in increasing order.
+		/// An array of up to 12 real numbers of the most common widths (including the dominant width given in the
+		/// StdHW array) for horizontal stems (measured vertically). These widths must be sorted in increasing order.
 		/// </summary>
 		StemSnapH,
 
@@ -179,16 +170,13 @@ namespace SharpFont.PostScript
 		NumStemSnapV,
 
 		/// <summary>
-		/// An array of up to 12 real numbers of the most common widths
-		/// (including the dominant width given in the StdVW array) for
-		/// vertical stems (measured horizontally). These widths must be sorted
-		/// in increasing order.
+		/// An array of up to 12 real numbers of the most common widths (including the dominant width given in the
+		/// StdVW array) for vertical stems (measured horizontally). These widths must be sorted in increasing order.
 		/// </summary>
 		StemSnapV,
 
 		/// <summary>
-		/// A boolean value indicating whether to force bold characters when a
-		/// regular character is drawn 1-pixel wide.
+		/// A boolean value indicating whether to force bold characters when a regular character is drawn 1-pixel wide.
 		/// </summary>
 		ForceBold,
 
@@ -203,8 +191,8 @@ namespace SharpFont.PostScript
 		MinFeature,
 
 		/// <summary>
-		/// An integer specifying the number of random bytes at the beginning
-		/// of charstrings for encryption. By default this value is 4.
+		/// An integer specifying the number of random bytes at the beginning of charstrings for encryption. By default
+		/// this value is 4.
 		/// </summary>
 		LenIV,
 
@@ -214,10 +202,9 @@ namespace SharpFont.PostScript
 		Password,
 
 		/// <summary>
-		/// Identifies the language group of the font. A value of 0 indicates a
-		/// language that uses Latin, Greek, Cyrillic, etc. characters. A value
-		/// of 1 indicates a language that consists of Chinese ideographs,
-		/// Jpaanese Kanji, and Korean Hangul. The default value is 0.
+		/// Identifies the language group of the font. A value of 0 indicates a language that uses Latin, Greek,
+		/// Cyrillic, etc. characters. A value of 1 indicates a language that consists of Chinese ideographs, Jpaanese
+		/// Kanji, and Korean Hangul. The default value is 0.
 		/// </summary>
 		LanguageGroup,
 

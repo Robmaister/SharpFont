@@ -30,8 +30,7 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary>
-	/// FreeType root size class structure. A size object models a face object
-	/// at a given size.
+	/// FreeType root size class structure. A size object models a face object at a given size.
 	/// </summary>
 	public sealed class FTSize : IDisposable
 	{
@@ -105,9 +104,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets a typeless pointer, which is unused by the FreeType library or
-		/// any of its drivers. It can be used by client applications to link
-		/// their own data to each size object.
+		/// Gets a typeless pointer, which is unused by the FreeType library or any of its drivers. It can be used by
+		/// client applications to link their own data to each size object.
 		/// </summary>
 		public Generic Generic
 		{
@@ -168,14 +166,11 @@ namespace SharpFont
 		#region Public Methods
 
 		/// <summary><para>
-		/// Even though it is possible to create several size objects for a
-		/// given face (see <see cref="FT.NewSize"/> for details), functions
-		/// like <see cref="FT.LoadGlyph"/> or <see cref="FT.LoadChar"/> only
-		/// use the one which has been activated last to determine the ‘current
-		/// character pixel size’.
+		/// Even though it is possible to create several size objects for a given face (see <see cref="FT.NewSize"/>
+		/// for details), functions like <see cref="FT.LoadGlyph"/> or <see cref="FT.LoadChar"/> only use the one which
+		/// has been activated last to determine the ‘current character pixel size’.
 		/// </para><para>
-		/// This function can be used to ‘activate’ a previously created size
-		/// object.
+		/// This function can be used to ‘activate’ a previously created size object.
 		/// </para></summary>
 		/// <remarks><see cref="FT.ActivateSize"/>.</remarks>
 		/// <param name="size">A handle to a target size object.</param>

@@ -27,11 +27,10 @@ using System;
 namespace SharpFont.FNT
 {
 	/// <summary>
-	/// A list of valid values for the ‘charset’ byte in FT_WinFNT_HeaderRec.
-	/// Exact mapping tables for the various cpXXXX encodings (except for
-	/// cp1361) can be found at <see href="ftp://ftp.unicode.org" /> in the
-	/// MAPPINGS/VENDORS/MICSFT/WINDOWS subdirectory. cp1361 is roughly a 
-	/// superset of MAPPINGS/OBSOLETE/EASTASIA/KSC/JOHAB.TXT.
+	/// A list of valid values for the ‘charset’ byte in <see cref="Header"/>. Exact mapping tables for the various
+	/// cpXXXX encodings (except for cp1361) can be found at <see href="ftp://ftp.unicode.org" /> in the
+	/// MAPPINGS/VENDORS/MICSFT/WINDOWS subdirectory. cp1361 is roughly a superset of
+	/// MAPPINGS/OBSOLETE/EASTASIA/KSC/JOHAB.TXT.
 	/// </summary>
 	public enum WinFntID : byte
 	{
@@ -41,11 +40,9 @@ namespace SharpFont.FNT
 		CP1252 = 0,
 
 		/// <summary>
-		/// This is used for font enumeration and font creation as a ‘don't
-		/// care’ value. Valid font files don't contain this value. When
-		/// querying for information about the character set of the font that
-		/// is currently selected into a specified device context, this return
-		/// value (of the related Windows API) simply denotes failure.
+		/// This is used for font enumeration and font creation as a ‘don't care’ value. Valid font files don't contain
+		/// this value. When querying for information about the character set of the font that is currently selected
+		/// into a specified device context, this return value (of the related Windows API) simply denotes failure.
 		/// </summary>
 		Default = 1,
 
@@ -65,8 +62,7 @@ namespace SharpFont.FNT
 		CP932 = 128,
 
 		/// <summary>
-		/// A superset of Korean Hangul KS C 5601-1987 (with different ordering
-		/// and minor deviations).
+		/// A superset of Korean Hangul KS C 5601-1987 (with different ordering and minor deviations).
 		/// </summary>
 		CP949 = 129,
 
@@ -76,14 +72,12 @@ namespace SharpFont.FNT
 		CP1361 = 130,
 
 		/// <summary>
-		/// A superset of simplified Chinese GB 2312-1980 (with different
-		/// ordering and minor deviations).
+		/// A superset of simplified Chinese GB 2312-1980 (with different ordering and minor deviations).
 		/// </summary>
 		CP936 = 134,
 
 		/// <summary>
-		/// A superset of traditional Chinese Big 5 ETen (with different
-		/// ordering and minor deviations).
+		/// A superset of traditional Chinese Big 5 ETen (with different ordering and minor deviations).
 		/// </summary>
 		CP950 = 136,
 
@@ -98,8 +92,7 @@ namespace SharpFont.FNT
 		CP1254 = 162,
 
 		/// <summary>
-		/// For Vietnamese. This encoding doesn't cover all necessary
-		/// characters.
+		/// For Vietnamese. This encoding doesn't cover all necessary characters.
 		/// </summary>
 		CP1258 = 163,
 
@@ -129,31 +122,26 @@ namespace SharpFont.FNT
 		CP874 = 222,
 
 		/// <summary>
-		/// A superset of East European ISO 8859-2 (with slightly different
-		/// ordering).
+		/// A superset of East European ISO 8859-2 (with slightly different ordering).
 		/// </summary>
 		CP1250 = 238,
 
 		/// <summary><para>
 		/// From Michael Pöttgen &lt;michael@poettgen.de&gt;:
-		/// The ‘Windows Font Mapping’ article says that FT_WinFNT_ID_OEM is
-		/// used for the charset of vector fonts, like ‘modern.fon’,
-		/// ‘roman.fon’, and ‘script.fon’ on Windows.
+		/// The ‘Windows Font Mapping’ article says that <see cref="WinFntID.OEM"/> is used for the charset of vector
+		/// fonts, like ‘modern.fon’, ‘roman.fon’, and ‘script.fon’ on Windows.
 		/// </para><para>
-		/// The ‘CreateFont’ documentation says: The FT_WinFNT_ID_OEM value
-		/// specifies a character set that is operating-system dependent.
+		/// The ‘CreateFont’ documentation says: The <see cref="WinFntID.OEM"/> value specifies a character set that is
+		/// operating-system dependent.
 		/// </para><para>
-		/// The ‘IFIMETRICS’ documentation from the ‘Windows Driver Development
-		/// Kit’ says: This font supports an OEM-specific character set. The
-		/// OEM character set is system dependent.
+		/// The ‘IFIMETRICS’ documentation from the ‘Windows Driver Development Kit’ says: This font supports an
+		/// OEM-specific character set. The OEM character set is system dependent.
 		/// </para><para>
-		/// In general OEM, as opposed to ANSI (i.e., cp1252), denotes the
-		/// second default codepage that most international versions of Windows
-		/// have. It is one of the OEM codepages from <see 
-		/// href="http://www.microsoft.com/globaldev/reference/cphome.mspx"/>,
-		/// and is used for the ‘DOS boxes’, to support legacy applications. A
-		/// German Windows version for example usually uses ANSI codepage 1252
-		/// and OEM codepage 850.
+		/// In general OEM, as opposed to ANSI (i.e., cp1252), denotes the second default codepage that most
+		/// international versions of Windows have. It is one of the OEM codepages from 
+		/// <see href="http://www.microsoft.com/globaldev/reference/cphome.mspx"/>, and is used for the ‘DOS boxes’, to
+		/// support legacy applications. A German Windows version for example usually uses ANSI codepage 1252 and OEM
+		/// codepage 850.
 		/// </para></summary>
 		OEM = 255
 	}

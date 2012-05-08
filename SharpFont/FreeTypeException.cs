@@ -33,12 +33,19 @@ namespace SharpFont
 	{
 		private Error error;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FreeTypeException"/> class.
+		/// </summary>
+		/// <param name="error"></param>
 		public FreeTypeException(Error error)
 			: base(error.ToString())
 		{
 			this.error = error;
 		}
 
+		/// <summary>
+		/// Gets the FreeType error code that caused the exception.
+		/// </summary>
 		public Error Error { get { return error; } }
 
 		private static string GetErrorMessage(Error err)

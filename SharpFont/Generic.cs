@@ -30,27 +30,26 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary>
-	/// Describe a function used to destroy the ‘client’ data of any FreeType
-	/// object. See the description of the <see cref="Generic"/> type for 
-	/// details of usage.
+	/// Describe a function used to destroy the ‘client’ data of any FreeType object. See the description of the
+	/// <see cref="Generic"/> type for details of usage.
 	/// </summary>
-	/// <param name="object">The address of the FreeType object which is under finalization. Its client data is accessed through its ‘generic’ field.</param>
+	/// <param name="object">
+	/// The address of the FreeType object which is under finalization. Its client data is accessed through its
+	/// ‘generic’ field.
+	/// </param>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate void GenericFinalizer(IntPtr @object);
 
 	/// <summary><para>
-	/// Client applications often need to associate their own data to a variety
-	/// of FreeType core objects. For example, a text layout API might want to
-	/// associate a glyph cache to a given size object.
+	/// Client applications often need to associate their own data to a variety of FreeType core objects. For example,
+	/// a text layout API might want to associate a glyph cache to a given size object.
 	/// </para><para>
-	/// Most FreeType object contains a ‘generic’ field, of type FT_Generic, 
-	/// which usage is left to client applications and font servers.
+	/// Most FreeType object contains a ‘generic’ field, of type <see cref="Generic"/>, which usage is left to client
+	/// applications and font servers.
 	/// </para><para>
-	/// It can be used to store a pointer to client-specific data, as well as
-	/// the address of a ‘finalizer’ function, which will be called by FreeType
-	/// when the object is destroyed (for example, the previous client example
-	/// would put the address of the glyph cache destructor in the ‘finalizer’
-	/// field).
+	/// It can be used to store a pointer to client-specific data, as well as the address of a ‘finalizer’ function,
+	/// which will be called by FreeType when the object is destroyed (for example, the previous client example would
+	/// put the address of the glyph cache destructor in the ‘finalizer’ field).
 	/// </para></summary>
 	public class Generic
 	{
@@ -65,8 +64,12 @@ namespace SharpFont
 		/// <summary>
 		/// Initializes a new instance of the Generic class.
 		/// </summary>
-		/// <param name="data">A typeless pointer to some client data. The data it cointains must stay fixed until finalizer is called.</param>
-		/// <param name="finalizer">A delegate that gets called when the contained object gets finalized.</param>
+		/// <param name="data">
+		/// A typeless pointer to some client data. The data it cointains must stay fixed until finalizer is called.
+		/// </param>
+		/// <param name="finalizer">
+		/// A delegate that gets called when the contained object gets finalized.
+		/// </param>
 		public Generic(IntPtr data, GenericFinalizer finalizer)
 		{
 			rec.data = data;

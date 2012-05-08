@@ -30,16 +30,15 @@ using SharpFont.TrueType.Internal;
 namespace SharpFont.TrueType
 {
 	/// <summary>
-	/// A structure used to model a TrueType vertical header, the ‘vhea’ table,
-	/// as well as the corresponding vertical metrics table, i.e., the ‘vmtx’
-	/// table.
+	/// A structure used to model a TrueType vertical header, the ‘vhea’ table, as well as the corresponding vertical
+	/// metrics table, i.e., the ‘vmtx’ table.
 	/// </summary>
 	/// <remarks><para>
-	/// IMPORTANT: The TT_HoriHeader and TT_VertHeader structures should be
-	/// identical except for the names of their fields which are different.
+	/// IMPORTANT: The <see cref="HoriHeader"/> and <see cref="VertHeader"/> structures should be identical except for
+	/// the names of their fields which are different.
 	/// </para><para>
-	/// This ensures that a single function in the ‘ttload’ module is able to
-	/// read both the horizontal and vertical headers.
+	/// This ensures that a single function in the ‘ttload’ module is able to read both the horizontal and vertical
+	/// headers.
 	/// </para></remarks>
 	public class VertHeader
 	{
@@ -73,15 +72,13 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary><para>
-		/// Gets the font's ascender, i.e., the distance from the baseline to
-		/// the top-most of all glyph points found in the font.
+		/// Gets the font's ascender, i.e., the distance from the baseline to the top-most of all glyph points found in
+		/// the font.
 		/// </para><para>
-		/// This value is invalid in many fonts, as it is usually set by the
-		/// font designer, and often reflects only a portion of the glyphs
-		/// found in the font (maybe ASCII).
+		/// This value is invalid in many fonts, as it is usually set by the font designer, and often reflects only a
+		/// portion of the glyphs found in the font (maybe ASCII).
 		/// </para><para>
-		/// You should use the ‘sTypoAscender’ field of the OS/2 table instead
-		/// if you want the correct one.
+		/// You should use the ‘sTypoAscender’ field of the OS/2 table instead if you want the correct one.
 		/// </para></summary>
 		public short Ascender
 		{
@@ -92,16 +89,13 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary><para>
-		/// Gets the font's descender, i.e., the distance from the baseline to
-		/// the bottom-most of all glyph points found in the font. It is
-		/// negative.
+		/// Gets the font's descender, i.e., the distance from the baseline to the bottom-most of all glyph points
+		/// found in the font. It is negative.
 		/// </para><para>
-		/// This value is invalid in many fonts, as it is usually set by the
-		/// font designer, and often reflects only a portion of the glyphs
-		/// found in the font (maybe ASCII).
+		/// This value is invalid in many fonts, as it is usually set by the font designer, and often reflects only a
+		/// portion of the glyphs found in the font (maybe ASCII).
 		/// </para><para>
-		/// You should use the ‘sTypoDescender’ field of the OS/2 table instead
-		/// if you want the correct one.
+		/// You should use the ‘sTypoDescender’ field of the OS/2 table instead if you want the correct one.
 		/// </para></summary>
 		public short Descender
 		{
@@ -112,9 +106,8 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the font's line gap, i.e., the distance to add to the ascender and
-		/// descender to get the BTB, i.e., the baseline-to-baseline distance
-		/// for the font.
+		/// Gets the font's line gap, i.e., the distance to add to the ascender and descender to get the BTB, i.e., the
+		/// baseline-to-baseline distance for the font.
 		/// </summary>
 		public short LineGap
 		{
@@ -125,9 +118,8 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the maximum of all advance heights found in the font. It can
-		/// be used to compute the maximum height of an arbitrary string of
-		/// text.
+		/// Gets the maximum of all advance heights found in the font. It can be used to compute the maximum height of
+		/// an arbitrary string of text.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort AdvanceHeightMax
@@ -161,8 +153,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the maximum vertical extent (i.e., the ‘height’ of a glyph's
-		/// bounding box) for all glyphs in the font.
+		/// Gets the maximum vertical extent (i.e., the ‘height’ of a glyph's bounding box) for all glyphs in the font.
 		/// </summary>
 		public short MaximumExtentY
 		{
@@ -173,8 +164,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the rise coefficient of the cursor's slope of the cursor
-		/// (slope=rise/run).
+		/// Gets the rise coefficient of the cursor's slope of the cursor (slope=rise/run).
 		/// </summary>
 		public short CaretSlopeRise
 		{
@@ -226,8 +216,8 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Number of VMetrics entries in the ‘vmtx’ table -- this value can be
-		/// smaller than the total number of glyphs in the font.
+		/// Number of VMetrics entries in the ‘vmtx’ table -- this value can be smaller than the total number of glyphs
+		/// in the font.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort VMetricsCount

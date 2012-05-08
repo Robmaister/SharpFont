@@ -30,8 +30,7 @@ using SharpFont.MultipleMasters.Internal;
 namespace SharpFont.MultipleMasters
 {
 	/// <summary>
-	/// A simple structure used to model a given axis in design space for
-	/// Multiple Masters and GX var fonts.
+	/// A simple structure used to model a given axis in design space for Multiple Masters and GX var fonts.
 	/// </summary>
 	public class VarAxis
 	{
@@ -76,9 +75,8 @@ namespace SharpFont.MultipleMasters
 		}
 
 		/// <summary>
-		/// Gets the axis's default design coordinate. FreeType computes meaningful
-		/// default values for MM; it is then an integer value, not in 16.16
-		/// format.
+		/// Gets the axis's default design coordinate. FreeType computes meaningful default values for MM; it is then
+		/// an integer value, not in 16.16 format.
 		/// </summary>
 		public int Default
 		{
@@ -100,8 +98,7 @@ namespace SharpFont.MultipleMasters
 		}
 
 		/// <summary>
-		/// Gets the axis's tag (the GX equivalent to ‘name’). FreeType provides
-		/// default values for MM if possible.
+		/// Gets the axis's tag (the GX equivalent to ‘name’). FreeType provides default values for MM if possible.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint Tag
@@ -113,8 +110,7 @@ namespace SharpFont.MultipleMasters
 		}
 
 		/// <summary>
-		/// Gets the entry in ‘name’ table (another GX version of ‘name’). Not
-		/// meaningful for MM.
+		/// Gets the entry in ‘name’ table (another GX version of ‘name’). Not meaningful for MM.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint StrID

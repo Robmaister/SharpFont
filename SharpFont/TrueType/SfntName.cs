@@ -33,9 +33,8 @@ namespace SharpFont.TrueType
 	/// A structure used to model an SFNT ‘name’ table entry.
 	/// </summary>
 	/// <remarks>
-	/// Possible values for ‘platform_id’, ‘encoding_id’, ‘language_id’, and
-	/// ‘name_id’ are given in the file ‘ttnameid.h’. For details please refer
-	/// to the TrueType or OpenType specification.
+	/// Possible values for ‘platform_id’, ‘encoding_id’, ‘language_id’, and ‘name_id’ are given in the file
+	/// ‘ttnameid.h’. For details please refer to the TrueType or OpenType specification.
 	/// </remarks>
 	/// <see cref="PlatformID"/>
 	/// <see cref="AppleEncodingID"/>
@@ -110,12 +109,11 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary><para>
-		/// The ‘name’ string. Note that its format differs depending on the
-		/// (platform,encoding) pair. It can be a Pascal String, a UTF-16 one,
-		/// etc.
+		/// The ‘name’ string. Note that its format differs depending on the (platform,encoding) pair. It can be a
+		/// Pascal String, a UTF-16 one, etc.
 		/// </para><para>
-		/// Generally speaking, the string is not zero-terminated. Please refer
-		/// to the TrueType specification for details.
+		/// Generally speaking, the string is not zero-terminated. Please refer to the TrueType specification for
+		/// details.
 		/// </para></summary>
 		public string String
 		{

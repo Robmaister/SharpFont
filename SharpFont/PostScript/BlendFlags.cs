@@ -27,9 +27,8 @@ using System;
 namespace SharpFont.PostScript
 {
 	/// <summary>
-	/// A set of flags used to indicate which fields are present in a given
-	/// blend dictionary (font info or private). Used to support Multiple
-	/// Masters fonts.
+	/// A set of flags used to indicate which fields are present in a given blend dictionary (font info or private).
+	/// Used to support Multiple Masters fonts.
 	/// </summary>
 	public enum BlendFlags
 	{

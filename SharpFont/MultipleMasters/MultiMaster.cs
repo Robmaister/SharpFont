@@ -30,8 +30,7 @@ using SharpFont.MultipleMasters.Internal;
 namespace SharpFont.MultipleMasters
 {
 	/// <summary><para>
-	/// A structure used to model the axes and space of a Multiple Masters
-	/// font.
+	/// A structure used to model the axes and space of a Multiple Masters font.
 	/// </para><para>
 	/// This structure can't be used for GX var fonts.
 	/// </para></summary>
@@ -68,9 +67,8 @@ namespace SharpFont.MultipleMasters
 		}
 
 		/// <summary>
-		/// Gets the number of designs; should be normally 2^num_axis even though the
-		/// Type 1 specification strangely allows for intermediate designs to
-		/// be present. This number cannot exceed 16.
+		/// Gets the number of designs; should be normally 2^num_axis even though the Type 1 specification strangely
+		/// allows for intermediate designs to be present. This number cannot exceed 16.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint DesignsCount

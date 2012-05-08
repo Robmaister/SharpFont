@@ -33,11 +33,9 @@ namespace SharpFont
 	/// A function used to create a new raster object.
 	/// </summary>
 	/// <remarks>
-	/// The ‘memory’ parameter is a typeless pointer in order to avoid
-	/// un-wanted dependencies on the rest of the FreeType code. In practice,
-	/// it is an <see cref="Memory"/> object, i.e., a handle to the standard
-	/// FreeType memory allocator. However, this field can be completely
-	/// ignored by a given raster implementation.
+	/// The ‘memory’ parameter is a typeless pointer in order to avoid un-wanted dependencies on the rest of the
+	/// FreeType code. In practice, it is an <see cref="Memory"/> object, i.e., a handle to the standard FreeType
+	/// memory allocator. However, this field can be completely ignored by a given raster implementation.
 	/// </remarks>
 	/// <param name="memory">A handle to the memory allocator.</param>
 	/// <param name="raster">A handle to the new raster object.</param>
@@ -53,19 +51,15 @@ namespace SharpFont
 	public delegate void RasterDoneFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RasterMarshaler))] Raster raster);
 
 	/// <summary><para>
-	/// FreeType provides an area of memory called the ‘render pool’, available
-	/// to all registered rasters. This pool can be freely used during a given
-	/// scan-conversion but is shared by all rasters. Its content is thus
-	/// transient.
+	/// FreeType provides an area of memory called the ‘render pool’, available to all registered rasters. This pool
+	/// can be freely used during a given scan-conversion but is shared by all rasters. Its content is thus transient.
 	/// </para><para>
-	/// This function is called each time the render pool changes, or just
-	/// after a new raster object is created.
+	/// This function is called each time the render pool changes, or just after a new raster object is created.
 	/// </para></summary>
 	/// <remarks>
-	/// Rasters can ignore the render pool and rely on dynamic memory
-	/// allocation if they want to (a handle to the memory allocator is passed
-	/// to the raster constructor). However, this is not recommended for
-	/// efficiency purposes.
+	/// Rasters can ignore the render pool and rely on dynamic memory allocation if they want to (a handle to the
+	/// memory allocator is passed to the raster constructor). However, this is not recommended for efficiency
+	/// purposes.
 	/// </remarks>
 	/// <param name="raster">A handle to the new raster object.</param>
 	/// <param name="pool_base">The address in memory of the render pool.</param>
@@ -74,9 +68,8 @@ namespace SharpFont
 	public delegate void RasterResetFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(RasterMarshaler))] Raster raster, IntPtr pool_base, int pool_size);
 
 	/// <summary>
-	/// This function is a generic facility to change modes or attributes in a
-	/// given raster. This can be used for debugging purposes, or simply to
-	/// allow implementation-specific ‘features’ in a given raster module.
+	/// This function is a generic facility to change modes or attributes in a given raster. This can be used for
+	/// debugging purposes, or simply to allow implementation-specific ‘features’ in a given raster module.
 	/// </summary>
 	/// <param name="raster">A handle to the new raster object.</param>
 	/// <param name="mode">A 4-byte tag used to name the mode or property.</param>
@@ -89,23 +82,22 @@ namespace SharpFont
 	/// Invoke a given raster to scan-convert a given glyph image into a target
 	/// bitmap.
 	/// </summary>
-	/// <remarks>
-	/// The exact format of the source image depends on the raster's glyph
-	/// format defined in its <see cref="RasterFuncs"/> structure. It can be an
-	/// <see cref="Outline"/> or anything else in order to support a large
-	/// array of glyph formats.
-	/// 
-	/// Note also that the render function can fail and return a
-	/// <see cref="Error.UnimplementedFeature"/> error code if the raster used
-	/// does not support direct composition.
-	/// 
-	/// XXX: For now, the standard raster doesn't support direct composition
-	/// but this should change for the final release (see the files
-	/// ‘demos/src/ftgrays.c’ and ‘demos/src/ftgrays2.c’ for examples of
-	/// distinct implementations which support direct composition).
-	/// </remarks>
+	/// <remarks><para>
+	/// The exact format of the source image depends on the raster's glyph format defined in its
+	/// <see cref="RasterFuncs"/> structure. It can be an <see cref="Outline"/> or anything else in order to support a
+	/// large array of glyph formats.
+	/// </para><para>
+	/// Note also that the render function can fail and return a <see cref="Error.UnimplementedFeature"/> error code if
+	/// the raster used does not support direct composition.
+	/// </para><para>
+	/// XXX: For now, the standard raster doesn't support direct composition but this should change for the final
+	/// release (see the files ‘demos/src/ftgrays.c’ and ‘demos/src/ftgrays2.c’ for examples of distinct
+	/// implementations which support direct composition).
+	/// </para></remarks>
 	/// <param name="raster">A handle to the raster object.</param>
-	/// <param name="RasterParams">A pointer to an <see cref="RasterParams"/> structure used to store the rendering parameters.</param>
+	/// <param name="params">
+	/// A pointer to an <see cref="RasterParams"/> structure used to store the rendering parameters.
+	/// </param>
 	/// <returns>Error code. 0 means success.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate Error RasterRenderFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RasterMarshaler))] Raster raster, [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RasterParamsMarshaler))] RasterParams @params);

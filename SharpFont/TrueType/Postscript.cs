@@ -30,10 +30,9 @@ using SharpFont.TrueType.Internal;
 namespace SharpFont.TrueType
 {
 	/// <summary>
-	/// A structure used to model a TrueType PostScript table. All fields
-	/// comply to the TrueType specification. This structure does not reference
-	/// the PostScript glyph names, which can be nevertheless accessed with the
-	/// ‘ttpost’ module.
+	/// A structure used to model a TrueType PostScript table. All fields comply to the TrueType specification. This
+	/// structure does not reference the PostScript glyph names, which can be nevertheless accessed with the ‘ttpost’
+	/// module.
 	/// </summary>
 	public class Postscript
 	{

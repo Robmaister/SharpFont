@@ -27,47 +27,32 @@ using System;
 namespace SharpFont.TrueType
 {
 	/// <summary>
-	/// A list of valid values for the ‘encoding_id’ for
-	/// TT_PLATFORM_APPLE_UNICODE charmaps and name entries.
+	/// A list of valid values for the ‘encoding_id’ for TT_PLATFORM_APPLE_UNICODE charmaps and name entries.
 	/// </summary>
 	[CLSCompliant(false)]
 	public enum AppleEncodingID : ushort
 	{
-		/// <summary>
-		/// Unicode version 1.0.
-		/// </summary>
+		/// <summary>Unicode version 1.0.</summary>
 		Default = 0,
 
-		/// <summary>
-		/// Unicode 1.1; specifies Hangul characters starting at U+34xx.
-		/// </summary>
+		/// <summary>Unicode 1.1; specifies Hangul characters starting at U+34xx.</summary>
 		Unicode11,
 
-		/// <summary>
-		/// Deprecated (identical to preceding).
-		/// </summary>
+		/// <summary>Deprecated (identical to preceding).</summary>
 		ISO10646,
 
-		/// <summary>
-		/// Unicode 2.0 and beyond (UTF-16 BMP only).
-		/// </summary>
+		/// <summary>Unicode 2.0 and beyond (UTF-16 BMP only).</summary>
 		Unicode20,
 
-		/// <summary>
-		/// Unicode 3.1 and beyond, using UTF-32.
-		/// </summary>
+		/// <summary>Unicode 3.1 and beyond, using UTF-32.</summary>
 		Unicode32,
 
-		/// <summary>
-		/// From Adobe, not Apple. Not a normal cmap. Specifies variations on a
-		/// real cmap.
-		/// </summary>
+		/// <summary>From Adobe, not Apple. Not a normal cmap. Specifies variations on a real cmap.</summary>
 		VariantSelector,
 	}
 
 	/// <summary>
-	/// A list of valid values for the ‘encoding_id’ for TT_PLATFORM_MACINTOSH
-	/// charmaps and name entries.
+	/// A list of valid values for the ‘encoding_id’ for TT_PLATFORM_MACINTOSH charmaps and name entries.
 	/// </summary>
 	[CLSCompliant(false)]
 	public enum MacEncodingID : ushort
@@ -176,21 +161,18 @@ namespace SharpFont.TrueType
 	}
 
 	/// <summary>
-	/// A list of valid values for the ‘encoding_id’ for TT_PLATFORM_MICROSOFT
-	/// charmaps and name entries.
+	/// A list of valid values for the ‘encoding_id’ for TT_PLATFORM_MICROSOFT charmaps and name entries.
 	/// </summary>
 	[CLSCompliant(false)]
 	public enum MicrosoftEncodingID : ushort
 	{
 		/// <summary>
-		/// Corresponds to Microsoft symbol encoding. See
-		/// FT_ENCODING_MS_SYMBOL.
+		/// Corresponds to Microsoft symbol encoding. See FT_ENCODING_MS_SYMBOL.
 		/// </summary>
 		Symbol = 0,
 
 		/// <summary>
-		/// Corresponds to a Microsoft WGL4 charmap, matching Unicode. See
-		/// FT_ENCODING_UNICODE.
+		/// Corresponds to a Microsoft WGL4 charmap, matching Unicode. See FT_ENCODING_UNICODE.
 		/// </summary>
 		Unicode = 1,
 
@@ -200,14 +182,12 @@ namespace SharpFont.TrueType
 		SJIS = 2,
 
 		/// <summary>
-		/// Corresponds to Simplified Chinese as used in Mainland China. See
-		/// FT_ENCODING_GB2312.
+		/// Corresponds to Simplified Chinese as used in Mainland China. See FT_ENCODING_GB2312.
 		/// </summary>
 		GB2312 = 3,
 
 		/// <summary>
-		/// Corresponds to Traditional Chinese as used in Taiwan and Hong Kong.
-		/// See FT_ENCODING_BIG5.
+		/// Corresponds to Traditional Chinese as used in Taiwan and Hong Kong. See FT_ENCODING_BIG5.
 		/// </summary>
 		Big5 = 4,
 
@@ -222,37 +202,29 @@ namespace SharpFont.TrueType
 		Johab = 6,
 
 		/// <summary>
-		/// Corresponds to UCS-4 or UTF-32 charmaps. This has been added to the
-		/// OpenType specification version 1.4 (mid-2001.)
+		/// Corresponds to UCS-4 or UTF-32 charmaps. This has been added to the OpenType specification version 1.4
+		/// (mid-2001.)
 		/// </summary>
 		UCS4 = 10,
 	}
 
 	/// <summary>
-	/// A list of valid values for the ‘encoding_id’ for TT_PLATFORM_ADOBE
-	/// charmaps. This is a FreeType-specific extension!
+	/// A list of valid values for the ‘encoding_id’ for TT_PLATFORM_ADOBE charmaps. This is a FreeType-specific
+	/// extension!
 	/// </summary>
 	[CLSCompliant(false)]
 	public enum AdobeEncodingID : ushort
 	{
-		/// <summary>
-		/// Adobe standard encoding.
-		/// </summary>
+		/// <summary>Adobe standard encoding.</summary>
 		Standard = 0,
 
-		/// <summary>
-		/// Adobe expert encoding.
-		/// </summary>
+		/// <summary>Adobe expert encoding.</summary>
 		Expert = 1,
 
-		/// <summary>
-		/// Adobe custom encoding.
-		/// </summary>
+		/// <summary>Adobe custom encoding.</summary>
 		Custom = 2,
 
-		/// <summary>
-		/// Adobe Latin 1 encoding.
-		/// </summary>
+		/// <summary>Adobe Latin 1 encoding.</summary>
 		Latin1 = 3
 	}
 }

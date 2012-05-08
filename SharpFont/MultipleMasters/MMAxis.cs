@@ -30,8 +30,7 @@ using SharpFont.MultipleMasters.Internal;
 namespace SharpFont.MultipleMasters
 {
 	/// <summary><para>
-	/// A simple structure used to model a given axis in design space for
-	/// Multiple Masters fonts.
+	/// A simple structure used to model a given axis in design space for Multiple Masters fonts.
 	/// </para><para>
 	/// This structure can't be used for GX var fonts.
 	/// </para></summary>

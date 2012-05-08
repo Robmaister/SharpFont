@@ -30,8 +30,7 @@ using SharpFont.MultipleMasters.Internal;
 namespace SharpFont.MultipleMasters
 {
 	/// <summary><para>
-	/// A structure used to model the axes and space of a Multiple Masters or
-	/// GX var distortable font.
+	/// A structure used to model the axes and space of a Multiple Masters or GX var distortable font.
 	/// </para><para>
 	/// Some fields are specific to one format and not to the other.
 	/// </para></summary>
@@ -68,9 +67,8 @@ namespace SharpFont.MultipleMasters
 		}
 
 		/// <summary>
-		/// Gets the number of designs; should be normally 2^num_axis for MM fonts.
-		/// Not meaningful for GX (where every glyph could have a different
-		/// number of designs).
+		/// Gets the number of designs; should be normally 2^num_axis for MM fonts. Not meaningful for GX (where every
+		/// glyph could have a different number of designs).
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint DesignsCount
@@ -82,10 +80,9 @@ namespace SharpFont.MultipleMasters
 		}
 
 		/// <summary>
-		/// Gets the number of named styles; only meaningful for GX which allows
-		/// certain design coordinates to have a string ID (in the ‘name’
-		/// table) associated with them. The font can tell the user that, for
-		/// example, Weight=1.5 is ‘Bold’.
+		/// Gets the number of named styles; only meaningful for GX which allows certain design coordinates to have a
+		/// string ID (in the ‘name’ table) associated with them. The font can tell the user that, for example,
+		/// Weight=1.5 is ‘Bold’.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint NamedStylesCount
@@ -97,8 +94,7 @@ namespace SharpFont.MultipleMasters
 		}
 
 		/// <summary>
-		/// Gets a table of axis descriptors. GX fonts contain slightly more data
-		/// than MM.
+		/// Gets a table of axis descriptors. GX fonts contain slightly more data than MM.
 		/// </summary>
 		public VarAxis Axis
 		{

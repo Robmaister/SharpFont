@@ -30,9 +30,8 @@ using SharpFont.Cache.Internal;
 namespace SharpFont.Cache
 {
 	/// <summary>
-	/// A handle to a small bitmap cache. These are special cache objects used
-	/// to store small glyph bitmaps (and anti-aliased pixmaps) in a much more
-	/// efficient way than the traditional glyph image cache implemented by
+	/// A handle to a small bitmap cache. These are special cache objects used to store small glyph bitmaps (and
+	/// anti-aliased pixmaps) in a much more efficient way than the traditional glyph image cache implemented by
 	/// <see cref="ImageCache"/>.
 	/// </summary>
 	public class SBit
@@ -78,8 +77,8 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// Gets the horizontal distance from the pen position to the left
-		/// bitmap border (a.k.a. ‘left side bearing’, or ‘lsb’).
+		/// Gets the horizontal distance from the pen position to the left bitmap border (a.k.a. ‘left side bearing’,
+		/// or ‘lsb’).
 		/// </summary>
 		public byte Left
 		{
@@ -90,9 +89,8 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// Gets the vertical distance from the pen position (on the baseline)
-		/// to the upper bitmap border (a.k.a. ‘top side bearing’). The
-		/// distance is positive for upwards y coordinates.
+		/// Gets the vertical distance from the pen position (on the baseline) to the upper bitmap border (a.k.a. ‘top
+		/// side bearing’). The distance is positive for upwards y coordinates.
 		/// </summary>
 		public byte Top
 		{
@@ -125,8 +123,7 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// Gets the number of bytes per bitmap line. May be positive or
-		/// negative.
+		/// Gets the number of bytes per bitmap line. May be positive or negative.
 		/// </summary>
 		public short Pitch
 		{

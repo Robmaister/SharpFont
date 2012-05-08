@@ -30,15 +30,13 @@ using SharpFont.TrueType;
 namespace SharpFont
 {
 	/// <summary><para>
-	/// A handle to a FreeType library instance. Each ‘library’ is completely
-	/// independent from the others; it is the ‘root’ of a set of objects like
-	/// fonts, faces, sizes, etc.
+	/// A handle to a FreeType library instance. Each ‘library’ is completely independent from the others; it is the
+	/// ‘root’ of a set of objects like fonts, faces, sizes, etc.
 	/// </para><para>
-	/// It also embeds a memory manager (see <see cref="Memory"/>), as well as
-	/// a scan-line converter object (see <see cref="Raster"/>).
+	/// It also embeds a memory manager (see <see cref="Memory"/>), as well as a scan-line converter object (see
+	/// <see cref="Raster"/>).
 	/// </para><para>
-	/// For multi-threading applications each thread should have its own
-	/// <see cref="Library"/> object.
+	/// For multi-threading applications each thread should have its own <see cref="Library"/> object.
 	/// </para></summary>
 	public sealed class Library : IDisposable
 	{
@@ -174,7 +172,9 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="path">A path to the font file.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
-		/// <returns> A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.</returns>
+		/// <returns>
+		/// A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.
+		/// </returns>
 		/// <see cref="OpenFace"/>
 		public Face NewFace(string path, int faceIndex)
 		{
@@ -188,7 +188,9 @@ namespace SharpFont
 		/// <remarks>See <see cref="FT.NewMemoryFace"/>.</remarks>
 		/// <param name="file">A pointer to the beginning of the font data.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
-		/// <returns>A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.</returns>
+		/// <returns>
+		/// A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.
+		/// </returns>
 		/// <see cref="OpenFace"/>
 		public Face NewMemoryFace(byte[] file, int faceIndex)
 		{
@@ -200,9 +202,13 @@ namespace SharpFont
 		/// by <see cref="OpenArgs"/>.
 		/// </summary>
 		/// <remarks>See <see cref="FT.OpenFace"/>.</remarks>
-		/// <param name="args">A pointer to an <see cref="OpenArgs"/> structure which must be filled by the caller.</param>
+		/// <param name="args">
+		/// A pointer to an <see cref="OpenArgs"/> structure which must be filled by the caller.
+		/// </param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
-		/// <returns>A handle to a new face object. If ‘face_index’ is greater than or equal to zero, it must be non-NULL.</returns>
+		/// <returns>
+		/// A handle to a new face object. If ‘face_index’ is greater than or equal to zero, it must be non-NULL.
+		/// </returns>
 		public Face OpenFace(OpenArgs args, int faceIndex)
 		{
 			return FT.OpenFace(this, args, faceIndex);
@@ -221,8 +227,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Create a new face object from a given resource and typeface index
-		/// using an FSSpec to the font file.
+		/// Create a new face object from a given resource and typeface index using an FSSpec to the font file.
 		/// </summary>
 		/// <remarks>See <see cref="FT.NewFaceFromFSSpec"/>.</remarks>
 		/// <param name="spec">FSSpec to the font file.</param>
@@ -234,8 +239,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Create a new face object from a given resource and typeface index
-		/// using an FSRef to the font file.
+		/// Create a new face object from a given resource and typeface index using an FSRef to the font file.
 		/// </summary>
 		/// <remarks>See <see cref="FT.NewFaceFromFSRef"/>.</remarks>
 		/// <param name="ref">FSRef to the font file.</param>
@@ -278,11 +282,13 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Set a debug hook function for debugging the interpreter of a font
-		/// format.
+		/// Set a debug hook function for debugging the interpreter of a font format.
 		/// </summary>
 		/// <remarks>See <see cref="FT.SetDebugHook"/>.</remarks>
-		/// <param name="hookIndex">The index of the debug hook. You should use the values defined in ‘ftobjs.h’, e.g., ‘FT_DEBUG_HOOK_TRUETYPE’.</param>
+		/// <param name="hookIndex">
+		/// The index of the debug hook. You should use the values defined in ‘ftobjs.h’, e.g.,
+		/// ‘FT_DEBUG_HOOK_TRUETYPE’.
+		/// </param>
 		/// <param name="debugHook">The function used to debug the interpreter.</param>
 		[CLSCompliant(false)]
 		public void SetDebugHook(uint hookIndex, IntPtr debugHook)
@@ -291,10 +297,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Add the set of default drivers to a given library object. This is
-		/// only useful when you create a library object with
-		/// <see cref="FT.NewLibrary"/> (usually to plug a custom memory
-		/// manager).
+		/// Add the set of default drivers to a given library object. This is only useful when you create a library
+		/// object with <see cref="FT.NewLibrary"/> (usually to plug a custom memory manager).
 		/// </summary>
 		public void AddDefaultModules()
 		{
@@ -327,38 +331,39 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This function is used to apply color filtering to LCD decimated
-		/// bitmaps, like the ones used when calling
-		/// <see cref="FT.RenderGlyph"/> with <see cref="RenderMode.LCD"/> or
-		/// <see cref="RenderMode.VerticalLCD"/>.
+		/// This function is used to apply color filtering to LCD decimated bitmaps, like the ones used when calling
+		/// <see cref="FT.RenderGlyph"/> with <see cref="RenderMode.LCD"/> or <see cref="RenderMode.VerticalLCD"/>.
 		/// </summary>
 		/// <remarks>See <see cref="FT.LibrarySetLcdFilter"/>.</remarks>
-		/// <param name="filter"><para>The filter type.
+		/// <param name="filter"><para>
+		/// The filter type.
 		/// </para><para>
-		/// You can use <see cref="LcdFilter.None"/> here to disable this feature, or <see cref="LcdFilter.Default"/> to use a default filter that should work well on most LCD screens.</para></param>
+		/// You can use <see cref="LcdFilter.None"/> here to disable this feature, or <see cref="LcdFilter.Default"/>
+		/// to use a default filter that should work well on most LCD screens.
+		/// </para></param>
 		public void SetLcdFilter(LcdFilter filter)
 		{
 			FT.LibrarySetLcdFilter(this, filter);
 		}
 
 		/// <summary>
-		/// Use this function to override the filter weights selected by
-		/// <see cref="FT.LibrarySetLcdFilter"/>. By default, FreeType uses the
-		/// quintuple (0x00, 0x55, 0x56, 0x55, 0x00) for
-		/// <see cref="LcdFilter.Light"/>, and (0x10, 0x40, 0x70, 0x40, 0x10)
-		/// for <see cref="LcdFilter.Default"/> and
-		/// <see cref="LcdFilter.Legacy"/>.
+		/// Use this function to override the filter weights selected by <see cref="FT.LibrarySetLcdFilter"/>. By
+		/// default, FreeType uses the quintuple (0x00, 0x55, 0x56, 0x55, 0x00) for <see cref="LcdFilter.Light"/>, and
+		/// (0x10, 0x40, 0x70, 0x40, 0x10) for <see cref="LcdFilter.Default"/> and <see cref="LcdFilter.Legacy"/>.
 		/// </summary>
 		/// <remarks>See <see cref="FT.LibrarySetLcdFilterWeights"/>.</remarks>
-		/// <param name="weights">A pointer to an array; the function copies the first five bytes and uses them to specify the filter weights.</param>
+		/// <param name="weights">
+		/// A pointer to an array; the function copies the first five bytes and uses them to specify the filter
+		/// weights.
+		/// </param>
 		public void SetLcdFilterWeights(byte[] weights)
 		{
 			FT.LibrarySetLcdFilterWeights(this, weights);
 		}
 
 		/// <summary>
-		/// Return an <see cref="EngineType"/> value to indicate which level of
-		/// the TrueType virtual machine a given library instance supports.
+		/// Return an <see cref="EngineType"/> value to indicate which level of the TrueType virtual machine a given
+		/// library instance supports.
 		/// </summary>
 		/// <returns>A value indicating which level is supported.</returns>
 		public EngineType GetTrueTypeEngineType()

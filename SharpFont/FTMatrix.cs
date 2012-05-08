@@ -44,11 +44,12 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont
 {
 	/// <summary>
-	/// A simple structure used to store a 2x2 matrix. Coefficients are in 16.16 fixed float format. The computation performed is:
-	///     <code>
-	///     x' = x*xx + y*xy
-	///     y' = x*yx + y*yy
-	///     </code>
+	/// A simple structure used to store a 2x2 matrix. Coefficients are in 16.16 fixed float format. The computation
+	/// performed is:
+	/// <code>
+	/// x' = x*xx + y*xy
+	/// y' = x*yx + y*yy
+	/// </code>
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
 	public struct FTMatrix
@@ -56,6 +57,13 @@ namespace SharpFont
 		private FT_Fixed xx, xy;
 		private FT_Fixed yx, yy;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FTMatrix"/> struct.
+		/// </summary>
+		/// <param name="xx">Matrix coefficient.</param>
+		/// <param name="xy">Matrix coefficient.</param>
+		/// <param name="yx">Matrix coefficient.</param>
+		/// <param name="yy">Matrix coefficient.</param>
 		public FTMatrix(int xx, int xy, int yx, int yy)
 			: this()
 		{
@@ -72,11 +80,20 @@ namespace SharpFont
 #endif
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FTMatrix"/> struct.
+		/// </summary>
+		/// <param name="row0">Matrix coefficients.</param>
+		/// <param name="row1">Matrix coefficients.</param>
 		public FTMatrix(FTVector row0, FTVector row1)
 			: this(row0.X, row0.Y, row1.X, row1.Y)
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FTMatrix"/> struct.
+		/// </summary>
+		/// <param name="reference">A pointer to a matrix.</param>
 		internal FTMatrix(IntPtr reference)
 			: this()
 		{

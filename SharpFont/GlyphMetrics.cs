@@ -30,14 +30,13 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary>
-	/// A structure used to model the metrics of a single glyph. The values are
-	/// expressed in 26.6 fractional pixel format; if the flag FT_LOAD_NO_SCALE
-	/// has been used while loading the glyph, values are expressed in font
-	/// units instead.
+	/// A structure used to model the metrics of a single glyph. The values are expressed in 26.6 fractional pixel
+	/// format; if the flag <see cref="LoadFlags.NoScale"/> has been used while loading the glyph, values are expressed
+	/// in font units instead.
 	/// </summary>
 	/// <remarks>
-	/// If not disabled with FT_LOAD_NO_HINTING, the values represent
-	/// dimensions of the hinted glyph (in case hinting is applicable).
+	/// If not disabled with <see cref="LoadFlags.NoHinting"/>, the values represent dimensions of the hinted glyph (in
+	/// case hinting is applicable).
 	/// </remarks>
 	public sealed class GlyphMetrics
 	{
@@ -63,17 +62,6 @@ namespace SharpFont
 		#endregion
 
 		#region Properties
-
-		/*/// <summary>
-		/// Gets the size of a GlyphMetrics, in bytes.
-		/// </summary>
-		public static int SizeInBytes
-		{
-			get
-			{
-				return 32;
-			}
-		}*/
 
 		/// <summary>
 		/// Gets the glyph's width.
@@ -142,8 +130,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets the top side bearing for vertical layout. Larger positive
-		/// values mean further below the vertical glyph origin.
+		/// Gets the top side bearing for vertical layout. Larger positive values mean further below the vertical glyph
+		/// origin.
 		/// </summary>
 		public int VerticalBearingY
 		{
@@ -154,8 +142,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets the advance height for vertical layout. Positive values mean
-		/// the glyph has a positive advance downward.
+		/// Gets the advance height for vertical layout. Positive values mean the glyph has a positive advance
+		/// downward.
 		/// </summary>
 		public int VerticalAdvance
 		{

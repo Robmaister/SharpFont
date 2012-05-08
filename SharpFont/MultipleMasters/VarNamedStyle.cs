@@ -55,8 +55,7 @@ namespace SharpFont.MultipleMasters
 		#region Properties
 
 		/// <summary>
-		/// Gets the design coordinates for this style. This is an array with one
-		/// entry for each axis.
+		/// Gets the design coordinates for this style. This is an array with one entry for each axis.
 		/// </summary>
 		public IntPtr Coordinates
 		{

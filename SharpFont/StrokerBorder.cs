@@ -27,17 +27,16 @@ using System;
 namespace SharpFont
 {
 	/// <summary>
-	/// These values are used to select a given stroke border in 
-	/// FT_Stroker_GetBorderCounts and FT_Stroker_ExportBorder.
+	/// These values are used to select a given stroke border in <see cref="FT.StrokerGetBorderCounts"/> and
+	/// <see cref="FT.StrokerExportBorder"/>.
 	/// </summary>
 	/// <remarks><para>
-	/// Applications are generally interested in the ‘inside’ and ‘outside’
-	/// borders. However, there is no direct mapping between these and the
-	/// ‘left’ and ‘right’ ones, since this really depends on the glyph's
-	/// drawing orientation, which varies between font formats.
+	/// Applications are generally interested in the ‘inside’ and ‘outside’ borders. However, there is no direct
+	/// mapping between these and the ‘left’ and ‘right’ ones, since this really depends on the glyph's drawing
+	/// orientation, which varies between font formats.
 	/// </para><para>
-	/// You can however use FT_Outline_GetInsideBorder and
-	/// FT_Outline_GetOutsideBorder to get these.
+	/// You can however use <see cref="FT.OutlineGetInsideBorder"/> and <see cref="FT.OutlineGetOutsideBorder"/> to get
+	/// these.
 	/// </para></remarks>
 	public enum StrokerBorder
 	{

@@ -28,8 +28,8 @@ using System.Runtime.InteropServices;
 namespace SharpFont
 {
 	/// <summary>
-	/// A handle (pointer) to a raster object. Each object can be used
-	/// independently to convert an outline into a bitmap or pixmap.
+	/// A handle (pointer) to a raster object. Each object can be used independently to convert an outline into a
+	/// bitmap or pixmap.
 	/// </summary>
 	public class Raster
 	{

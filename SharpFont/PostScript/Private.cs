@@ -30,9 +30,8 @@ using SharpFont.PostScript.Internal;
 namespace SharpFont.PostScript
 {
 	/// <summary>
-	/// A structure used to model a Type 1 or Type 2 private dictionary. Note
-	/// that for Multiple Master fonts, each instance has its own Private
-	/// dictionary.
+	/// A structure used to model a Type 1 or Type 2 private dictionary. Note that for Multiple Master fonts, each
+	/// instance has its own Private dictionary.
 	/// </summary>
 	public class Private
 	{

@@ -33,8 +33,8 @@ namespace SharpFont
 	/// A function used to seek and read data from a given input stream.
 	/// </summary>
 	/// <remarks>
-	/// This function might be called to perform a seek or skip operation with
-	/// a ‘count’ of 0. A non-zero return value then indicates an error.
+	/// This function might be called to perform a seek or skip operation with a ‘count’ of 0. A non-zero return value
+	/// then indicates an error.
 	/// </remarks>
 	/// <param name="stream">A handle to the source stream.</param>
 	/// <param name="offset">The offset of read in stream (always from start).</param>
@@ -76,9 +76,8 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// For memory-based streams, this is the address of the first stream
-		/// byte in memory. This field should always be set to NULL for
-		/// disk-based streams.
+		/// For memory-based streams, this is the address of the first stream byte in memory. This field should always
+		/// be set to NULL for disk-based streams.
 		/// </summary>
 		public IntPtr Base
 		{
@@ -113,9 +112,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is a union that can hold an integer or a pointer. It is
-		/// used by stream implementations to store file descriptors or ‘FILE*’
-		/// pointers.
+		/// This field is a union that can hold an integer or a pointer. It is used by stream implementations to store
+		/// file descriptors or ‘FILE*’ pointers.
 		/// </summary>
 		public StreamDesc Descriptor
 		{
@@ -126,9 +124,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is completely ignored by FreeType. However, it is often
-		/// useful during debugging to use it to store the stream's filename
-		/// (where available).
+		/// This field is completely ignored by FreeType. However, it is often useful during debugging to use it to
+		/// store the stream's filename (where available).
 		/// </summary>
 		public StreamDesc PathName
 		{
@@ -162,8 +159,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The memory manager to use to preload frames. This is set internally
-		/// by FreeType and shouldn't be touched by stream implementations.
+		/// The memory manager to use to preload frames. This is set internally by FreeType and shouldn't be touched by
+		/// stream implementations.
 		/// </summary>
 		public Memory Memory
 		{
@@ -174,8 +171,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is set and used internally by FreeType when parsing
-		/// frames.
+		/// This field is set and used internally by FreeType when parsing frames.
 		/// </summary>
 		public IntPtr Cursor
 		{
@@ -186,8 +182,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is set and used internally by FreeType when parsing
-		/// frames.
+		/// This field is set and used internally by FreeType when parsing frames.
 		/// </summary>
 		public IntPtr Limit
 		{

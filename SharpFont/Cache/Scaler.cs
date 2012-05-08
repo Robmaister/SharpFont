@@ -30,12 +30,10 @@ using SharpFont.Cache.Internal;
 namespace SharpFont.Cache
 {
 	/// <summary>
-	/// A structure used to describe a given character size in either pixels or
-	/// points to the cache manager.
+	/// A structure used to describe a given character size in either pixels or points to the cache manager.
 	/// </summary>
 	/// <remarks>
-	/// This type is mainly used to retrieve <see cref="FTSize"/> objects through
-	/// the cache manager.
+	/// This type is mainly used to retrieve <see cref="FTSize"/> objects through the cache manager.
 	/// </remarks>
 	/// <see cref="FTC.ManagerLookupSize"/>
 	public class Scaler
@@ -94,9 +92,8 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// Gets a boolean. If true, the ‘width’ and ‘height’ fields are
-		/// interpreted as integer pixel character sizes. Otherwise, they are
-		/// expressed as 1/64th of points.
+		/// Gets a boolean. If true, the ‘width’ and ‘height’ fields are interpreted as integer pixel character sizes.
+		/// Otherwise, they are expressed as 1/64th of points.
 		/// </summary>
 		public bool Pixel
 		{
@@ -107,8 +104,7 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// Only used when ‘pixel’ is value 0 to indicate the horizontal
-		/// resolution in dpi.
+		/// Only used when ‘pixel’ is value 0 to indicate the horizontal resolution in dpi.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint ResolutionX
@@ -120,8 +116,7 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// Only used when ‘pixel’ is value 0 to indicate the vertical
-		/// resolution in dpi.
+		/// Only used when ‘pixel’ is value 0 to indicate the vertical resolution in dpi.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint ResolutionY

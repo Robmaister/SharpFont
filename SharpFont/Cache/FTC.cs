@@ -176,11 +176,11 @@ namespace SharpFont.Cache
 		/// because its content changed, or because it was deallocated or uninstalled.
 		/// </summary>
 		/// <remarks><para>
-		/// This function flushes all nodes from the cache corresponding to this <see cref="faceID"/>, with the
+		/// This function flushes all nodes from the cache corresponding to this ‘faceID’, with the
 		/// exception of nodes with a non-null reference count.
 		/// </para><para>
 		/// Such nodes are however modified internally so as to never appear in later lookups with the same
-		/// <see cref="faceID"/> value, and to be immediately destroyed when released by all their users.
+		///  ‘faceID’ value, and to be immediately destroyed when released by all their users.
 		/// </para></remarks>
 		/// <param name="manager">The cache manager handle.</param>
 		/// <param name="faceID">The FTC_FaceID to be removed.</param>
@@ -250,11 +250,11 @@ namespace SharpFont.Cache
 		/// The returned glyph is owned and managed by the glyph image cache. Never try to transform or discard it
 		/// manually! You can however create a copy with <see cref="FT.GlyphCopy"/> and modify the new one.
 		/// </para><para>
-		/// If <see cref="node"/> is not NULL, it receives the address of the cache node containing the glyph image,
+		/// If ‘node’ is not NULL, it receives the address of the cache node containing the glyph image,
 		/// after increasing its reference count. This ensures that the node (as well as the <see cref="Glyph"/>) will
 		/// always be kept in the cache until you call <see cref="FTC.NodeUnref"/> to ‘release’ it.
 		/// </para><para>
-		/// If <see cref="node"/> is NULL, the cache node is left unchanged, which means that the <see cref="Glyph"/>
+		/// If ‘node’ is NULL, the cache node is left unchanged, which means that the <see cref="Glyph"/>
 		/// could be flushed out of the cache on the next call to one of the caching sub-system APIs. Don't assume that
 		/// it is persistent!
 		/// </para></remarks>
@@ -288,11 +288,11 @@ namespace SharpFont.Cache
 		/// The returned glyph is owned and managed by the glyph image cache. Never try to transform or discard it
 		/// manually! You can however create a copy with <see cref="FT.GlyphCopy"/> and modify the new one.
 		/// </para><para>
-		/// If <see cref="node"/> is not NULL, it receives the address of the cache node containing the glyph image,
+		/// If ‘node’ is not NULL, it receives the address of the cache node containing the glyph image,
 		/// after increasing its reference count. This ensures that the node (as well as the <see cref="Glyph"/>) will
 		/// always be kept in the cache until you call <see cref="FTC.NodeUnref"/> to ‘release’ it.
 		/// </para><para>
-		/// If <see cref="node"/> is NULL, the cache node is left unchanged, which means that the <see cref="Glyph"/>
+		/// If ‘node’ is NULL, the cache node is left unchanged, which means that the <see cref="Glyph"/>
 		/// could be flushed out of the cache on the next call to one of the caching sub-system APIs. Don't assume that
 		/// it is persistent!
 		/// </para><para>
@@ -350,11 +350,11 @@ namespace SharpFont.Cache
 		/// </para><para>
 		/// The descriptor's ‘buffer’ field is set to 0 to indicate a missing glyph bitmap.
 		/// </para><para>
-		/// If <see cref="node"/> is not NULL, it receives the address of the cache node containing the bitmap, after
+		/// If ‘node’ is not NULL, it receives the address of the cache node containing the bitmap, after
 		/// increasing its reference count. This ensures that the node (as well as the image) will always be kept in
 		/// the cache until you call <see cref="FTC.NodeUnref"/> to ‘release’ it.
 		/// </para><para>
-		/// If <see cref="node"/> is NULL, the cache node is left unchanged, which means that the bitmap could be
+		/// If ‘node’ is NULL, the cache node is left unchanged, which means that the bitmap could be
 		/// flushed out of the cache on the next call to one of the caching sub-system APIs. Don't assume that it is
 		/// persistent!
 		/// </para></remarks>
@@ -391,11 +391,11 @@ namespace SharpFont.Cache
 		/// </para><para>
 		/// The descriptor's ‘buffer’ field is set to 0 to indicate a missing glyph bitmap.
 		/// </para><para>
-		/// If <see cref="node"/> is not NULL, it receives the address of the cache node containing the bitmap, after
+		/// If ‘node’ is not NULL, it receives the address of the cache node containing the bitmap, after
 		/// increasing its reference count. This ensures that the node (as well as the image) will always be kept in
 		/// the cache until you call <see cref="FTC.NodeUnref"/> to ‘release’ it.
 		/// </para><para>
-		/// If <see cref="node"/> is NULL, the cache node is left unchanged, which means that the bitmap could be
+		/// If ‘node’ is NULL, the cache node is left unchanged, which means that the bitmap could be
 		/// flushed out of the cache on the next call to one of the caching sub-system APIs. Don't assume that it is
 		/// persistent!
 		/// </para></remarks>

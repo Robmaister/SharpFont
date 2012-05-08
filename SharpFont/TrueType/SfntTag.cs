@@ -27,8 +27,8 @@ using System;
 namespace SharpFont.TrueType
 {
 	/// <summary>
-	/// An enumeration used to specify the index of an SFNT table. Used in the
-	/// <see cref="FT.GetSfntTable"/> API function.
+	/// An enumeration used to specify the index of an SFNT table. Used in the <see cref="FT.GetSfntTable"/> API
+	/// function.
 	/// </summary>
 	public enum SfntTag
 	{

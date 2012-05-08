@@ -30,22 +30,16 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary>
-	/// A structure used for outline (vectorial) glyph images. This really is a
-	/// ‘sub-class’ of <see cref="Glyph"/>.
+	/// A structure used for outline (vectorial) glyph images. This really is a ‘sub-class’ of <see cref="Glyph"/>.
 	/// </summary>
 	/// <remarks><para>
-	/// You can typecast an <see cref="Glyph"/> to <see cref="OutlineGlyph"/>
-	/// if you have ‘<see cref="Glyph.Format"/> ==
-	/// <see cref="GlyphFormat.Outline"/>’. This lets you access the outline's
-	/// content easily.
+	/// You can typecast an <see cref="Glyph"/> to <see cref="OutlineGlyph"/> if you have ‘<see cref="Glyph.Format"/>
+	/// == <see cref="GlyphFormat.Outline"/>’. This lets you access the outline's content easily.
 	/// </para><para>
-	/// As the outline is extracted from a glyph slot, its coordinates are
-	/// expressed normally in 26.6 pixels, unless the flag
-	/// <see cref="LoadFlags.NoScale"/> was used in <see cref="FT.LoadGlyph"/>
-	/// or <see cref="FT.LoadChar"/>.
+	/// As the outline is extracted from a glyph slot, its coordinates are expressed normally in 26.6 pixels, unless
+	/// the flag <see cref="LoadFlags.NoScale"/> was used in <see cref="FT.LoadGlyph"/> or <see cref="FT.LoadChar"/>.
 	/// </para><para>
-	/// The outline's tables are always owned by the object and are destroyed
-	/// with it.
+	/// The outline's tables are always owned by the object and are destroyed with it.
 	/// </para></remarks>
 	public class OutlineGlyph
 	{

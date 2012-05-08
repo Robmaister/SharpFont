@@ -30,9 +30,8 @@ using SharpFont.TrueType.Internal;
 namespace SharpFont.TrueType
 {
 	/// <summary>
-	/// The maximum profile is a table containing many max values which can be
-	/// used to pre-allocate arrays. This ensures that no memory allocation
-	/// occurs during a glyph load.
+	/// The maximum profile is a table containing many max values which can be used to pre-allocate arrays. This
+	/// ensures that no memory allocation occurs during a glyph load.
 	/// </summary>
 	/// <remarks>
 	/// This structure is only used during font loading.
@@ -81,8 +80,8 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the maximum number of points in a non-composite TrueType
-		/// glyph. See also the structure element ‘maxCompositePoints’.
+		/// Gets the maximum number of points in a non-composite TrueType glyph. See also the structure element
+		/// ‘maxCompositePoints’.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort MaxPoints
@@ -94,8 +93,8 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the maximum number of contours in a non-composite TrueType
-		/// glyph. See also the structure element ‘maxCompositeContours’.
+		/// Gets the maximum number of contours in a non-composite TrueType glyph. See also the structure element
+		/// ‘maxCompositeContours’.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort MaxContours
@@ -107,8 +106,8 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the maximum number of points in a composite TrueType glyph.
-		/// See also the structure element ‘maxPoints’.
+		/// Gets the maximum number of points in a composite TrueType glyph. See also the structure element
+		/// ‘maxPoints’.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort MaxCompositePoints
@@ -120,8 +119,8 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the maximum number of contours in a composite TrueType glyph.
-		/// See also the structure element ‘maxContours’.
+		/// Gets the maximum number of contours in a composite TrueType glyph. See also the structure element
+		/// ‘maxContours’.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort MaxCompositeContours
@@ -145,8 +144,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the maximum number of points in the twilight zone used for
-		/// glyph hinting.
+		/// Gets the maximum number of points in the twilight zone used for glyph hinting.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort MaxTwilightPoints
@@ -158,8 +156,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the maximum number of elements in the storage area used for
-		/// glyph hinting.
+		/// Gets the maximum number of elements in the storage area used for glyph hinting.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort MaxStorage
@@ -171,8 +168,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the maximum number of function definitions in the TrueType
-		/// bytecode for this font.
+		/// Gets the maximum number of function definitions in the TrueType bytecode for this font.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort MaxFunctionDefs
@@ -184,8 +180,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the maximum number of instruction definitions in the TrueType
-		/// bytecode for this font.
+		/// Gets the maximum number of instruction definitions in the TrueType bytecode for this font.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort MaxInstructionDefs
@@ -197,8 +192,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the maximum number of stack elements used during bytecode
-		/// interpretation.
+		/// Gets the maximum number of stack elements used during bytecode interpretation.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort MaxStackElements
@@ -222,8 +216,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the maximum number of simple (i.e., non- composite) glyphs in
-		/// a composite glyph.
+		/// Gets the maximum number of simple (i.e., non- composite) glyphs in a composite glyph.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort MaxComponentElements

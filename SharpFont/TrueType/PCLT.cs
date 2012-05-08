@@ -30,8 +30,7 @@ using SharpFont.TrueType.Internal;
 namespace SharpFont.TrueType
 {
 	/// <summary>
-	/// A structure used to model a TrueType PCLT table. All fields comply to
-	/// the TrueType specification.
+	/// A structure used to model a TrueType PCLT table. All fields comply to the TrueType specification.
 	/// </summary>
 	public class PCLT
 	{

@@ -26,6 +26,10 @@ using System;
 
 namespace SharpFont.Cache
 {
+	/// <summary>
+	/// A handle to an glyph image cache object. They are designed to hold many distinct glyph images while not
+	/// exceeding a certain memory threshold.
+	/// </summary>
 	public class ImageCache
 	{
 		#region Fields

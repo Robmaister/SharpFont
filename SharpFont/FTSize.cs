@@ -49,6 +49,22 @@ namespace SharpFont
 
 		#region Constructors
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FTSize"/> class.
+		/// </summary>
+		/// <param name="parent">The parent face.</param>
+		public FTSize(Face parent)
+		{
+			IntPtr reference;
+			Error err = FT.FT_New_Size(parent.Reference, out reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			Reference = reference;
+			userAlloc = true;
+		}
+
 		internal FTSize(IntPtr reference, bool userAlloc, Face parentFace)
 		{
 			Reference = reference;
@@ -173,10 +189,15 @@ namespace SharpFont
 		/// This function can be used to ‘activate’ a previously created size object.
 		/// </para></summary>
 		/// <remarks><see cref="FT.ActivateSize"/>.</remarks>
-		/// <param name="size">A handle to a target size object.</param>
-		public void Activate(FTSize size)
+		public void Activate()
 		{
-			FT.ActivateSize(this);
+			if (disposed)
+				throw new ObjectDisposedException("Activate", "Cannot access a disposed object.");
+
+			Error err = FT.FT_Activate_Size(Reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
 		}
 
 		/// <summary>

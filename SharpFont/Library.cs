@@ -49,6 +49,7 @@ namespace SharpFont
 
 		private List<Face> childFaces;
 		private List<Glyph> childGlyphs;
+		private List<Outline> childOutlines;
 
 		#endregion
 
@@ -58,6 +59,7 @@ namespace SharpFont
 		{
 			childFaces = new List<Face>();
 			childGlyphs = new List<Glyph>();
+			childOutlines = new List<Outline>();
 
 			if (duplicate)
 				FT.ReferenceLibrary(this);
@@ -385,6 +387,11 @@ namespace SharpFont
 			childGlyphs.Add(child);
 		}
 
+		internal void AddChildOutline(Outline child)
+		{
+			childOutlines.Add(child);
+		}
+
 		#endregion
 
 		#region IDisposable Members
@@ -410,6 +417,9 @@ namespace SharpFont
 
 				foreach (Glyph g in childGlyphs)
 					g.Dispose();
+
+				foreach (Outline o in childOutlines)
+					o.Dispose();
 
 				childFaces.Clear();
 				childGlyphs.Clear();

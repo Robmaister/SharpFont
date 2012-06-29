@@ -55,6 +55,67 @@ namespace SharpFont
 
 		#region Constructors
 
+		private Face()
+		{
+			childSizes = new List<FTSize>();
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Face"/> class with a default faceIndex of 0.
+		/// </summary>
+		/// <param name="library">The parent library.</param>
+		/// <param name="path">The path of the font file.</param>
+		public Face(Library library, string path)
+			: this(library, path, 0)
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Face"/> class.
+		/// </summary>
+		/// <param name="library">The parent library.</param>
+		/// <param name="path">The path of the font file.</param>
+		/// <param name="faceIndex">The index of the face to take from the file.</param>
+		public Face(Library library, string path, int faceIndex)
+			: this()
+		{
+			IntPtr reference;
+			Error err = FT.FT_New_Face(library.Reference, path, faceIndex, out reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			Reference = reference;
+			parentLibrary = library;
+			parentLibrary.AddChildFace(this);
+		}
+
+		//TODO make an overload with a FileStream instead of a byte[]
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Face"/> class from a file that's already loaded into memory.
+		/// </summary>
+		/// <param name="library">The parent library.</param>
+		/// <param name="file">The loaded file.</param>
+		/// <param name="faceIndex">The index of the face to take from the file.</param>
+		public unsafe Face(Library library, byte[] file, int faceIndex)
+			: this()
+		{
+			fixed (byte* ptr = file)
+			{
+				IntPtr reference;
+				Error err = FT.FT_New_Memory_Face(library.Reference, (IntPtr)ptr, file.Length, faceIndex, out reference);
+
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+
+				Reference = reference;
+			}
+
+			parentLibrary = library;
+			parentLibrary.AddChildFace(this);
+		}
+
 		/// <summary>
 		/// Initializes a new instance of the Face class.
 		/// </summary>
@@ -63,6 +124,7 @@ namespace SharpFont
 		/// </param>
 		/// <param name="parent">The parent <see cref="Library"/>.</param>
 		internal Face(IntPtr reference, Library parent)
+			: this()
 		{
 			Reference = reference;
 
@@ -75,8 +137,6 @@ namespace SharpFont
 			{
 				duplicate = true;
 			}
-
-			childSizes = new List<FTSize>();
 		}
 
 		/// <summary>

@@ -36,41 +36,71 @@ namespace SharpFont
 	/// as given with <see cref="OutlineFlags.IgnoreDropouts"/>, <see cref="OutlineFlags.SmartDropouts"/>, and
 	/// <see cref="OutlineFlags.IncludeStubs"/> in ‘flags’ is then overridden.
 	/// </remarks>
-	public sealed class Outline
+	public sealed class Outline : IDisposable
 	{
 		#region Fields
 
+		private bool disposed;
+		private bool duplicate;
+
 		private IntPtr reference;
 		private OutlineRec rec;
+
+		private Library parentLibrary;
+		private Memory parentMemory;
 
 		#endregion
 
 		#region Constructor
 
-		internal Outline(IntPtr reference)
+		[CLSCompliant(false)]
+		public Outline(Library library, uint pointsCount, int contoursCount)
+		{
+			IntPtr reference;
+			Error err = FT.FT_Outline_New(library.Reference, pointsCount, contoursCount, out reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			parentLibrary = library;
+			parentLibrary.AddChildOutline(this);
+		}
+
+		[CLSCompliant(false)]
+		public Outline(Memory memory, uint pointsCount, int contoursCount)
+		{
+			IntPtr reference;
+			Error err = FT.FT_Outline_New_Internal(memory.Reference, pointsCount, contoursCount, out reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			parentMemory = memory; //TODO Should Memory be disposable as well?
+		}
+
+		internal Outline(IntPtr reference, Library parent)
 		{
 			Reference = reference;
+
+			parentLibrary = parent;
+			parentLibrary.AddChildOutline(this);
 		}
 
 		internal Outline(OutlineRec outlineInt)
 		{
 			this.rec = outlineInt;
+
+			duplicate = true;
+		}
+
+		~Outline()
+		{
+			Dispose(false);
 		}
 
 		#endregion
 
 		#region Properties
-
-		/// <summary>
-		/// Gets the size of the Outline, in bytes.
-		/// </summary>
-		public static int SizeInBytes
-		{
-			get
-			{
-				return 8 + IntPtr.Size * 3;
-			}
-		}
 
 		/// <summary>
 		/// Gets the number of contours in the outline.
@@ -79,6 +109,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("ContoursCount", "Cannot access a disposed object.");
+
 				return rec.n_contours;
 			}
 		}
@@ -90,6 +123,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("PointsCount", "Cannot access a disposed object.");
+
 				return rec.n_points;
 			}
 		}
@@ -102,6 +138,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Points", "Cannot access a disposed object.");
+
 				int count = PointsCount;
 
 				if (count == 0)
@@ -136,6 +175,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Tags", "Cannot access a disposed object.");
+
 				int count = PointsCount;
 
 				if (count == 0)
@@ -162,6 +204,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Contours", "Cannot access a disposed object.");
+
 				int count = ContoursCount;
 
 				if (count == 0)
@@ -188,6 +233,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Flags", "Cannot access a disposed object.");
+
 				return rec.flags;
 			}
 		}
@@ -196,13 +244,176 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
+
 				return reference;
 			}
 
 			set
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
+
 				reference = value;
 				rec = PInvokeHelper.PtrToStructure<OutlineRec>(reference);
+			}
+		}
+
+		#endregion
+
+		#region Methods
+
+		public void Copy(Outline target)
+		{
+			IntPtr targetRef = target.Reference;
+			Error err = FT.FT_Outline_Copy(reference, ref targetRef);
+			target.Reference = reference;
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		public void Translate(int offsetX, int offsetY)
+		{
+			FT.FT_Outline_Translate(reference, offsetX, offsetY);
+		}
+
+		public void Transform(FTMatrix matrix)
+		{
+			FT.FT_Outline_Transform(reference, ref matrix);
+		}
+
+		public void Embolden(int strength)
+		{
+			Error err = FT.FT_Outline_Embolden(reference, strength);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		public void EmboldenXY(int strengthX, int strengthY)
+		{
+			Error err = FT.FT_Outline_EmboldenXY(reference, strengthX, strengthY);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		public void Reverse()
+		{
+			FT.FT_Outline_Reverse(reference);
+		}
+
+		public void Check()
+		{
+			Error err = FT.FT_Outline_Check(reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		public BBox GetBBox()
+		{
+			IntPtr bboxRef;
+			Error err = FT.FT_Outline_Get_BBox(reference, out bboxRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new BBox(bboxRef);
+		}
+
+		public void Decompose(OutlineFuncs funcInterface, IntPtr user)
+		{
+			//TODO cleanup/move to the outlinefuncs class
+			IntPtr funcInterfaceRef = Marshal.AllocHGlobal(OutlineFuncsRec.SizeInBytes);
+			Marshal.WriteIntPtr(funcInterfaceRef, Marshal.GetFunctionPointerForDelegate(funcInterface.MoveFunction));
+			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "line_to"), Marshal.GetFunctionPointerForDelegate(funcInterface.LineFuction));
+			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "conic_to"), Marshal.GetFunctionPointerForDelegate(funcInterface.ConicFunction));
+			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "cubic_to"), Marshal.GetFunctionPointerForDelegate(funcInterface.CubicFunction));
+
+			Marshal.WriteInt32(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "shift"), funcInterface.Shift);
+			Marshal.WriteInt32(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "delta"), funcInterface.Delta);
+
+			Error err = FT.FT_Outline_Decompose(reference, funcInterfaceRef, user);
+
+			Marshal.FreeHGlobal(funcInterfaceRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		public BBox GetCBox()
+		{
+			IntPtr cboxRef;
+			FT.FT_Outline_Get_CBox(reference, out cboxRef);
+
+			return new BBox(cboxRef);
+		}
+
+		public void GetBitmap(FTBitmap bitmap)
+		{
+			Error err = FT.FT_Outline_Get_Bitmap(parentLibrary.Reference, reference, bitmap.Reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		public void GetBitmap(Library library, FTBitmap bitmap)
+		{
+			Error err = FT.FT_Outline_Get_Bitmap(library.Reference, reference, bitmap.Reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		public void Render(RasterParams parameters)
+		{
+			Error err = FT.FT_Outline_Render(parentLibrary.Reference, reference, parameters.Reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		public void Render(Library library, RasterParams parameters)
+		{
+			Error err = FT.FT_Outline_Render(library.Reference, reference, parameters.Reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		public Orientation GetOrientation()
+		{
+			return FT.FT_Outline_Get_Orientation(reference);
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if (!disposed)
+			{
+				disposed = true;
+
+				if (!duplicate)
+				{
+					Error err;
+					if (parentLibrary != null)
+						err = FT.FT_Outline_Done(parentLibrary.Reference, reference);
+					else
+						err = FT.FT_Outline_Done_Internal(parentMemory.Reference, reference);
+
+					if (err != Error.Ok)
+						throw new FreeTypeException(err);
+				}
+
+				reference = IntPtr.Zero;
+				rec = default(OutlineRec);
 			}
 		}
 

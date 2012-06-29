@@ -395,38 +395,26 @@ namespace SharpFont
 		/// A handle to the library object from where the outline is allocated. Note however that the new outline will
 		/// not necessarily be freed, when destroying the library, by <see cref="FT.DoneFreeType"/>.
 		/// </param>
-		/// <param name="numPoints">The maximal number of points within the outline.</param>
-		/// <param name="numContours">The maximal number of contours within the outline.</param>
+		/// <param name="pointsCount">The maximal number of points within the outline.</param>
+		/// <param name="contoursCount">The maximal number of contours within the outline.</param>
 		/// <returns>A handle to the new outline.</returns>
 		[CLSCompliant(false)]
-		public static Outline OutlineNew(Library library, uint numPoints, int numContours)
+		public static Outline OutlineNew(Library library, uint pointsCount, int contoursCount)
 		{
-			IntPtr outlineRef;
-			Error err = FT_Outline_New(library.Reference, numPoints, numContours, out outlineRef);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
-
-			return new Outline(outlineRef);
+			return new Outline(library, pointsCount, contoursCount);
 		}
 
 		/// <summary>
 		/// Create a new outline of a given size.
 		/// </summary>
 		/// <param name="memory">A handle to a FreeType memory allocator.</param>
-		/// <param name="numPoints">The maximal number of points within the outline.</param>
-		/// <param name="numContours">The maximal number of contours within the outline.</param>
+		/// <param name="pointsCount">The maximal number of points within the outline.</param>
+		/// <param name="contoursCount">The maximal number of contours within the outline.</param>
 		/// <returns>A handle to the new outline.</returns>
 		[CLSCompliant(false)]
-		public static Outline OutlineNew(Memory memory, uint numPoints, int numContours)
+		public static Outline OutlineNew(Memory memory, uint pointsCount, int contoursCount)
 		{
-			IntPtr outlineRef;
-			Error err = FT_Outline_New_Internal(memory.Reference, numPoints, numContours, out outlineRef);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
-
-			return new Outline(outlineRef);
+			return new Outline(memory, pointsCount, contoursCount);
 		}
 
 		/// <summary>
@@ -441,10 +429,7 @@ namespace SharpFont
 		/// <param name="outline">A pointer to the outline object to be discarded.</param>
 		public static void OutlineDone(Library library, Outline outline)
 		{
-			Error err = FT_Outline_Done(library.Reference, outline.Reference);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
+			outline.Dispose();
 		}
 
 		/// <summary>
@@ -469,25 +454,20 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="source">A handle to the source outline.</param>
 		/// <param name="target">A handle to the target outline.</param>
-		public static void OutlineCopy(Outline source, ref Outline target)
+		public static void OutlineCopy(Outline source, Outline target)
 		{
-			IntPtr targetRef = target.Reference;
-			Error err = FT_Outline_Copy(source.Reference, ref targetRef);
-			target.Reference = targetRef;
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
+			source.Copy(target);
 		}
 
 		/// <summary>
 		/// Apply a simple translation to the points of an outline.
 		/// </summary>
 		/// <param name="outline">A pointer to the target outline descriptor.</param>
-		/// <param name="xOffset">The horizontal offset.</param>
-		/// <param name="yOffset">The vertical offset.</param>
-		public static void OutlineTranslate(Outline outline, int xOffset, int yOffset)
+		/// <param name="offsetX">The horizontal offset.</param>
+		/// <param name="offsetY">The vertical offset.</param>
+		public static void OutlineTranslate(Outline outline, int offsetX, int offsetY)
 		{
-			FT_Outline_Translate(outline.Reference, xOffset, yOffset);
+			outline.Translate(offsetX, offsetY);
 		}
 
 		/// <summary>
@@ -501,7 +481,7 @@ namespace SharpFont
 		/// <param name="matrix">A pointer to the transformation matrix.</param>
 		public static void OutlineTransform(Outline outline, FTMatrix matrix)
 		{
-			FT_Outline_Transform(outline.Reference, ref matrix);
+			outline.Transform(matrix);
 		}
 
 		/// <summary><para>
@@ -526,10 +506,23 @@ namespace SharpFont
 		/// <param name="strength">How strong the glyph is emboldened. Expressed in 26.6 pixel format.</param>
 		public static void OutlineEmbolden(Outline outline, int strength)
 		{
-			Error err = FT_Outline_Embolden(outline.Reference, strength);
+			outline.Embolden(strength);
+		}
 
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
+		/// <summary>
+		/// Embolden an outline. The new outline will be ‘xstrength’ pixels wider and ‘ystrength’ pixels higher.
+		/// Otherwise, it is similar to <see cref="OutlineEmbolden"/>, which uses the same strength in both directions.
+		/// </summary>
+		/// <param name="outline">A handle to the target outline.</param>
+		/// <param name="strengthX">
+		/// How strong the glyph is emboldened in the X direction. Expressed in 26.6 pixel format.
+		/// </param>
+		/// <param name="strengthY">
+		/// How strong the glyph is emboldened in the Y direction. Expressed in 26.6 pixel format.
+		/// </param>
+		public static void OutlineEmboldenXY(Outline outline, int strengthX, int strengthY)
+		{
+			outline.EmboldenXY(strengthX, strengthY);
 		}
 
 		/// <summary>
@@ -544,7 +537,7 @@ namespace SharpFont
 		/// <param name="outline">A pointer to the target outline descriptor.</param>
 		public static void OutlineReverse(Outline outline)
 		{
-			FT_Outline_Reverse(outline.Reference);
+			outline.Reverse();
 		}
 
 		/// <summary>
@@ -553,10 +546,7 @@ namespace SharpFont
 		/// <param name="outline">A handle to a source outline.</param>
 		public static void OutlineCheck(Outline outline)
 		{
-			Error err = FT_Outline_Check(outline.Reference);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
+			outline.Check();
 		}
 
 		/// <summary>
@@ -574,13 +564,7 @@ namespace SharpFont
 		/// <returns>The outline's exact bounding box.</returns>
 		public static BBox OutlineGetBBox(Outline outline)
 		{
-			IntPtr bboxRef;
-			Error err = FT_Outline_Get_BBox(outline.Reference, out bboxRef);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
-
-			return new BBox(bboxRef);
+			return outline.GetBBox();
 		}
 
 		/// <summary>
@@ -597,22 +581,7 @@ namespace SharpFont
 		/// </param>
 		public static void OutlineDecompose(Outline outline, OutlineFuncs funcInterface, IntPtr user)
 		{
-			//TODO cleanup/move to the outlinefuncs class?
-			IntPtr funcInterfaceRef = Marshal.AllocHGlobal(OutlineFuncsRec.SizeInBytes);
-			Marshal.WriteIntPtr(funcInterfaceRef, Marshal.GetFunctionPointerForDelegate(funcInterface.MoveFunction));
-			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "line_to"), Marshal.GetFunctionPointerForDelegate(funcInterface.LineFuction));
-			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "conic_to"), Marshal.GetFunctionPointerForDelegate(funcInterface.ConicFunction));
-			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "cubic_to"), Marshal.GetFunctionPointerForDelegate(funcInterface.CubicFunction));
-
-			Marshal.WriteInt32(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "shift"), funcInterface.Shift);
-			Marshal.WriteInt32(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "delta"), funcInterface.Delta);
-
-			Error err = FT_Outline_Decompose(outline.Reference, funcInterfaceRef, user);
-
-			Marshal.FreeHGlobal(funcInterfaceRef);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
+			outline.Decompose(funcInterface, user);
 		}
 
 		/// <summary><para>
@@ -629,11 +598,7 @@ namespace SharpFont
 		/// <returns>The outline's control box.</returns>
 		public static BBox OutlineGetCBox(Outline outline)
 		{
-			IntPtr cboxRef;
-
-			FT_Outline_Get_CBox(outline.Reference, out cboxRef);
-
-			return new BBox(cboxRef);
+			return outline.GetCBox();
 		}
 
 		/// <summary>
@@ -653,10 +618,7 @@ namespace SharpFont
 		/// <param name="bitmap">A pointer to the target bitmap descriptor.</param>
 		public static void OutlineGetBitmap(Library library, Outline outline, FTBitmap bitmap)
 		{
-			Error err = FT_Outline_Get_Bitmap(library.Reference, outline.Reference, bitmap.Reference);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
+			outline.GetBitmap(library, bitmap);
 		}
 
 		/// <summary>
@@ -676,15 +638,12 @@ namespace SharpFont
 		/// </para></remarks>
 		/// <param name="library">A handle to a FreeType library object.</param>
 		/// <param name="outline">A pointer to the source outline descriptor.</param>
-		/// <param name="params">
+		/// <param name="parameters">
 		/// A pointer to an <see cref="RasterParams"/> structure used to describe the rendering operation.
 		/// </param>
-		public static void OutlineRender(Library library, Outline outline, RasterParams @params)
+		public static void OutlineRender(Library library, Outline outline, RasterParams parameters)
 		{
-			Error err = FT_Outline_Render(library.Reference, outline.Reference, @params.Reference);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
+			outline.Render(library, parameters);
 		}
 
 		/// <summary><para>
@@ -698,7 +657,7 @@ namespace SharpFont
 		/// <returns>The orientation.</returns>
 		public static Orientation OutlineGetOrientation(Outline outline)
 		{
-			return FT_Outline_Get_Orientation(outline.Reference);
+			return outline.GetOrientation();
 		}
 
 		#endregion

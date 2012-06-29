@@ -431,24 +431,15 @@ namespace SharpFont
 		/// This function calls <see cref="OpenFace"/> to open a font by its pathname.
 		/// </summary>
 		/// <param name="library">A handle to the library resource.</param>
-		/// <param name="filepathname">A path to the font file.</param>
+		/// <param name="path">A path to the font file.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
 		/// <returns>
 		/// A handle to a new face object. If ‘faceIndex’ is greater than or equal to zero, it must be non-NULL.
 		/// </returns>
 		/// <see cref="OpenFace"/>
-		public static Face NewFace(Library library, string filepathname, int faceIndex)
+		public static Face NewFace(Library library, string path, int faceIndex)
 		{
-			if (library.IsDisposed)
-				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
-
-			IntPtr faceRef;
-			Error err = FT_New_Face(library.Reference, filepathname, faceIndex, out faceRef);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
-
-			return new Face(faceRef, library);
+			return new Face(library, path, faceIndex);
 		}
 
 		/// <summary>
@@ -458,28 +449,15 @@ namespace SharpFont
 		/// You must not deallocate the memory before calling <see cref="DoneFace"/>.
 		/// </remarks>
 		/// <param name="library">A handle to the library resource</param>
-		/// <param name="fileBase">A pointer to the beginning of the font data.</param>
+		/// <param name="file">A pointer to the beginning of the font data.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
 		/// <returns>
 		/// A handle to a new face object. If ‘faceIndex’ is greater than or equal to zero, it must be non-NULL.
 		/// </returns>
 		/// <see cref="OpenFace"/>
-		public static unsafe Face NewMemoryFace(Library library, byte[] fileBase, int faceIndex)
+		public static unsafe Face NewMemoryFace(Library library, byte[] file, int faceIndex)
 		{
-			if (library.IsDisposed)
-				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
-
-			fixed (byte* ptr = fileBase)
-			{
-				IntPtr faceRef;
-
-				Error err = FT_New_Memory_Face(library.Reference, new IntPtr(ptr), fileBase.Length, faceIndex, out faceRef);
-
-				if (err != Error.Ok)
-					throw new FreeTypeException(err);
-
-				return new Face(faceRef, library);
-			}
+			return new Face(library, file, faceIndex);
 		}
 
 		/// <summary>
@@ -1580,17 +1558,7 @@ namespace SharpFont
 		/// <returns>A handle to a new size object.</returns>
 		public static FTSize NewSize(Face face)
 		{
-			if (face.IsDisposed)
-				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
-
-			IntPtr sizeRef;
-
-			Error err = FT_New_Size(face.Reference, out sizeRef);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
-
-			return new FTSize(sizeRef, true, face);
+			return new FTSize(face);
 		}
 
 		/// <summary>
@@ -1617,13 +1585,7 @@ namespace SharpFont
 		/// <param name="size">A handle to a target size object.</param>
 		public static void ActivateSize(FTSize size)
 		{
-			if (size.IsDisposed)
-				throw new ObjectDisposedException("size", "Cannot access a disposed object.");
-
-			Error err = FT_Activate_Size(size.Reference);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
+			size.Activate();
 		}
 
 		#endregion

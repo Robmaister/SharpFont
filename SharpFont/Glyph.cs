@@ -155,12 +155,22 @@ namespace SharpFont
 
 		/// <summary>
 		/// A function used to copy a glyph image. Note that the created <see cref="Glyph"/> object must be released
-		/// with <see cref="FT.DoneGlyph"/>.
+		/// with <see cref="DoneGlyph"/>.
 		/// </summary>
 		/// <returns>A handle to the target glyph object. 0 in case of error.</returns>
 		public Glyph Copy()
 		{
-			return FT.GlyphCopy(this);
+			if (disposed)
+				throw new ObjectDisposedException("source", "Cannot access a disposed object.");
+
+			IntPtr glyphRef;
+
+			Error err = FT.FT_Glyph_Copy(Reference, out glyphRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Glyph(glyphRef, Library);
 		}
 
 		/// <summary>
@@ -172,7 +182,13 @@ namespace SharpFont
 		/// </param>
 		public void Transform(FTMatrix matrix, FTVector delta)
 		{
-			FT.GlyphTransform(this, matrix, delta);
+			if (disposed)
+				throw new ObjectDisposedException("glyph", "Cannot access a disposed object.");
+
+			Error err = FT.FT_Glyph_Transform(Reference, ref matrix, ref delta);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
 		}
 
 		/// <summary><para>
@@ -184,7 +200,40 @@ namespace SharpFont
 		/// to walk over all segments and arcs in the outline. To get the latter, you can use the ‘ftbbox’ component
 		/// which is dedicated to this single task.
 		/// </para></summary>
-		/// <remarks>See <see cref="FT.GlyphGetCBox"/>.</remarks>
+		/// <remarks><para>
+		/// Coordinates are relative to the glyph origin, using the y upwards convention.
+		/// </para><para>
+		/// If the glyph has been loaded with <see cref="LoadFlags.NoScale"/>, ‘bbox_mode’ must be set to
+		/// <see cref="GlyphBBoxMode.Unscaled"/> to get unscaled font units in 26.6 pixel format. The value
+		/// <see cref="GlyphBBoxMode.Subpixels"/> is another name for this constant.
+		/// </para><para>
+		/// If the font is tricky and the glyph has been loaded with <see cref="LoadFlags.NoScale"/>, the resulting
+		/// CBox is meaningless. To get reasonable values for the CBox it is necessary to load the glyph at a large
+		/// ppem value (so that the hinting instructions can properly shift and scale the subglyphs), then extracting
+		/// the CBox which can be eventually converted back to font units.
+		/// </para><para>
+		/// Note that the maximum coordinates are exclusive, which means that one can compute the width and height of
+		/// the glyph image (be it in integer or 26.6 pixels) as:
+		/// </para><para>
+		/// <code>
+		/// width  = bbox.xMax - bbox.xMin;
+		/// height = bbox.yMax - bbox.yMin;
+		/// </code>
+		/// </para><para>
+		/// Note also that for 26.6 coordinates, if ‘bbox_mode’ is set to <see cref="GlyphBBoxMode.Gridfit"/>, the
+		/// coordinates will also be grid-fitted, which corresponds to:
+		/// </para><para>
+		/// <code>
+		/// bbox.xMin = FLOOR(bbox.xMin);
+		/// bbox.yMin = FLOOR(bbox.yMin);
+		/// bbox.xMax = CEILING(bbox.xMax);
+		/// bbox.yMax = CEILING(bbox.yMax);
+		/// </code>
+		/// </para><para>
+		/// To get the bbox in pixel coordinates, set ‘bbox_mode’ to <see cref="GlyphBBoxMode.Truncate"/>.
+		/// </para><para>
+		/// To get the bbox in grid-fitted pixel coordinates, set ‘bbox_mode’ to <see cref="GlyphBBoxMode.Pixels"/>.
+		/// </para></remarks>
 		/// <param name="mode">The mode which indicates how to interpret the returned bounding box values.</param>
 		/// <returns>
 		/// The glyph coordinate bounding box. Coordinates are expressed in 1/64th of pixels if it is grid-fitted.
@@ -192,7 +241,51 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public BBox GetCBox(GlyphBBoxMode mode)
 		{
-			return FT.GlyphGetCBox(this, mode);
+			if (disposed)
+				throw new ObjectDisposedException("glyph", "Cannot access a disposed object.");
+
+			IntPtr cboxRef;
+			FT.FT_Glyph_Get_CBox(Reference, mode, out cboxRef);
+
+			return new BBox(cboxRef);
+		}
+
+		/// <summary>
+		/// Convert a given glyph object to a bitmap glyph object.
+		/// </summary>
+		/// <remarks><para>
+		/// This function does nothing if the glyph format isn't scalable.
+		/// </para><para>
+		/// The glyph image is translated with the ‘origin’ vector before rendering.
+		/// </para><para>
+		/// The first parameter is a pointer to an <see cref="Glyph"/> handle, that will be replaced by this function
+		/// (with newly allocated data). Typically, you would use (omitting error handling):
+		/// </para><para>
+		/// --sample code ommitted--
+		/// </para></remarks>
+		/// <param name="glyph">A pointer to a handle to the target glyph.</param>
+		/// <param name="renderMode">An enumeration that describes how the data is rendered.</param>
+		/// <param name="origin">
+		/// A pointer to a vector used to translate the glyph image before rendering. Can be 0 (if no translation). The
+		/// origin is expressed in 26.6 pixels.
+		/// </param>
+		/// <param name="destroy">
+		/// A boolean that indicates that the original glyph image should be destroyed by this function. It is never
+		/// destroyed in case of error.
+		/// </param>
+		public void ToBitmap(RenderMode renderMode, FTVector origin, bool destroy)
+		{
+			if (disposed)
+				throw new ObjectDisposedException("glyph", "Cannot access a disposed object.");
+
+			IntPtr glyphRef = Reference;
+
+			Error err = FT.FT_Glyph_To_Bitmap(ref glyphRef, renderMode, ref origin, destroy);
+
+			Reference = glyphRef;
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
 		}
 
 		/// <summary>

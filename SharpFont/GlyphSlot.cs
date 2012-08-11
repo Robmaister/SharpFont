@@ -33,12 +33,11 @@ namespace SharpFont
 	/// they in outline or bitmap format.
 	/// </summary>
 	/// <remarks><para>
-	/// If <see cref="FT.LoadGlyph"/> is called with default flags (see <see cref="LoadFlags.Default"/>) the glyph
-	/// image is loaded in the glyph slot in its native format (e.g., an outline glyph for TrueType and Type 1
-	/// formats).
+	/// If <see cref="LoadGlyph"/> is called with default flags (see <see cref="LoadFlags.Default"/>) the glyph image
+	/// is loaded in the glyph slot in its native format (e.g., an outline glyph for TrueType and Type 1 formats).
 	/// </para><para>
-	/// This image can later be converted into a bitmap by calling <see cref="FT.RenderGlyph"/>. This function finds
-	/// the current renderer for the native image's format, then invokes it.
+	/// This image can later be converted into a bitmap by calling <see cref="RenderGlyph"/>. This function finds the
+	/// current renderer for the native image's format, then invokes it.
 	/// </para><para>
 	/// The renderer is in charge of transforming the native image through the slot's face transformation fields, then
 	/// converting it into a bitmap that is returned in ‘slot->bitmap’.
@@ -145,7 +144,7 @@ namespace SharpFont
 
 		/// <summary><para>
 		/// Gets the metrics of the last loaded glyph in the slot. The returned values depend on the last load flags
-		/// (see the <see cref="FT.LoadGlyph"/> API function) and can be expressed either in 26.6 fractional pixels or
+		/// (see the <see cref="LoadGlyph"/> API function) and can be expressed either in 26.6 fractional pixels or
 		/// font units.
 		/// </para><para>
 		/// Note that even when the glyph image is transformed, the metrics are not.
@@ -213,7 +212,7 @@ namespace SharpFont
 
 		/// <summary>
 		/// This field is used as a bitmap descriptor when the slot format is <see cref="GlyphFormat.Bitmap"/>. Note
-		/// that the address and content of the bitmap buffer can change between calls of <see cref="FT.LoadGlyph"/>
+		/// that the address and content of the bitmap buffer can change between calls of <see cref="LoadGlyph"/>
 		/// and a few other functions.
 		/// </summary>
 		public FTBitmap Bitmap
@@ -378,44 +377,57 @@ namespace SharpFont
 		#region Public Methods
 
 		/// <summary>
-		/// Convert a given glyph image to a bitmap. It does so by inspecting
-		/// the glyph image format, finding the relevant renderer, and invoking
-		/// it.
+		/// Convert a given glyph image to a bitmap. It does so by inspecting the glyph image format, finding the
+		/// relevant renderer, and invoking it.
 		/// </summary>
 		/// <param name="mode">This is the render mode used to render the glyph image into a bitmap.</param>
 		public void RenderGlyph(RenderMode mode)
 		{
-			FT.RenderGlyph(this, mode);
+			Error err = FT.FT_Render_Glyph(Reference, mode);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
 		}
 
 		/// <summary>
-		/// Gets a description of a given subglyph. Only use it if ‘glyph->format’ is
+		/// Retrieve a description of a given subglyph. Only use it if <see cref="GlyphSlot.Format"/> is
 		/// <see cref="GlyphFormat.Composite"/>; an error is returned otherwise.
 		/// </summary>
 		/// <remarks>
 		/// The values of ‘*p_arg1’, ‘*p_arg2’, and ‘*p_transform’ must be interpreted depending on the flags returned
 		/// in ‘*p_flags’. See the TrueType specification for details.
 		/// </remarks>
-		/// <param name="subIndex">The index of the subglyph. Must be less than ‘glyph->num_subglyphs’.</param>
+		/// <param name="subIndex">
+		/// The index of the subglyph. Must be less than <see cref="GlyphSlot.SubglyphsCount"/>.
+		/// </param>
 		/// <param name="index">The glyph index of the subglyph.</param>
-		/// <param name="flags">The subglyph flags, see FT_SUBGLYPH_FLAG_XXX.</param>
+		/// <param name="flags">The subglyph flags, see <see cref="SubGlyphFlags"/>.</param>
 		/// <param name="arg1">The subglyph's first argument (if any).</param>
 		/// <param name="arg2">The subglyph's second argument (if any).</param>
 		/// <param name="transform">The subglyph transformation (if any).</param>
 		[CLSCompliant(false)]
 		public void GetSubGlyphInfo(uint subIndex, out int index, out SubGlyphFlags flags, out int arg1, out int arg2, out FTMatrix transform)
 		{
-			FT.GetSubGlyphInfo(this, subIndex, out index, out flags, out arg1, out arg2, out transform);
+			Error err = FT.FT_Get_SubGlyph_Info(Reference, subIndex, out index, out flags, out arg1, out arg2, out transform);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
 		}
 
 		/// <summary>
 		/// A function used to extract a glyph image from a slot. Note that the created <see cref="Glyph"/> object must
-		/// be released with <see cref="FT.DoneGlyph"/>.
+		/// be released with <see cref="DoneGlyph"/>.
 		/// </summary>
 		/// <returns>A handle to the glyph object.</returns>
 		public Glyph GetGlyph()
 		{
-			return FT.GetGlyph(this);
+			IntPtr glyphRef;
+			Error err = FT.FT_Get_Glyph(Reference, out glyphRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Glyph(glyphRef, Library);
 		}
 
 		#endregion

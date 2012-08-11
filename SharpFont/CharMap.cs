@@ -67,8 +67,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets an <see cref="Encoding"/> tag identifying the charmap. Use
-		/// this with <see cref="FT.SelectCharmap"/>.
+		/// Gets an <see cref="Encoding"/> tag identifying the charmap. Use this with <see cref="FT.SelectCharmap"/>.
 		/// </summary>
 		[CLSCompliant(false)]
 		public Encoding Encoding
@@ -80,9 +79,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets an ID number describing the platform for the following
-		/// encoding ID. This comes directly from the TrueType specification
-		/// and should be emulated for other formats.
+		/// Gets an ID number describing the platform for the following encoding ID. This comes directly from the
+		/// TrueType specification and should be emulated for other formats.
 		/// </summary>
 		[CLSCompliant(false)]
 		public PlatformID PlatformID
@@ -94,8 +92,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets a platform specific encoding number. This also comes from the
-		/// TrueType specification and should be emulated similarly.
+		/// Gets a platform specific encoding number. This also comes from the TrueType specification and should be
+		/// emulated similarly.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort EncodingID
@@ -128,13 +126,10 @@ namespace SharpFont
 		/// <summary>
 		/// Retrieve index of a given charmap.
 		/// </summary>
-		/// <returns>
-		/// The index into the array of character maps within the face to which
-		/// ‘charmap’ belongs.
-		/// </returns>
+		/// <returns>The index into the array of character maps within the face to which ‘charmap’ belongs.</returns>
 		public int GetCharmapIndex()
 		{
-			return FT.GetCharmapIndex(this);
+			return FT.FT_Get_Charmap_Index(Reference);
 		}
 
 		#endregion

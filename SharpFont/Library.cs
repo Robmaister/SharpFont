@@ -71,8 +71,6 @@ namespace SharpFont
 		public Library()
 			: this(false)
 		{
-			//duplicate the error checking code from FT.InitFreeType, it's the
-			//simplest way to create a new Library without making copies.
 			IntPtr libraryRef;
 			Error err = FT.FT_Init_FreeType(out libraryRef);
 
@@ -131,7 +129,6 @@ namespace SharpFont
 		/// <summary>
 		/// Return the version of the FreeType library being used.
 		/// </summary>
-		/// <remarks>See <see cref="FT.LibraryVersion"/>.</remarks>
 		public Version Version
 		{
 			get
@@ -140,7 +137,7 @@ namespace SharpFont
 					throw new ObjectDisposedException("Version", "Cannot access a disposed object.");
 
 				int major, minor, patch;
-				FT.LibraryVersion(this, out major, out minor, out patch);
+				FT.FT_Library_Version(Reference, out major, out minor, out patch);
 				return new Version(major, minor, patch);
 			}
 		}
@@ -169,87 +166,154 @@ namespace SharpFont
 		#region Public Methods
 
 		/// <summary>
-		/// This function calls <see cref="OpenFace"/> to open a font by its 
-		/// pathname.
+		/// This function calls <see cref="OpenFace"/> to open a font by its pathname.
 		/// </summary>
 		/// <param name="path">A path to the font file.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
 		/// <returns>
-		/// A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.
+		/// A handle to a new face object. If ‘faceIndex’ is greater than or equal to zero, it must be non-NULL.
 		/// </returns>
 		/// <see cref="OpenFace"/>
 		public Face NewFace(string path, int faceIndex)
 		{
-			return FT.NewFace(this, path, faceIndex);
+			return new Face(this, path, faceIndex);
 		}
 
 		/// <summary>
-		/// This function calls <see cref="OpenFace"/> to open a font which has
-		/// been loaded into memory.
+		/// This function calls <see cref="OpenFace"/> to open a font which has been loaded into memory.
 		/// </summary>
-		/// <remarks>See <see cref="FT.NewMemoryFace"/>.</remarks>
+		/// <remarks>
+		/// You must not deallocate the memory before calling <see cref="Face.Dispose()"/>.
+		/// </remarks>
 		/// <param name="file">A pointer to the beginning of the font data.</param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
 		/// <returns>
-		/// A handle to a new face object. If faceIndex is greater than or equal to zero, it must be non-NULL.
+		/// A handle to a new face object. If ‘faceIndex’ is greater than or equal to zero, it must be non-NULL.
 		/// </returns>
 		/// <see cref="OpenFace"/>
 		public Face NewMemoryFace(byte[] file, int faceIndex)
 		{
-			return FT.NewMemoryFace(this, file, faceIndex);
+			return new Face(this, file, faceIndex);
 		}
 
 		/// <summary>
-		/// Create a <see cref="Face"/> object from a given resource described
-		/// by <see cref="OpenArgs"/>.
+		/// Create a <see cref="Face"/> object from a given resource described by <see cref="OpenArgs"/>.
 		/// </summary>
-		/// <remarks>See <see cref="FT.OpenFace"/>.</remarks>
+		/// <remarks><para>
+		/// Unlike FreeType 1.x, this function automatically creates a glyph slot for the face object which can be
+		/// accessed directly through <see cref="Face.Glyph"/>.
+		/// </para><para>
+		/// OpenFace can be used to quickly check whether the font format of a given font resource is supported by
+		/// FreeType. If the ‘faceIndex’ field is negative, the function's return value is 0 if the font format is
+		/// recognized, or non-zero otherwise; the function returns a more or less empty face handle in ‘*aface’ (if
+		/// ‘aface’ isn't NULL). The only useful field in this special case is <see cref="Face.FaceCount"/> which gives
+		/// the number of faces within the font file. After examination, the returned <see cref="Face"/> structure
+		/// should be deallocated with a call to <see cref="Face.Dispose()"/>.
+		/// </para><para>
+		/// Each new face object created with this function also owns a default <see cref="FTSize"/> object, accessible
+		/// as <see cref="Face.Size"/>.
+		/// </para><para>
+		/// See the discussion of reference counters in the description of <see cref="FT.ReferenceFace"/>.
+		/// </para></remarks>
 		/// <param name="args">
 		/// A pointer to an <see cref="OpenArgs"/> structure which must be filled by the caller.
 		/// </param>
 		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
 		/// <returns>
-		/// A handle to a new face object. If ‘face_index’ is greater than or equal to zero, it must be non-NULL.
+		/// A handle to a new face object. If ‘faceIndex’ is greater than or equal to zero, it must be non-NULL.
 		/// </returns>
 		public Face OpenFace(OpenArgs args, int faceIndex)
 		{
-			return FT.OpenFace(this, args, faceIndex);
+			if (disposed)
+				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
+
+			IntPtr faceRef;
+
+			Error err = FT.FT_Open_Face(Reference, args.Reference, faceIndex, out faceRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Face(faceRef, this);
 		}
 
 		/// <summary>
 		/// Create a new face object from a FOND resource.
 		/// </summary>
-		/// <remarks>See <see cref="FT.NewFaceFromFOND"/>.</remarks>
+		/// <remarks>
+		/// This function can be used to create <see cref="Face"/> objects from fonts that are installed in the system
+		/// as follows.
+		/// <code>
+		/// fond = GetResource( 'FOND', fontName );
+		/// error = FT_New_Face_From_FOND( library, fond, 0, &amp;face );
+		/// </code>
+		/// </remarks>
 		/// <param name="fond">A FOND resource.</param>
 		/// <param name="faceIndex">Only supported for the -1 ‘sanity check’ special case.</param>
 		/// <returns>A handle to a new face object.</returns>
 		public Face NewFaceFromFOND(IntPtr fond, int faceIndex)
 		{
-			return FT.NewFaceFromFOND(this, fond, faceIndex);
+			if (disposed)
+				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
+
+			IntPtr faceRef;
+
+			Error err = FT.FT_New_Face_From_FOND(Reference, fond, faceIndex, out faceRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Face(faceRef, this);
 		}
 
 		/// <summary>
 		/// Create a new face object from a given resource and typeface index using an FSSpec to the font file.
 		/// </summary>
-		/// <remarks>See <see cref="FT.NewFaceFromFSSpec"/>.</remarks>
+		/// <remarks>
+		/// <see cref="NewFaceFromFSSpec"/> is identical to <see cref="NewFace"/> except it accepts an FSSpec instead
+		/// of a path.
+		/// </remarks>
 		/// <param name="spec">FSSpec to the font file.</param>
 		/// <param name="faceIndex">The index of the face within the resource. The first face has index 0.</param>
 		/// <returns>A handle to a new face object.</returns>
 		public Face NewFaceFromFSSpec(IntPtr spec, int faceIndex)
 		{
-			return FT.NewFaceFromFSSpec(this, spec, faceIndex);
+			if (disposed)
+				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
+
+			IntPtr faceRef;
+
+			Error err = FT.FT_New_Face_From_FSSpec(Reference, spec, faceIndex, out faceRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Face(faceRef, this);
 		}
 
 		/// <summary>
 		/// Create a new face object from a given resource and typeface index using an FSRef to the font file.
 		/// </summary>
-		/// <remarks>See <see cref="FT.NewFaceFromFSRef"/>.</remarks>
+		/// <remarks>
+		/// <see cref="NewFaceFromFSRef"/> is identical to <see cref="NewFace"/> except it accepts an FSRef instead of
+		/// a path.
+		/// </remarks>
 		/// <param name="ref">FSRef to the font file.</param>
 		/// <param name="faceIndex">The index of the face within the resource. The first face has index 0.</param>
 		/// <returns>A handle to a new face object.</returns>
 		public Face NewFaceFromFSRef(IntPtr @ref, int faceIndex)
 		{
-			return FT.NewFaceFromFSRef(this, @ref, faceIndex);
+			if (disposed)
+				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
+
+			IntPtr faceRef;
+
+			Error err = FT.FT_New_Face_From_FSRef(Reference, @ref, faceIndex, out faceRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Face(faceRef, this);
 		}
 
 		/// <summary>

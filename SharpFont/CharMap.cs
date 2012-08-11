@@ -67,7 +67,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets an <see cref="Encoding"/> tag identifying the charmap. Use this with <see cref="FT.SelectCharmap"/>.
+		/// Gets an <see cref="Encoding"/> tag identifying the charmap. Use this with <see cref="SelectCharmap"/>.
 		/// </summary>
 		[CLSCompliant(false)]
 		public Encoding Encoding
@@ -121,7 +121,9 @@ namespace SharpFont
 
 		#endregion
 
-		#region Public Methods
+		#region Methods
+
+		#region Base Interface
 
 		/// <summary>
 		/// Retrieve index of a given charmap.
@@ -131,6 +133,35 @@ namespace SharpFont
 		{
 			return FT.FT_Get_Charmap_Index(Reference);
 		}
+
+		#endregion
+
+		#region TrueType Tables
+
+		/// <summary>
+		/// Return TrueType/sfnt specific cmap language ID. Definitions of language ID values are in
+		/// ‘freetype/ttnameid.h’.
+		/// </summary>
+		/// <returns>
+		/// The language ID of ‘charmap’. If ‘charmap’ doesn't belong to a TrueType/sfnt face, just return 0 as the
+		/// default value.
+		/// </returns>
+		[CLSCompliant(false)]
+		public uint GetCMapLanguageID()
+		{
+			return FT.FT_Get_CMap_Language_ID(Reference);
+		}
+
+		/// <summary>
+		/// Return TrueType/sfnt specific cmap format.
+		/// </summary>
+		/// <returns>The format of ‘charmap’. If ‘charmap’ doesn't belong to a TrueType/sfnt face, return -1.</returns>
+		public int GetCMapFormat()
+		{
+			return FT.FT_Get_CMap_Format(Reference);
+		}
+
+		#endregion
 
 		#endregion
 	}

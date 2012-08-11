@@ -27,6 +27,10 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
+using SharpFont.MultipleMasters;
+using SharpFont.TrueType;
+using SharpFont.PostScript;
+using SharpFont.BDF;
 
 namespace SharpFont
 {
@@ -580,128 +584,83 @@ namespace SharpFont
 			}
 		}
 
-		#endregion
-
-		#region Public Methods
-
-		#region FaceFlags flag checks
-
 		/// <summary>
-		/// A macro that returns true whenever a face object contains horizontal metrics (this is true for all font
+		/// Gets a value indicating whether a face object contains horizontal metrics (this is true for all font
 		/// formats though).
 		/// </summary>
-		/// <returns>
-		/// True if the face has the horizontal flag set, false otherwise.
-		/// </returns>
-		public bool HasHoriziontal()
-		{
-			return (FaceFlags & FaceFlags.Horizontal) == FaceFlags.Horizontal;
-		}
+		public bool HasHoriziontal { get { return (FaceFlags & FaceFlags.Horizontal) == FaceFlags.Horizontal; } }
 
 		/// <summary>
-		/// A macro that returns true whenever a face object contains vertical metrics.
+		/// Gets a value indicating whether a face object contains vertical metrics.
 		/// </summary>
-		/// <returns>True if the face has the vertical flag set, false otherwise.</returns>
-		public bool HasVertical()
-		{
-			return (FaceFlags & FaceFlags.Vertical) == FaceFlags.Vertical;
-		}
+		public bool HasVertical { get { return (FaceFlags & FaceFlags.Vertical) == FaceFlags.Vertical; } }
 
 		/// <summary>
-		/// A macro that returns true whenever a face object contains kerning data that can be accessed with
+		/// Gets a value indicating whether a face object contains kerning data that can be accessed with
 		/// <see cref="GetKerning"/>.
 		/// </summary>
-		/// <returns>True if the face has the kerning flag set, false otherwise.</returns>
 		public bool HasKerning()
 		{
 			return (FaceFlags & FaceFlags.Kerning) == FaceFlags.Kerning;
 		}
 
 		/// <summary>
-		/// A macro that returns true whenever a face object contains a scalable font face (true for TrueType, Type 1,
+		/// Gets a value indicating whether a face object contains a scalable font face (true for TrueType, Type 1,
 		/// Type 42, CID, OpenType/CFF, and PFR font formats.
 		/// </summary>
-		/// <returns>True if the face has the scalable flag set, false otherwise.</returns>
-		public bool IsScalable()
-		{
-			return (FaceFlags & FaceFlags.Scalable) == FaceFlags.Scalable;
-		}
+		public bool IsScalable { get { return (FaceFlags & FaceFlags.Scalable) == FaceFlags.Scalable; } }
 
 		/// <summary><para>
-		/// A macro that returns true whenever a face object contains a font whose format is based on the SFNT storage
+		/// Gets a value indicating whether a face object contains a font whose format is based on the SFNT storage
 		/// scheme. This usually means: TrueType fonts, OpenType fonts, as well as SFNT-based embedded bitmap fonts.
 		/// </para><para>
 		/// If this macro is true, all functions defined in FT_SFNT_NAMES_H and FT_TRUETYPE_TABLES_H are available.
 		/// </para></summary>
-		/// <returns>True if the face has the SFNT flag set, false otherwise.</returns>
-		public bool IsSFNT()
-		{
-			return (FaceFlags & FaceFlags.SFNT) == FaceFlags.SFNT;
-		}
+		public bool IsSfnt { get { return (FaceFlags & FaceFlags.Sfnt) == FaceFlags.Sfnt; } }
 
 		/// <summary>
-		/// A macro that returns true whenever a face object contains a font face that contains fixed-width (or
+		/// Gets a value indicating whether a face object contains a font face that contains fixed-width (or
 		/// ‘monospace’, ‘fixed-pitch’, etc.) glyphs.
 		/// </summary>
-		/// <returns>True if the face has the fixed width flag set, false otherwise.</returns>
-		public bool IsFixedWidth()
-		{
-			return (FaceFlags & FaceFlags.FixedWidth) == FaceFlags.FixedWidth;
-		}
+		public bool IsFixedWidth { get { return (FaceFlags & FaceFlags.FixedWidth) == FaceFlags.FixedWidth; } }
 
 		/// <summary>
-		/// A macro that returns true whenever a face object contains some embedded bitmaps.
+		/// Gets a value indicating whether a face object contains some embedded bitmaps.
 		/// </summary>
-		/// <returns>True if the face has the fixed sizes flag set, false otherwise.</returns>
 		/// <see cref="Face.AvailableSizes"/>
-		public bool HasFixedSizes()
-		{
-			return (FaceFlags & FaceFlags.FixedSizes) == FaceFlags.FixedSizes;
-		}
+		public bool HasFixedSizes { get { return (FaceFlags & FaceFlags.FixedSizes) == FaceFlags.FixedSizes; } }
 
 		/// <summary>
-		/// A macro that returns true whenever a face object contains some glyph names that can be accessed through 
+		/// Gets a value indicating whether a face object contains some glyph names that can be accessed through 
 		/// <see cref="GetGlyphName(uint, int)"/>.
 		/// </summary>
-		/// <returns>True if the face has the glyph names flag set, false otherwise.</returns>
-		public bool HasGlyphNames()
-		{
-			return (FaceFlags & FaceFlags.GlyphNames) == FaceFlags.GlyphNames;
-		}
+		public bool HasGlyphNames { get { return (FaceFlags & FaceFlags.GlyphNames) == FaceFlags.GlyphNames; } }
 
 		/// <summary>
-		/// A macro that returns true whenever a face object contains some multiple masters. The functions provided by
+		/// Gets a value indicating whether a face object contains some multiple masters. The functions provided by
 		/// FT_MULTIPLE_MASTERS_H are then available to choose the exact design you want.
 		/// </summary>
-		/// <returns>True if the face has the multiple masters flag set, false otherwise.</returns>
-		public bool HasMultipleMasters()
-		{
-			return (FaceFlags & FaceFlags.MultipleMasters) == FaceFlags.MultipleMasters;
-		}
+		public bool HasMultipleMasters { get { return (FaceFlags & FaceFlags.MultipleMasters) == FaceFlags.MultipleMasters; } }
 
 		/// <summary><para>
-		/// A macro that returns true whenever a face object contains a CID-keyed font. See the discussion of
+		/// Gets a value indicating whether a face object contains a CID-keyed font. See the discussion of
 		/// FT_FACE_FLAG_CID_KEYED for more details.
 		/// </para><para>
 		/// If this macro is true, all functions defined in FT_CID_H are available.
 		/// </para></summary>
-		/// <returns>True if the face has the CID-keyed flag set, false otherwise.</returns>
-		public bool IsCIDKeyed()
-		{
-			return (FaceFlags & FaceFlags.CIDKeyed) == FaceFlags.CIDKeyed;
-		}
+		public bool IsCIDKeyed { get { return (FaceFlags & FaceFlags.CIDKeyed) == FaceFlags.CIDKeyed; } }
 
 		/// <summary>
-		/// A macro that returns true whenever a face represents a ‘tricky’ font. See the discussion of
+		/// Gets a value indicating whether a face represents a ‘tricky’ font. See the discussion of
 		/// FT_FACE_FLAG_TRICKY for more details.
 		/// </summary>
-		/// <returns>True if the face has the tricky flag set, false otherwise.</returns>
-		public bool IsTricky()
-		{
-			return (FaceFlags & FaceFlags.Tricky) == FaceFlags.Tricky;
-		}
+		public bool IsTricky { get { return (FaceFlags & FaceFlags.Tricky) == FaceFlags.Tricky; } }
 
 		#endregion
+
+		#region Methods
+
+		#region FreeType Version
 
 		/// <summary><para>
 		/// Parse all bytecode instructions of a TrueType font file to check whether any of the patented opcodes are
@@ -742,6 +701,10 @@ namespace SharpFont
 
 			return FT.FT_Face_SetUnpatentedHinting(Reference, value);
 		}
+
+		#endregion
+
+		#region Base Interface
 
 		/// <summary>
 		/// This function calls <see cref="AttachStream"/> to attach a file.
@@ -1211,6 +1174,10 @@ namespace SharpFont
 			return FT.FT_Get_FSType_Flags(Reference);
 		}
 
+		#endregion
+
+		#region Glyph Variants
+
 		/// <summary>
 		/// Return the glyph index of a given character code as modified by the variation selector.
 		/// </summary>
@@ -1358,6 +1325,10 @@ namespace SharpFont
 			return list.ToArray();
 		}
 
+		#endregion
+
+		#region Size Management
+
 		/// <summary>
 		/// Create a new size object from a given face object.
 		/// </summary>
@@ -1374,16 +1345,711 @@ namespace SharpFont
 
 		#endregion
 
-		#region Internal Methods
+		#region Multiple Masters
+
+		/// <summary><para>
+		/// Retrieve the Multiple Master descriptor of a given font.
+		/// </para><para>
+		/// This function can't be used with GX fonts.
+		/// </para></summary>
+		/// <returns>The Multiple Masters descriptor.</returns>
+		public MultiMaster GetMultiMaster()
+		{
+			IntPtr masterRef;
+			Error err = FT.FT_Get_Multi_Master(Reference, out masterRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new MultiMaster(masterRef);
+		}
+
+		/// <summary>
+		/// Retrieve the Multiple Master/GX var descriptor of a given font.
+		/// </summary>
+		/// <returns>
+		/// The Multiple Masters/GX var descriptor. Allocates a data structure, which the user must free (a single call
+		/// to FT_FREE will do it).
+		/// </returns>
+		public MMVar GetMMVar()
+		{
+			IntPtr varRef;
+			Error err = FT.FT_Get_MM_Var(Reference, out varRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new MMVar(varRef);
+		}
+
+		/// <summary><para>
+		/// For Multiple Masters fonts, choose an interpolated font design through design coordinates.
+		/// </para><para>
+		/// This function can't be used with GX fonts.
+		/// </para></summary>
+		/// <param name="coords">An array of design coordinates.</param>
+		public unsafe void SetMMDesignCoordinates(long[] coords)
+		{
+			fixed (void* ptr = coords)
+			{
+				IntPtr coordsPtr = (IntPtr)ptr;
+				Error err = FT.FT_Set_MM_Design_Coordinates(Reference, (uint)coords.Length, coordsPtr);
+
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+			}
+		}
+
+		/// <summary>
+		/// For Multiple Master or GX Var fonts, choose an interpolated font design through design coordinates.
+		/// </summary>
+		/// <param name="coords">An array of design coordinates.</param>
+		public unsafe void SetVarDesignCoordinates(long[] coords)
+		{
+			fixed (void* ptr = coords)
+			{
+				IntPtr coordsPtr = (IntPtr)ptr;
+				Error err = FT.FT_Set_Var_Design_Coordinates(Reference, (uint)coords.Length, coordsPtr);
+
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+			}
+		}
+
+		/// <summary>
+		/// For Multiple Masters and GX var fonts, choose an interpolated font design through normalized blend
+		/// coordinates.
+		/// </summary>
+		/// <param name="coords">The design coordinates array (each element must be between 0 and 1.0).</param>
+		public unsafe void SetMMBlendCoordinates(long[] coords)
+		{
+			fixed (void* ptr = coords)
+			{
+				IntPtr coordsPtr = (IntPtr)ptr;
+				Error err = FT.FT_Set_MM_Blend_Coordinates(Reference, (uint)coords.Length, coordsPtr);
+
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+			}
+		}
+
+		/// <summary>
+		/// This is another name of <see cref="SetMMBlendCoordinates"/>.
+		/// </summary>
+		/// <param name="coords">The design coordinates array (each element must be between 0 and 1.0).</param>
+		public unsafe void SetVarBlendCoordinates(long[] coords)
+		{
+			SetMMBlendCoordinates(coords);
+		}
+
+		#endregion
+
+		#region TrueType Tables
+
+		/// <summary>
+		/// Return a pointer to a given SFNT table within a face.
+		/// </summary>
+		/// <remarks><para>
+		/// The table is owned by the face object and disappears with it.
+		/// </para><para>
+		/// This function is only useful to access SFNT tables that are loaded by the sfnt, truetype, and opentype
+		/// drivers. See <see cref="SfntTag"/> for a list.
+		/// </para></remarks>
+		/// <param name="tag">The index of the SFNT table.</param>
+		/// <returns><para>
+		/// A type-less pointer to the table. This will be 0 in case of error, or if the corresponding table was not
+		/// found OR loaded from the file.
+		/// </para><para>
+		/// Use a typecast according to ‘tag’ to access the structure elements.
+		/// </para></returns>
+		public object GetSfntTable(SfntTag tag)
+		{
+			IntPtr tableRef = FT.FT_Get_Sfnt_Table(Reference, tag);
+
+			if (tableRef == IntPtr.Zero)
+				return null;
+
+			switch (tag)
+			{
+				case SfntTag.Header:
+					return new Header(tableRef);
+				case SfntTag.HorizontalHeader:
+					return new HoriHeader(tableRef);
+				case SfntTag.MaxProfile:
+					return new MaxProfile(tableRef);
+				case SfntTag.OS2:
+					return new OS2(tableRef);
+				case SfntTag.PCLT:
+					return new PCLT(tableRef);
+				case SfntTag.Postscript:
+					return new Postscript(tableRef);
+				case SfntTag.VertHeader:
+					return new VertHeader(tableRef);
+				default:
+					return null;
+			}
+		}
+
+		/// <summary>
+		/// Load any font table into client memory.
+		/// </summary>
+		/// <remarks>
+		/// If you need to determine the table's length you should first call this function with ‘*length’ set to 0, as
+		/// in the following example:
+		/// <code>
+		/// FT_ULong  length = 0;
+		/// 
+		/// 
+		/// error = FT_Load_Sfnt_Table( face, tag, 0, NULL, &amp;length );
+		/// if ( error ) { ... table does not exist ... }
+		/// 
+		/// buffer = malloc( length );
+		/// if ( buffer == NULL ) { ... not enough memory ... }
+		/// 
+		/// error = FT_Load_Sfnt_Table( face, tag, 0, buffer, &amp;length );
+		/// if ( error ) { ... could not load table ... }
+		/// </code>
+		/// </remarks>
+		/// <param name="tag">
+		/// The four-byte tag of the table to load. Use the value 0 if you want to access the whole font file.
+		/// Otherwise, you can use one of the definitions found in the FT_TRUETYPE_TAGS_H file, or forge a new one with
+		/// FT_MAKE_TAG.
+		/// </param>
+		/// <param name="offset">The starting offset in the table (or file if tag == 0).</param>
+		/// <param name="buffer">
+		/// The target buffer address. The client must ensure that the memory array is big enough to hold the data.
+		/// </param>
+		/// <param name="length"><para>
+		/// If the ‘length’ parameter is NULL, then try to load the whole table. Return an error code if it fails.
+		/// </para><para>
+		/// Else, if ‘*length’ is 0, exit immediately while returning the table's (or file) full size in it.
+		/// </para><para>
+		/// Else the number of bytes to read from the table or file, from the starting offset.
+		/// </para></param>
+		[CLSCompliant(false)]
+		public void LoadSfntTable(uint tag, int offset, IntPtr buffer, ref uint length)
+		{
+			Error err = FT.FT_Load_Sfnt_Table(Reference, tag, offset, buffer, ref length);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Return information on an SFNT table.
+		/// </summary>
+		/// <param name="tableIndex">
+		/// The index of an SFNT table. The function returns <see cref="Error.TableMissing"/> for an invalid value.
+		/// </param>
+		/// <param name="tag">
+		/// The name tag of the SFNT table. If the value is NULL, ‘table_index’ is ignored, and ‘length’ returns the
+		/// number of SFNT tables in the font.
+		/// </param>
+		/// <returns>The length of the SFNT table (or the number of SFNT tables, depending on ‘tag’).</returns>
+		[CLSCompliant(false)]
+		public unsafe uint SfntTableInfo(uint tableIndex, SfntTag tag)
+		{
+			uint length;
+			Error err = FT.FT_Sfnt_Table_Info(Reference, tableIndex, &tag, out length);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return length;
+		}
+
+		/// <summary>
+		/// Only gets the number of SFNT tables.
+		/// </summary>
+		/// <returns>The number of SFNT tables.</returns>
+		[CLSCompliant(false)]
+		public unsafe uint SfntTableInfo()
+		{
+			uint length;
+			Error err = FT.FT_Sfnt_Table_Info(Reference, 0, null, out length);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return length;
+		}
+
+		#endregion
+
+		#region Type 1 Tables
+
+		/// <summary><para>
+		/// Return true if a given face provides reliable PostScript glyph names. This is similar to using the
+		/// <see cref="HasGlyphNames"/> macro, except that certain fonts (mostly TrueType) contain incorrect
+		/// glyph name tables.
+		/// </para><para>
+		/// When this function returns true, the caller is sure that the glyph names returned by
+		/// <see cref="GetGlyphName(uint, int)"/> are reliable.
+		/// </para></summary>
+		/// <returns>Boolean. True if glyph names are reliable.</returns>
+		public bool HasPSGlyphNames()
+		{
+			return FT.FT_Has_PS_Glyph_Names(Reference);
+		}
+
+		/// <summary>
+		/// Retrieve the <see cref="PostScript.FontInfo"/> structure corresponding to a given PostScript font.
+		/// </summary>
+		/// <remarks><para>
+		/// The string pointers within the font info structure are owned by the face and don't need to be freed by the
+		/// caller.
+		/// </para><para>
+		/// If the font's format is not PostScript-based, this function will return the
+		/// <see cref="Error.InvalidArgument"/> error code.
+		/// </para></remarks>
+		/// <returns>Output font info structure pointer.</returns>
+		public FontInfo GetPSFontInfo()
+		{
+			IntPtr fontInfoRef;
+			Error err = FT.FT_Get_PS_Font_Info(Reference, out fontInfoRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new FontInfo(fontInfoRef);
+		}
+
+		/// <summary>
+		/// Retrieve the <see cref="PostScript.Private"/> structure corresponding to a given PostScript font.
+		/// </summary>
+		/// <remarks><para>
+		/// The string pointers within the <see cref="PostScript.Private"/> structure are owned by the face and don't
+		/// need to be freed by the caller.
+		/// </para><para>
+		/// If the font's format is not PostScript-based, this function returns the <see cref="Error.InvalidArgument"/>
+		/// error code.
+		/// </para></remarks>
+		/// <returns>Output private dictionary structure pointer.</returns>
+		public Private GetPSFontPrivate()
+		{
+			IntPtr privateRef;
+			Error err = FT.FT_Get_PS_Font_Private(Reference, out privateRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Private(privateRef);
+		}
+
+		/// <summary>
+		/// Retrieve the value for the supplied key from a PostScript font.
+		/// </summary>
+		/// <remarks><para>
+		/// The values returned are not pointers into the internal structures of the face, but are ‘fresh’ copies, so
+		/// that the memory containing them belongs to the calling application. This also enforces the ‘read-only’
+		/// nature of these values, i.e., this function cannot be used to manipulate the face.
+		/// </para><para>
+		/// ‘value’ is a void pointer because the values returned can be of various types.
+		/// </para><para>
+		/// If either ‘value’ is NULL or ‘value_len’ is too small, just the required memory size for the requested
+		/// entry is returned.
+		/// </para><para>
+		/// The ‘idx’ parameter is used, not only to retrieve elements of, for example, the FontMatrix or FontBBox, but
+		/// also to retrieve name keys from the CharStrings dictionary, and the charstrings themselves. It is ignored
+		/// for atomic values.
+		/// </para><para>
+		/// <see cref="PostScript.DictionaryKeys.BlueScale"/> returns a value that is scaled up by 1000. To get the
+		/// value as in the font stream, you need to divide by 65536000.0 (to remove the FT_Fixed scale, and the x1000
+		/// scale).
+		/// </para><para>
+		/// IMPORTANT: Only key/value pairs read by the FreeType interpreter can be retrieved. So, for example,
+		/// PostScript procedures such as NP, ND, and RD are not available. Arbitrary keys are, obviously, not be
+		/// available either.
+		/// </para><para>
+		/// If the font's format is not PostScript-based, this function returns the <see cref="Error.InvalidArgument"/>
+		/// error code.
+		/// </para></remarks>
+		/// <param name="key">An enumeration value representing the dictionary key to retrieve.</param>
+		/// <param name="idx">For array values, this specifies the index to be returned.</param>
+		/// <param name="value">A pointer to memory into which to write the value.</param>
+		/// <param name="valueLength">The size, in bytes, of the memory supplied for the value.</param>
+		/// <returns>
+		/// The amount of memory (in bytes) required to hold the requested value (if it exists, -1 otherwise).
+		/// </returns>
+		[CLSCompliant(false)]
+		public int GetPSFontValue(DictionaryKeys key, uint idx, ref IntPtr value, int valueLength)
+		{
+			return FT.FT_Get_PS_Font_Value(Reference, key, idx, ref value, valueLength);
+		}
+
+		#endregion
+
+		#region SFNT Names
+
+		/// <summary>
+		/// Retrieve the number of name strings in the SFNT ‘name’ table.
+		/// </summary>
+		/// <returns>The number of strings in the ‘name’ table.</returns>
+		[CLSCompliant(false)]
+		public uint GetSfntNameCount()
+		{
+			return FT.FT_Get_Sfnt_Name_Count(Reference);
+		}
+
+		/// <summary>
+		/// Retrieve a string of the SFNT ‘name’ table for a given index.
+		/// </summary>
+		/// <remarks><para>
+		/// The ‘string’ array returned in the ‘aname’ structure is not null-terminated. The application should
+		/// deallocate it if it is no longer in use.
+		/// </para><para>
+		/// Use <see cref="GetSfntNameCount"/> to get the total number of available ‘name’ table entries, then do a
+		/// loop until you get the right platform, encoding, and name ID.
+		/// </para></remarks>
+		/// <param name="idx">The index of the ‘name’ string.</param>
+		/// <returns>The indexed <see cref="SfntName"/> structure.</returns>
+		[CLSCompliant(false)]
+		public SfntName GetSfntName(uint idx)
+		{
+			IntPtr nameRef;
+
+			Error err = FT.FT_Get_Sfnt_Name(Reference, idx, out nameRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new SfntName(nameRef);
+		}
+
+		#endregion
+
+		#region BDF and PCF Files
+
+		/// <summary>
+		/// Retrieve a BDF font character set identity, according to the BDF specification.
+		/// </summary>
+		/// <remarks>
+		/// This function only works with BDF faces, returning an error otherwise.
+		/// </remarks>
+		/// <param name="encoding">Charset encoding, as a C string, owned by the face.</param>
+		/// <param name="registry">Charset registry, as a C string, owned by the face.</param>
+		public void GetBDFCharsetID(out string encoding, out string registry)
+		{
+			Error err = FT.FT_Get_BDF_Charset_ID(Reference, out encoding, out registry);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Retrieve a BDF property from a BDF or PCF font file.
+		/// </summary>
+		/// <remarks><para>
+		/// This function works with BDF and PCF fonts. It returns an error otherwise. It also returns an error if the
+		/// property is not in the font.
+		/// </para><para>
+		/// A ‘property’ is a either key-value pair within the STARTPROPERTIES ... ENDPROPERTIES block of a BDF font or
+		/// a key-value pair from the ‘info->props’ array within a ‘FontRec’ structure of a PCF font.
+		/// </para><para>
+		/// Integer properties are always stored as ‘signed’ within PCF fonts; consequently,
+		/// <see cref="PropertyType.Cardinal"/> is a possible return value for BDF fonts only.
+		/// </para><para>
+		/// In case of error, ‘aproperty->type’ is always set to <see cref="PropertyType.None"/>.
+		/// </para></remarks>
+		/// <param name="propertyName">The property name.</param>
+		/// <returns>The property.</returns>
+		public Property GetBDFProperty(string propertyName)
+		{
+			IntPtr propertyRef;
+
+			Error err = FT.FT_Get_BDF_Property(Reference, propertyName, out propertyRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new Property(propertyRef);
+		}
+
+		#endregion
+
+		#region CID Fonts
+
+		/// <summary>
+		/// Retrieve the Registry/Ordering/Supplement triple (also known as the "R/O/S") from a CID-keyed font.
+		/// </summary>
+		/// <remarks>
+		/// This function only works with CID faces, returning an error otherwise.
+		/// </remarks>
+		/// <param name="registry">The registry, as a C string, owned by the face.</param>
+		/// <param name="ordering">The ordering, as a C string, owned by the face.</param>
+		/// <param name="supplement">The supplement.</param>
+		public void GetCIDRegistryOrderingSupplement(out string registry, out string ordering, out int supplement)
+		{
+			Error err = FT.FT_Get_CID_Registry_Ordering_Supplement(Reference, out registry, out ordering, out supplement);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Retrieve the type of the input face, CID keyed or not. In constrast to the 
+		/// <see cref="IsCIDKeyed"/> macro this function returns successfully also for CID-keyed fonts in an
+		/// SNFT wrapper.
+		/// </summary>
+		/// <remarks>
+		/// This function only works with CID faces and OpenType fonts, returning an error otherwise.
+		/// </remarks>
+		/// <returns>The type of the face as an FT_Bool.</returns>
+		public bool GetCIDIsInternallyCIDKeyed(Face face)
+		{
+			byte is_cid;
+			Error err = FT.FT_Get_CID_Is_Internally_CID_Keyed(Reference, out is_cid);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return is_cid == 1;
+		}
+
+		/// <summary>
+		/// Retrieve the CID of the input glyph index.
+		/// </summary>
+		/// <remarks>
+		/// This function only works with CID faces and OpenType fonts, returning an error otherwise.
+		/// </remarks>
+		/// <param name="glyphIndex">The input glyph index.</param>
+		/// <returns>The CID as an uint.</returns>
+		[CLSCompliant(false)]
+		public uint GetCIDFromGlyphIndex(uint glyphIndex)
+		{
+			uint cid;
+			Error err = FT.FT_Get_CID_From_Glyph_Index(Reference, glyphIndex, out cid);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return cid;
+		}
+
+		#endregion
+
+		#region PFR Fonts
+
+		/// <summary>
+		/// Return the outline and metrics resolutions of a given PFR face.
+		/// </summary>
+		/// <remarks>
+		/// If the input face is not a PFR, this function will return an error. However, in all cases, it will return
+		/// valid values.
+		/// </remarks>
+		/// <param name="outlineResolution">
+		/// Outline resolution. This is equivalent to ‘face->units_per_EM’ for non-PFR fonts. Optional (parameter can
+		/// be NULL).
+		/// </param>
+		/// <param name="metricsResolution">
+		/// Metrics resolution. This is equivalent to ‘outline_resolution’ for non-PFR fonts. Optional (parameter can
+		/// be NULL).
+		/// </param>
+		/// <param name="metricsXScale">
+		/// A 16.16 fixed-point number used to scale distance expressed in metrics units to device sub-pixels. This is
+		/// equivalent to ‘face->size->x_scale’, but for metrics only. Optional (parameter can be NULL).
+		/// </param>
+		/// <param name="metricsYScale">
+		/// Same as ‘ametrics_x_scale’ but for the vertical direction. optional (parameter can be NULL).
+		/// </param>
+		[CLSCompliant(false)]
+		public void GetPFRMetrics(out uint outlineResolution, out uint metricsResolution, out int metricsXScale, out int metricsYScale)
+		{
+			Error err = FT.FT_Get_PFR_Metrics(Reference, out outlineResolution, out metricsResolution, out metricsXScale, out metricsYScale);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Return the kerning pair corresponding to two glyphs in a PFR face. The distance is expressed in metrics
+		/// units, unlike the result of <see cref="GetKerning"/>.
+		/// </summary>
+		/// <remarks><para>
+		/// This function always return distances in original PFR metrics units. This is unlike
+		/// <see cref="GetKerning"/> with the <see cref="KerningMode.Unscaled"/> mode, which always returns
+		/// distances converted to outline units.
+		/// </para><para>
+		/// You can use the value of the ‘x_scale’ and ‘y_scale’ parameters returned by <see cref="GetPFRMetrics"/> to
+		/// scale these to device sub-pixels.
+		/// </para></remarks>
+		/// <param name="left">Index of the left glyph.</param>
+		/// <param name="right">Index of the right glyph.</param>
+		/// <returns>A kerning vector.</returns>
+		[CLSCompliant(false)]
+		public FTVector GetPFRKerning(uint left, uint right)
+		{
+			FTVector vector;
+			Error err = FT.FT_Get_PFR_Kerning(Reference, left, right, out vector);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return vector;
+		}
+
+		/// <summary>
+		/// Return a given glyph advance, expressed in original metrics units, from a PFR font.
+		/// </summary>
+		/// <remarks>
+		/// You can use the ‘x_scale’ or ‘y_scale’ results of <see cref="GetPFRMetrics"/> to convert the advance to
+		/// device sub-pixels (i.e., 1/64th of pixels).
+		/// </remarks>
+		/// <param name="glyphIndex">The glyph index.</param>
+		/// <returns>The glyph advance in metrics units.</returns>
+		[CLSCompliant(false)]
+		public int GetPFRAdvance(uint glyphIndex)
+		{
+			int advance;
+			Error err = FT.FT_Get_PFR_Advance(Reference, glyphIndex, out advance);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return advance;
+		}
+
+		#endregion
+
+		#region Windows FNT Files
+
+		/// <summary>
+		/// Retrieve a Windows FNT font info header.
+		/// </summary>
+		/// <remarks>
+		/// This function only works with Windows FNT faces, returning an error otherwise.
+		/// </remarks>
+		/// <returns>The WinFNT header.</returns>
+		public FNT.Header GetWinFNTHeader()
+		{
+			IntPtr headerRef;
+			Error err = FT.FT_Get_WinFNT_Header(Reference, out headerRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new FNT.Header(headerRef);
+		}
+
+		#endregion
+
+		#region Font Formats
+
+		/// <summary>
+		/// Return a string describing the format of a given face, using values which can be used as an X11
+		/// FONT_PROPERTY. Possible values are ‘TrueType’, ‘Type 1’, ‘BDF’, ‘PCF’, ‘Type 42’, ‘CID Type 1’, ‘CFF’,
+		/// ‘PFR’, and ‘Windows FNT’.
+		/// </summary>
+		/// <returns>Font format string. NULL in case of error.</returns>
+		public string GetX11FontFormat()
+		{
+			return Marshal.PtrToStringAnsi(FT.FT_Get_X11_Font_Format(Reference));
+		}
+
+		#endregion
+
+		#region Gasp Table
+
+		/// <summary>
+		/// Read the ‘gasp’ table from a TrueType or OpenType font file and return the entry corresponding to a given
+		/// character pixel size.
+		/// </summary>
+		/// <param name="ppem">The vertical character pixel size.</param>
+		/// <returns>
+		/// Bit flags (see <see cref="Gasp"/>), or <see cref="Gasp.NoTable"/> if there is no ‘gasp’ table in the face.
+		/// </returns>
+		[CLSCompliant(false)]
+		public Gasp GetGasp(uint ppem)
+		{
+			return FT.FT_Get_Gasp(Reference, ppem);
+		}
+
+		#endregion
+
+		#region Quick retrieval of advance values
+
+		/// <summary>
+		/// Retrieve the advance value of a given glyph outline in a <see cref="Face"/>. By default, the unhinted
+		/// advance is returned in font units.
+		/// </summary>
+		/// <remarks><para>
+		/// This function may fail if you use <see cref="LoadFlags.AdvanceFlagFastOnly"/> and if the corresponding font
+		/// backend doesn't have a quick way to retrieve the advances.
+		/// </para><para>
+		/// A scaled advance is returned in 16.16 format but isn't transformed by the affine transformation specified
+		/// by <see cref="SetTransform"/>.
+		/// </para></remarks>
+		/// <param name="glyphIndex">The glyph index.</param>
+		/// <param name="flags">
+		/// A set of bit flags similar to those used when calling <see cref="LoadGlyph"/>, used to determine what kind
+		/// of advances you need.
+		/// </param>
+		/// <returns><para>
+		/// The advance value, in either font units or 16.16 format.
+		/// </para><para>
+		/// If <see cref="LoadFlags.VerticalLayout"/> is set, this is the vertical advance corresponding to a vertical
+		/// layout. Otherwise, it is the horizontal advance in a horizontal layout.
+		/// </para></returns>
+		[CLSCompliant(false)]
+		public int GetAdvance(uint glyphIndex, LoadFlags flags)
+		{
+			int padvance;
+			Error err = FT.FT_Get_Advance(Reference, glyphIndex, flags, out padvance);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return padvance;
+		}
+
+		/// <summary>
+		/// Retrieve the advance values of several glyph outlines in an
+		/// <see cref="Face"/>. By default, the unhinted advances are returned
+		/// in font units.
+		/// </summary>
+		/// <remarks><para>
+		/// This function may fail if you use
+		/// <see cref="LoadFlags.AdvanceFlagFastOnly"/> and if the
+		/// corresponding font backend doesn't have a quick way to retrieve the
+		/// advances.
+		/// </para><para>
+		/// Scaled advances are returned in 16.16 format but aren't transformed
+		/// by the affine transformation specified by
+		/// <see cref="SetTransform"/>.
+		/// </para></remarks>
+		/// <param name="start">The first glyph index.</param>
+		/// <param name="count">The number of advance values you want to retrieve.</param>
+		/// <param name="flags">A set of bit flags similar to those used when calling <see cref="LoadGlyph"/>.</param>
+		/// <returns><para>The advances, in either font units or 16.16 format. This array must contain at least ‘count’ elements.
+		/// </para><para>
+		/// If <see cref="LoadFlags.VerticalLayout"/> is set, these are the vertical advances corresponding to a vertical layout. Otherwise, they are the horizontal advances in a horizontal layout.</para></returns>
+		[CLSCompliant(false)]
+		public unsafe int[] GetAdvances(uint start, uint count, LoadFlags flags)
+		{
+			IntPtr advPtr;
+			Error err = FT.FT_Get_Advances(Reference, start, count, flags, out advPtr);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			//create a new array and copy the data from the pointer over
+			int[] advances = new int[count];
+			int* ptr = (int*)advPtr;
+
+			for (int i = 0; i < count; i++)
+				advances[i] = ptr[i];
+
+			return advances;
+		}
+
+		#endregion
 
 		internal void AddChildSize(FTSize child)
 		{
 			childSizes.Add(child);
 		}
 
-		#endregion
-
-		#region IDisposable members
+		#region IDisposable
 
 		/// <summary>
 		/// Disposes the Face.
@@ -1417,6 +2083,8 @@ namespace SharpFont
 				rec = null;
 			}
 		}
+
+		#endregion
 
 		#endregion
 	}

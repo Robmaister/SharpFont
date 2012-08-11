@@ -219,7 +219,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new FTBitmap(rec.bitmap);
+				return new FTBitmap(rec.bitmap, parentLibrary);
 			}
 		}
 
@@ -376,6 +376,8 @@ namespace SharpFont
 
 		#region Public Methods
 
+		#region Base Interface
+
 		/// <summary>
 		/// Convert a given glyph image to a bitmap. It does so by inspecting the glyph image format, finding the
 		/// relevant renderer, and invoking it.
@@ -414,6 +416,10 @@ namespace SharpFont
 				throw new FreeTypeException(err);
 		}
 
+		#endregion
+
+		#region Glyph Management
+
 		/// <summary>
 		/// A function used to extract a glyph image from a slot. Note that the created <see cref="Glyph"/> object must
 		/// be released with <see cref="DoneGlyph"/>.
@@ -429,6 +435,26 @@ namespace SharpFont
 
 			return new Glyph(glyphRef, Library);
 		}
+
+		#endregion
+
+		#region Bitmap Handling
+
+		/// <summary>
+		/// Make sure that a glyph slot owns ‘slot->bitmap’.
+		/// </summary>
+		/// <remarks>
+		/// This function is to be used in combination with <see cref="Embolden"/>.
+		/// </remarks>
+		public void OwnBitmap()
+		{
+			Error err = FT.FT_GlyphSlot_Own_Bitmap(Reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		#endregion
 
 		#endregion
 	}

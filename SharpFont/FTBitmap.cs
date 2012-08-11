@@ -39,30 +39,65 @@ namespace SharpFont
 	/// For now, the only pixel modes supported by FreeType are mono and grays. However, drivers might be added in the
 	/// future to support more ‘colorful’ options.
 	/// </remarks>
-	public sealed class FTBitmap
+	public sealed class FTBitmap : IDisposable
 	{
 		#region Fields
 
 		private IntPtr reference;
 		private BitmapRec rec;
 
+		private Library library;
+
+		private bool disposed;
+
 		#endregion
 
 		#region Constructors
 
-		internal FTBitmap(IntPtr reference)
+		public FTBitmap(Library library)
+		{
+			IntPtr bitmapRef;
+			FT.FT_Bitmap_New(out bitmapRef);
+			Reference = bitmapRef;
+
+			this.library = library;
+		}
+
+		internal FTBitmap(IntPtr reference, Library library)
 		{
 			Reference = reference;
+			this.library = library;
+		}
+
+		internal FTBitmap(BitmapRec bmpInt, Library library)
+		{
+			this.rec = bmpInt;
+			this.library = library;
+		}
+
+		internal FTBitmap(IntPtr reference)
+			: this(reference, null)
+		{
 		}
 
 		internal FTBitmap(BitmapRec bmpInt)
+			: this(bmpInt, null)
 		{
-			this.rec = bmpInt;
+		}
+
+		/// <summary>
+		/// Finalizes an instance of the <see cref="FTBitmap"/> class.
+		/// </summary>
+		~FTBitmap()
+		{
+			Dispose(false);
 		}
 
 		#endregion
 
 		#region Properties
+
+		public bool IsDisposed { get { return disposed; } }
 
 		/// <summary>
 		/// Gets the number of bitmap rows.
@@ -180,6 +215,110 @@ namespace SharpFont
 				rec = PInvokeHelper.PtrToStructure<BitmapRec>(reference);
 			}
 		}
+
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Copy a bitmap into another one.
+		/// </summary>
+		/// <param name="library">A handle to a library object.</param>
+		/// <returns>A handle to the target bitmap.</returns>
+		public FTBitmap Copy(Library library)
+		{
+			IntPtr bitmapRef;
+			Error err = FT.FT_Bitmap_Copy(library.Reference, Reference, out bitmapRef);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new FTBitmap(bitmapRef);
+		}
+
+		/// <summary>
+		/// Embolden a bitmap. The new bitmap will be about ‘xStrength’ pixels wider and ‘yStrength’ pixels higher. The
+		/// left and bottom borders are kept unchanged.
+		/// </summary>
+		/// <remarks><para>
+		/// The current implementation restricts ‘xStrength’ to be less than or equal to 8 if bitmap is of pixel_mode
+		/// <see cref="PixelMode.Mono"/>.
+		/// </para><para>
+		/// If you want to embolden the bitmap owned by a <see cref="GlyphSlot"/>, you should call
+		/// <see cref="FT.GlyphSlotOwnBitmap"/> on the slot first.
+		/// </para></remarks>
+		/// <param name="library">A handle to a library object.</param>
+		/// <param name="xStrength">
+		/// How strong the glyph is emboldened horizontally. Expressed in 26.6 pixel format.
+		/// </param>
+		/// <param name="yStrength">
+		/// How strong the glyph is emboldened vertically. Expressed in 26.6 pixel format.
+		/// </param>
+		public void Embolden(Library library, int xStrength, int yStrength)
+		{
+			Error err = FT.FT_Bitmap_Embolden(library.Reference, Reference, xStrength, yStrength);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Convert a bitmap object with depth 1bpp, 2bpp, 4bpp, or 8bpp to a bitmap object with depth 8bpp, making the
+		/// number of used bytes per line (a.k.a. the ‘pitch’) a multiple of ‘alignment’.
+		/// </summary>
+		/// <remarks><para>
+		/// It is possible to call <see cref="Convert"/> multiple times without calling
+		/// <see cref="FT.BitmapDone"/> (the memory is simply reallocated).
+		/// </para><para>
+		/// Use <see cref="BitmapDone"/> to finally remove the bitmap object.
+		/// </para><para>
+		/// The ‘library’ argument is taken to have access to FreeType's memory handling functions.
+		/// </para></remarks>
+		/// <param name="library">A handle to a library object.</param>
+		/// <param name="alignment">
+		/// The pitch of the bitmap is a multiple of this parameter. Common values are 1, 2, or 4.
+		/// </param>
+		/// <returns>The target bitmap.</returns>
+		public FTBitmap Convert(Library library, int alignment)
+		{
+			IntPtr bitmapRef;
+			Error err = FT.FT_Bitmap_Convert(library.Reference, Reference, out bitmapRef, alignment);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return new FTBitmap(bitmapRef);
+		}
+
+		#region IDisposable
+
+		/// <summary>
+		/// Disposes an instance of the <see cref="FTBitmap"/> class.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if (!disposed)
+			{
+				if (library != null && !library.IsDisposed) //HACK set this up properly
+				{
+					Error err = FT.FT_Bitmap_Done(library.Reference, Reference);
+
+					if (err != Error.Ok)
+						throw new FreeTypeException(err);
+				}
+
+				disposed = true;
+				reference = IntPtr.Zero;
+				library = null;
+			}
+		}
+
+		#endregion
 
 		#endregion
 	}

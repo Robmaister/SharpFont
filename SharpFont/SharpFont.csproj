@@ -96,7 +96,6 @@
     <Compile Include="Encoding.cs" />
     <Compile Include="FNT\Header.cs" />
     <Compile Include="FNT\Internal\HeaderRec.cs" />
-    <Compile Include="FT.Format.cs" />
     <Compile Include="FT.Misc.cs" />
     <Compile Include="FTList.cs" />
     <Compile Include="Internal\BBoxRec.cs" />

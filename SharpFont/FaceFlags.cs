@@ -58,7 +58,7 @@ namespace SharpFont
 		/// <summary>
 		/// Indicates that the face uses the ‘sfnt’ storage scheme. For now, this means TrueType and OpenType.
 		/// </summary>
-		SFNT = 0x0008,
+		Sfnt = 0x0008,
 
 		/// <summary>
 		/// Indicates that the face contains horizontal glyph metrics. This should be set for all common formats.

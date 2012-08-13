@@ -34,7 +34,7 @@ namespace SharpFont
 	/// <remarks><para>
 	/// The subglyph implementation is not part of the high-level API, hence the forward structure declaration.
 	/// </para><para>
-	/// You can however retrieve subglyph information with <see cref="FT.GetSubGlyphInfo"/>.
+	/// You can however retrieve subglyph information with <see cref="GlyphSlot.GetSubGlyphInfo"/>.
 	/// </para></remarks>
 	public sealed class SubGlyph
 	{

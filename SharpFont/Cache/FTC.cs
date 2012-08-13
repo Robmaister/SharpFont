@@ -103,8 +103,8 @@ namespace SharpFont.Cache
 		/// The <see cref="Face"/> object doesn't necessarily have a current size object (i.e., <see cref="Face.Size"/>
 		/// can be 0). If you need a specific ‘font size’, use <see cref="FTC.ManagerLookupSize"/> instead.
 		/// </para><para>
-		/// Never change the face's transformation matrix (i.e., never call the <see cref="FT.SetTransform"/> function)
-		/// on a returned face! If you need to transform glyphs, do it yourself after glyph loading.
+		/// Never change the face's transformation matrix (i.e., never call the <see cref="Face.SetTransform"/>
+		/// function) on a returned face! If you need to transform glyphs, do it yourself after glyph loading.
 		/// </para><para>
 		/// When you perform a lookup, out-of-memory errors are detected within the lookup and force incremental
 		/// flushes of the cache until enough memory is released for the lookup to succeed.
@@ -248,7 +248,7 @@ namespace SharpFont.Cache
 		/// </summary>
 		/// <remarks><para>
 		/// The returned glyph is owned and managed by the glyph image cache. Never try to transform or discard it
-		/// manually! You can however create a copy with <see cref="FT.GlyphCopy"/> and modify the new one.
+		/// manually! You can however create a copy with <see cref="Glyph.Copy"/> and modify the new one.
 		/// </para><para>
 		/// If ‘node’ is not NULL, it receives the address of the cache node containing the glyph image,
 		/// after increasing its reference count. This ensures that the node (as well as the <see cref="Glyph"/>) will
@@ -286,7 +286,7 @@ namespace SharpFont.Cache
 		/// </summary>
 		/// <remarks><para>
 		/// The returned glyph is owned and managed by the glyph image cache. Never try to transform or discard it
-		/// manually! You can however create a copy with <see cref="FT.GlyphCopy"/> and modify the new one.
+		/// manually! You can however create a copy with <see cref="Glyph.Copy"/> and modify the new one.
 		/// </para><para>
 		/// If ‘node’ is not NULL, it receives the address of the cache node containing the glyph image,
 		/// after increasing its reference count. This ensures that the node (as well as the <see cref="Glyph"/>) will
@@ -296,7 +296,7 @@ namespace SharpFont.Cache
 		/// could be flushed out of the cache on the next call to one of the caching sub-system APIs. Don't assume that
 		/// it is persistent!
 		/// </para><para>
-		/// Calls to <see cref="FT.SetCharSize"/> and friends have no effect on cached glyphs; you should always use
+		/// Calls to <see cref="Face.SetCharSize"/> and friends have no effect on cached glyphs; you should always use
 		/// the FreeType cache API instead.
 		/// </para></remarks>
 		/// <param name="cache">A handle to the source glyph image cache.</param>

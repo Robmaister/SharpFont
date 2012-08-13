@@ -27,7 +27,7 @@ using System;
 namespace SharpFont
 {
 	/// <summary>
-	/// An enumeration used to specify which kerning values to return in <see cref="FT.GetKerning"/>.
+	/// An enumeration used to specify which kerning values to return in <see cref="Face.GetKerning"/>.
 	/// </summary>
 	public enum KerningMode
 	{

@@ -131,7 +131,7 @@ namespace SharpFont
 		/// </para><para>
 		/// For the B/W rasterizer, ‘pitch’ is always an even number.
 		/// </para><para>
-		/// To change the pitch of a bitmap (say, to make it a multiple of 4), use <see cref="FT.BitmapConvert"/>.
+		/// To change the pitch of a bitmap (say, to make it a multiple of 4), use <see cref="FTBitmap.Convert"/>.
 		/// Alternatively, you might use callback functions to directly render to the application's surface; see the
 		/// file ‘example2.cpp’ in the tutorial for a demonstration.
 		/// </para></summary>
@@ -156,8 +156,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is only used with <see cref="PixelMode.Gray"/>; it gives the number of gray levels used in the
-		/// bitmap.
+		/// This field is only used with <see cref="SharpFont.PixelMode.Gray"/>; it gives the number of gray levels
+		/// used in the bitmap.
 		/// </summary>
 		public short GrayLevels
 		{
@@ -242,10 +242,10 @@ namespace SharpFont
 		/// </summary>
 		/// <remarks><para>
 		/// The current implementation restricts ‘xStrength’ to be less than or equal to 8 if bitmap is of pixel_mode
-		/// <see cref="PixelMode.Mono"/>.
+		/// <see cref="SharpFont.PixelMode.Mono"/>.
 		/// </para><para>
 		/// If you want to embolden the bitmap owned by a <see cref="GlyphSlot"/>, you should call
-		/// <see cref="FT.GlyphSlotOwnBitmap"/> on the slot first.
+		/// <see cref="GlyphSlot.OwnBitmap"/> on the slot first.
 		/// </para></remarks>
 		/// <param name="library">A handle to a library object.</param>
 		/// <param name="xStrength">
@@ -268,9 +268,9 @@ namespace SharpFont
 		/// </summary>
 		/// <remarks><para>
 		/// It is possible to call <see cref="Convert"/> multiple times without calling
-		/// <see cref="FT.BitmapDone"/> (the memory is simply reallocated).
+		/// <see cref="Dispose()"/> (the memory is simply reallocated).
 		/// </para><para>
-		/// Use <see cref="BitmapDone"/> to finally remove the bitmap object.
+		/// Use <see cref="Dispose()"/> to finally remove the bitmap object.
 		/// </para><para>
 		/// The ‘library’ argument is taken to have access to FreeType's memory handling functions.
 		/// </para></remarks>

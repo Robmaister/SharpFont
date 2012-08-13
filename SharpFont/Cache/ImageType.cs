@@ -86,7 +86,7 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// Gets the load flags, as in <see cref="FT.LoadGlyph"/>
+		/// Gets the load flags, as in <see cref="Face.LoadGlyph"/>
 		/// </summary>
 		[CLSCompliant(false)]
 		public LoadFlags Flags

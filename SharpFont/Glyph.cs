@@ -151,11 +151,11 @@ namespace SharpFont
 
 		#endregion
 
-		#region Public Methods
+		#region Methods
 
 		/// <summary>
 		/// A function used to copy a glyph image. Note that the created <see cref="Glyph"/> object must be released
-		/// with <see cref="DoneGlyph"/>.
+		/// with <see cref="Glyph.Dispose()"/>.
 		/// </summary>
 		/// <returns>A handle to the target glyph object. 0 in case of error.</returns>
 		public Glyph Copy()
@@ -263,7 +263,6 @@ namespace SharpFont
 		/// </para><para>
 		/// --sample code ommitted--
 		/// </para></remarks>
-		/// <param name="glyph">A pointer to a handle to the target glyph.</param>
 		/// <param name="renderMode">An enumeration that describes how the data is rendered.</param>
 		/// <param name="origin">
 		/// A pointer to a vector used to translate the glyph image before rendering. Can be 0 (if no translation). The
@@ -288,6 +287,70 @@ namespace SharpFont
 				throw new FreeTypeException(err);
 		}
 
+		#region Glyph Stroker
+
+		/// <summary>
+		/// Stroke a given outline glyph object with a given stroker.
+		/// </summary>
+		/// <remarks>
+		/// The source glyph is untouched in case of error.
+		/// </remarks>
+		/// <param name="stroker">A stroker handle.</param>
+		/// <param name="destroy">A Boolean. If 1, the source glyph object is destroyed on success.</param>
+		/// <returns>New glyph handle.</returns>
+		public Glyph Stroke(Stroker stroker, bool destroy)
+		{
+			IntPtr sourceRef = Reference;
+
+			Error err = FT.FT_Glyph_Stroke(ref sourceRef, stroker.Reference, destroy);
+
+			if (destroy)
+			{
+				//TODO when Glyph implements IDisposable, dispose the glyph.
+			}
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			if (sourceRef == Reference)
+				return this;
+			else
+				return new Glyph(sourceRef, Library);
+		}
+
+		/// <summary>
+		/// Stroke a given outline glyph object with a given stroker, but only return either its inside or outside
+		/// border.
+		/// </summary>
+		/// <remarks>
+		/// The source glyph is untouched in case of error.
+		/// </remarks>
+		/// <param name="stroker">A stroker handle.</param>
+		/// <param name="inside">A Boolean. If 1, return the inside border, otherwise the outside border.</param>
+		/// <param name="destroy">A Boolean. If 1, the source glyph object is destroyed on success.</param>
+		/// <returns>New glyph handle.</returns>
+		public Glyph StrokeBorder(Stroker stroker, bool inside, bool destroy)
+		{
+			IntPtr sourceRef = Reference;
+
+			Error err = FT.FT_Glyph_StrokeBorder(ref sourceRef, stroker.Reference, inside, destroy);
+
+			if (destroy)
+			{
+				//TODO when Glyph implements IDisposable, dispose the glyph.
+			}
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			if (sourceRef == Reference)
+				return this;
+			else
+				return new Glyph(sourceRef, Library);
+		}
+
+		#endregion
+
 		/// <summary>
 		/// Disposes the Glyph.
 		/// </summary>
@@ -296,10 +359,6 @@ namespace SharpFont
 			Dispose(true);
 			GC.SuppressFinalize(this);
 		}
-
-		#endregion
-
-		#region Private Methods
 
 		private void Dispose(bool disposing)
 		{

@@ -49,8 +49,14 @@ namespace SharpFont
 	[StructLayout(LayoutKind.Sequential)]
 	public struct FTVector
 	{
+		#region Fields
+
 		private FT_Long x;
 		private FT_Long y;
+
+		#endregion
+
+		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FTVector"/> struct.
@@ -80,6 +86,10 @@ namespace SharpFont
 			this.y = Marshal.ReadIntPtr(reference, IntPtr.Size);
 #endif
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Gets the horizontal coordinate.
@@ -120,5 +130,81 @@ namespace SharpFont
 #endif
 			}
 		}
+
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Transform a single vector through a 2x2 matrix.
+		/// </summary>
+		/// <remarks>
+		/// The result is undefined if either ‘vector’ or ‘matrix’ is invalid.
+		/// </remarks>
+		/// <param name="matrix">A pointer to the source 2x2 matrix.</param>
+		public void Transform(FTMatrix matrix)
+		{
+			FT.FT_Vector_Transform(ref this, ref matrix);
+		}
+
+		/// <summary>
+		/// Rotate a vector by a given angle.
+		/// </summary>
+		/// <param name="angle">The address of angle.</param>
+		public void Rotate(int angle)
+		{
+			FT.FT_Vector_Rotate(ref this, angle);
+		}
+
+		/// <summary>
+		/// Return the length of a given vector.
+		/// </summary>
+		/// <returns>The vector length, expressed in the same units that the original vector coordinates.</returns>
+		public int Length()
+		{
+			return FT.FT_Vector_Length(ref this);
+		}
+
+		/// <summary>
+		/// Compute both the length and angle of a given vector.
+		/// </summary>
+		/// <param name="length">The vector length.</param>
+		/// <param name="angle">The vector angle.</param>
+		public void Polarize(out int length, out int angle)
+		{
+			FT.FT_Vector_Polarize(ref this, out length, out angle);
+		}
+
+		/// <summary><para>
+		/// Return the unit vector corresponding to a given angle. After the call, the value of ‘vec.x’ will be
+		/// ‘sin(angle)’, and the value of ‘vec.y’ will be ‘cos(angle)’.
+		/// </para><para>
+		/// This function is useful to retrieve both the sinus and cosinus of a given angle quickly.
+		/// </para></summary>
+		/// <param name="angle">The address of angle.</param>
+		/// <returns>The address of target vector.</returns>
+		public static FTVector Unit(int angle)
+		{
+			FTVector vec;
+			FT.FT_Vector_Unit(out vec, angle);
+
+			return vec;
+		}
+
+		/// <summary>
+		/// Compute vector coordinates from a length and angle.
+		/// </summary>
+		/// <param name="length">The vector length.</param>
+		/// <param name="angle">The vector angle.</param>
+		/// <returns>The address of source vector.</returns>
+		public static FTVector FromPolar(int length, int angle)
+		{
+			FTVector vec;
+			FT.FT_Vector_From_Polar(out vec, length, angle);
+
+			return vec;
+		}
+
+		#endregion
 	}
 }

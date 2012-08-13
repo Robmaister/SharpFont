@@ -73,8 +73,8 @@ namespace SharpFont
 
 		/// <summary>
 		/// Indicates that the face contains kerning information. If set, the kerning distance can be retrieved through
-		/// the function <see cref="FT.GetKerning"/>. Otherwise the function always return the vector (0,0). Note that
-		/// FreeType doesn't handle kerning data from the ‘GPOS’ table (as present in some OpenType fonts).
+		/// the function <see cref="Face.GetKerning"/>. Otherwise the function always return the vector (0,0). Note
+		/// that FreeType doesn't handle kerning data from the ‘GPOS’ table (as present in some OpenType fonts).
 		/// </summary>
 		Kerning = 0x0040,
 
@@ -86,14 +86,14 @@ namespace SharpFont
 
 		/// <summary>
 		/// Indicates that the font contains glyph names that can be retrieved through
-		/// <see cref="FT.GetGlyphName(Face, uint, int)"/>. Note that some TrueType fonts contain broken glyph name
-		/// tables. Use the function <see cref="FT.HasPSGlyphNames"/> when needed.
+		/// <see cref="Face.GetGlyphName(uint, int)"/>. Note that some TrueType fonts contain broken glyph name
+		/// tables. Use the function <see cref="Face.HasPSGlyphNames"/> when needed.
 		/// </summary>
 		GlyphNames = 0x0200,
 
 		/// <summary>
 		/// Used internally by FreeType to indicate that a face's stream was provided by the client application and
-		/// should not be destroyed when <see cref="FT.DoneFace"/> is called. Don't read or test this flag.
+		/// should not be destroyed when <see cref="Face.Dispose()"/> is called. Don't read or test this flag.
 		/// </summary>
 		ExternalStream = 0x0400,
 
@@ -107,8 +107,8 @@ namespace SharpFont
 		/// <summary><para>
 		/// Set if the font is CID-keyed. In that case, the font is not accessed by glyph indices but by CID values.
 		/// For subsetted CID-keyed fonts this has the consequence that not all index values are a valid argument to
-		/// <see cref="FT.LoadGlyph"/>. Only the CID values for which corresponding glyphs in the subsetted font exist
-		/// make <see cref="FT.LoadGlyph"/> return successfully; in all other cases you get an
+		/// <see cref="Face.LoadGlyph"/>. Only the CID values for which corresponding glyphs in the subsetted font
+		/// exist make <see cref="Face.LoadGlyph"/> return successfully; in all other cases you get an
 		/// <see cref="Error.InvalidArgument"/> error.
 		/// </para><para>
 		/// Note that CID-keyed fonts which are in an SFNT wrapper don't have this flag set since the glyphs are

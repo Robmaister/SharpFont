@@ -31,16 +31,16 @@ namespace SharpFont
 {
 	/// <summary>
 	/// A structure used to indicate how to open a new font file or stream. A pointer to such a structure can be used
-	/// as a parameter for the functions <see cref="FT.OpenFace"/> and <see cref="FT.AttachStream"/>.
+	/// as a parameter for the functions <see cref="Library.OpenFace"/> and <see cref="Face.AttachStream"/>.
 	/// </summary>
 	/// <remarks>
 	/// The stream type is determined by the contents of <see cref="Flags"/> which are tested in the following order by
-	/// <see cref="FT.OpenFace"/>:
+	/// <see cref="Library.OpenFace"/>:
 	/// <list type="bullet">
 	/// <item><description>
 	/// If the <see cref="OpenFlags.Memory"/> bit is set, assume that this is a memory file of <see cref="MemorySize"/>
 	/// bytes, located at <see cref="MemoryBase"/>. The data are are not copied, and the client is responsible for
-	/// releasing and destroying them after the corresponding call to <see cref="FT.DoneFace"/>.
+	/// releasing and destroying them after the corresponding call to <see cref="Face.Dispose()"/>.
 	/// </description></item>
 	/// <item><description>
 	/// Otherwise, if the <see cref="OpenFlags.Stream"/> bit is set, assume that a custom input stream
@@ -51,8 +51,8 @@ namespace SharpFont
 	/// <see cref="PathName"/> to open it.
 	/// </description></item>
 	/// <item><description>
-	/// If the <see cref="OpenFlags.Driver"/> bit is set, <see cref="FT.OpenFace"/> only tries to open the file with
-	/// the driver whose handler is in <see cref="Driver"/>.
+	/// If the <see cref="OpenFlags.Driver"/> bit is set, <see cref="Library.OpenFace"/> only tries to open the file
+	/// with the driver whose handler is in <see cref="Driver"/>.
 	/// </description></item>
 	/// <item><description>
 	/// If the <see cref="OpenFlags.Params"/> bit is set, the parameters given by <see cref="ParamsCount"/> and
@@ -138,8 +138,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is exclusively used by <see cref="FT.OpenFace"/>; it simply specifies the font driver to use to
-		/// open the face. If set to 0, FreeType tries to load the face with each one of the drivers in its list.
+		/// This field is exclusively used by <see cref="Library.OpenFace"/>; it simply specifies the font driver to
+		/// use to open the face. If set to 0, FreeType tries to load the face with each one of the drivers in its
+		/// list.
 		/// </summary>
 		public Module Driver
 		{

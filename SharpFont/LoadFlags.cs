@@ -27,7 +27,7 @@ using System;
 namespace SharpFont
 {
 	/// <summary>
-	/// A list of bit-field constants used with <see cref="FT.LoadGlyph"/> to indicate what kind of operations to
+	/// A list of bit-field constants used with <see cref="Face.LoadGlyph"/> to indicate what kind of operations to
 	/// perform during glyph loading.
 	/// </summary>
 	/// <remarks><para>
@@ -82,7 +82,7 @@ namespace SharpFont
 		NoHinting = 0x0002,
 
 		/// <summary><para>
-		/// Call <see cref="FT.RenderGlyph"/> after the glyph is loaded. By default, the glyph is rendered in
+		/// Call <see cref="GlyphSlot.RenderGlyph"/> after the glyph is loaded. By default, the glyph is rendered in
 		/// <see cref="RenderMode.Normal"/> mode. This can be overridden by <see cref="LoadTarget"/> or
 		/// <see cref="LoadFlags.Monochrome"/>.
 		/// </para><para>
@@ -136,7 +136,7 @@ namespace SharpFont
 		NoRecurse = 0x0400,
 
 		/// <summary>
-		/// Indicates that the transform matrix set by <see cref="FT.SetTransform"/> should be ignored.
+		/// Indicates that the transform matrix set by <see cref="Face.SetTransform"/> should be ignored.
 		/// </summary>
 		IgnoreTransform = 0x0800,
 
@@ -161,8 +161,8 @@ namespace SharpFont
 		NoAutohint = 0x8000,
 
 		/// <summary><para>
-		/// A bit-flag to be OR-ed with the ‘flags’ parameter of the <see cref="FT.GetAdvance"/> and
-		/// <see cref="FT.GetAdvances"/> functions.
+		/// A bit-flag to be OR-ed with the ‘flags’ parameter of the <see cref="Face.GetAdvance"/> and
+		/// <see cref="Face.GetAdvances"/> functions.
 		/// </para><para>
 		/// If set, it indicates that you want these functions to fail if the corresponding hinting mode or font driver
 		/// doesn't allow for very quick advance computation.

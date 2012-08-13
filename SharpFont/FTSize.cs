@@ -182,13 +182,17 @@ namespace SharpFont
 		#region Public Methods
 
 		/// <summary><para>
-		/// Even though it is possible to create several size objects for a given face (see <see cref="FT.NewSize"/>
-		/// for details), functions like <see cref="FT.LoadGlyph"/> or <see cref="FT.LoadChar"/> only use the one which
-		/// has been activated last to determine the ‘current character pixel size’.
+		/// Even though it is possible to create several size objects for a given face (see
+		/// <see cref="SharpFont.Face.NewSize"/> for details), functions like <see cref="SharpFont.Face.LoadGlyph"/> or
+		/// <see cref="SharpFont.Face.LoadChar"/> only use the one which has been activated last to determine the
+		/// ‘current character pixel size’.
 		/// </para><para>
 		/// This function can be used to ‘activate’ a previously created size object.
 		/// </para></summary>
-		/// <remarks><see cref="FT.ActivateSize"/>.</remarks>
+		/// <remarks>
+		/// If ‘face’ is the size's parent face object, this function changes the value of ‘face->size’ to the input
+		/// size handle.
+		/// </remarks>
 		public void Activate()
 		{
 			if (disposed)

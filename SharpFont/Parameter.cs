@@ -30,7 +30,7 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary>
-	/// A simple structure used to pass more or less generic parameters to <see cref="FT.OpenFace"/>.
+	/// A simple structure used to pass more or less generic parameters to <see cref="Library.OpenFace"/>.
 	/// </summary>
 	/// <remarks>
 	/// The ID and function of parameters are driver-specific. See the various <see cref="ParamTag"/> flags for more

@@ -207,5 +207,111 @@ namespace SharpFont
 		}
 
 		#endregion
+
+		#region Methods
+
+		#region GZIP Streams
+
+		/// <summary>
+		/// Open a new stream to parse gzip-compressed font files. This is mainly used to support the compressed
+		/// ‘*.pcf.gz’ fonts that come with XFree86.
+		/// </summary>
+		/// <remarks><para>
+		/// The source stream must be opened before calling this function.
+		/// </para><para>
+		/// Calling the internal function ‘FT_Stream_Close’ on the new stream will not call ‘FT_Stream_Close’ on the
+		/// source stream. None of the stream objects will be released to the heap.
+		/// </para><para>
+		/// The stream implementation is very basic and resets the decompression process each time seeking backwards is
+		/// needed within the stream.
+		/// </para><para>
+		/// In certain builds of the library, gzip compression recognition is automatically handled when calling
+		/// <see cref="Library.NewFace"/> or <see cref="Library.OpenFace"/>. This means that if no font driver is
+		/// capable of handling the raw compressed file, the library will try to open a gzipped stream from it and
+		/// re-open the face with it.
+		/// </para><para>
+		/// This function may return <see cref="Error.UnimplementedFeature"/> if your build of FreeType was not
+		/// compiled with zlib support.
+		/// </para></remarks>
+		/// <param name="source">The source stream.</param>
+		public void OpenGzip(FTStream source)
+		{
+			Error err = FT.FT_Stream_OpenGzip(Reference, source.Reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		#endregion
+
+		#region LZW Streams
+
+		/// <summary>
+		/// Open a new stream to parse LZW-compressed font files. This is mainly used to support the compressed
+		/// ‘*.pcf.Z’ fonts that come with XFree86.
+		/// </summary>
+		/// <remarks><para>
+		/// The source stream must be opened before calling this function.
+		/// </para><para>
+		/// Calling the internal function ‘FT_Stream_Close’ on the new stream will not call ‘FT_Stream_Close’ on the
+		/// source stream. None of the stream objects will be released to the heap.
+		/// </para><para>
+		/// The stream implementation is very basic and resets the decompression process each time seeking backwards is
+		/// needed within the stream.
+		/// </para><para>
+		/// In certain builds of the library, LZW compression recognition is automatically handled when calling
+		/// <see cref="Library.NewFace"/> or <see cref="Library.OpenFace"/>. This means that if no font driver is
+		/// capable of handling the raw compressed file, the library will try to open a LZW stream from it and re-open
+		/// the face with it.
+		/// </para><para>
+		/// This function may return <see cref="Error.UnimplementedFeature"/> if your build of FreeType was not
+		/// compiled with LZW support.
+		/// </para></remarks>
+		/// <param name="source">The source stream.</param>
+		public void OpenLZW(FTStream source)
+		{
+			Error err = FT.FT_Stream_OpenLZW(Reference, source.Reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		#endregion
+
+		#region BZIP2 Streams
+
+		/// <summary>
+		/// Open a new stream to parse bzip2-compressed font files. This is mainly used to support the compressed
+		/// ‘*.pcf.bz2’ fonts that come with XFree86.
+		/// </summary>
+		/// <remarks><para>
+		/// The source stream must be opened before calling this function.
+		/// </para><para>
+		/// Calling the internal function ‘FT_Stream_Close’ on the new stream will not call ‘FT_Stream_Close’ on the
+		/// source stream. None of the stream objects will be released to the heap.
+		/// </para><para>
+		/// The stream implementation is very basic and resets the decompression process each time seeking backwards is
+		/// needed within the stream.
+		/// </para><para>
+		/// In certain builds of the library, bzip2 compression recognition is automatically handled when calling
+		/// <see cref="Library.NewFace"/> or <see cref="Library.OpenFace"/>. This means that if no font driver is
+		/// capable of handling the raw compressed file, the library will try to open a bzip2 stream from it and
+		/// re-open the face with it.
+		/// </para><para>
+		/// This function may return <see cref="Error.UnimplementedFeature"/> if your build of FreeType was not
+		/// compiled with bzip2 support.
+		/// </para></remarks>
+		/// <param name="source">The source stream.</param>
+		public void StreamOpenBzip2(FTStream source)
+		{
+			Error err = FT.FT_Stream_OpenBzip2(Reference, source.Reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		#endregion
+
+		#endregion
 	}
 }

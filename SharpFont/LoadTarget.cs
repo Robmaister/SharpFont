@@ -28,7 +28,7 @@ namespace SharpFont
 {
 	/// <summary><para>
 	/// A list of values that are used to select a specific hinting algorithm to use by the hinter. You should OR one
-	/// of these values to your ‘load_flags’ when calling <see cref="FT.LoadGlyph"/>.
+	/// of these values to your ‘load_flags’ when calling <see cref="Face.LoadGlyph"/>.
 	/// </para><para>
 	/// Note that font's native hinters may ignore the hinting algorithm you  have specified (e.g., the TrueType
 	/// bytecode interpreter). You can set <see cref="LoadFlags.ForceAutohint"/> to ensure that the auto-hinter is

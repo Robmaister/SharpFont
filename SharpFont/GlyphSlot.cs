@@ -33,8 +33,9 @@ namespace SharpFont
 	/// they in outline or bitmap format.
 	/// </summary>
 	/// <remarks><para>
-	/// If <see cref="LoadGlyph"/> is called with default flags (see <see cref="LoadFlags.Default"/>) the glyph image
-	/// is loaded in the glyph slot in its native format (e.g., an outline glyph for TrueType and Type 1 formats).
+	/// If <see cref="SharpFont.Face.LoadGlyph"/> is called with default flags (see <see cref="LoadFlags.Default"/>)
+	/// the glyph image is loaded in the glyph slot in its native format (e.g., an outline glyph for TrueType and Type
+	/// 1 formats).
 	/// </para><para>
 	/// This image can later be converted into a bitmap by calling <see cref="RenderGlyph"/>. This function finds the
 	/// current renderer for the native image's format, then invokes it.
@@ -144,8 +145,8 @@ namespace SharpFont
 
 		/// <summary><para>
 		/// Gets the metrics of the last loaded glyph in the slot. The returned values depend on the last load flags
-		/// (see the <see cref="LoadGlyph"/> API function) and can be expressed either in 26.6 fractional pixels or
-		/// font units.
+		/// (see the <see cref="SharpFont.Face.LoadGlyph"/> API function) and can be expressed either in 26.6
+		/// fractional pixels or font units.
 		/// </para><para>
 		/// Note that even when the glyph image is transformed, the metrics are not.
 		/// </para></summary>
@@ -212,8 +213,8 @@ namespace SharpFont
 
 		/// <summary>
 		/// This field is used as a bitmap descriptor when the slot format is <see cref="GlyphFormat.Bitmap"/>. Note
-		/// that the address and content of the bitmap buffer can change between calls of <see cref="LoadGlyph"/>
-		/// and a few other functions.
+		/// that the address and content of the bitmap buffer can change between calls of
+		/// <see cref="SharpFont.Face.LoadGlyph"/> and a few other functions.
 		/// </summary>
 		public FTBitmap Bitmap
 		{
@@ -422,7 +423,7 @@ namespace SharpFont
 
 		/// <summary>
 		/// A function used to extract a glyph image from a slot. Note that the created <see cref="Glyph"/> object must
-		/// be released with <see cref="DoneGlyph"/>.
+		/// be released with <see cref="Glyph.Dispose()"/>.
 		/// </summary>
 		/// <returns>A handle to the glyph object.</returns>
 		public Glyph GetGlyph()
@@ -444,7 +445,7 @@ namespace SharpFont
 		/// Make sure that a glyph slot owns ‘slot->bitmap’.
 		/// </summary>
 		/// <remarks>
-		/// This function is to be used in combination with <see cref="Embolden"/>.
+		/// This function is to be used in combination with <see cref="FTBitmap.Embolden"/>.
 		/// </remarks>
 		public void OwnBitmap()
 		{

@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 
 using SharpFont.TrueType;
+using SharpFont.Internal;
 
 namespace SharpFont
 {
@@ -50,6 +51,7 @@ namespace SharpFont
 		private List<Face> childFaces;
 		private List<Glyph> childGlyphs;
 		private List<Outline> childOutlines;
+		private List<Stroker> childStrokers;
 
 		#endregion
 
@@ -60,9 +62,7 @@ namespace SharpFont
 			childFaces = new List<Face>();
 			childGlyphs = new List<Glyph>();
 			childOutlines = new List<Outline>();
-
-			if (duplicate)
-				FT.ReferenceLibrary(this);
+			childStrokers = new List<Stroker>();
 		}
 
 		/// <summary>
@@ -101,6 +101,9 @@ namespace SharpFont
 			: this(duplicate)
 		{
 			Reference = reference;
+
+			if (duplicate)
+				FT.FT_Reference_Library(Reference);
 		}
 
 		/// <summary>
@@ -163,7 +166,7 @@ namespace SharpFont
 
 		#endregion
 
-		#region Public Methods
+		#region Methods
 
 		/// <summary>
 		/// This function calls <see cref="OpenFace"/> to open a font by its pathname.
@@ -316,91 +319,155 @@ namespace SharpFont
 			return new Face(faceRef, this);
 		}
 
+		#region Module Management
+
 		/// <summary>
 		/// Add a new module to a given library instance.
 		/// </summary>
-		/// <remarks>See <see cref="FT.AddModule"/>.</remarks>
+		/// <remarks>
+		/// An error will be returned if a module already exists by that name, or if the module requires a version of
+		/// FreeType that is too great.
+		/// </remarks>
 		/// <param name="clazz">A pointer to class descriptor for the module.</param>
 		public void AddModule(ModuleClass clazz)
 		{
-			FT.AddModule(this, clazz);
+			Error err = FT.FT_Add_Module(Reference, clazz.Reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
 		}
 
 		/// <summary>
 		/// Find a module by its name.
 		/// </summary>
-		/// <remarks>See <see cref="FT.GetModule"/>.</remarks>
+		/// <remarks>
+		/// FreeType's internal modules aren't documented very well, and you should look up the source code for
+		/// details.
+		/// </remarks>
 		/// <param name="moduleName">The module's name (as an ASCII string).</param>
 		/// <returns>A module handle. 0 if none was found.</returns>
 		public Module GetModule(string moduleName)
 		{
-			return FT.GetModule(this, moduleName);
+			return new Module(FT.FT_Get_Module(Reference, moduleName));
 		}
 
 		/// <summary>
 		/// Remove a given module from a library instance.
 		/// </summary>
-		/// <remarks>See <see cref="FT.RemoveModule"/>.</remarks>
+		/// <remarks>
+		/// The module object is destroyed by the function in case of success.
+		/// </remarks>
 		/// <param name="module">A handle to a module object.</param>
 		public void RemoveModule(Module module)
 		{
-			FT.RemoveModule(this, module);
+			Error err = FT.FT_Remove_Module(Reference, module.Reference);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
 		}
 
 		/// <summary>
 		/// Set a debug hook function for debugging the interpreter of a font format.
 		/// </summary>
-		/// <remarks>See <see cref="FT.SetDebugHook"/>.</remarks>
-		/// <param name="hookIndex">
-		/// The index of the debug hook. You should use the values defined in ‘ftobjs.h’, e.g.,
-		/// ‘FT_DEBUG_HOOK_TRUETYPE’.
-		/// </param>
+		/// <remarks><para>
+		/// Currently, four debug hook slots are available, but only two (for the TrueType and the Type 1 interpreter)
+		/// are defined.
+		/// </para><para>
+		/// Since the internal headers of FreeType are no longer installed, the symbol ‘FT_DEBUG_HOOK_TRUETYPE’ isn't
+		/// available publicly. This is a bug and will be fixed in a forthcoming release.
+		/// </para></remarks>
+		/// <param name="hookIndex">The index of the debug hook. You should use the values defined in ‘ftobjs.h’, e.g., ‘FT_DEBUG_HOOK_TRUETYPE’.</param>
 		/// <param name="debugHook">The function used to debug the interpreter.</param>
 		[CLSCompliant(false)]
 		public void SetDebugHook(uint hookIndex, IntPtr debugHook)
 		{
-			FT.SetDebugHook(this, hookIndex, debugHook);
+			FT.FT_Set_Debug_Hook(Reference, hookIndex, debugHook);
 		}
 
 		/// <summary>
 		/// Add the set of default drivers to a given library object. This is only useful when you create a library
-		/// object with <see cref="FT.NewLibrary"/> (usually to plug a custom memory manager).
+		/// object with <see cref="Library(Memory)"/> (usually to plug a custom memory manager).
 		/// </summary>
 		public void AddDefaultModules()
 		{
-			FT.AddDefaultModules(this);
+			FT.FT_Add_Default_Modules(Reference);
 		}
 
 		/// <summary>
 		/// Retrieve the current renderer for a given glyph format.
 		/// </summary>
-		/// <remarks>See <see cref="FT.GetRenderer"/>.</remarks>
+		/// <remarks><para>
+		/// An error will be returned if a module already exists by that name, or if the module requires a version of
+		/// FreeType that is too great.
+		/// </para><para>
+		/// To add a new renderer, simply use <see cref="AddModule"/>. To retrieve a renderer by its name, use
+		/// <see cref="GetModule"/>.
+		/// </para></remarks>
 		/// <param name="format">The glyph format.</param>
 		/// <returns>A renderer handle. 0 if none found.</returns>
 		[CLSCompliant(false)]
 		public Renderer GetRenderer(GlyphFormat format)
 		{
-			return FT.GetRenderer(this, format);
+			return new Renderer(FT.FT_Get_Renderer(Reference, format));
 		}
 
 		/// <summary>
 		/// Set the current renderer to use, and set additional mode.
 		/// </summary>
-		/// <remarks>See <see cref="FT.SetRenderer"/>.</remarks>
+		/// <remarks><para>
+		/// In case of success, the renderer will be used to convert glyph images in the renderer's known format into
+		/// bitmaps.
+		/// </para><para>
+		/// This doesn't change the current renderer for other formats.
+		/// </para><para>
+		/// Currently, only the B/W renderer, if compiled with FT_RASTER_OPTION_ANTI_ALIASING (providing a 5-levels
+		/// anti-aliasing mode; this option must be set directly in ‘ftraster.c’ and is undefined by default) accepts a
+		/// single tag ‘pal5’ to set its gray palette as a character string with 5 elements. Consequently, the third
+		/// and fourth argument are zero normally.
+		/// </para></remarks>
 		/// <param name="renderer">A handle to the renderer object.</param>
 		/// <param name="numParams">The number of additional parameters.</param>
 		/// <param name="parameters">Additional parameters.</param>
 		[CLSCompliant(false)]
-		public void SetRenderer(Renderer renderer, uint numParams, Parameter[] parameters)
+		public unsafe void SetRenderer(Renderer renderer, uint numParams, Parameter[] parameters)
 		{
-			FT.SetRenderer(this, renderer, numParams, parameters);
+			ParameterRec[] paramRecs = Array.ConvertAll<Parameter, ParameterRec>(parameters, (p => p.Record));
+			fixed (void* ptr = paramRecs)
+			{
+				Error err = FT.FT_Set_Renderer(Reference, renderer.Reference, numParams, (IntPtr)ptr);
+			}
 		}
+
+		#endregion
+
+		#region LCD Filtering
 
 		/// <summary>
 		/// This function is used to apply color filtering to LCD decimated bitmaps, like the ones used when calling
-		/// <see cref="FT.RenderGlyph"/> with <see cref="RenderMode.LCD"/> or <see cref="RenderMode.VerticalLCD"/>.
+		/// <see cref="GlyphSlot.RenderGlyph"/> with <see cref="RenderMode.LCD"/> or
+		/// <see cref="RenderMode.VerticalLCD"/>.
 		/// </summary>
-		/// <remarks>See <see cref="FT.LibrarySetLcdFilter"/>.</remarks>
+		/// <remarks><para>
+		/// This feature is always disabled by default. Clients must make an explicit call to this function with a
+		/// ‘filter’ value other than <see cref="LcdFilter.None"/> in order to enable it.
+		/// </para><para>
+		/// Due to <b>PATENTS</b> covering subpixel rendering, this function doesn't do anything except returning
+		/// <see cref="Error.UnimplementedFeature"/> if the configuration macro FT_CONFIG_OPTION_SUBPIXEL_RENDERING is
+		/// not defined in your build of the library, which should correspond to all default builds of FreeType.
+		/// </para><para>
+		/// The filter affects glyph bitmaps rendered through <see cref="GlyphSlot.RenderGlyph"/>,
+		/// <see cref="Outline.GetBitmap(FTBitmap)"/>, <see cref="Face.LoadGlyph"/>, and <see cref="Face.LoadChar"/>.
+		/// </para><para>
+		/// It does not affect the output of <see cref="Outline.Render(RasterParams)"/> and
+		/// <see cref="Outline.GetBitmap(FTBitmap)"/>.
+		/// </para><para>
+		/// If this feature is activated, the dimensions of LCD glyph bitmaps are either larger or taller than the
+		/// dimensions of the corresponding outline with regards to the pixel grid. For example, for
+		/// <see cref="RenderMode.LCD"/>, the filter adds up to 3 pixels to the left, and up to 3 pixels to the right.
+		/// </para><para>
+		/// The bitmap offset values are adjusted correctly, so clients shouldn't need to modify their layout and glyph
+		/// positioning code when enabling the filter.
+		/// </para></remarks>
 		/// <param name="filter"><para>
 		/// The filter type.
 		/// </para><para>
@@ -409,23 +476,39 @@ namespace SharpFont
 		/// </para></param>
 		public void SetLcdFilter(LcdFilter filter)
 		{
-			FT.LibrarySetLcdFilter(this, filter);
+			Error err = FT.FT_Library_SetLcdFilter(Reference, filter);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
 		}
 
 		/// <summary>
-		/// Use this function to override the filter weights selected by <see cref="FT.LibrarySetLcdFilter"/>. By
-		/// default, FreeType uses the quintuple (0x00, 0x55, 0x56, 0x55, 0x00) for <see cref="LcdFilter.Light"/>, and
-		/// (0x10, 0x40, 0x70, 0x40, 0x10) for <see cref="LcdFilter.Default"/> and <see cref="LcdFilter.Legacy"/>.
+		/// Use this function to override the filter weights selected by <see cref="SetLcdFilter"/>. By default,
+		/// FreeType uses the quintuple (0x00, 0x55, 0x56, 0x55, 0x00) for <see cref="LcdFilter.Light"/>, and (0x10,
+		/// 0x40, 0x70, 0x40, 0x10) for <see cref="LcdFilter.Default"/> and <see cref="LcdFilter.Legacy"/>.
 		/// </summary>
-		/// <remarks>See <see cref="FT.LibrarySetLcdFilterWeights"/>.</remarks>
+		/// <remarks><para>
+		/// Due to <b>PATENTS</b> covering subpixel rendering, this function doesn't do anything except returning
+		/// <see cref="Error.UnimplementedFeature"/> if the configuration macro FT_CONFIG_OPTION_SUBPIXEL_RENDERING is
+		/// not defined in your build of the library, which should correspond to all default builds of FreeType.
+		/// </para><para>
+		/// This function must be called after <see cref="SetLcdFilter"/> to have any effect.
+		/// </para></remarks>
 		/// <param name="weights">
 		/// A pointer to an array; the function copies the first five bytes and uses them to specify the filter
 		/// weights.
 		/// </param>
 		public void SetLcdFilterWeights(byte[] weights)
 		{
-			FT.LibrarySetLcdFilterWeights(this, weights);
+			Error err = FT.FT_Library_SetLcdFilterWeights(Reference, weights);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
 		}
+
+		#endregion
+
+		#region The TrueType Engine
 
 		/// <summary>
 		/// Return an <see cref="EngineType"/> value to indicate which level of the TrueType virtual machine a given
@@ -434,8 +517,10 @@ namespace SharpFont
 		/// <returns>A value indicating which level is supported.</returns>
 		public EngineType GetTrueTypeEngineType()
 		{
-			return FT.GetTrueTypeEngineType(this);
+			return FT.FT_Get_TrueType_Engine_Type(Reference);
 		}
+
+		#endregion
 
 		#endregion
 
@@ -456,6 +541,11 @@ namespace SharpFont
 			childOutlines.Add(child);
 		}
 
+		internal void AddChildStroker(Stroker child)
+		{
+			childStrokers.Add(child);
+		}
+
 		#endregion
 
 		#region IDisposable Members
@@ -473,8 +563,6 @@ namespace SharpFont
 		{
 			if (!disposed)
 			{
-				disposed = true;
-
 				//dipose all the children before disposing the library.
 				foreach (Face f in childFaces)
 					f.Dispose();
@@ -485,15 +573,22 @@ namespace SharpFont
 				foreach (Outline o in childOutlines)
 					o.Dispose();
 
+				foreach (Stroker s in childStrokers)
+					s.Dispose();
+
 				childFaces.Clear();
 				childGlyphs.Clear();
+				childOutlines.Clear();
+				childStrokers.Clear();
 
-				Error err = (customMemory) ? FT.FT_Done_Library(reference) : FT.FT_Done_FreeType(reference);
+				Error err = (customMemory) ? FT.FT_Done_Library(Reference) : FT.FT_Done_FreeType(Reference);
 
 				if (err != Error.Ok)
 					throw new FreeTypeException(err);
 
 				reference = IntPtr.Zero;
+
+				disposed = true;
 			}
 		}
 

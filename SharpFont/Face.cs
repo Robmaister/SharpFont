@@ -48,7 +48,6 @@ namespace SharpFont
 		private FaceRec rec;
 
 		private bool disposed;
-		private bool duplicate;
 
 		private Library parentLibrary;
 		private List<FTSize> childSizes;
@@ -135,7 +134,7 @@ namespace SharpFont
 			}
 			else //if there's no parent, this is a Marshalled duplicate.
 			{
-				duplicate = true;
+				FT.FT_Reference_Face(Reference);
 			}
 		}
 
@@ -830,7 +829,7 @@ namespace SharpFont
 		/// </para><para>
 		/// For subsetted CID-keyed fonts, <see cref="Error.InvalidArgument"/> is returned for invalid CID values (this
 		/// is, for CID values which don't have a corresponding glyph in the font). See the discussion of the
-		/// <see cref="FaceFlags.CIDKeyed"/> flag for more details.
+		/// <see cref="SharpFont.FaceFlags.CIDKeyed"/> flag for more details.
 		/// </para></remarks>
 		/// <param name="glyphIndex">
 		/// The index of the glyph in the font file. For CID-keyed fonts (either in PS or in CFF format) this argument
@@ -2044,6 +2043,126 @@ namespace SharpFont
 
 		#endregion
 
+		#region OpenType Validation
+
+		/// <summary>
+		/// Validate various OpenType tables to assure that all offsets and indices are valid. The idea is that a
+		/// higher-level library which actually does the text layout can access those tables without error checking
+		/// (which can be quite time consuming).
+		/// </summary>
+		/// <remarks><para>
+		/// This function only works with OpenType fonts, returning an error otherwise.
+		/// </para><para>
+		/// After use, the application should deallocate the five tables with <see cref="OpenTypeFree"/>. A NULL value
+		/// indicates that the table either doesn't exist in the font, or the application hasn't asked for validation.
+		/// </para></remarks>
+		/// <param name="flags">A bit field which specifies the tables to be validated.</param>
+		/// <param name="baseTable">A pointer to the BASE table.</param>
+		/// <param name="gdefTable">A pointer to the GDEF table.</param>
+		/// <param name="gposTable">A pointer to the GPOS table.</param>
+		/// <param name="gsubTable">A pointer to the GSUB table.</param>
+		/// <param name="jstfTable">A pointer to the JSTF table.</param>
+		[CLSCompliant(false)]
+		public void OpenTypeValidate(OpenTypeValidationFlags flags, out IntPtr baseTable, out IntPtr gdefTable, out IntPtr gposTable, out IntPtr gsubTable, out IntPtr jstfTable)
+		{
+			Error err = FT.FT_OpenType_Validate(Reference, flags, out baseTable, out gdefTable, out gposTable, out gsubTable, out jstfTable);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Free the buffer allocated by OpenType validator.
+		/// </summary>
+		/// <remarks>
+		/// This function must be used to free the buffer allocated by <see cref="OpenTypeValidate"/> only.
+		/// </remarks>
+		/// <param name="table">The pointer to the buffer that is allocated by <see cref="OpenTypeValidate"/>.</param>
+		public void OpenTypeFree(IntPtr table)
+		{
+			FT.FT_OpenType_Free(Reference, table);
+		}
+
+		#endregion
+
+		#region TrueTypeGX/AAT Validation
+
+		/// <summary>
+		/// Validate various TrueTypeGX tables to assure that all offsets and indices are valid. The idea is that a
+		/// higher-level library which actually does the text layout can access those tables without error checking
+		/// (which can be quite time consuming).
+		/// </summary>
+		/// <remarks><para>
+		/// This function only works with TrueTypeGX fonts, returning an error otherwise.
+		/// </para><para>
+		/// After use, the application should deallocate the buffers pointed to by each ‘tables’ element, by calling
+		/// <see cref="TrueTypeGXFree"/>. A NULL value indicates that the table either doesn't exist in the font, the
+		/// application hasn't asked for validation, or the validator doesn't have the ability to validate the sfnt
+		/// table.
+		/// </para></remarks>
+		/// <param name="flags">A bit field which specifies the tables to be validated.</param>
+		/// <param name="tables">
+		/// The array where all validated sfnt tables are stored. The array itself must be allocated by a client.
+		/// </param>
+		/// <param name="tableLength">
+		/// The size of the ‘tables’ array. Normally, FT_VALIDATE_GX_LENGTH should be passed.
+		/// </param>
+		[CLSCompliant(false)]
+		public void TrueTypeGXValidate(TrueTypeValidationFlags flags, byte[][] tables, uint tableLength)
+		{
+			FT.FT_TrueTypeGX_Validate(Reference, flags, tables, tableLength);
+		}
+
+		/// <summary>
+		/// Free the buffer allocated by TrueTypeGX validator.
+		/// </summary>
+		/// <remarks>
+		/// This function must be used to free the buffer allocated by <see cref="TrueTypeGXValidate"/> only.
+		/// </remarks>
+		/// <param name="table">The pointer to the buffer allocated by <see cref="TrueTypeGXValidate"/>.</param>
+		public void TrueTypeGXFree(IntPtr table)
+		{
+			FT.FT_TrueTypeGX_Free(Reference, table);
+		}
+
+		/// <summary><para>
+		/// Validate classic (16-bit format) kern table to assure that the offsets and indices are valid. The idea is
+		/// that a higher-level library which actually does the text layout can access those tables without error
+		/// checking (which can be quite time consuming).
+		/// </para><para>
+		/// The ‘kern’ table validator in <see cref="TrueTypeGXValidate"/> deals with both the new 32-bit format and
+		/// the classic 16-bit format, while <see cref="ClassicKernValidate"/> only supports the classic 16-bit format.
+		/// </para></summary>
+		/// <remarks>
+		/// After use, the application should deallocate the buffers pointed to by ‘ckern_table’, by calling
+		/// <see cref="ClassicKernFree"/>. A NULL value indicates that the table doesn't exist in the font.
+		/// </remarks>
+		/// <param name="flags">A bit field which specifies the dialect to be validated.</param>
+		/// <returns>A pointer to the kern table.</returns>
+		[CLSCompliant(false)]
+		public IntPtr ClassicKernValidate(ClassicKernValidationFlags flags)
+		{
+			IntPtr ckernRef;
+			FT.FT_ClassicKern_Validate(Reference, flags, out ckernRef);
+			return ckernRef;
+		}
+
+		/// <summary>
+		/// Free the buffer allocated by classic Kern validator.
+		/// </summary>
+		/// <remarks>
+		/// This function must be used to free the buffer allocated by <see cref="ClassicKernValidate"/> only.
+		/// </remarks>
+		/// <param name="table">
+		/// The pointer to the buffer that is allocated by <see cref="ClassicKernValidate"/>.
+		/// </param>
+		public void ClassicKernFree(IntPtr table)
+		{
+			FT.FT_ClassicKern_Free(Reference, table);
+		}
+
+		#endregion
+
 		internal void AddChildSize(FTSize child)
 		{
 			childSizes.Add(child);
@@ -2071,13 +2190,10 @@ namespace SharpFont
 
 				childSizes.Clear();
 
-				if (!duplicate)
-				{
 					Error err = FT.FT_Done_Face(reference);
 
 					if (err != Error.Ok)
 						throw new FreeTypeException(err);
-				}
 
 				reference = IntPtr.Zero;
 				rec = null;

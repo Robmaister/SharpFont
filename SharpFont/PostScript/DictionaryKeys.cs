@@ -27,7 +27,7 @@ using System;
 namespace SharpFont.PostScript
 {
 	/// <summary>
-	/// An enumeration used in calls to <see cref="FT.GetPSFontValue"/> to identify the Type 1 dictionary entry to
+	/// An enumeration used in calls to <see cref="Face.GetPSFontValue"/> to identify the Type 1 dictionary entry to
 	/// retrieve.
 	/// </summary>
 	/// <see href="http://partners.adobe.com/public/developer/en/font/T1_SPEC.PDF"/>

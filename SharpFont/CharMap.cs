@@ -67,7 +67,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets an <see cref="Encoding"/> tag identifying the charmap. Use this with <see cref="SelectCharmap"/>.
+		/// Gets an <see cref="Encoding"/> tag identifying the charmap. Use this with
+		/// <see cref="SharpFont.Face.SelectCharmap"/>.
 		/// </summary>
 		[CLSCompliant(false)]
 		public Encoding Encoding

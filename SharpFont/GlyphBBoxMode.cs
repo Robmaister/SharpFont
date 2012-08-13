@@ -27,7 +27,7 @@ using System;
 namespace SharpFont
 {
 	/// <summary>
-	/// The mode how the values of <see cref="FT.GlyphGetCBox"/> are returned.
+	/// The mode how the values of <see cref="Glyph.GetCBox"/> are returned.
 	/// </summary>
 	[CLSCompliant(false)]
 	public enum GlyphBBoxMode : uint

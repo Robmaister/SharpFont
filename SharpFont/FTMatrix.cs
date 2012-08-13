@@ -54,8 +54,14 @@ namespace SharpFont
 	[StructLayout(LayoutKind.Sequential)]
 	public struct FTMatrix
 	{
+		#region Fields
+
 		private FT_Fixed xx, xy;
 		private FT_Fixed yx, yy;
+
+		#endregion
+
+		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FTMatrix"/> struct.
@@ -109,6 +115,10 @@ namespace SharpFont
 			yy = Marshal.ReadIntPtr(reference, IntPtr.Size * 3);
 #endif
 		}
+
+		#endregion
+
+		#region Properties
 
 		/// <summary>
 		/// Matrix coefficient.
@@ -189,5 +199,47 @@ namespace SharpFont
 #endif
 			}
 		}
+
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Perform the matrix operation ‘b = a*b’.
+		/// </summary>
+		/// <remarks>
+		/// The result is undefined if either ‘a’ or ‘b’ is zero.
+		/// </remarks>
+		/// <param name="b">A pointer to matrix ‘b’.</param>
+		public void Multiply(FTMatrix b)
+		{
+			FT.FT_Matrix_Multiply(ref this, ref b);
+		}
+
+		/// <summary>
+		/// Invert a 2x2 matrix. Return an error if it can't be inverted.
+		/// </summary>
+		public void Invert()
+		{
+			Error err = FT.FT_Matrix_Invert(ref this);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Perform the matrix operation ‘b = a*b’.
+		/// </summary>
+		/// <remarks>
+		/// The result is undefined if either ‘a’ or ‘b’ is zero.
+		/// </remarks>
+		/// <param name="a">A pointer to matrix ‘a’.</param>
+		/// <param name="b">A pointer to matrix ‘b’.</param>
+		public static void Multiply(FTMatrix a, FTMatrix b)
+		{
+			FT.FT_Matrix_Multiply(ref a, ref b);
+		}
+
+		#endregion
 	}
 }

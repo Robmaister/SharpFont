@@ -45,8 +45,8 @@ namespace SharpFont
 		/// Return an FSSpec for the disk file containing the named font.
 		/// </summary>
 		/// <param name="fontName">Mac OS name of the font (e.g., Times New Roman Bold).</param>
-		/// <param name="faceIndex">Index of the face. For passing to <see cref="NewFaceFromFSSpec"/>.</param>
-		/// <returns>FSSpec to the file. For passing to <see cref="NewFaceFromFSSpec"/>.</returns>
+		/// <param name="faceIndex">Index of the face. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</param>
+		/// <returns>FSSpec to the file. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</returns>
 		public static IntPtr GetFileFromMacName(string fontName, out int faceIndex)
 		{
 			IntPtr fsspec;
@@ -63,8 +63,8 @@ namespace SharpFont
 		/// Return an FSSpec for the disk file containing the named font.
 		/// </summary>
 		/// <param name="fontName">Mac OS name of the font in ATS framework.</param>
-		/// <param name="faceIndex">Index of the face. For passing to <see cref="NewFaceFromFSSpec"/>.</param>
-		/// <returns>FSSpec to the file. For passing to <see cref="NewFaceFromFSSpec"/>.</returns>
+		/// <param name="faceIndex">Index of the face. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</param>
+		/// <returns>FSSpec to the file. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</returns>
 		public static IntPtr GetFileFromMacATSName(string fontName, out int faceIndex)
 		{
 			IntPtr fsspec;
@@ -82,10 +82,10 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="fontName">Mac OS name of the font in ATS framework.</param>
 		/// <param name="path">
-		/// Buffer to store pathname of the file. For passing to <see cref="NewFace"/>. The client must allocate this
-		/// buffer before calling this function.
+		/// Buffer to store pathname of the file. For passing to <see cref="Library.NewFace"/>. The client must
+		/// allocate this buffer before calling this function.
 		/// </param>
-		/// <returns>Index of the face. For passing to <see cref="NewFace"/>.</returns>
+		/// <returns>Index of the face. For passing to <see cref="Library.NewFace"/>.</returns>
 		public unsafe static int GetFilePathFromMacATSName(string fontName, byte[] path)
 		{
 			int faceIndex;

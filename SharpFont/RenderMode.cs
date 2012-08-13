@@ -36,12 +36,12 @@ namespace SharpFont
 	/// All modes except <see cref="RenderMode.Mono"/> use 256 levels of opacity.
 	/// </para></summary>
 	/// <remarks><para>
-	/// The LCD-optimized glyph bitmaps produced by <see cref="FT.RenderGlyph"/> can be filtered to reduce
-	/// color-fringes by using <see cref="FT.LibrarySetLcdFilter"/> (not active in the default builds). It is up to the
-	/// caller to either call <see cref="FT.LibrarySetLcdFilter"/> (if available) or do the filtering itself.
+	/// The LCD-optimized glyph bitmaps produced by <see cref="GlyphSlot.RenderGlyph"/> can be filtered to reduce
+	/// color-fringes by using <see cref="Library.SetLcdFilter"/> (not active in the default builds). It is up to the
+	/// caller to either call <see cref="Library.SetLcdFilter"/> (if available) or do the filtering itself.
 	/// </para><para>
 	/// The selected render mode only affects vector glyphs of a font. Embedded bitmaps often have a different pixel
-	/// mode like <see cref="PixelMode.Mono"/>. You can use <see cref="FT.BitmapConvert"/> to transform them into 8-bit
+	/// mode like <see cref="PixelMode.Mono"/>. You can use <see cref="FTBitmap.Convert"/> to transform them into 8-bit
 	/// pixmaps.
 	/// </para></remarks>
 	public enum RenderMode

@@ -66,11 +66,17 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
+
 				return reference;
 			}
 
 			set
 			{
+				if (disposed)
+					throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
+
 				reference = value;
 			}
 		}
@@ -94,6 +100,9 @@ namespace SharpFont
 		/// </param>
 		public void Set(int radius, StrokerLineCap lineCap, StrokerLineJoin lineJoin, int miterLimit)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
+
 			FT.FT_Stroker_Set(Reference, radius, lineCap, lineJoin, miterLimit);
 		}
 
@@ -103,6 +112,9 @@ namespace SharpFont
 		/// </summary>
 		public void Rewind()
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
+
 			FT.FT_Stroker_Rewind(Reference);
 		}
 
@@ -125,6 +137,12 @@ namespace SharpFont
 		/// </param>
 		public void ParseOutline(Outline outline, bool opened)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
+
+			if (outline == null)
+				throw new ArgumentNullException("outline");
+
 			Error err = FT.FT_Stroker_ParseOutline(Reference, outline.Reference, opened);
 
 			if (err != Error.Ok)
@@ -142,6 +160,9 @@ namespace SharpFont
 		/// <param name="open">A boolean. If 1, the sub-path is treated as an open one.</param>
 		public void BeginSubPath(FTVector to, bool open)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
+
 			Error err = FT.FT_Stroker_BeginSubPath(Reference, ref to, open);
 
 			if (err != Error.Ok)
@@ -157,6 +178,9 @@ namespace SharpFont
 		/// </remarks>
 		public void EndSubPath()
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
+
 			Error err = FT.FT_Stroker_EndSubPath(Reference);
 
 			if (err != Error.Ok)
@@ -172,6 +196,9 @@ namespace SharpFont
 		/// <param name="to">A pointer to the destination point.</param>
 		public void LineTo(FTVector to)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
+
 			Error err = FT.FT_Stroker_LineTo(Reference, ref to);
 
 			if (err != Error.Ok)
@@ -188,6 +215,9 @@ namespace SharpFont
 		/// <param name="to">A pointer to the destination point.</param>
 		public void ConicTo(FTVector control, FTVector to)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
+
 			Error err = FT.FT_Stroker_ConicTo(Reference, ref control, ref to);
 
 			if (err != Error.Ok)
@@ -205,6 +235,9 @@ namespace SharpFont
 		/// <param name="to">A pointer to the destination point.</param>
 		public void CubicTo(FTVector control1, FTVector control2, FTVector to)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
+
 			Error err = FT.FT_Stroker_CubicTo(Reference, ref control1, ref control2, ref to);
 
 			if (err != Error.Ok)
@@ -231,6 +264,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public void GetBorderCounts(StrokerBorder border, out uint pointsCount, out uint contoursCount)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
+
 			Error err = FT.FT_Stroker_GetBorderCounts(Reference, border, out pointsCount, out contoursCount);
 
 			if (err != Error.Ok)
@@ -260,6 +296,12 @@ namespace SharpFont
 		/// <param name="outline">The target outline handle.</param>
 		public void ExportBorder(StrokerBorder border, Outline outline)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
+
+			if (outline == null)
+				throw new ArgumentNullException("outline");
+
 			FT.FT_Stroker_ExportBorder(Reference, border, outline.Reference);
 		}
 
@@ -272,6 +314,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public void GetCounts(out uint pointsCount, out uint contoursCount)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
+
 			Error err = FT.FT_Stroker_GetCounts(Reference, out pointsCount, out contoursCount);
 
 			if (err != Error.Ok)
@@ -288,6 +333,12 @@ namespace SharpFont
 		/// <param name="outline">The target outline handle.</param>
 		public void Export(Outline outline)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
+
+			if (outline == null)
+				throw new ArgumentNullException("outline");
+
 			FT.FT_Stroker_Export(Reference, outline.Reference);
 		}
 

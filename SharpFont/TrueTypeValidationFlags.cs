@@ -27,7 +27,7 @@ using System;
 namespace SharpFont
 {
 	/// <summary>
-	/// A list of bit-field constants used with <see cref="FT.TrueTypeGXValidate"/> to indicate which TrueTypeGX/AAT
+	/// A list of bit-field constants used with <see cref="Face.TrueTypeGXValidate"/> to indicate which TrueTypeGX/AAT
 	/// Type tables should be validated.
 	/// </summary>
 	[Flags]

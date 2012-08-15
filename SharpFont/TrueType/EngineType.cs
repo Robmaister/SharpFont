@@ -28,7 +28,7 @@ namespace SharpFont.TrueType
 {
 	/// <summary>
 	/// A list of values describing which kind of TrueType bytecode engine is implemented in a given
-	/// <see cref="Library"/> instance. It is used by the <see cref="FT.GetTrueTypeEngineType"/> function.
+	/// <see cref="Library"/> instance. It is used by the <see cref="Library.GetTrueTypeEngineType"/> function.
 	/// </summary>
 	public enum EngineType
 	{

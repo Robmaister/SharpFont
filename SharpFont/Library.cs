@@ -27,6 +27,7 @@ using System.Collections.Generic;
 
 using SharpFont.TrueType;
 using SharpFont.Internal;
+using SharpFont.Cache;
 
 namespace SharpFont
 {
@@ -52,6 +53,7 @@ namespace SharpFont
 		private List<Glyph> childGlyphs;
 		private List<Outline> childOutlines;
 		private List<Stroker> childStrokers;
+		private List<Manager> childManagers;
 
 		#endregion
 
@@ -63,6 +65,7 @@ namespace SharpFont
 			childGlyphs = new List<Glyph>();
 			childOutlines = new List<Outline>();
 			childStrokers = new List<Stroker>();
+			childManagers = new List<Manager>();
 		}
 
 		/// <summary>
@@ -179,6 +182,9 @@ namespace SharpFont
 		/// <see cref="OpenFace"/>
 		public Face NewFace(string path, int faceIndex)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
 			return new Face(this, path, faceIndex);
 		}
 
@@ -196,6 +202,9 @@ namespace SharpFont
 		/// <see cref="OpenFace"/>
 		public Face NewMemoryFace(byte[] file, int faceIndex)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
 			return new Face(this, file, faceIndex);
 		}
 
@@ -228,7 +237,7 @@ namespace SharpFont
 		public Face OpenFace(OpenArgs args, int faceIndex)
 		{
 			if (disposed)
-				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
 			IntPtr faceRef;
 
@@ -257,7 +266,7 @@ namespace SharpFont
 		public Face NewFaceFromFOND(IntPtr fond, int faceIndex)
 		{
 			if (disposed)
-				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
 			IntPtr faceRef;
 
@@ -282,7 +291,7 @@ namespace SharpFont
 		public Face NewFaceFromFSSpec(IntPtr spec, int faceIndex)
 		{
 			if (disposed)
-				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
 			IntPtr faceRef;
 
@@ -307,7 +316,7 @@ namespace SharpFont
 		public Face NewFaceFromFSRef(IntPtr @ref, int faceIndex)
 		{
 			if (disposed)
-				throw new ObjectDisposedException("library", "Cannot access a disposed object.");
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
 			IntPtr faceRef;
 
@@ -331,6 +340,9 @@ namespace SharpFont
 		/// <param name="clazz">A pointer to class descriptor for the module.</param>
 		public void AddModule(ModuleClass clazz)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
 			Error err = FT.FT_Add_Module(Reference, clazz.Reference);
 
 			if (err != Error.Ok)
@@ -348,6 +360,9 @@ namespace SharpFont
 		/// <returns>A module handle. 0 if none was found.</returns>
 		public Module GetModule(string moduleName)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
 			return new Module(FT.FT_Get_Module(Reference, moduleName));
 		}
 
@@ -360,6 +375,12 @@ namespace SharpFont
 		/// <param name="module">A handle to a module object.</param>
 		public void RemoveModule(Module module)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
+			if (module == null)
+				throw new ArgumentNullException("module");
+
 			Error err = FT.FT_Remove_Module(Reference, module.Reference);
 
 			if (err != Error.Ok)
@@ -381,6 +402,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public void SetDebugHook(uint hookIndex, IntPtr debugHook)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
 			FT.FT_Set_Debug_Hook(Reference, hookIndex, debugHook);
 		}
 
@@ -390,6 +414,9 @@ namespace SharpFont
 		/// </summary>
 		public void AddDefaultModules()
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
 			FT.FT_Add_Default_Modules(Reference);
 		}
 
@@ -408,6 +435,9 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public Renderer GetRenderer(GlyphFormat format)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
 			return new Renderer(FT.FT_Get_Renderer(Reference, format));
 		}
 
@@ -431,10 +461,22 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public unsafe void SetRenderer(Renderer renderer, uint numParams, Parameter[] parameters)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
+			if (renderer == null)
+				throw new ArgumentNullException("renderer");
+
+			if (parameters == null)
+				throw new ArgumentNullException("paramters");
+
 			ParameterRec[] paramRecs = Array.ConvertAll<Parameter, ParameterRec>(parameters, (p => p.Record));
 			fixed (void* ptr = paramRecs)
 			{
 				Error err = FT.FT_Set_Renderer(Reference, renderer.Reference, numParams, (IntPtr)ptr);
+
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
 			}
 		}
 
@@ -476,6 +518,9 @@ namespace SharpFont
 		/// </para></param>
 		public void SetLcdFilter(LcdFilter filter)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
 			Error err = FT.FT_Library_SetLcdFilter(Reference, filter);
 
 			if (err != Error.Ok)
@@ -500,6 +545,12 @@ namespace SharpFont
 		/// </param>
 		public void SetLcdFilterWeights(byte[] weights)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
+			if (weights == null)
+				throw new ArgumentNullException("weights");
+
 			Error err = FT.FT_Library_SetLcdFilterWeights(Reference, weights);
 
 			if (err != Error.Ok)
@@ -517,6 +568,9 @@ namespace SharpFont
 		/// <returns>A value indicating which level is supported.</returns>
 		public EngineType GetTrueTypeEngineType()
 		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
 			return FT.FT_Get_TrueType_Engine_Type(Reference);
 		}
 
@@ -544,6 +598,11 @@ namespace SharpFont
 		internal void AddChildStroker(Stroker child)
 		{
 			childStrokers.Add(child);
+		}
+
+		internal void AddChildManager(Manager child)
+		{
+			childManagers.Add(child);
 		}
 
 		#endregion
@@ -576,10 +635,14 @@ namespace SharpFont
 				foreach (Stroker s in childStrokers)
 					s.Dispose();
 
+				foreach (Manager m in childManagers)
+					m.Dispose();
+
 				childFaces.Clear();
 				childGlyphs.Clear();
 				childOutlines.Clear();
 				childStrokers.Clear();
+				childManagers.Clear();
 
 				Error err = (customMemory) ? FT.FT_Done_Library(Reference) : FT.FT_Done_FreeType(Reference);
 

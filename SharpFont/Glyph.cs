@@ -161,7 +161,7 @@ namespace SharpFont
 		public Glyph Copy()
 		{
 			if (disposed)
-				throw new ObjectDisposedException("source", "Cannot access a disposed object.");
+				throw new ObjectDisposedException("Glyph", "Cannot access a disposed object.");
 
 			IntPtr glyphRef;
 
@@ -183,7 +183,7 @@ namespace SharpFont
 		public void Transform(FTMatrix matrix, FTVector delta)
 		{
 			if (disposed)
-				throw new ObjectDisposedException("glyph", "Cannot access a disposed object.");
+				throw new ObjectDisposedException("Glyph", "Cannot access a disposed object.");
 
 			Error err = FT.FT_Glyph_Transform(Reference, ref matrix, ref delta);
 
@@ -242,7 +242,7 @@ namespace SharpFont
 		public BBox GetCBox(GlyphBBoxMode mode)
 		{
 			if (disposed)
-				throw new ObjectDisposedException("glyph", "Cannot access a disposed object.");
+				throw new ObjectDisposedException("Glyph", "Cannot access a disposed object.");
 
 			IntPtr cboxRef;
 			FT.FT_Glyph_Get_CBox(Reference, mode, out cboxRef);
@@ -275,10 +275,9 @@ namespace SharpFont
 		public void ToBitmap(RenderMode renderMode, FTVector origin, bool destroy)
 		{
 			if (disposed)
-				throw new ObjectDisposedException("glyph", "Cannot access a disposed object.");
+				throw new ObjectDisposedException("Glyph", "Cannot access a disposed object.");
 
 			IntPtr glyphRef = Reference;
-
 			Error err = FT.FT_Glyph_To_Bitmap(ref glyphRef, renderMode, ref origin, destroy);
 
 			Reference = glyphRef;
@@ -300,8 +299,13 @@ namespace SharpFont
 		/// <returns>New glyph handle.</returns>
 		public Glyph Stroke(Stroker stroker, bool destroy)
 		{
-			IntPtr sourceRef = Reference;
+			if (disposed)
+				throw new ObjectDisposedException("Glyph", "Cannot access a disposed object.");
 
+			if (stroker == null)
+				throw new ArgumentNullException("stroker");
+
+			IntPtr sourceRef = Reference;
 			Error err = FT.FT_Glyph_Stroke(ref sourceRef, stroker.Reference, destroy);
 
 			if (destroy)
@@ -331,8 +335,13 @@ namespace SharpFont
 		/// <returns>New glyph handle.</returns>
 		public Glyph StrokeBorder(Stroker stroker, bool inside, bool destroy)
 		{
-			IntPtr sourceRef = Reference;
+			if (disposed)
+				throw new ObjectDisposedException("Glyph", "Cannot access a disposed object.");
 
+			if (stroker == null)
+				throw new ArgumentNullException("stroker");
+
+			IntPtr sourceRef = Reference;
 			Error err = FT.FT_Glyph_StrokeBorder(ref sourceRef, stroker.Reference, inside, destroy);
 
 			if (destroy)

@@ -28,6 +28,7 @@ using System.Runtime.InteropServices;
 using SharpFont.Internal;
 using SharpFont.PostScript;
 using SharpFont.TrueType;
+using SharpFont.Cache;
 
 namespace SharpFont
 {
@@ -657,6 +658,55 @@ namespace SharpFont
 		internal static extern Error FT_Library_SetLcdFilterWeights(IntPtr library, byte[] weights);
 
 		#endregion
+
+		#endregion
+
+		#region Caching Sub-system
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern Error FTC_Manager_New(IntPtr library, uint max_faces, uint max_sizes, ulong maxBytes, FaceRequester requester, IntPtr req_data, out IntPtr amanager);
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern void FTC_Manager_Reset(IntPtr manager);
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern void FTC_Manager_Done(IntPtr manager);
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern Error FTC_Manager_LookupFace(IntPtr manager, IntPtr face_id, out IntPtr aface);
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern Error FTC_Manager_LookupSize(IntPtr manager, IntPtr scaler, out IntPtr asize);
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern void FTC_Node_Unref(IntPtr node, IntPtr manager);
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern void FTC_Manager_RemoveFaceID(IntPtr manager, IntPtr face_id);
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern Error FTC_CMapCache_New(IntPtr manager, out IntPtr acache);
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern uint FTC_CMapCache_Lookup(IntPtr cache, IntPtr face_id, int cmap_index, uint char_code);
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern Error FTC_ImageCache_New(IntPtr manager, out IntPtr acache);
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern Error FTC_ImageCache_Lookup(IntPtr cache, IntPtr type, uint gindex, out IntPtr aglyph, out IntPtr anode);
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern Error FTC_ImageCache_LookupScaler(IntPtr cache, IntPtr scaler, LoadFlags load_flags, uint gindex, out IntPtr aglyph, out IntPtr anode);
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern Error FTC_SBitCache_New(IntPtr manager, out IntPtr acache);
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern Error FTC_SBitCache_Lookup(IntPtr cache, IntPtr type, uint gindex, out IntPtr sbit, out IntPtr anode);
+
+		[DllImport(freetypeDll, CallingConvention = callConvention)]
+		internal static extern Error FTC_SBitCache_LookupScaler(IntPtr cache, IntPtr scaler, LoadFlags load_flags, uint gindex, out IntPtr sbit, out IntPtr anode);
 
 		#endregion
 

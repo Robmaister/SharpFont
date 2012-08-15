@@ -23,14 +23,86 @@ SOFTWARE.*/
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
 
 namespace SharpFont
 {
+	/// <summary>
+	/// Provides an API very similar to the original FreeType API.
+	/// </summary>
+	/// <remarks>
+	/// Useful for porting over C code that relies on FreeType. For everything else, use the instance methods of the
+	/// classes provided by SharpFont, they are designed to follow .NET naming and style conventions.
+	/// </remarks>
 	public static partial class FT
 	{
+		#region Mac Specific Interface
+
+		/// <summary>
+		/// Return an FSSpec for the disk file containing the named font.
+		/// </summary>
+		/// <param name="fontName">Mac OS name of the font (e.g., Times New Roman Bold).</param>
+		/// <param name="faceIndex">Index of the face. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</param>
+		/// <returns>FSSpec to the file. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</returns>
+		public static IntPtr GetFileFromMacName(string fontName, out int faceIndex)
+		{
+			IntPtr fsspec;
+
+			Error err = FT_GetFile_From_Mac_Name(fontName, out fsspec, out faceIndex);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return fsspec;
+		}
+
+		/// <summary>
+		/// Return an FSSpec for the disk file containing the named font.
+		/// </summary>
+		/// <param name="fontName">Mac OS name of the font in ATS framework.</param>
+		/// <param name="faceIndex">Index of the face. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</param>
+		/// <returns>FSSpec to the file. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</returns>
+		public static IntPtr GetFileFromMacATSName(string fontName, out int faceIndex)
+		{
+			IntPtr fsspec;
+
+			Error err = FT_GetFile_From_Mac_ATS_Name(fontName, out fsspec, out faceIndex);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			return fsspec;
+		}
+
+		/// <summary>
+		/// Return a pathname of the disk file and face index for given font name which is handled by ATS framework.
+		/// </summary>
+		/// <param name="fontName">Mac OS name of the font in ATS framework.</param>
+		/// <param name="path">
+		/// Buffer to store pathname of the file. For passing to <see cref="Library.NewFace"/>. The client must
+		/// allocate this buffer before calling this function.
+		/// </param>
+		/// <returns>Index of the face. For passing to <see cref="Library.NewFace"/>.</returns>
+		public unsafe static int GetFilePathFromMacATSName(string fontName, byte[] path)
+		{
+			int faceIndex;
+
+			fixed (void* ptr = path)
+			{
+				Error err = FT_GetFilePath_From_Mac_ATS_Name(fontName, (IntPtr)ptr, path.Length, out faceIndex);
+
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+			}
+
+			return faceIndex;
+		}
+
+		#endregion
+
 		#region Computations
 
 		/// <summary>

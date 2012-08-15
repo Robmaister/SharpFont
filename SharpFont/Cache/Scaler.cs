@@ -35,7 +35,7 @@ namespace SharpFont.Cache
 	/// <remarks>
 	/// This type is mainly used to retrieve <see cref="FTSize"/> objects through the cache manager.
 	/// </remarks>
-	/// <see cref="FTC.ManagerLookupSize"/>
+	/// <see cref="Manager.LookupSize"/>
 	public class Scaler
 	{
 		#region Fields

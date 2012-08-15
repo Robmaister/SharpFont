@@ -75,7 +75,6 @@
     <Compile Include="BitmapSize.cs" />
     <Compile Include="Cache\CMapCache.cs" />
     <Compile Include="Cache\FaceRequester.cs" />
-    <Compile Include="Cache\FTC.cs" />
     <Compile Include="Cache\ImageCache.cs" />
     <Compile Include="Cache\ImageType.cs" />
     <Compile Include="Cache\Internal\CMapCacheRec.cs" />
@@ -178,7 +177,7 @@
     <Compile Include="FaceFlags.cs" />
     <Compile Include="FreeTypeException.cs" />
     <Compile Include="EmbeddingTypes.cs" />
-    <Compile Include="FT.Core.cs" />
+    <Compile Include="FT.Public.cs" />
     <Compile Include="Gasp.cs" />
     <Compile Include="Generic.cs" />
     <Compile Include="Glyph.cs" />
@@ -233,10 +232,9 @@
     <Compile Include="PostScript\EncodingType.cs" />
     <Compile Include="FTVector.cs" />
     <Compile Include="FNT\WinFntID.cs" />
-    <Compile Include="FT.Private.cs" />
+    <Compile Include="FT.Internal.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FT.Support.cs" />
     <None Include="SharpFont.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>

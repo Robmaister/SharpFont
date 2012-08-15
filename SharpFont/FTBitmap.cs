@@ -106,6 +106,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
 				return rec.rows;
 			}
 		}
@@ -117,6 +120,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
 				return rec.width;
 			}
 		}
@@ -139,6 +145,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
 				return rec.pitch;
 			}
 		}
@@ -151,6 +160,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
 				return rec.buffer;
 			}
 		}
@@ -163,6 +175,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
 				return rec.num_grays;
 			}
 		}
@@ -174,6 +189,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
 				return rec.pixel_mode;
 			}
 		}
@@ -186,6 +204,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
 				return rec.palette_mode;
 			}
 		}
@@ -198,6 +219,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
 				return rec.palette;
 			}
 		}
@@ -206,11 +230,17 @@ namespace SharpFont
 		{
 			get
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
 				return reference;
 			}
 
 			set
 			{
+				if (disposed)
+					throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
 				reference = value;
 				rec = PInvokeHelper.PtrToStructure<BitmapRec>(reference);
 			}
@@ -227,6 +257,12 @@ namespace SharpFont
 		/// <returns>A handle to the target bitmap.</returns>
 		public FTBitmap Copy(Library library)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
+			if (library == null)
+				throw new ArgumentNullException("library");
+
 			IntPtr bitmapRef;
 			Error err = FT.FT_Bitmap_Copy(library.Reference, Reference, out bitmapRef);
 
@@ -256,6 +292,12 @@ namespace SharpFont
 		/// </param>
 		public void Embolden(Library library, int xStrength, int yStrength)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
+			if (library == null)
+				throw new ArgumentNullException("library");
+
 			Error err = FT.FT_Bitmap_Embolden(library.Reference, Reference, xStrength, yStrength);
 
 			if (err != Error.Ok)
@@ -281,6 +323,12 @@ namespace SharpFont
 		/// <returns>The target bitmap.</returns>
 		public FTBitmap Convert(Library library, int alignment)
 		{
+			if (disposed)
+				throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
+			if (library == null)
+				throw new ArgumentNullException("library");
+
 			IntPtr bitmapRef;
 			Error err = FT.FT_Bitmap_Convert(library.Reference, Reference, out bitmapRef, alignment);
 
@@ -298,6 +346,7 @@ namespace SharpFont
 		public void Dispose()
 		{
 			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 
 		private void Dispose(bool disposing)

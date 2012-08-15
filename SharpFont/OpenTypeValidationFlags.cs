@@ -27,7 +27,7 @@ using System;
 namespace SharpFont
 {
 	/// <summary>
-	/// A list of bit-field constants used with <see cref="FT.OpenTypeValidate"/> to indicate which OpenType tables
+	/// A list of bit-field constants used with <see cref="Face.OpenTypeValidate"/> to indicate which OpenType tables
 	/// should be validated.
 	/// </summary>
 	[Flags]

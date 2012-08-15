@@ -33,9 +33,9 @@ namespace SharpFont.Cache
 	/// If you look up nodes, you have the ability to ‘acquire’ them, i.e., to increment their reference count. This
 	/// will prevent the node from being flushed out of the cache until you explicitly ‘release’ it.
 	/// </para></summary>
-	/// <see cref="FTC.NodeUnref"/>
-	/// <seealso cref="FTC.SBitCacheLookup"/>
-	/// <seealso cref="FTC.ImageCacheLookup"/>
+	/// <see cref="Node.Unref"/>
+	/// <seealso cref="SBitCache.Lookup"/>
+	/// <seealso cref="ImageCache.Lookup"/>
 	public class Node
 	{
 		#region Fields
@@ -79,7 +79,7 @@ namespace SharpFont.Cache
 		/// <param name="manager">The cache manager handle.</param>
 		public void Unref(Manager manager)
 		{
-			FTC.NodeUnref(this, manager);
+			FT.FTC_Node_Unref(Reference, manager.Reference);
 		}
 
 		#endregion

@@ -15,7 +15,7 @@ SharpFont simplifies the FreeType API in a few ways:
  - Most methods are instance methods instead of static methods. This avoids unnecessary redundancy in method calls and
 creates an API with a .NET look-and-feel.
 
-For example, a regular FreeType method like this:
+For example, a regular FreeType method looks like this:
 
 ```C
 Face face;

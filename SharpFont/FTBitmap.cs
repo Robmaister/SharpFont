@@ -50,6 +50,9 @@ namespace SharpFont
 
 		private bool disposed;
 
+		//If the bitmap was generated with FT_Bitmap_New.
+		private bool user;
+
 		#endregion
 
 		#region Constructors
@@ -61,12 +64,14 @@ namespace SharpFont
 			Reference = bitmapRef;
 
 			this.library = library;
+			this.user = true;
 		}
 
 		internal FTBitmap(IntPtr reference, Library library)
 		{
 			Reference = reference;
 			this.library = library;
+			user = true;
 		}
 
 		internal FTBitmap(BitmapRec bmpInt, Library library)
@@ -78,6 +83,7 @@ namespace SharpFont
 		internal FTBitmap(IntPtr reference)
 			: this(reference, null)
 		{
+			user = true;
 		}
 
 		internal FTBitmap(BitmapRec bmpInt)
@@ -353,7 +359,7 @@ namespace SharpFont
 		{
 			if (!disposed)
 			{
-				if (library != null && !library.IsDisposed) //HACK set this up properly
+				if (user)
 				{
 					Error err = FT.FT_Bitmap_Done(library.Reference, Reference);
 

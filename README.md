@@ -37,7 +37,7 @@ possible to rename the file by changing the filename constant in
 [FT.Internal.cs](SharpFont/tree/master/SharpFont/FT.Internal.cs) and recompile. On Linux and OSX (and any other
 Mono-supported platform), you must also copy `SharpFont.dll.config` to the project's output directory.
 
-A 32-bit copy of `freetype.dll` is included in the [Example](SharpFont/tree/master/Example) project.
+A 32-bit copy of `freetype.dll` is included in the [Examples](SharpFont/tree/master/Examples) project.
 
 Currently, Windows 64-bit systems require you to either compile SharpFont under the WIN64 configurations and include a
 64-bit copy of `freetype.dll` or to compile your project as an x86 project (instead of Any CPU). I describe this issue

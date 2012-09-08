@@ -33,11 +33,11 @@ Face face = new Face(library, "./myfont.ttf");
 
 Clone the repository and compile the solution. Copy `SharpFont.dll` to your project and include it as a reference. On
 Windows, you must include a compiled copy of FreeType2 as `freetype.dll` in the project's output directory. It is
-possible to rename the file by changing the filename constant in [FT.Internal.cs](SharpFont/FT.Internal.cs) and
-recompile. On Linux and OSX (and any other Mono-supported platform), you must also copy `SharpFont.dll.config` to the
-project's output directory.
+possible to rename the file by changing the filename constant in [FT.Internal.cs](SharpFont/SharpFont/FT.Internal.cs)
+and recompile. On Linux and OSX (and any other Mono-supported platform), you must also copy `SharpFont.dll.config` to
+the project's output directory.
 
-A 32-bit copy of `freetype.dll` is included in the [Example](Example) project.
+A 32-bit copy of `freetype.dll` is included in the [Example](SharpFont/Example) project.
 
 Currently, Windows 64-bit systems require you to either compile SharpFont under the WIN64 configurations and include a
 64-bit copy of `freetype.dll` or to compile your project as an x86 project (instead of Any CPU). I describe this issue
@@ -88,7 +88,7 @@ However, this can be restrictive to some applications. The best solution is to c
 =======================================================================================================================
 
 As metioned earlier, SharpFont is licensed under the MIT License. The terms of the MIT license are included in both the
-[LICENSE](LICENSE) file and below:
+[LICENSE](SharpFont/LICENSE) file and below:
 
 ```
 Copyright (c) 2012 Robert Rouhani <robert.rouhani@gmail.com>

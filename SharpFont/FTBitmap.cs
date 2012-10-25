@@ -25,6 +25,10 @@ SOFTWARE.*/
 #endregion
 
 using System;
+#if USING_SYSTEM_DRAWING
+using System.Drawing;
+using System.Drawing.Imaging;
+#endif
 using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
@@ -32,8 +36,8 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary>
-	/// A structure used to describe a bitmap or pixmap to the raster. Note that we now manage pixmaps of various depths
-	/// through the ‘pixel_mode’ field.
+	/// A structure used to describe a bitmap or pixmap to the raster. Note that we now manage pixmaps of various
+	/// depths through the <see cref="PixelMode"/> field.
 	/// </summary>
 	/// <remarks>
 	/// For now, the only pixel modes supported by FreeType are mono and grays. However, drivers might be added in the
@@ -232,6 +236,22 @@ namespace SharpFont
 			}
 		}
 
+		/// <summary>
+		/// Gets the <see cref="FTBitmap"/>'s buffer as a byte array.
+		/// </summary>
+		public byte[] BufferData
+		{
+			get
+			{
+				if (disposed)
+					throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
+				byte[] data = new byte[rec.rows * rec.width];
+				Marshal.Copy(rec.buffer, data, 0, data.Length);
+				return data;
+			}
+		}
+
 		internal IntPtr Reference
 		{
 			get
@@ -343,6 +363,69 @@ namespace SharpFont
 
 			return new FTBitmap(bitmapRef);
 		}
+
+#if USING_SYSTEM_DRAWING
+		public Bitmap ToSystemBitmap()
+		{
+			if (disposed)
+				throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
+
+			switch (rec.pixel_mode)
+			{
+				case PixelMode.Mono:
+				{
+					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format1bppIndexed);
+					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format1bppIndexed);
+					Marshal.Copy(BufferData, 0, locked.Scan0, rec.width * rec.rows);
+					bmp.UnlockBits(locked);
+					bmp.Palette.Entries[0] = Color.FromArgb(0, 0, 0, 0);
+					bmp.Palette.Entries[1] = Color.FromArgb(1, 0, 0, 0);
+					return bmp;
+				}
+				case PixelMode.Gray4:
+				{
+					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format4bppIndexed);
+					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format4bppIndexed);
+					Marshal.Copy(BufferData, 0, locked.Scan0, rec.width * rec.rows);
+					bmp.UnlockBits(locked);
+					for (int i = 0; i < 16; i++)
+					{
+						bmp.Palette.Entries[i] = Color.FromArgb((int)((i / 15) * 255), 0, 0, 0);
+					}
+					return bmp;
+				}
+				case PixelMode.Gray:
+				{
+					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format8bppIndexed);
+					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
+					Marshal.Copy(BufferData, 0, locked.Scan0, rec.width * rec.rows);
+					bmp.UnlockBits(locked);
+					for (int i = 0; i < 256; i++)
+					{
+						bmp.Palette.Entries[i] = Color.FromArgb(i, 0, 0, 0);
+					}
+					return bmp;
+				}
+				case PixelMode.LCD:
+				case PixelMode.VerticalLCD:
+				{
+					//TODO Should vertical LCD be different?
+					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format24bppRgb);
+					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+					Marshal.Copy(BufferData, 0, locked.Scan0, rec.width * rec.rows);
+					bmp.UnlockBits(locked);
+					for (int i = 0; i < 256; i++)
+					{
+						bmp.Palette.Entries[i] = Color.FromArgb(i, 0, 0, 0);
+					}
+					return bmp;
+				}
+				default:
+					throw new InvalidOperationException("System.Drawing.Bitmap does not support this pixel mode.");
+			}
+			
+		}
+#endif
 
 		#region IDisposable
 

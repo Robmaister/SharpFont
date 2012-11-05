@@ -41,7 +41,7 @@ namespace SharpFont.Cache
 		#region Constructors
 
 		/// <summary>
-		/// Create a new charmap cache.
+		/// Initializes a new instance of the <see cref="CMapCache"/> class.
 		/// </summary>
 		/// <remarks>
 		/// Like all other caches, this one will be destroyed with the cache manager.

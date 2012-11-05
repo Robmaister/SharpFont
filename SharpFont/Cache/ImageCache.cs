@@ -42,7 +42,7 @@ namespace SharpFont.Cache
 		#region Constructors
 
 		/// <summary>
-		/// Create a new glyph image cache.
+		/// Initializes a new instance of the <see cref="ImageCache"/> class.
 		/// </summary>
 		/// <param name="manager">The parent manager for the image cache.</param>
 		public ImageCache(Manager manager)

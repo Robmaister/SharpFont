@@ -61,7 +61,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// The span's horizontal start position.
+		/// Gets the span's horizontal start position.
 		/// </summary>
 		public short X
 		{
@@ -72,7 +72,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The span's length in pixels.
+		/// Gets the span's length in pixels.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort Length
@@ -84,7 +84,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The span color/coverage, ranging from 0 (background) to 255 (foreground). Only used for anti-aliased
+		/// Gets the span color/coverage, ranging from 0 (background) to 255 (foreground). Only used for anti-aliased
 		/// rendering.
 		/// </summary>
 		public byte Coverage

@@ -53,7 +53,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// The previous element in the list. NULL if first.
+		/// Gets the previous element in the list. NULL if first.
 		/// </summary>
 		public ListNode Previous
 		{
@@ -67,7 +67,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The next element in the list. NULL if last.
+		/// Gets the next element in the list. NULL if last.
 		/// </summary>
 		public ListNode Next
 		{
@@ -81,7 +81,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A typeless pointer to the listed object.
+		/// Gets a typeless pointer to the listed object.
 		/// </summary>
 		public IntPtr Data
 		{

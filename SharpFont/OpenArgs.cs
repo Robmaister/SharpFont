@@ -83,7 +83,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// A set of bit flags indicating how to use the structure.
+		/// Gets a set of bit flags indicating how to use the structure.
 		/// </summary>
 		public OpenFlags Flags
 		{
@@ -94,7 +94,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The first byte of the file in memory.
+		/// Gets the first byte of the file in memory.
 		/// </summary>
 		public IntPtr MemoryBase
 		{
@@ -105,7 +105,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The size in bytes of the file in memory.
+		/// Gets the size in bytes of the file in memory.
 		/// </summary>
 		public int MemorySize
 		{
@@ -116,7 +116,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A pointer to an 8-bit file pathname.
+		/// Gets a pointer to an 8-bit file pathname.
 		/// </summary>
 		public string PathName
 		{
@@ -127,7 +127,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A handle to a source stream object.
+		/// Gets a handle to a source stream object.
 		/// </summary>
 		public FTStream Stream
 		{
@@ -151,7 +151,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The number of extra parameters.
+		/// Gets the number of extra parameters.
 		/// </summary>
 		public int ParamsCount
 		{
@@ -162,7 +162,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Extra parameters passed to the font driver when opening a new face.
+		/// Gets the extra parameters passed to the font driver when opening a new face.
 		/// </summary>
 		public Parameter[] Params
 		{
@@ -178,7 +178,7 @@ namespace SharpFont
 
 				for (int i = 0; i < count; i++)
 				{
-					parameters[i] = new Parameter(new IntPtr(array.ToInt64() + Parameter.SizeInBytes * i));
+					parameters[i] = new Parameter(new IntPtr(array.ToInt64() + ParameterRec.SizeInBytes * i));
 				}
 
 				return parameters;

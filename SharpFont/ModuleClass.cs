@@ -77,7 +77,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// Bit flags describing the module.
+		/// Gets bit flags describing the module.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint Flags
@@ -89,7 +89,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The size of one module object/instance in bytes.
+		/// Gets the size of one module object/instance in bytes.
 		/// </summary>
 		public int Size
 		{
@@ -100,7 +100,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The name of the module.
+		/// Gets the name of the module.
 		/// </summary>
 		public string Name
 		{
@@ -111,7 +111,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The version, as a 16.16 fixed number (major.minor).
+		/// Gets the version, as a 16.16 fixed number (major.minor).
 		/// </summary>
 		public int Version
 		{
@@ -122,8 +122,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The version of FreeType this module requires, as a 16.16 fixed number (major.minor). Starts at version 2.0,
-		/// i.e., 0x20000.
+		/// Gets the version of FreeType this module requires, as a 16.16 fixed number (major.minor). Starts at version
+		/// 2.0, i.e., 0x20000.
 		/// </summary>
 		public int Requires
 		{
@@ -142,7 +142,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The initializing function.
+		/// Gets the initializing function.
 		/// </summary>
 		public ModuleConstructor Init
 		{
@@ -153,7 +153,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The finalizing function.
+		/// Gets the finalizing function.
 		/// </summary>
 		public ModuleDestructor Done
 		{
@@ -164,7 +164,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The interface requesting function.
+		/// Gets the interface requesting function.
 		/// </summary>
 		public ModuleRequester GetInterface
 		{

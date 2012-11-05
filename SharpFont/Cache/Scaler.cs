@@ -104,7 +104,7 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// Only used when ‘pixel’ is value 0 to indicate the horizontal resolution in dpi.
+		/// Gets the horizontal resolution in dpi; only used when ‘pixel’ is value 0.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint ResolutionX
@@ -116,7 +116,7 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// Only used when ‘pixel’ is value 0 to indicate the vertical resolution in dpi.
+		/// Gets the vertical resolution in dpi; only used when ‘pixel’ is value 0.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint ResolutionY

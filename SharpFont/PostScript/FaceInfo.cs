@@ -133,7 +133,7 @@ namespace SharpFont.PostScript
 				#if WIN64
 				return rec.xuid;
 				#else
-				return Array.ConvertAll<UIntPtr, uint>(rec.xuid, new Converter<UIntPtr,uint>(delegate(UIntPtr x) { return (uint)x; }));
+				return Array.ConvertAll<UIntPtr, uint>(rec.xuid, new Converter<UIntPtr, uint>(delegate(UIntPtr x) { return (uint)x; }));
 				#endif
 			}
 		}

@@ -29,7 +29,7 @@ namespace SharpFont.Internal
 {
 	internal sealed class FaceMarshsaler : ICustomMarshaler
 	{
-		private static readonly FaceMarshsaler instance = new FaceMarshsaler();
+		private static readonly FaceMarshsaler Instance = new FaceMarshsaler();
 
 		private FaceMarshsaler()
 		{
@@ -37,18 +37,18 @@ namespace SharpFont.Internal
 
 		public static ICustomMarshaler GetInstance(string cookie)
 		{
-			return instance;
+			return Instance;
 		}
 
-		public void CleanUpManagedData(object ManagedObj)
+		public void CleanUpManagedData(object managedObj)
 		{
-			if (ManagedObj == null)
+			if (managedObj == null)
 				throw new ArgumentNullException("ManagedObj");
 
-			if (ManagedObj.GetType() != typeof(Face))
+			if (managedObj.GetType() != typeof(Face))
 				throw new ArgumentException("Managed object is not a Face.");
 
-			((Face)ManagedObj).Dispose();
+			((Face)managedObj).Dispose();
 		}
 
 		public void CleanUpNativeData(IntPtr pNativeData)
@@ -61,17 +61,16 @@ namespace SharpFont.Internal
 			return FaceRec.SizeInBytes;
 		}
 
-		public IntPtr MarshalManagedToNative(object ManagedObj)
+		public IntPtr MarshalManagedToNative(object managedObj)
 		{
-			if (ManagedObj == null)
+			if (managedObj == null)
 				throw new ArgumentNullException("ManagedObj");
 
-			if (ManagedObj.GetType() != typeof(Face))
+			if (managedObj.GetType() != typeof(Face))
 				throw new ArgumentException("Managed object is not a Face.");
 
 			//TODO if we have any setters in Face, make sure to marshal them to Reference.
-
-			return ((Face)ManagedObj).Reference;
+			return ((Face)managedObj).Reference;
 		}
 
 		public object MarshalNativeToManaged(IntPtr pNativeData)

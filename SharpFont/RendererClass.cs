@@ -53,7 +53,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// The root <see cref="ModuleClass"/> fields.
+		/// Gets the root <see cref="ModuleClass"/> fields.
 		/// </summary>
 		public ModuleClass Root
 		{
@@ -64,7 +64,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The glyph image format this renderer handles.
+		/// Gets the glyph image format this renderer handles.
 		/// </summary>
 		[CLSCompliant(false)]
 		public GlyphFormat Format
@@ -76,7 +76,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A method used to render the image that is in a given glyph slot into a bitmap.
+		/// Gets a method used to render the image that is in a given glyph slot into a bitmap.
 		/// </summary>
 		public IntPtr RenderGlyph
 		{
@@ -87,7 +87,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A method used to transform the image that is in a given glyph slot.
+		/// Gets a method used to transform the image that is in a given glyph slot.
 		/// </summary>
 		public IntPtr TransformGlyph
 		{
@@ -98,7 +98,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A method used to access the glyph's cbox.
+		/// Gets a method used to access the glyph's cbox.
 		/// </summary>
 		public IntPtr GetGlyphCBox
 		{
@@ -109,7 +109,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A method used to pass additional parameters.
+		/// Gets a method used to pass additional parameters.
 		/// </summary>
 		public IntPtr SetMode
 		{
@@ -126,7 +126,6 @@ namespace SharpFont
 		{
 			get
 			{
-				
 				return new RasterFuncs(reference, Marshal.OffsetOf(typeof(RendererClassRec), "raster_class"));
 			}
 		}

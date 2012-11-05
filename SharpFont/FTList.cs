@@ -38,7 +38,7 @@ namespace SharpFont
 	/// </param>
 	/// <returns>Error code.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate Error ListIterator([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(ListNodeMarshaler))]ListNode node, IntPtr user);
+	public delegate Error ListIterator([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ListNodeMarshaler))]ListNode node, IntPtr user);
 
 	/// <summary>
 	/// An <see cref="FTList"/> iterator function which is called during a list finalization by
@@ -76,7 +76,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// The head (first element) of doubly-linked list.
+		/// Gets the head (first element) of doubly-linked list.
 		/// </summary>
 		public ListNode Head
 		{
@@ -87,7 +87,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The tail (last element) of doubly-linked list.
+		/// Gets the tail (last element) of doubly-linked list.
 		/// </summary>
 		public ListNode Tail
 		{

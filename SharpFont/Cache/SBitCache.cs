@@ -44,7 +44,7 @@ namespace SharpFont.Cache
 		#region Constructors
 
 		/// <summary>
-		/// Create a new cache to store small glyph bitmaps.
+		/// Initializes a new instance of the <see cref="SBitCache"/> class.
 		/// </summary>
 		/// <param name="manager">A handle to the source cache manager.</param>
 		public SBitCache(Manager manager)

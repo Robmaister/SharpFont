@@ -26,11 +26,11 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
+using SharpFont.BDF;
 using SharpFont.Internal;
 using SharpFont.MultipleMasters;
-using SharpFont.TrueType;
 using SharpFont.PostScript;
-using SharpFont.BDF;
+using SharpFont.TrueType;
 
 namespace SharpFont
 {
@@ -55,11 +55,6 @@ namespace SharpFont
 		#endregion
 
 		#region Constructors
-
-		private Face()
-		{
-			childSizes = new List<FTSize>();
-		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Face"/> class with a default faceIndex of 0.
@@ -132,10 +127,16 @@ namespace SharpFont
 				parentLibrary = parent;
 				parentLibrary.AddChildFace(this);
 			}
-			else //if there's no parent, this is a Marshalled duplicate.
+			else
 			{
+				//if there's no parent, this is a marshalled duplicate.
 				FT.FT_Reference_Face(Reference);
 			}
+		}
+
+		private Face()
+		{
+			childSizes = new List<FTSize>();
 		}
 
 		/// <summary>
@@ -356,7 +357,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets a field reserved for client uses.
+		/// Gets or sets a field reserved for client uses.
 		/// </summary>
 		/// <see cref="Generic"/>
 		public Generic Generic
@@ -563,6 +564,141 @@ namespace SharpFont
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether a face object contains horizontal metrics (this is true for all font
+		/// formats though).
+		/// </summary>
+		public bool HasHoriziontal
+		{
+			get
+			{
+				return (FaceFlags & FaceFlags.Horizontal) == FaceFlags.Horizontal;
+			}
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether a face object contains vertical metrics.
+		/// </summary>
+		public bool HasVertical
+		{
+			get
+			{
+				return (FaceFlags & FaceFlags.Vertical) == FaceFlags.Vertical;
+			}
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether a face object contains kerning data that can be accessed with
+		/// <see cref="GetKerning"/>.
+		/// </summary>
+		public bool HasKerning
+		{
+			get
+			{
+				return (FaceFlags & FaceFlags.Kerning) == FaceFlags.Kerning;
+			}
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether a face object contains a scalable font face (true for TrueType, Type 1,
+		/// Type 42, CID, OpenType/CFF, and PFR font formats.
+		/// </summary>
+		public bool IsScalable
+		{
+			get
+			{
+				return (FaceFlags & FaceFlags.Scalable) == FaceFlags.Scalable;
+			}
+		}
+
+		/// <summary><para>
+		/// Gets a value indicating whether a face object contains a font whose format is based on the SFNT storage
+		/// scheme. This usually means: TrueType fonts, OpenType fonts, as well as SFNT-based embedded bitmap fonts.
+		/// </para><para>
+		/// If this macro is true, all functions defined in FT_SFNT_NAMES_H and FT_TRUETYPE_TABLES_H are available.
+		/// </para></summary>
+		public bool IsSfnt
+		{
+			get
+			{
+				return (FaceFlags & FaceFlags.Sfnt) == FaceFlags.Sfnt;
+			}
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether a face object contains a font face that contains fixed-width (or
+		/// ‘monospace’, ‘fixed-pitch’, etc.) glyphs.
+		/// </summary>
+		public bool IsFixedWidth
+		{
+			get
+			{
+				return (FaceFlags & FaceFlags.FixedWidth) == FaceFlags.FixedWidth;
+			}
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether a face object contains some embedded bitmaps.
+		/// </summary>
+		/// <see cref="Face.AvailableSizes"/>
+		public bool HasFixedSizes
+		{
+			get
+			{
+				return (FaceFlags & FaceFlags.FixedSizes) == FaceFlags.FixedSizes;
+			}
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether a face object contains some glyph names that can be accessed through 
+		/// <see cref="GetGlyphName(uint, int)"/>.
+		/// </summary>
+		public bool HasGlyphNames
+		{
+			get
+			{
+				return (FaceFlags & FaceFlags.GlyphNames) == FaceFlags.GlyphNames;
+			}
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether a face object contains some multiple masters. The functions provided by
+		/// FT_MULTIPLE_MASTERS_H are then available to choose the exact design you want.
+		/// </summary>
+		public bool HasMultipleMasters
+		{
+			get
+			{
+				return (FaceFlags & FaceFlags.MultipleMasters) == FaceFlags.MultipleMasters;
+			}
+		}
+
+		/// <summary><para>
+		/// Gets a value indicating whether a face object contains a CID-keyed font. See the discussion of
+		/// FT_FACE_FLAG_CID_KEYED for more details.
+		/// </para><para>
+		/// If this macro is true, all functions defined in FT_CID_H are available.
+		/// </para></summary>
+		public bool IsCIDKeyed
+		{
+			get
+			{
+				return (FaceFlags & FaceFlags.CIDKeyed) == FaceFlags.CIDKeyed;
+			}
+		}
+
+		/// <summary>
+		/// Gets a value indicating whether a face represents a ‘tricky’ font. See the discussion of
+		/// FT_FACE_FLAG_TRICKY for more details.
+		/// </summary>
+		public bool IsTricky
+		{
+			get
+			{
+				return (FaceFlags & FaceFlags.Tricky) == FaceFlags.Tricky;
+			}
+		}
+
 		internal IntPtr Reference
 		{
 			get
@@ -582,78 +718,6 @@ namespace SharpFont
 				rec = PInvokeHelper.PtrToStructure<FaceRec>(reference);
 			}
 		}
-
-		/// <summary>
-		/// Gets a value indicating whether a face object contains horizontal metrics (this is true for all font
-		/// formats though).
-		/// </summary>
-		public bool HasHoriziontal { get { return (FaceFlags & FaceFlags.Horizontal) == FaceFlags.Horizontal; } }
-
-		/// <summary>
-		/// Gets a value indicating whether a face object contains vertical metrics.
-		/// </summary>
-		public bool HasVertical { get { return (FaceFlags & FaceFlags.Vertical) == FaceFlags.Vertical; } }
-
-		/// <summary>
-		/// Gets a value indicating whether a face object contains kerning data that can be accessed with
-		/// <see cref="GetKerning"/>.
-		/// </summary>
-		public bool HasKerning()
-		{
-			return (FaceFlags & FaceFlags.Kerning) == FaceFlags.Kerning;
-		}
-
-		/// <summary>
-		/// Gets a value indicating whether a face object contains a scalable font face (true for TrueType, Type 1,
-		/// Type 42, CID, OpenType/CFF, and PFR font formats.
-		/// </summary>
-		public bool IsScalable { get { return (FaceFlags & FaceFlags.Scalable) == FaceFlags.Scalable; } }
-
-		/// <summary><para>
-		/// Gets a value indicating whether a face object contains a font whose format is based on the SFNT storage
-		/// scheme. This usually means: TrueType fonts, OpenType fonts, as well as SFNT-based embedded bitmap fonts.
-		/// </para><para>
-		/// If this macro is true, all functions defined in FT_SFNT_NAMES_H and FT_TRUETYPE_TABLES_H are available.
-		/// </para></summary>
-		public bool IsSfnt { get { return (FaceFlags & FaceFlags.Sfnt) == FaceFlags.Sfnt; } }
-
-		/// <summary>
-		/// Gets a value indicating whether a face object contains a font face that contains fixed-width (or
-		/// ‘monospace’, ‘fixed-pitch’, etc.) glyphs.
-		/// </summary>
-		public bool IsFixedWidth { get { return (FaceFlags & FaceFlags.FixedWidth) == FaceFlags.FixedWidth; } }
-
-		/// <summary>
-		/// Gets a value indicating whether a face object contains some embedded bitmaps.
-		/// </summary>
-		/// <see cref="Face.AvailableSizes"/>
-		public bool HasFixedSizes { get { return (FaceFlags & FaceFlags.FixedSizes) == FaceFlags.FixedSizes; } }
-
-		/// <summary>
-		/// Gets a value indicating whether a face object contains some glyph names that can be accessed through 
-		/// <see cref="GetGlyphName(uint, int)"/>.
-		/// </summary>
-		public bool HasGlyphNames { get { return (FaceFlags & FaceFlags.GlyphNames) == FaceFlags.GlyphNames; } }
-
-		/// <summary>
-		/// Gets a value indicating whether a face object contains some multiple masters. The functions provided by
-		/// FT_MULTIPLE_MASTERS_H are then available to choose the exact design you want.
-		/// </summary>
-		public bool HasMultipleMasters { get { return (FaceFlags & FaceFlags.MultipleMasters) == FaceFlags.MultipleMasters; } }
-
-		/// <summary><para>
-		/// Gets a value indicating whether a face object contains a CID-keyed font. See the discussion of
-		/// FT_FACE_FLAG_CID_KEYED for more details.
-		/// </para><para>
-		/// If this macro is true, all functions defined in FT_CID_H are available.
-		/// </para></summary>
-		public bool IsCIDKeyed { get { return (FaceFlags & FaceFlags.CIDKeyed) == FaceFlags.CIDKeyed; } }
-
-		/// <summary>
-		/// Gets a value indicating whether a face represents a ‘tricky’ font. See the discussion of
-		/// FT_FACE_FLAG_TRICKY for more details.
-		/// </summary>
-		public bool IsTricky { get { return (FaceFlags & FaceFlags.Tricky) == FaceFlags.Tricky; } }
 
 		#endregion
 
@@ -1794,7 +1858,7 @@ namespace SharpFont
 		/// This function only works with CID faces and OpenType fonts, returning an error otherwise.
 		/// </remarks>
 		/// <returns>The type of the face as an FT_Bool.</returns>
-		public bool GetCIDIsInternallyCIDKeyed(Face face)
+		public bool GetCIDIsInternallyCIDKeyed()
 		{
 			byte is_cid;
 			Error err = FT.FT_Get_CID_Is_Internally_CID_Keyed(Reference, out is_cid);
@@ -2163,13 +2227,6 @@ namespace SharpFont
 
 		#endregion
 
-		internal void AddChildSize(FTSize child)
-		{
-			childSizes.Add(child);
-		}
-
-		#region IDisposable
-
 		/// <summary>
 		/// Disposes the Face.
 		/// </summary>
@@ -2177,6 +2234,11 @@ namespace SharpFont
 		{
 			Dispose(true);
 			GC.SuppressFinalize(this);
+		}
+
+		internal void AddChildSize(FTSize child)
+		{
+			childSizes.Add(child);
 		}
 
 		private void Dispose(bool disposing)
@@ -2199,8 +2261,6 @@ namespace SharpFont
 				rec = null;
 			}
 		}
-
-		#endregion
 
 		#endregion
 	}

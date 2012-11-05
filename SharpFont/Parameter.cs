@@ -57,7 +57,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// A four-byte identification tag.
+		/// Gets a four-byte identification tag.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ParamTag Tag
@@ -69,7 +69,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A pointer to the parameter data.
+		/// Gets a pointer to the parameter data.
 		/// </summary>
 		public IntPtr Data
 		{
@@ -78,8 +78,6 @@ namespace SharpFont
 				return rec.data;
 			}
 		}
-
-		public static int SizeInBytes { get { return ParameterRec.SizeInBytes; } }
 
 		internal IntPtr Reference
 		{

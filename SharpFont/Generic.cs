@@ -62,14 +62,12 @@ namespace SharpFont
 		#region Constructors
 
 		/// <summary>
-		/// Initializes a new instance of the Generic class.
+		/// Initializes a new instance of the <see cref="Generic"/> class.
 		/// </summary>
 		/// <param name="data">
 		/// A typeless pointer to some client data. The data it cointains must stay fixed until finalizer is called.
 		/// </param>
-		/// <param name="finalizer">
-		/// A delegate that gets called when the contained object gets finalized.
-		/// </param>
+		/// <param name="finalizer">A delegate that gets called when the contained object gets finalized.</param>
 		public Generic(IntPtr data, GenericFinalizer finalizer)
 		{
 			rec.data = data;
@@ -96,8 +94,19 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// Gets or sets a typeless pointer to any client-specified data. This
-		/// field is completely ignored by the FreeType library.
+		/// Gets the size of a <see cref="Generic"/>, in bytes.
+		/// </summary>
+		public static int SizeInBytes
+		{
+			get
+			{
+				return Marshal.SizeOf(typeof(GenericRec));
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets a typeless pointer to any client-specified data. This field is completely ignored by the
+		/// FreeType library.
 		/// </summary>
 		public IntPtr Data
 		{
@@ -113,20 +122,25 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets or sets a pointer to a <see cref="GenericFinalizer"/>
-		/// function, which will be called when the object is destroyed. If
-		/// this field is set to NULL, no code will be called.
+		/// Gets or sets a pointer to a <see cref="GenericFinalizer"/> function, which will be called when the object
+		/// is destroyed. If this field is set to NULL, no code will be called.
 		/// </summary>
-		public GenericFinalizer Finalizer { get { return rec.finalizer; } set { rec.finalizer = value; } }
+		public GenericFinalizer Finalizer
+		{
+			get
+			{
+				return rec.finalizer;
+			}
 
-		/// <summary>
-		/// Gets the size of a Generic, in bytes.
-		/// </summary>
-		public static int SizeInBytes { get { return Marshal.SizeOf(typeof(GenericRec)); } }
+			set
+			{
+				rec.finalizer = value;
+			}
+		}
 
 		#endregion
 
-		#region Internal Methods
+		#region Methods
 
 		//TODO make this private and build it into the setters if the reference isn't IntPtr.Zero.
 		internal void WriteToUnmanagedMemory(IntPtr location)

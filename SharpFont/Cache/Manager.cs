@@ -32,7 +32,8 @@ namespace SharpFont.Cache
 	/// <see cref="Face"/> objects, along with corresponding <see cref="FTSize"/> objects.
 	/// </para><para>
 	/// The manager intentionally limits the total number of opened <see cref="Face"/> and <see cref="FTSize"/> objects
-	/// to control memory usage. See the ‘max_faces’ and ‘max_sizes’ parameters of <see cref="FT.ManagerNew"/>.
+	/// to control memory usage. See the ‘max_faces’ and ‘max_sizes’ parameters of
+	/// <see cref="Manager(Library, uint, uint, ulong, FaceRequester, IntPtr)"/>.
 	/// </para><para>
 	/// The manager is also used to cache ‘nodes’ of various types while limiting their total memory usage.
 	/// </para><para>

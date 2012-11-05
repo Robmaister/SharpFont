@@ -120,8 +120,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// In some cases (like some font tools), several glyph slots per face object can be a good thing. As this is
-		/// rare, the glyph slots are listed through a direct, single-linked list using its ‘next’ field.
+		/// Gets the next <see cref="GlyphSlot"/>. In some cases (like some font tools), several glyph slots per face
+		/// object can be a good thing. As this is rare, the glyph slots are listed through a direct, single-linked
+		/// list using its ‘next’ field.
 		/// </summary>
 		public GlyphSlot Next
 		{
@@ -185,9 +186,10 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This shorthand is, depending on <see cref="LoadFlags.IgnoreTransform"/>, the transformed advance width for
-		/// the glyph (in 26.6 fractional pixel format). As specified with <see cref="LoadFlags.VerticalLayout"/>, it
-		/// uses either the ‘horiAdvance’ or the ‘vertAdvance’ value of ‘metrics’ field.
+		/// Gets the advance. This shorthand is, depending on <see cref="LoadFlags.IgnoreTransform"/>, the transformed
+		/// advance width for the glyph (in 26.6 fractional pixel format). As specified with
+		/// <see cref="LoadFlags.VerticalLayout"/>, it uses either the ‘horiAdvance’ or the ‘vertAdvance’ value of
+		/// ‘metrics’ field.
 		/// </summary>
 		public FTVector Advance
 		{
@@ -198,7 +200,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field indicates the format of the image contained in the glyph slot. Typically
+		/// Gets the glyph format. This field indicates the format of the image contained in the glyph slot. Typically
 		/// <see cref="GlyphFormat.Bitmap"/>, <see cref="GlyphFormat.Outline"/>, or
 		/// <see cref="GlyphFormat.Composite"/>, but others are possible.
 		/// </summary>
@@ -212,9 +214,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is used as a bitmap descriptor when the slot format is <see cref="GlyphFormat.Bitmap"/>. Note
-		/// that the address and content of the bitmap buffer can change between calls of
-		/// <see cref="SharpFont.Face.LoadGlyph"/> and a few other functions.
+		/// Gets the bitmap. This field is used as a bitmap descriptor when the slot format is
+		/// <see cref="GlyphFormat.Bitmap"/>. Note that the address and content of the bitmap buffer can change between
+		/// calls of <see cref="SharpFont.Face.LoadGlyph"/> and a few other functions.
 		/// </summary>
 		public FTBitmap Bitmap
 		{
@@ -225,8 +227,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This is the bitmap's left bearing expressed in integer pixels. Of course, this is only valid if the format
-		/// is <see cref="GlyphFormat.Bitmap"/>.
+		/// Gets the bitmap's left bearing expressed in integer pixels. Of course, this is only valid if the format is
+		/// <see cref="GlyphFormat.Bitmap"/>.
 		/// </summary>
 		public int BitmapLeft
 		{
@@ -237,7 +239,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This is the bitmap's top bearing expressed in integer pixels. Remember that this is the distance from the
+		/// Gets the bitmap's top bearing expressed in integer pixels. Remember that this is the distance from the
 		/// baseline to the top-most glyph scanline, upwards y coordinates being positive.
 		/// </summary>
 		public int BitmapTop
@@ -301,8 +303,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Certain font drivers can also return the control data for a given glyph image (e.g. TrueType bytecode, Type
-		/// 1 charstrings, etc.). This field is a pointer to such data.
+		/// Gets the control data. Certain font drivers can also return the control data for a given glyph image (e.g.
+		/// TrueType bytecode, Type 1 charstrings, etc.). This field is a pointer to such data.
 		/// </summary>
 		public IntPtr ControlData
 		{
@@ -313,7 +315,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This is the length in bytes of the control data.
+		/// Gets the length in bytes of the control data.
 		/// </summary>
 		public int ControlLength
 		{
@@ -348,8 +350,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Really wicked formats can use this pointer to present their own glyph image to client applications. Note
-		/// that the application needs to know about the image format.
+		/// Gets other data. Really wicked formats can use this pointer to present their own glyph image to client
+		/// applications. Note that the application needs to know about the image format.
 		/// </summary>
 		public IntPtr Other
 		{

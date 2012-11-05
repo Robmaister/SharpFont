@@ -41,7 +41,7 @@ namespace SharpFont
 	/// <param name="raster">A handle to the new raster object.</param>
 	/// <returns>Error code. 0 means success.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate Error RasterNewFunc(IntPtr memory, [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(RasterMarshaler))] Raster raster);
+	public delegate Error RasterNewFunc(IntPtr memory, [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RasterMarshaler))] Raster raster);
 
 	/// <summary>
 	/// A function used to destroy a given raster object.
@@ -65,7 +65,7 @@ namespace SharpFont
 	/// <param name="pool_base">The address in memory of the render pool.</param>
 	/// <param name="pool_size">The size in bytes of the render pool.</param>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void RasterResetFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(RasterMarshaler))] Raster raster, IntPtr pool_base, int pool_size);
+	public delegate void RasterResetFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RasterMarshaler))] Raster raster, IntPtr pool_base, int pool_size);
 
 	/// <summary>
 	/// This function is a generic facility to change modes or attributes in a given raster. This can be used for
@@ -76,7 +76,7 @@ namespace SharpFont
 	/// <param name="args">A pointer to the new mode/property to use.</param>
 	[CLSCompliant(false)]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void RasterSetModeFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef=typeof(RasterMarshaler))] Raster raster, uint mode, IntPtr args);
+	public delegate void RasterSetModeFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(RasterMarshaler))] Raster raster, uint mode, IntPtr args);
 
 	/// <summary>
 	/// Invoke a given raster to scan-convert a given glyph image into a target
@@ -131,7 +131,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// The supported glyph format for this raster.
+		/// Gets the supported glyph format for this raster.
 		/// </summary>
 		[CLSCompliant(false)]
 		public GlyphFormat Format
@@ -143,7 +143,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The raster constructor.
+		/// Gets the raster constructor.
 		/// </summary>
 		public RasterNewFunc New
 		{
@@ -154,7 +154,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Used to reset the render pool within the raster.
+		/// Gets a function used to reset the render pool within the raster.
 		/// </summary>
 		public RasterResetFunc Reset
 		{
@@ -165,7 +165,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A function to set or change modes.
+		/// Gets a function to set or change modes.
 		/// </summary>
 		[CLSCompliant(false)]
 		public RasterSetModeFunc SetMode
@@ -177,7 +177,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A function to render a glyph into a given bitmap.
+		/// Gets a function to render a glyph into a given bitmap.
 		/// </summary>
 		public RasterRenderFunc Render
 		{
@@ -188,7 +188,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The raster destructor.
+		/// Gets the raster destructor.
 		/// </summary>
 		public RasterDoneFunc Done
 		{

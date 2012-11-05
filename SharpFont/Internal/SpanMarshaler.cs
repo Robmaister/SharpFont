@@ -29,7 +29,7 @@ namespace SharpFont.Internal
 {
 	internal sealed class SpanMarshaler : ICustomMarshaler
 	{
-		private static readonly SpanMarshaler instance = new SpanMarshaler();
+		private static readonly SpanMarshaler Instance = new SpanMarshaler();
 
 		private SpanMarshaler()
 		{
@@ -37,15 +37,15 @@ namespace SharpFont.Internal
 
 		public static ICustomMarshaler GetInstance(string cookie)
 		{
-			return instance;
+			return Instance;
 		}
 
-		public void CleanUpManagedData(object ManagedObj)
+		public void CleanUpManagedData(object managedObj)
 		{
-			if (ManagedObj == null)
+			if (managedObj == null)
 				throw new ArgumentNullException("ManagedObj");
 
-			if (ManagedObj.GetType() != typeof(Span))
+			if (managedObj.GetType() != typeof(Span))
 				throw new ArgumentException("Managed object is not a Span.");
 		}
 
@@ -59,17 +59,16 @@ namespace SharpFont.Internal
 			return SpanRec.SizeInBytes;
 		}
 
-		public IntPtr MarshalManagedToNative(object ManagedObj)
+		public IntPtr MarshalManagedToNative(object managedObj)
 		{
-			if (ManagedObj == null)
+			if (managedObj == null)
 				throw new ArgumentNullException("ManagedObj");
 
-			if (ManagedObj.GetType() != typeof(Span))
+			if (managedObj.GetType() != typeof(Span))
 				throw new ArgumentException("Managed object is not a Span.");
 
 			//TODO if we have any setters in ListNode, marshal them.
-
-			return ((Span)ManagedObj).Reference;
+			return ((Span)managedObj).Reference;
 		}
 
 		public object MarshalNativeToManaged(IntPtr pNativeData)

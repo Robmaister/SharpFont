@@ -71,7 +71,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// The width of the scaled EM square in pixels, hence the term ‘ppem’ (pixels per EM). It is also referred to
+		/// Gets the width of the scaled EM square in pixels, hence the term ‘ppem’ (pixels per EM). It is also referred to
 		/// as ‘nominal width’.
 		/// </summary>
 		[CLSCompliant(false)]
@@ -84,7 +84,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The height of the scaled EM square in pixels, hence the term ‘ppem’ (pixels per EM). It is also referred to
+		/// Gets the height of the scaled EM square in pixels, hence the term ‘ppem’ (pixels per EM). It is also referred to
 		/// as ‘nominal height’.
 		/// </summary>
 		[CLSCompliant(false)]
@@ -97,7 +97,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A 16.16 fractional scaling value used to convert horizontal metrics from font units to 26.6 fractional
+		/// Gets a 16.16 fractional scaling value used to convert horizontal metrics from font units to 26.6 fractional
 		/// pixels. Only relevant for scalable font formats.
 		/// </summary>
 		public int ScaleX
@@ -109,7 +109,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A 16.16 fractional scaling value used to convert vertical metrics from font units to 26.6 fractional
+		/// Gets a 16.16 fractional scaling value used to convert vertical metrics from font units to 26.6 fractional
 		/// pixels. Only relevant for scalable font formats.
 		/// </summary>
 		public int ScaleY
@@ -121,7 +121,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The ascender in 26.6 fractional pixels.
+		/// Gets the ascender in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
 		public int Ascender
@@ -133,7 +133,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The descender in 26.6 fractional pixels.
+		/// Gets the descender in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
 		public int Descender
@@ -145,7 +145,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The height in 26.6 fractional pixels.
+		/// Gets the height in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
 		public int Height
@@ -157,7 +157,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The maximal advance width in 26.6 fractional pixels.
+		/// Gets the maximal advance width in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
 		public int MaxAdvance

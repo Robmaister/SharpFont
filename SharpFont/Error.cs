@@ -256,7 +256,7 @@ namespace SharpFont
 		/// <summary>Argument stack underflow.</summary>
 		StackUnderflow = 0xA1,
 
-		/// <summary>Ignore.</summary>
+		/// <summary>Ignore this error.</summary>
 		Ignore = 0xA2,
 
 		/// <summary>No Unicode glyph name found.</summary>

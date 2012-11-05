@@ -50,7 +50,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// The data.
+		/// Gets the data.
 		/// </summary>
 		public IntPtr Pointer
 		{
@@ -61,7 +61,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The length of the data in bytes.
+		/// Gets the length of the data in bytes.
 		/// </summary>
 		public int Length
 		{

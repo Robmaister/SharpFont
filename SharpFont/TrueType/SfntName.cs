@@ -61,7 +61,7 @@ namespace SharpFont.TrueType
 		#region Properties
 
 		/// <summary>
-		/// The platform ID for ‘string’.
+		/// Gets the platform ID for ‘string’.
 		/// </summary>
 		[CLSCompliant(false)]
 		public PlatformID PlatformID
@@ -73,7 +73,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// The encoding ID for ‘string’.
+		/// Gets the encoding ID for ‘string’.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort EncodingID
@@ -85,7 +85,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// The language ID for ‘string’.
+		/// Gets the language ID for ‘string’.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort LanguageID
@@ -97,7 +97,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// An identifier for ‘string’.
+		/// Gets an identifier for ‘string’.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort NameID
@@ -109,7 +109,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary><para>
-		/// The ‘name’ string. Note that its format differs depending on the (platform,encoding) pair. It can be a
+		/// Gets the ‘name’ string. Note that its format differs depending on the (platform,encoding) pair. It can be a
 		/// Pascal String, a UTF-16 one, etc.
 		/// </para><para>
 		/// Generally speaking, the string is not zero-terminated. Please refer to the TrueType specification for

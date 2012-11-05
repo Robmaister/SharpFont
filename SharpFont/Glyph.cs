@@ -87,7 +87,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A handle to the FreeType library object.
+		/// Gets a handle to the FreeType library object.
 		/// </summary>
 		public Library Library
 		{
@@ -101,7 +101,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The format of the glyph's image.
+		/// Gets the format of the glyph's image.
 		/// </summary>
 		[CLSCompliant(false)]
 		public GlyphFormat Format
@@ -116,7 +116,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A 16.16 vector that gives the glyph's advance width.
+		/// Gets a 16.16 vector that gives the glyph's advance width.
 		/// </summary>
 		public FTVector Advance
 		{

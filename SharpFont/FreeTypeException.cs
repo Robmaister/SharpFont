@@ -36,9 +36,9 @@ namespace SharpFont
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FreeTypeException"/> class.
 		/// </summary>
-		/// <param name="error"></param>
+		/// <param name="error">The error returned by FreeType.</param>
 		public FreeTypeException(Error error)
-			: base(error.ToString())
+			: base("FreeType error: " + GetErrorMessage(error))
 		{
 			this.error = error;
 		}
@@ -46,7 +46,13 @@ namespace SharpFont
 		/// <summary>
 		/// Gets the FreeType error code that caused the exception.
 		/// </summary>
-		public Error Error { get { return error; } }
+		public Error Error
+		{
+			get
+			{
+				return this.error;
+			}
+		}
 
 		private static string GetErrorMessage(Error err)
 		{
@@ -127,7 +133,7 @@ namespace SharpFont
 				case Error.InvalidPostTable: return "Invalid PostScript (post) table.";
 				case Error.SyntaxError: return "Opcode syntax error.";
 				case Error.StackUnderflow: return "Argument stack underflow.";
-				case Error.Ignore: return "Ignore.";
+				case Error.Ignore: return "Ignore this error.";
 				case Error.NoUnicodeGlyphName: return "No Unicode glyph name found.";
 				case Error.MissingStartfontField: return "`STARTFONT' field missing.";
 				case Error.MissingFontField: return "`FONT' field missing.";

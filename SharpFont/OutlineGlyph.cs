@@ -63,7 +63,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// The root <see cref="Glyph"/> fields.
+		/// Gets the root <see cref="Glyph"/> fields.
 		/// </summary>
 		public Glyph Root
 		{
@@ -75,7 +75,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A descriptor for the outline.
+		/// Gets a descriptor for the outline.
 		/// </summary>
 		public Outline Outline
 		{

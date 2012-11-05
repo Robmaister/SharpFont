@@ -76,8 +76,8 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// For memory-based streams, this is the address of the first stream byte in memory. This field should always
-		/// be set to NULL for disk-based streams.
+		/// Gets base. For memory-based streams, this is the address of the first stream byte in memory. This field
+		/// should always be set to NULL for disk-based streams.
 		/// </summary>
 		public IntPtr Base
 		{
@@ -88,7 +88,7 @@ namespace SharpFont
 		}
 		
 		/// <summary>
-		/// The stream size in bytes.
+		/// Gets the stream size in bytes.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint Size
@@ -100,7 +100,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The current position within the stream.
+		/// Gets the current position within the stream.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint Position
@@ -112,8 +112,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is a union that can hold an integer or a pointer. It is used by stream implementations to store
-		/// file descriptors or ‘FILE*’ pointers.
+		/// Gets the descriptor. This field is a union that can hold an integer or a pointer. It is used by stream
+		/// implementations to store file descriptors or ‘FILE*’ pointers.
 		/// </summary>
 		public StreamDesc Descriptor
 		{
@@ -124,8 +124,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is completely ignored by FreeType. However, it is often useful during debugging to use it to
-		/// store the stream's filename (where available).
+		/// Gets the path name. This field is completely ignored by FreeType. However, it is often useful during
+		/// debugging to use it to store the stream's filename (where available).
 		/// </summary>
 		public StreamDesc PathName
 		{
@@ -136,7 +136,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The stream's input function.
+		/// Gets the stream's input function.
 		/// </summary>
 		[CLSCompliant(false)]
 		public StreamIOFunc Read
@@ -148,7 +148,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The stream's close function.
+		/// Gets the stream's close function.
 		/// </summary>
 		public StreamCloseFunc Close
 		{
@@ -159,8 +159,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The memory manager to use to preload frames. This is set internally by FreeType and shouldn't be touched by
-		/// stream implementations.
+		/// Gets the memory manager to use to preload frames. This is set internally by FreeType and shouldn't be
+		/// touched by stream implementations.
 		/// </summary>
 		public Memory Memory
 		{
@@ -171,7 +171,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is set and used internally by FreeType when parsing frames.
+		/// Gets the cursor. This field is set and used internally by FreeType when parsing frames.
 		/// </summary>
 		public IntPtr Cursor
 		{
@@ -182,7 +182,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is set and used internally by FreeType when parsing frames.
+		/// Gets the limit. This field is set and used internally by FreeType when parsing frames.
 		/// </summary>
 		public IntPtr Limit
 		{

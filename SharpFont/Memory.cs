@@ -89,7 +89,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// A generic typeless pointer for user data.
+		/// Gets a generic typeless pointer for user data.
 		/// </summary>
 		public IntPtr User
 		{
@@ -100,7 +100,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A pointer type to an allocation function.
+		/// Gets a pointer type to an allocation function.
 		/// </summary>
 		public AllocFunc Allocate
 		{
@@ -111,7 +111,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A pointer type to an memory freeing function.
+		/// Gets a pointer type to an memory freeing function.
 		/// </summary>
 		public FreeFunc Free
 		{
@@ -122,7 +122,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A pointer type to a reallocation function.
+		/// Gets a pointer type to a reallocation function.
 		/// </summary>
 		public ReallocFunc Reallocate
 		{

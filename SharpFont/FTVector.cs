@@ -92,7 +92,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// Gets the horizontal coordinate.
+		/// Gets or sets the horizontal coordinate.
 		/// </summary>
 		public int X
 		{
@@ -112,7 +112,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets the vertical coordinate.
+		/// Gets or sets the vertical coordinate.
 		/// </summary>
 		public int Y
 		{
@@ -134,6 +134,36 @@ namespace SharpFont
 		#endregion
 
 		#region Methods
+
+		/// <summary><para>
+		/// Return the unit vector corresponding to a given angle. After the call, the value of ‘vec.x’ will be
+		/// ‘sin(angle)’, and the value of ‘vec.y’ will be ‘cos(angle)’.
+		/// </para><para>
+		/// This function is useful to retrieve both the sinus and cosinus of a given angle quickly.
+		/// </para></summary>
+		/// <param name="angle">The address of angle.</param>
+		/// <returns>The address of target vector.</returns>
+		public static FTVector Unit(int angle)
+		{
+			FTVector vec;
+			FT.FT_Vector_Unit(out vec, angle);
+
+			return vec;
+		}
+
+		/// <summary>
+		/// Compute vector coordinates from a length and angle.
+		/// </summary>
+		/// <param name="length">The vector length.</param>
+		/// <param name="angle">The vector angle.</param>
+		/// <returns>The address of source vector.</returns>
+		public static FTVector FromPolar(int length, int angle)
+		{
+			FTVector vec;
+			FT.FT_Vector_From_Polar(out vec, length, angle);
+
+			return vec;
+		}
 
 		/// <summary>
 		/// Transform a single vector through a 2x2 matrix.
@@ -173,36 +203,6 @@ namespace SharpFont
 		public void Polarize(out int length, out int angle)
 		{
 			FT.FT_Vector_Polarize(ref this, out length, out angle);
-		}
-
-		/// <summary><para>
-		/// Return the unit vector corresponding to a given angle. After the call, the value of ‘vec.x’ will be
-		/// ‘sin(angle)’, and the value of ‘vec.y’ will be ‘cos(angle)’.
-		/// </para><para>
-		/// This function is useful to retrieve both the sinus and cosinus of a given angle quickly.
-		/// </para></summary>
-		/// <param name="angle">The address of angle.</param>
-		/// <returns>The address of target vector.</returns>
-		public static FTVector Unit(int angle)
-		{
-			FTVector vec;
-			FT.FT_Vector_Unit(out vec, angle);
-
-			return vec;
-		}
-
-		/// <summary>
-		/// Compute vector coordinates from a length and angle.
-		/// </summary>
-		/// <param name="length">The vector length.</param>
-		/// <param name="angle">The vector angle.</param>
-		/// <returns>The address of source vector.</returns>
-		public static FTVector FromPolar(int length, int angle)
-		{
-			FTVector vec;
-			FT.FT_Vector_From_Polar(out vec, length, angle);
-
-			return vec;
 		}
 
 		#endregion

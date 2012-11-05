@@ -29,7 +29,7 @@ namespace SharpFont.Internal
 {
 	internal sealed class StreamMarshaler : ICustomMarshaler
 	{
-		private static readonly StreamMarshaler instance = new StreamMarshaler();
+		private static readonly StreamMarshaler Instance = new StreamMarshaler();
 
 		private StreamMarshaler()
 		{
@@ -37,15 +37,15 @@ namespace SharpFont.Internal
 
 		public static ICustomMarshaler GetInstance(string cookie)
 		{
-			return instance;
+			return Instance;
 		}
 
-		public void CleanUpManagedData(object ManagedObj)
+		public void CleanUpManagedData(object managedObj)
 		{
-			if (ManagedObj == null)
+			if (managedObj == null)
 				throw new ArgumentNullException("ManagedObj");
 
-			if (ManagedObj.GetType() != typeof(FTStream))
+			if (managedObj.GetType() != typeof(FTStream))
 				throw new ArgumentException("Managed object is not a FTStream.");
 		}
 
@@ -59,17 +59,16 @@ namespace SharpFont.Internal
 			return StreamRec.SizeInBytes;
 		}
 
-		public IntPtr MarshalManagedToNative(object ManagedObj)
+		public IntPtr MarshalManagedToNative(object managedObj)
 		{
-			if (ManagedObj == null)
+			if (managedObj == null)
 				throw new ArgumentNullException("ManagedObj");
 
-			if (ManagedObj.GetType() != typeof(FTStream))
+			if (managedObj.GetType() != typeof(FTStream))
 				throw new ArgumentException("Managed object is not a FTStream.");
 
 			//TODO if we have any setters in FTStream, marshal them.
-
-			return ((FTStream)ManagedObj).Reference;
+			return ((FTStream)managedObj).Reference;
 		}
 
 		public object MarshalNativeToManaged(IntPtr pNativeData)

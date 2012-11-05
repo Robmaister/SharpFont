@@ -120,7 +120,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets a typeless pointer, which is unused by the FreeType library or any of its drivers. It can be used by
+		/// Gets or sets a typeless pointer, which is unused by the FreeType library or any of its drivers. It can be used by
 		/// client applications to link their own data to each size object.
 		/// </summary>
 		public Generic Generic

@@ -25,10 +25,8 @@ SOFTWARE.*/
 #endregion
 
 using System;
-#if USING_SYSTEM_DRAWING
 using System.Drawing;
 using System.Drawing.Imaging;
-#endif
 using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
@@ -61,6 +59,10 @@ namespace SharpFont
 
 		#region Constructors
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FTBitmap"/> class.
+		/// </summary>
+		/// <param name="library">The parent <see cref="Library"/>.</param>
 		public FTBitmap(Library library)
 		{
 			IntPtr bitmapRef;
@@ -106,8 +108,17 @@ namespace SharpFont
 		#endregion
 
 		#region Properties
-
-		public bool IsDisposed { get { return disposed; } }
+		
+		/// <summary>
+		/// Gets a value indicating whether the <see cref="FTBitmap"/> has been disposed.
+		/// </summary>
+		public bool IsDisposed
+		{
+			get
+			{
+				return disposed;
+			}
+		}
 
 		/// <summary>
 		/// Gets the number of bitmap rows.
@@ -178,8 +189,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is only used with <see cref="SharpFont.PixelMode.Gray"/>; it gives the number of gray levels
-		/// used in the bitmap.
+		/// Gets the number of gray levels used in the bitmap. This field is only used with
+		/// <see cref="SharpFont.PixelMode.Gray"/>.
 		/// </summary>
 		public short GrayLevels
 		{
@@ -207,7 +218,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is intended for paletted pixel modes; it indicates how the palette is stored.
+		/// Gets how the palette is stored. This field is intended for paletted pixel modes.
 		/// </summary>
 		[Obsolete("Not used currently.")]
 		public byte PaletteMode
@@ -364,8 +375,11 @@ namespace SharpFont
 			return new FTBitmap(bitmapRef);
 		}
 
-#if USING_SYSTEM_DRAWING
-		public Bitmap ToSystemBitmap()
+		/// <summary>
+		/// Copies the contents of the <see cref="FTBitmap"/> to a <see cref="Bitmap"/>.
+		/// </summary>
+		/// <returns>A <see cref="Bitmap"/> containing this bitmap's data.</returns>
+		public Bitmap ToGdipBitmap()
 		{
 			if (disposed)
 				throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
@@ -382,30 +396,37 @@ namespace SharpFont
 					bmp.Palette.Entries[1] = Color.FromArgb(1, 0, 0, 0);
 					return bmp;
 				}
+
 				case PixelMode.Gray4:
 				{
 					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format4bppIndexed);
 					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format4bppIndexed);
 					Marshal.Copy(BufferData, 0, locked.Scan0, rec.width * rec.rows);
 					bmp.UnlockBits(locked);
+
 					for (int i = 0; i < 16; i++)
 					{
 						bmp.Palette.Entries[i] = Color.FromArgb((int)((i / 15) * 255), 0, 0, 0);
 					}
+
 					return bmp;
 				}
+
 				case PixelMode.Gray:
 				{
 					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format8bppIndexed);
 					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
 					Marshal.Copy(BufferData, 0, locked.Scan0, rec.width * rec.rows);
 					bmp.UnlockBits(locked);
+
 					for (int i = 0; i < 256; i++)
 					{
 						bmp.Palette.Entries[i] = Color.FromArgb(i, 0, 0, 0);
 					}
+
 					return bmp;
 				}
+
 				case PixelMode.LCD:
 				case PixelMode.VerticalLCD:
 				{
@@ -414,18 +435,19 @@ namespace SharpFont
 					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 					Marshal.Copy(BufferData, 0, locked.Scan0, rec.width * rec.rows);
 					bmp.UnlockBits(locked);
+
 					for (int i = 0; i < 256; i++)
 					{
 						bmp.Palette.Entries[i] = Color.FromArgb(i, 0, 0, 0);
 					}
+
 					return bmp;
 				}
+
 				default:
 					throw new InvalidOperationException("System.Drawing.Bitmap does not support this pixel mode.");
 			}
-			
 		}
-#endif
 
 		#region IDisposable
 

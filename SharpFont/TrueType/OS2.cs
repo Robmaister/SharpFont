@@ -189,7 +189,7 @@ namespace SharpFont.TrueType
 		}
 
 		//TODO write a PANOSE class from TrueType spec?
-		public byte[] panose
+		public byte[] Panose
 		{
 			get
 			{

@@ -97,7 +97,7 @@ namespace SharpFont
 	/// </remarks>
 	public class OutlineFuncs
 	{
-		internal OutlineFuncsRec rec;
+		private OutlineFuncsRec rec;
 
 		/// <summary>
 		/// Initializes a new instance of the OutlineFuncs class.

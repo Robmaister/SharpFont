@@ -53,6 +53,18 @@ namespace SharpFont
 
 		#region Constructor
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Outline"/> class.
+		/// </summary>
+		/// <remarks>
+		/// The reason why this function takes a ‘library’ parameter is simply to use the library's memory allocator.
+		/// </remarks>
+		/// <param name="library">
+		/// A handle to the library object from where the outline is allocated. Note however that the new outline will
+		/// not necessarily be freed, when destroying the library, by <see cref="Library.Finalize"/>.
+		/// </param>
+		/// <param name="pointsCount">The maximum number of points within the outline.</param>
+		/// <param name="contoursCount">The maximum number of contours within the outline.</param>
 		[CLSCompliant(false)]
 		public Outline(Library library, uint pointsCount, int contoursCount)
 		{
@@ -66,6 +78,12 @@ namespace SharpFont
 			parentLibrary.AddChildOutline(this);
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Outline"/> class.
+		/// </summary>
+		/// <param name="memory">A handle to the memory object from where the outline is allocated.</param>
+		/// <param name="pointsCount">The maximum number of points within the outline.</param>
+		/// <param name="contoursCount">The maximum number of contours within the outline.</param>
 		[CLSCompliant(false)]
 		public Outline(Memory memory, uint pointsCount, int contoursCount)
 		{
@@ -104,6 +122,17 @@ namespace SharpFont
 		#endregion
 
 		#region Properties
+
+		/// <summary>
+		/// Gets a value indicating whether the <see cref="Outline"/> has been disposed.
+		/// </summary>
+		public bool IsDisposed
+		{
+			get
+			{
+				return disposed;
+			}
+		}
 
 		/// <summary>
 		/// Gets the number of contours in the outline.
@@ -624,6 +653,30 @@ namespace SharpFont
 			return FT.FT_Outline_Get_Orientation(reference);
 		}
 
+		#endregion
+
+		#region Glyph Stroker
+
+		/// <summary>
+		/// Retrieve the <see cref="StrokerBorder"/> value corresponding to the ‘inside’ borders of a given outline.
+		/// </summary>
+		/// <returns>The border index. <see cref="StrokerBorder.Right"/> for empty or invalid outlines.</returns>
+		public StrokerBorder GetInsideBorder()
+		{
+			return FT.FT_Outline_GetInsideBorder(Reference);
+		}
+
+		/// <summary>
+		/// Retrieve the <see cref="StrokerBorder"/> value corresponding to the ‘outside’ borders of a given outline.
+		/// </summary>
+		/// <returns>The border index. <see cref="StrokerBorder.Left"/> for empty or invalid outlines.</returns>
+		public StrokerBorder GetOutsideBorder()
+		{
+			return FT.FT_Outline_GetOutsideBorder(Reference);
+		}
+
+		#endregion
+
 		/// <summary>
 		/// Disposes an instance of the <see cref="Outline"/> class.
 		/// </summary>
@@ -655,30 +708,6 @@ namespace SharpFont
 				rec = default(OutlineRec);
 			}
 		}
-
-		#endregion
-
-		#region Glyph Stroker
-
-		/// <summary>
-		/// Retrieve the <see cref="StrokerBorder"/> value corresponding to the ‘inside’ borders of a given outline.
-		/// </summary>
-		/// <returns>The border index. <see cref="StrokerBorder.Right"/> for empty or invalid outlines.</returns>
-		public StrokerBorder GetInsideBorder(Outline outline)
-		{
-			return FT.FT_Outline_GetInsideBorder(Reference);
-		}
-
-		/// <summary>
-		/// Retrieve the <see cref="StrokerBorder"/> value corresponding to the ‘outside’ borders of a given outline.
-		/// </summary>
-		/// <returns>The border index. <see cref="StrokerBorder.Left"/> for empty or invalid outlines.</returns>
-		public StrokerBorder GetOutsideBorder(Outline outline)
-		{
-			return FT.FT_Outline_GetOutsideBorder(Reference);
-		}
-
-		#endregion
 
 		#endregion
 	}

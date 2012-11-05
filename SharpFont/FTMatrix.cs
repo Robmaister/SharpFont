@@ -121,7 +121,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// Matrix coefficient.
+		/// Gets or sets the matrix coefficient.
 		/// </summary>
 		public int XX
 		{
@@ -141,7 +141,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Matrix coefficient.
+		/// Gets or sets the matrix coefficient.
 		/// </summary>
 		public int XY
 		{
@@ -161,7 +161,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Matrix coefficient.
+		/// Gets or sets the matrix coefficient.
 		/// </summary>
 		public int YX
 		{
@@ -181,7 +181,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Matrix coefficient.
+		/// Gets or sets the matrix coefficient.
 		/// </summary>
 		public int YY
 		{
@@ -210,6 +210,19 @@ namespace SharpFont
 		/// <remarks>
 		/// The result is undefined if either ‘a’ or ‘b’ is zero.
 		/// </remarks>
+		/// <param name="a">A pointer to matrix ‘a’.</param>
+		/// <param name="b">A pointer to matrix ‘b’.</param>
+		public static void Multiply(FTMatrix a, FTMatrix b)
+		{
+			FT.FT_Matrix_Multiply(ref a, ref b);
+		}
+
+		/// <summary>
+		/// Perform the matrix operation ‘b = a*b’.
+		/// </summary>
+		/// <remarks>
+		/// The result is undefined if either ‘a’ or ‘b’ is zero.
+		/// </remarks>
 		/// <param name="b">A pointer to matrix ‘b’.</param>
 		public void Multiply(FTMatrix b)
 		{
@@ -225,19 +238,6 @@ namespace SharpFont
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
-		}
-
-		/// <summary>
-		/// Perform the matrix operation ‘b = a*b’.
-		/// </summary>
-		/// <remarks>
-		/// The result is undefined if either ‘a’ or ‘b’ is zero.
-		/// </remarks>
-		/// <param name="a">A pointer to matrix ‘a’.</param>
-		/// <param name="b">A pointer to matrix ‘b’.</param>
-		public static void Multiply(FTMatrix a, FTMatrix b)
-		{
-			FT.FT_Matrix_Multiply(ref a, ref b);
 		}
 
 		#endregion

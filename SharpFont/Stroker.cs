@@ -40,6 +40,10 @@ namespace SharpFont
 
 		#region Constructors
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Stroker"/> class.
+		/// </summary>
+		/// <param name="library">FreeType library handle.</param>
 		public Stroker(Library library)
 		{
 			IntPtr strokerRef;
@@ -51,6 +55,9 @@ namespace SharpFont
 			Reference = strokerRef;
 		}
 
+		/// <summary>
+		/// Finalizes an instance of the <see cref="Stroker"/> class.
+		/// </summary>
 		~Stroker()
 		{
 			Dispose(false);
@@ -60,7 +67,16 @@ namespace SharpFont
 
 		#region Properties
 
-		public bool IsDisposed { get { return disposed; } }
+		/// <summary>
+		/// Gets a value indicating whether the <see cref="Stroker"/> has been disposed.
+		/// </summary>
+		public bool IsDisposed
+		{
+			get
+			{
+				return disposed;
+			}
+		}
 
 		internal IntPtr Reference
 		{
@@ -342,6 +358,9 @@ namespace SharpFont
 			FT.FT_Stroker_Export(Reference, outline.Reference);
 		}
 
+		/// <summary>
+		/// Disposes an instance of the <see cref="Stroker"/> class.
+		/// </summary>
 		public void Dispose()
 		{
 			Dispose(true);

@@ -25,9 +25,9 @@ SOFTWARE.*/
 using System;
 using System.Collections.Generic;
 
-using SharpFont.TrueType;
-using SharpFont.Internal;
 using SharpFont.Cache;
+using SharpFont.Internal;
+using SharpFont.TrueType;
 
 namespace SharpFont
 {
@@ -59,17 +59,8 @@ namespace SharpFont
 
 		#region Constructors
 
-		private Library(bool duplicate)
-		{
-			childFaces = new List<Face>();
-			childGlyphs = new List<Glyph>();
-			childOutlines = new List<Outline>();
-			childStrokers = new List<Stroker>();
-			childManagers = new List<Manager>();
-		}
-
 		/// <summary>
-		/// Initializes a new instance of the Library class.
+		/// Initializes a new instance of the <see cref="Library"/> class.
 		/// </summary>
 		public Library()
 			: this(false)
@@ -84,7 +75,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the Library class.
+		/// Initializes a new instance of the <see cref="Library"/> class.
 		/// </summary>
 		/// <param name="memory">A custom FreeType memory manager.</param>
 		public Library(Memory memory)
@@ -109,8 +100,17 @@ namespace SharpFont
 				FT.FT_Reference_Library(Reference);
 		}
 
+		private Library(bool duplicate)
+		{
+			childFaces = new List<Face>();
+			childGlyphs = new List<Glyph>();
+			childOutlines = new List<Outline>();
+			childStrokers = new List<Stroker>();
+			childManagers = new List<Manager>();
+		}
+
 		/// <summary>
-		/// Finalizes an instance of the Library class.
+		/// Finalizes an instance of the <see cref="Library"/> class.
 		/// </summary>
 		~Library()
 		{
@@ -133,7 +133,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Return the version of the FreeType library being used.
+		/// Gets the version of the FreeType library being used.
 		/// </summary>
 		public Version Version
 		{
@@ -170,6 +170,8 @@ namespace SharpFont
 		#endregion
 
 		#region Methods
+
+		#region Base Interface
 
 		/// <summary>
 		/// This function calls <see cref="OpenFace"/> to open a font by its pathname.
@@ -249,6 +251,10 @@ namespace SharpFont
 			return new Face(faceRef, this);
 		}
 
+		#endregion
+
+		#region Mac Specific Interface
+
 		/// <summary>
 		/// Create a new face object from a FOND resource.
 		/// </summary>
@@ -327,6 +333,8 @@ namespace SharpFont
 
 			return new Face(faceRef, this);
 		}
+
+		#endregion
 
 		#region Module Management
 
@@ -470,7 +478,7 @@ namespace SharpFont
 			if (parameters == null)
 				throw new ArgumentNullException("paramters");
 
-			ParameterRec[] paramRecs = Array.ConvertAll<Parameter, ParameterRec>(parameters, (p => p.Record));
+			ParameterRec[] paramRecs = Array.ConvertAll<Parameter, ParameterRec>(parameters, p => p.Record);
 			fixed (void* ptr = paramRecs)
 			{
 				Error err = FT.FT_Set_Renderer(Reference, renderer.Reference, numParams, (IntPtr)ptr);
@@ -576,9 +584,14 @@ namespace SharpFont
 
 		#endregion
 
-		#endregion
-
-		#region Internal Methods
+		/// <summary>
+		/// Disposes the Library.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
 
 		internal void AddChildFace(Face child)
 		{
@@ -603,19 +616,6 @@ namespace SharpFont
 		internal void AddChildManager(Manager child)
 		{
 			childManagers.Add(child);
-		}
-
-		#endregion
-
-		#region IDisposable Members
-
-		/// <summary>
-		/// Disposes the Library.
-		/// </summary>
-		public void Dispose()
-		{
-			Dispose(true);
-			GC.SuppressFinalize(this);
 		}
 
 		private void Dispose(bool disposing)
@@ -644,7 +644,7 @@ namespace SharpFont
 				childStrokers.Clear();
 				childManagers.Clear();
 
-				Error err = (customMemory) ? FT.FT_Done_Library(Reference) : FT.FT_Done_FreeType(Reference);
+				Error err = customMemory ? FT.FT_Done_Library(Reference) : FT.FT_Done_FreeType(Reference);
 
 				if (err != Error.Ok)
 					throw new FreeTypeException(err);

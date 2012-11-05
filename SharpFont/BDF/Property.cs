@@ -53,7 +53,7 @@ namespace SharpFont.BDF
 		#region Properties
 
 		/// <summary>
-		/// The property type.
+		/// Gets the property type.
 		/// </summary>
 		public PropertyType Type
 		{
@@ -64,7 +64,7 @@ namespace SharpFont.BDF
 		}
 
 		/// <summary>
-		/// The atom string, if type is <see cref="PropertyType.Atom"/>.
+		/// Gets the atom string, if type is <see cref="PropertyType.Atom"/>.
 		/// </summary>
 		public string Atom
 		{
@@ -80,7 +80,7 @@ namespace SharpFont.BDF
 		}
 
 		/// <summary>
-		/// A signed integer, if type is <see cref="PropertyType.Integer"/>.
+		/// Gets a signed integer, if type is <see cref="PropertyType.Integer"/>.
 		/// </summary>
 		public int Integer
 		{
@@ -91,7 +91,7 @@ namespace SharpFont.BDF
 		}
 
 		/// <summary>
-		/// An unsigned integer, if type is <see cref="PropertyType.Cardinal"/>.
+		/// Gets an unsigned integer, if type is <see cref="PropertyType.Cardinal"/>.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint Cardinal

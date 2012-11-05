@@ -216,8 +216,8 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Number of VMetrics entries in the ‘vmtx’ table -- this value can be smaller than the total number of glyphs
-		/// in the font.
+		/// Gets the number of VMetrics entries in the ‘vmtx’ table -- this value can be smaller than the total number
+		/// of glyphs in the font.
 		/// </summary>
 		[CLSCompliant(false)]
 		public ushort VMetricsCount
@@ -231,7 +231,7 @@ namespace SharpFont.TrueType
 		/// <summary>
 		/// Gets a pointer into the ‘vmtx’ table.
 		/// </summary>
-		public IntPtr long_metrics
+		public IntPtr LongMetrics
 		{
 			get
 			{
@@ -242,7 +242,7 @@ namespace SharpFont.TrueType
 		/// <summary>
 		/// Gets a pointer into the ‘vmtx’ table.
 		/// </summary>
-		public IntPtr short_metrics
+		public IntPtr ShortMetrics
 		{
 			get
 			{

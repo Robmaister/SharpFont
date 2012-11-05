@@ -364,7 +364,7 @@ namespace SharpFont.FNT
 				#if WIN64
 				return rec.reserved1;
 				#else
-				return Array.ConvertAll<UIntPtr, uint>(rec.reserved1, new Converter<UIntPtr,uint>(delegate(UIntPtr u) { return (uint)u; }));
+				return Array.ConvertAll<UIntPtr, uint>(rec.reserved1, new Converter<UIntPtr, uint>(delegate(UIntPtr u) { return (uint)u; }));
 				#endif
 			}
 		}

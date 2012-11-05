@@ -37,6 +37,8 @@ namespace SharpFont
 	[StructLayout(LayoutKind.Sequential)]
 	public sealed class SizeRequest
 	{
+		//HACK still need a rec for this.
+
 		#region Fields
 
 		private IntPtr reference;
@@ -57,7 +59,7 @@ namespace SharpFont
 		/// <summary>
 		/// See <see cref="SizeRequestType"/>.
 		/// </summary>
-		SizeRequestType RequestType
+		public SizeRequestType RequestType
 		{
 			get
 			{
@@ -66,7 +68,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The desired width.
+		/// Gets the desired width.
 		/// </summary>
 		public int Width
 		{
@@ -77,7 +79,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The desired height.
+		/// Gets the desired height.
 		/// </summary>
 		public int Height
 		{
@@ -88,7 +90,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The horizontal resolution. If set to zero, <see cref="Width"/> is treated as a 26.6 fractional pixel value.
+		/// Gets the horizontal resolution. If set to zero, <see cref="Width"/> is treated as a 26.6 fractional pixel
+		/// value.
 		/// </summary>
 		[CLSCompliant(false)]
 		public uint HorizontalResolution
@@ -100,7 +103,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The horizontal resolution. If set to zero, <see cref="Height"/> is treated as a 26.6 fractional pixel
+		/// Gets the horizontal resolution. If set to zero, <see cref="Height"/> is treated as a 26.6 fractional pixel
 		/// value.
 		/// </summary>
 		[CLSCompliant(false)]

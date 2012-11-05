@@ -29,7 +29,7 @@ namespace SharpFont.Internal
 {
 	internal sealed class ModuleMarshaler : ICustomMarshaler
 	{
-		private static readonly ModuleMarshaler instance = new ModuleMarshaler();
+		private static readonly ModuleMarshaler Instance = new ModuleMarshaler();
 
 		private ModuleMarshaler()
 		{
@@ -37,15 +37,15 @@ namespace SharpFont.Internal
 
 		public static ICustomMarshaler GetInstance(string cookie)
 		{
-			return instance;
+			return Instance;
 		}
 
-		public void CleanUpManagedData(object ManagedObj)
+		public void CleanUpManagedData(object managedObj)
 		{
-			if (ManagedObj == null)
+			if (managedObj == null)
 				throw new ArgumentNullException("ManagedObj");
 
-			if (ManagedObj.GetType() != typeof(Module))
+			if (managedObj.GetType() != typeof(Module))
 				throw new ArgumentException("Managed object is not a Module.");
 		}
 
@@ -59,17 +59,16 @@ namespace SharpFont.Internal
 			return 0;
 		}
 
-		public IntPtr MarshalManagedToNative(object ManagedObj)
+		public IntPtr MarshalManagedToNative(object managedObj)
 		{
-			if (ManagedObj == null)
+			if (managedObj == null)
 				throw new ArgumentNullException("ManagedObj");
 
-			if (ManagedObj.GetType() != typeof(Module))
+			if (managedObj.GetType() != typeof(Module))
 				throw new ArgumentException("Managed object is not a Module.");
 
 			//TODO if we have any setters in ListNode, marshal them.
-
-			return ((Module)ManagedObj).Reference;
+			return ((Module)managedObj).Reference;
 		}
 
 		public object MarshalNativeToManaged(IntPtr pNativeData)

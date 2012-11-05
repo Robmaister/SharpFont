@@ -116,7 +116,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// The target bitmap.
+		/// Gets the target bitmap.
 		/// </summary>
 		public FTBitmap Target
 		{
@@ -127,7 +127,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// A pointer to the source glyph image (e.g., an <see cref="Outline"/>).
+		/// Gets a pointer to the source glyph image (e.g., an <see cref="Outline"/>).
 		/// </summary>
 		public IntPtr Source
 		{
@@ -138,7 +138,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The rendering flags.
+		/// Gets the rendering flags.
 		/// </summary>
 		public RasterFlags Flags
 		{
@@ -149,7 +149,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The gray span drawing callback.
+		/// Gets the gray span drawing callback.
 		/// </summary>
 		public RasterSpanFunc GraySpans
 		{
@@ -160,7 +160,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The black span drawing callback. UNIMPLEMENTED!
+		/// Gets the black span drawing callback. UNIMPLEMENTED!
 		/// </summary>
 		public RasterSpanFunc BlackSpans
 		{
@@ -171,7 +171,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The bit test callback. UNIMPLEMENTED!
+		/// Gets the bit test callback. UNIMPLEMENTED!
 		/// </summary>
 		public RasterBitTestFunc BitTest
 		{
@@ -182,7 +182,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// The bit set callback. UNIMPLEMENTED!
+		/// Gets the bit set callback. UNIMPLEMENTED!
 		/// </summary>
 		public RasterBitSetFunc BitSet
 		{
@@ -193,7 +193,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// User-supplied data that is passed to each drawing callback.
+		/// Gets the user-supplied data that is passed to each drawing callback.
 		/// </summary>
 		public IntPtr User
 		{
@@ -204,8 +204,8 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// An optional clipping box. It is only used in direct rendering mode. Note that coordinates here should be
-		/// expressed in integer pixels (and not in 26.6 fixed-point units).
+		/// Gets an optional clipping box. It is only used in direct rendering mode. Note that coordinates here should
+		/// be expressed in integer pixels (and not in 26.6 fixed-point units).
 		/// </summary>
 		public BBox ClipBox
 		{

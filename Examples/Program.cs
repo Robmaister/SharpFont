@@ -91,7 +91,7 @@ namespace Examples
 
 				width += (int)face.Glyph.Advance.X >> 6;
 
-				if (face.HasKerning() && i < text.Length - 1)
+				if (face.HasKerning && i < text.Length - 1)
 				{
 					char cNext = text[i + 1];
 					width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
@@ -117,7 +117,7 @@ namespace Examples
 				{
 					penX += (int)face.Glyph.Advance.X >> 6;
 
-					if (face.HasKerning() && i < text.Length - 1)
+					if (face.HasKerning && i < text.Length - 1)
 					{
 						char cNext = text[i + 1];
 						width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
@@ -142,7 +142,7 @@ namespace Examples
 				penX += (int)face.Glyph.Advance.X >> 6;
 				penY += (int)face.Glyph.Advance.Y >> 6;
 
-				if (face.HasKerning() && i < text.Length - 1)
+				if (face.HasKerning && i < text.Length - 1)
 				{
 					char cNext = text[i + 1];
 					width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;

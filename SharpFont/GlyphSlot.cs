@@ -37,7 +37,7 @@ namespace SharpFont
 	/// the glyph image is loaded in the glyph slot in its native format (e.g., an outline glyph for TrueType and Type
 	/// 1 formats).
 	/// </para><para>
-	/// This image can later be converted into a bitmap by calling <see cref="RenderGlyph"/>. This function finds the
+	/// This image can later be converted into a bitmap by calling <see cref="Render"/>. This function finds the
 	/// current renderer for the native image's format, then invokes it.
 	/// </para><para>
 	/// The renderer is in charge of transforming the native image through the slot's face transformation fields, then
@@ -386,7 +386,7 @@ namespace SharpFont
 		/// relevant renderer, and invoking it.
 		/// </summary>
 		/// <param name="mode">This is the render mode used to render the glyph image into a bitmap.</param>
-		public void RenderGlyph(RenderMode mode)
+		public void Render(RenderMode mode)
 		{
 			Error err = FT.FT_Render_Glyph(Reference, mode);
 

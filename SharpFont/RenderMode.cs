@@ -36,7 +36,7 @@ namespace SharpFont
 	/// All modes except <see cref="RenderMode.Mono"/> use 256 levels of opacity.
 	/// </para></summary>
 	/// <remarks><para>
-	/// The LCD-optimized glyph bitmaps produced by <see cref="GlyphSlot.RenderGlyph"/> can be filtered to reduce
+	/// The LCD-optimized glyph bitmaps produced by <see cref="GlyphSlot.Render"/> can be filtered to reduce
 	/// color-fringes by using <see cref="Library.SetLcdFilter"/> (not active in the default builds). It is up to the
 	/// caller to either call <see cref="Library.SetLcdFilter"/> (if available) or do the filtering itself.
 	/// </para><para>

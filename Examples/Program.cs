@@ -111,7 +111,7 @@ namespace Examples
 
 				uint glyphIndex = face.GetCharIndex(c);
 				face.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
-				face.Glyph.Render(RenderMode.Normal);
+				face.Glyph.RenderGlyph(RenderMode.Normal);
 
 				if (c == ' ')
 				{

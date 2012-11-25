@@ -82,7 +82,7 @@ namespace SharpFont
 		NoHinting = 0x0002,
 
 		/// <summary><para>
-		/// Call <see cref="GlyphSlot.Render"/> after the glyph is loaded. By default, the glyph is rendered in
+		/// Call <see cref="GlyphSlot.RenderGlyph"/> after the glyph is loaded. By default, the glyph is rendered in
 		/// <see cref="RenderMode.Normal"/> mode. This can be overridden by <see cref="LoadTarget"/> or
 		/// <see cref="LoadFlags.Monochrome"/>.
 		/// </para><para>

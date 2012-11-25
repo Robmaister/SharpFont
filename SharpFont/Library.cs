@@ -494,7 +494,7 @@ namespace SharpFont
 
 		/// <summary>
 		/// This function is used to apply color filtering to LCD decimated bitmaps, like the ones used when calling
-		/// <see cref="GlyphSlot.Render"/> with <see cref="RenderMode.LCD"/> or
+		/// <see cref="GlyphSlot.RenderGlyph"/> with <see cref="RenderMode.LCD"/> or
 		/// <see cref="RenderMode.VerticalLCD"/>.
 		/// </summary>
 		/// <remarks><para>
@@ -505,7 +505,7 @@ namespace SharpFont
 		/// <see cref="Error.UnimplementedFeature"/> if the configuration macro FT_CONFIG_OPTION_SUBPIXEL_RENDERING is
 		/// not defined in your build of the library, which should correspond to all default builds of FreeType.
 		/// </para><para>
-		/// The filter affects glyph bitmaps rendered through <see cref="GlyphSlot.Render"/>,
+		/// The filter affects glyph bitmaps rendered through <see cref="GlyphSlot.RenderGlyph"/>,
 		/// <see cref="Outline.GetBitmap(FTBitmap)"/>, <see cref="Face.LoadGlyph"/>, and <see cref="Face.LoadChar"/>.
 		/// </para><para>
 		/// It does not affect the output of <see cref="Outline.Render(RasterParams)"/> and

@@ -624,83 +624,11 @@
          </Type>
          <Type Name="FT">
           <Members>
-           <Member Name="#FT_Attach_File(System.IntPtr,System.String)">
-            <Messages>
-             <Message Id="1" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2012-12-15 23:01:10Z">
-              <Issue Name="ParameterImplicitAnsi">
-               <Item>'filepathname'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FT_Get_BDF_Property(System.IntPtr,System.String,System.IntPtr&amp;)">
-            <Messages>
-             <Message Id="1" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2012-12-15 23:01:10Z">
-              <Issue Name="ParameterImplicitAnsi">
-               <Item>'prop_name'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FT_Get_Module(System.IntPtr,System.String)">
-            <Messages>
-             <Message Id="1" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2012-12-15 23:01:10Z">
-              <Issue Name="ParameterImplicitAnsi">
-               <Item>'module_name'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FT_GetFile_From_Mac_ATS_Name(System.String,System.IntPtr&amp;,System.Int32&amp;)">
-            <Messages>
-             <Message Id="0" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2012-12-15 23:01:10Z">
-              <Issue Name="ParameterImplicitAnsi">
-               <Item>'fontName'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FT_GetFile_From_Mac_Name(System.String,System.IntPtr&amp;,System.Int32&amp;)">
-            <Messages>
-             <Message Id="0" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2012-12-15 23:01:10Z">
-              <Issue Name="ParameterImplicitAnsi">
-               <Item>'fontName'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FT_GetFilePath_From_Mac_ATS_Name(System.String,System.IntPtr,System.Int32,System.Int32&amp;)">
-            <Messages>
-             <Message Id="0" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2012-12-15 23:01:10Z">
-              <Issue Name="ParameterImplicitAnsi">
-               <Item>'fontName'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FT_New_Face(System.IntPtr,System.String,System.Int32,System.IntPtr&amp;)">
-            <Messages>
-             <Message Id="1" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2012-12-15 23:01:10Z">
-              <Issue Name="ParameterImplicitAnsi">
-               <Item>'filepathname'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#FT_Reference_Library(System.IntPtr)">
             <Messages>
              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
               <Issue>
                <Item>'FT.FT_Reference_Library(IntPtr)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FT_Set_Var_Blend_Coordinates(System.IntPtr,System.UInt32,System.IntPtr)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-              <Issue>
-               <Item>'FT.FT_Set_Var_Blend_Coordinates(IntPtr, uint, IntPtr)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -971,24 +899,6 @@
               <Issue>
                <Item>'duplicate'</Item>
                <Item>'Library.Library(bool)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#.ctor(System.IntPtr,System.Boolean)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-              <Issue>
-               <Item>'Library.Library(IntPtr, bool)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#AddChildStroker(SharpFont.Stroker)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-              <Issue>
-               <Item>'Library.AddChildStroker(Stroker)'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1688,32 +1598,6 @@
             </Issue>
            </Message>
           </Messages>
-          <Members>
-           <Member Name="#Lookup(System.IntPtr,System.Int32,System.UInt32)">
-            <Messages>
-             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
-              <Issue Name="MemberParameterAbbreviation">
-               <Item>'CMapCache.Lookup(IntPtr, int, uint)'</Item>
-               <Item>ID</Item>
-               <Item>'faceID'</Item>
-               <Item>Id</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="FaceRequester">
-          <Messages>
-           <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
-            <Issue Name="DelegateParameterAbbreviation">
-             <Item>'FaceRequester'</Item>
-             <Item>ID</Item>
-             <Item>'faceID'</Item>
-             <Item>Id</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="ImageCache">
           <Members>
@@ -1737,17 +1621,6 @@
              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
               <Issue>
                <Item>'ImageType.ImageType(IntPtr)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FaceID">
-            <Messages>
-             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
-              <Issue Name="MemberAbbreviation">
-               <Item>ID</Item>
-               <Item>'ImageType.FaceID'</Item>
-               <Item>Id</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1785,44 +1658,6 @@
               <Issue>
                <Item>'disposing'</Item>
                <Item>'Manager.Dispose(bool)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#library">
-            <Messages>
-             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2012-12-15 23:01:10Z">
-              <Issue>
-               <Item>'Manager.library'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#LookupFace(System.IntPtr)">
-            <Messages>
-             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
-              <Issue Name="MemberParameterAbbreviation">
-               <Item>'Manager.LookupFace(IntPtr)'</Item>
-               <Item>ID</Item>
-               <Item>'faceID'</Item>
-               <Item>Id</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#RemoveFaceID(System.IntPtr)">
-            <Messages>
-             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
-              <Issue Name="MemberAbbreviation">
-               <Item>ID</Item>
-               <Item>'Manager.RemoveFaceID(IntPtr)'</Item>
-               <Item>Id</Item>
-              </Issue>
-              <Issue Name="MemberParameterAbbreviation">
-               <Item>'Manager.RemoveFaceID(IntPtr)'</Item>
-               <Item>ID</Item>
-               <Item>'faceID'</Item>
-               <Item>Id</Item>
               </Issue>
              </Message>
             </Messages>
@@ -1868,17 +1703,6 @@
              <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
               <Issue>
                <Item>'Scaler.Scaler(IntPtr)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#FaceID">
-            <Messages>
-             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
-              <Issue Name="MemberAbbreviation">
-               <Item>ID</Item>
-               <Item>'Scaler.FaceID'</Item>
-               <Item>Id</Item>
               </Issue>
              </Message>
             </Messages>
@@ -2031,23 +1855,6 @@
        </Namespace>
        <Namespace Name="SharpFont.Internal">
         <Types>
-         <Type Name="BBoxRec">
-          <Members>
-           <Member Name="#SizeInBytes">
-            <Accessors>
-             <Accessor Name="#get_SizeInBytes()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-                <Issue>
-                 <Item>'BBoxRec.SizeInBytes.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="BitmapGlyphRec">
           <Messages>
            <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
@@ -2057,23 +1864,6 @@
            </Message>
           </Messages>
          </Type>
-         <Type Name="BitmapRec">
-          <Members>
-           <Member Name="#SizeInBytes">
-            <Accessors>
-             <Accessor Name="#get_SizeInBytes()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-                <Issue>
-                 <Item>'BitmapRec.SizeInBytes.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="CharMapRec">
           <Messages>
            <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
@@ -2082,21 +1872,6 @@
             </Issue>
            </Message>
           </Messages>
-          <Members>
-           <Member Name="#SizeInBytes">
-            <Accessors>
-             <Accessor Name="#get_SizeInBytes()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-                <Issue>
-                 <Item>'CharMapRec.SizeInBytes.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
          </Type>
          <Type Name="FaceMarshsaler">
           <Members>
@@ -2114,23 +1889,6 @@
               </Issue>
              </Message>
             </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="GlyphMetricsRec">
-          <Members>
-           <Member Name="#SizeInBytes">
-            <Accessors>
-             <Accessor Name="#get_SizeInBytes()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-                <Issue>
-                 <Item>'GlyphMetricsRec.SizeInBytes.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
            </Member>
           </Members>
          </Type>
@@ -2226,23 +1984,6 @@
             </Issue>
            </Message>
           </Messages>
-         </Type>
-         <Type Name="OutlineRec">
-          <Members>
-           <Member Name="#SizeInBytes">
-            <Accessors>
-             <Accessor Name="#get_SizeInBytes()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-                <Issue>
-                 <Item>'OutlineRec.SizeInBytes.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
          </Type>
          <Type Name="RasterFuncsRec">
           <Messages>
@@ -2435,17 +2176,6 @@
              </Accessor>
             </Accessors>
            </Member>
-           <Member Name="#StrID">
-            <Messages>
-             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
-              <Issue Name="MemberAbbreviation">
-               <Item>ID</Item>
-               <Item>'VarAxis.StrID'</Item>
-               <Item>Id</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
           </Members>
          </Type>
          <Type Name="VarNamedStyle">
@@ -2462,17 +2192,6 @@
               </Messages>
              </Accessor>
             </Accessors>
-           </Member>
-           <Member Name="#StrID">
-            <Messages>
-             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
-              <Issue Name="MemberAbbreviation">
-               <Item>ID</Item>
-               <Item>'VarNamedStyle.StrID'</Item>
-               <Item>Id</Item>
-              </Issue>
-             </Message>
-            </Messages>
            </Member>
           </Members>
          </Type>
@@ -2543,21 +2262,6 @@
             </Issue>
            </Message>
           </Messages>
-         </Type>
-         <Type Name="EncodingType">
-          <Members>
-           <Member Name="#ISOLatin1">
-            <Messages>
-             <Message Id="ISO" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
-              <Issue Name="Member">
-               <Item>ISO</Item>
-               <Item>'EncodingType.ISOLatin1'</Item>
-               <Item>Iso</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
          </Type>
          <Type Name="FaceDict">
           <Members>
@@ -2688,17 +2392,6 @@
              <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
               <Issue>
                <Item>'Private.SnapWidths'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#UniqueID">
-            <Messages>
-             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
-              <Issue Name="MemberAbbreviation">
-               <Item>ID</Item>
-               <Item>'Private.UniqueID'</Item>
-               <Item>Id</Item>
               </Issue>
              </Message>
             </Messages>
@@ -3089,9 +2782,6 @@
    <Rule TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812">
     <Resolution Name="Default">{0} is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static methods, consider adding a private constructor to prevent the compiler from generating a default constructor.</Resolution>
    </Rule>
-   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
-    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
-   </Rule>
    <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
     <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
     <Resolution Name="NamespaceShouldBeDiscreteTerm">The compound word '{0}' in namespace name '{1}' exists as a discrete term. If your usage is intended to be single word, case it as '{2}'.</Resolution>
@@ -3108,10 +2798,6 @@
    </Rule>
    <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
     <Resolution Name="DelegateParameter">In delegate {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'.</Resolution>
-    <Resolution Name="DelegateParameterAbbreviation">In delegate {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'. '{3}' is an abbreviation and therefore is not subject to acronym casing guidelines.</Resolution>
-    <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
-    <Resolution Name="MemberAbbreviation">Correct the casing of '{0}' in member name {1} by changing it to '{2}'. '{2}' is an abbreviation and therefore is not subject to acronym casing guidelines.</Resolution>
-    <Resolution Name="MemberParameterAbbreviation">In member {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'. '{3}' is an abbreviation and therefore is not subject to acronym casing guidelines.</Resolution>
     <Resolution Name="Namespace">Correct the casing of '{0}' in namespace name '{1}' by changing it to '{2}'.</Resolution>
    </Rule>
    <Rule TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720">
@@ -3153,9 +2839,6 @@
    </Rule>
    <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
     <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
-   </Rule>
-   <Rule TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101">
-    <Resolution Name="ParameterImplicitAnsi">To reduce security risk, marshal parameter {0} as Unicode, by setting DllImport.CharSet to CharSet.Unicode, or by explicitly marshaling the parameter as UnmanagedType.LPWStr. If you need to marshal this string as ANSI or system-dependent, specify MarshalAs explicitly, and set BestFitMapping=false; for added security, also set ThrowOnUnmappableChar=true.</Resolution>
    </Rule>
    <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
     <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>

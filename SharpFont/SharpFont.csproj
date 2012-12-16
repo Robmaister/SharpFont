@@ -73,9 +73,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BBox.cs" />
-    <Compile Include="BDF\Internal\PropertyRec.cs" />
-    <Compile Include="BDF\Property.cs" />
-    <Compile Include="BDF\PropertyType.cs" />
+    <Compile Include="Bdf\Internal\PropertyRec.cs" />
+    <Compile Include="Bdf\Property.cs" />
+    <Compile Include="Bdf\PropertyType.cs" />
     <Compile Include="ClassicKernValidationFlags.cs" />
     <Compile Include="FTBitmap.cs" />
     <Compile Include="BitmapGlyph.cs" />
@@ -100,8 +100,8 @@
     <Compile Include="CharMap.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="Encoding.cs" />
-    <Compile Include="FNT\Header.cs" />
-    <Compile Include="FNT\Internal\HeaderRec.cs" />
+    <Compile Include="Fnt\Header.cs" />
+    <Compile Include="Fnt\Internal\HeaderRec.cs" />
     <Compile Include="FTList.cs" />
     <Compile Include="Internal\BBoxRec.cs" />
     <Compile Include="Internal\BitmapGlyphRec.cs" />
@@ -238,7 +238,7 @@
     <Compile Include="PostScript\BlendFlags.cs" />
     <Compile Include="PostScript\EncodingType.cs" />
     <Compile Include="FTVector.cs" />
-    <Compile Include="FNT\WinFntID.cs" />
+    <Compile Include="Fnt\WinFntID.cs" />
     <Compile Include="FT.Internal.cs" />
   </ItemGroup>
   <ItemGroup>

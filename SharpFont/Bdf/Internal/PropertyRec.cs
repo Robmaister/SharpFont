@@ -25,9 +25,9 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-namespace SharpFont.BDF.Internal
+namespace SharpFont.Bdf.Internal
 {
-	[StructLayout(LayoutKind.Explicit)]
+	[StructLayout(LayoutKind.Explicit, Pack = 0)]
 	internal struct PropertyRec
 	{
 		[FieldOffset(0)]

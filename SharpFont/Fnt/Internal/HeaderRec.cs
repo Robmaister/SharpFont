@@ -39,7 +39,7 @@ using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 #endif
 
-namespace SharpFont.FNT.Internal
+namespace SharpFont.Fnt.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
 	internal class HeaderRec

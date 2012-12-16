@@ -26,7 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-using SharpFont.BDF;
+using SharpFont.Bdf;
 using SharpFont.Internal;
 using SharpFont.MultipleMasters;
 using SharpFont.PostScript;
@@ -1990,7 +1990,7 @@ namespace SharpFont
 		/// This function only works with Windows FNT faces, returning an error otherwise.
 		/// </remarks>
 		/// <returns>The WinFNT header.</returns>
-		public FNT.Header GetWinFntHeader()
+		public Fnt.Header GetWinFntHeader()
 		{
 			IntPtr headerRef;
 			Error err = FT.FT_Get_WinFNT_Header(Reference, out headerRef);
@@ -1998,7 +1998,7 @@ namespace SharpFont
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new FNT.Header(headerRef);
+			return new Fnt.Header(headerRef);
 		}
 
 		#endregion

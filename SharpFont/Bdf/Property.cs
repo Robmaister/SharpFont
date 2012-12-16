@@ -25,9 +25,9 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.BDF.Internal;
+using SharpFont.Bdf.Internal;
 
-namespace SharpFont.BDF
+namespace SharpFont.Bdf
 {
 	/// <summary>
 	/// This structure models a given BDF/PCF property.

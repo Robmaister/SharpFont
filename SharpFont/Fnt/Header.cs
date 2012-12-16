@@ -25,9 +25,9 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.FNT.Internal;
+using SharpFont.Fnt.Internal;
 
-namespace SharpFont.FNT
+namespace SharpFont.Fnt
 {
 	/// <summary>
 	/// Windows FNT Header info.

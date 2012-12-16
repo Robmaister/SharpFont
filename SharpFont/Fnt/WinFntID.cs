@@ -24,7 +24,7 @@ SOFTWARE.*/
 
 using System;
 
-namespace SharpFont.FNT
+namespace SharpFont.Fnt
 {
 	/// <summary>
 	/// A list of valid values for the ‘charset’ byte in <see cref="Header"/>. Exact mapping tables for the various

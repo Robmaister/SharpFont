@@ -91,15 +91,6 @@ namespace SharpFont
 			customMemory = true;
 		}
 
-		internal Library(IntPtr reference, bool duplicate)
-			: this(duplicate)
-		{
-			Reference = reference;
-
-			if (duplicate)
-				FT.FT_Reference_Library(Reference);
-		}
-
 		private Library(bool duplicate)
 		{
 			childFaces = new List<Face>();
@@ -227,7 +218,7 @@ namespace SharpFont
 		/// Each new face object created with this function also owns a default <see cref="FTSize"/> object, accessible
 		/// as <see cref="Face.Size"/>.
 		/// </para><para>
-		/// See the discussion of reference counters in the description of <see cref="FT.ReferenceFace"/>.
+		/// See the discussion of reference counters in the description of FT_Reference_Face.
 		/// </para></remarks>
 		/// <param name="args">
 		/// A pointer to an <see cref="OpenArgs"/> structure which must be filled by the caller.
@@ -269,7 +260,7 @@ namespace SharpFont
 		/// <param name="fond">A FOND resource.</param>
 		/// <param name="faceIndex">Only supported for the -1 ‘sanity check’ special case.</param>
 		/// <returns>A handle to a new face object.</returns>
-		public Face NewFaceFromFOND(IntPtr fond, int faceIndex)
+		public Face NewFaceFromFond(IntPtr fond, int faceIndex)
 		{
 			if (disposed)
 				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
@@ -476,7 +467,7 @@ namespace SharpFont
 				throw new ArgumentNullException("renderer");
 
 			if (parameters == null)
-				throw new ArgumentNullException("paramters");
+				throw new ArgumentNullException("parameters");
 
 			ParameterRec[] paramRecs = Array.ConvertAll<Parameter, ParameterRec>(parameters, p => p.Record);
 			fixed (void* ptr = paramRecs)
@@ -494,8 +485,8 @@ namespace SharpFont
 
 		/// <summary>
 		/// This function is used to apply color filtering to LCD decimated bitmaps, like the ones used when calling
-		/// <see cref="GlyphSlot.RenderGlyph"/> with <see cref="RenderMode.LCD"/> or
-		/// <see cref="RenderMode.VerticalLCD"/>.
+		/// <see cref="GlyphSlot.RenderGlyph"/> with <see cref="RenderMode.Lcd"/> or
+		/// <see cref="RenderMode.VerticalLcd"/>.
 		/// </summary>
 		/// <remarks><para>
 		/// This feature is always disabled by default. Clients must make an explicit call to this function with a
@@ -513,7 +504,7 @@ namespace SharpFont
 		/// </para><para>
 		/// If this feature is activated, the dimensions of LCD glyph bitmaps are either larger or taller than the
 		/// dimensions of the corresponding outline with regards to the pixel grid. For example, for
-		/// <see cref="RenderMode.LCD"/>, the filter adds up to 3 pixels to the left, and up to 3 pixels to the right.
+		/// <see cref="RenderMode.Lcd"/>, the filter adds up to 3 pixels to the left, and up to 3 pixels to the right.
 		/// </para><para>
 		/// The bitmap offset values are adjusted correctly, so clients shouldn't need to modify their layout and glyph
 		/// positioning code when enabling the filter.
@@ -598,9 +589,19 @@ namespace SharpFont
 			childFaces.Add(child);
 		}
 
+		internal void RemoveChildFace(Face child)
+		{
+			childFaces.Remove(child);
+		}
+
 		internal void AddChildGlyph(Glyph child)
 		{
 			childGlyphs.Add(child);
+		}
+
+		internal void RemoveChildGlyph(Glyph child)
+		{
+			childGlyphs.Remove(child);
 		}
 
 		internal void AddChildOutline(Outline child)
@@ -608,14 +609,29 @@ namespace SharpFont
 			childOutlines.Add(child);
 		}
 
+		internal void RemoveChildOutline(Outline child)
+		{
+			childOutlines.Remove(child);
+		}
+
 		internal void AddChildStroker(Stroker child)
 		{
 			childStrokers.Add(child);
 		}
 
+		internal void RemoveChildStroker(Stroker child)
+		{
+			childStrokers.Remove(child);
+		}
+
 		internal void AddChildManager(Manager child)
 		{
 			childManagers.Add(child);
+		}
+
+		internal void RemoveChildManager(Manager child)
+		{
+			childManagers.Remove(child);
 		}
 
 		private void Dispose(bool disposing)

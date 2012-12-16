@@ -67,7 +67,7 @@ namespace SharpFont
 		/// Corresponds to Japanese SJIS encoding.
 		/// </summary>
 		/// <see href="http://langsupport.japanreference.com/encoding.shtml"/>
-		SJIS = ('s' << 24 | 'j' << 16 | 'i' << 8 | 's'),
+		Sjis = ('s' << 24 | 'j' << 16 | 'i' << 8 | 's'),
 
 		/// <summary>
 		/// Corresponds to an encoding system for Simplified Chinese as used

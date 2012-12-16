@@ -52,7 +52,5 @@ namespace SharpFont.Internal
 	{
 		internal FT_Pos xMin, yMin;
 		internal FT_Pos xMax, yMax;
-
-		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(FT_Pos)) * 4; } }
 	}
 }

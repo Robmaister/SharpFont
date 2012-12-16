@@ -173,7 +173,7 @@ namespace SharpFont
 					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
 
 				reference = value;
-				rec = PInvokeHelper.PtrToStructure<SizeRec>(reference);
+				this.rec = PInvokeHelper.PtrToStructure<SizeRec>(reference);
 			}
 		}
 
@@ -230,6 +230,8 @@ namespace SharpFont
 
 					if (err != Error.Ok)
 						throw new FreeTypeException(err);
+
+					parentFace.RemoveChildSize(this);
 				}
 
 				reference = IntPtr.Zero;

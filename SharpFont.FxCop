@@ -1,0 +1,3180 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FxCopProject Version="10.0" Name="My FxCop Project">
+ <ProjectOptions>
+  <SharedProject>True</SharedProject>
+  <Stylesheet Apply="False">$(FxCopDir)\Xml\FxCopReport.xsl</Stylesheet>
+  <SaveMessages>
+   <Project Status="Active, Excluded, Good, Noise" NewOnly="False" />
+   <Report Status="Active, Good, Noise" NewOnly="False" />
+  </SaveMessages>
+  <ProjectFile Compress="True" DefaultTargetCheck="True" DefaultRuleCheck="True" SaveByRuleGroup="" Deterministic="True" />
+  <EnableMultithreadedLoad>True</EnableMultithreadedLoad>
+  <EnableMultithreadedAnalysis>True</EnableMultithreadedAnalysis>
+  <SourceLookup>True</SourceLookup>
+  <AnalysisExceptionsThreshold>10</AnalysisExceptionsThreshold>
+  <RuleExceptionsThreshold>1</RuleExceptionsThreshold>
+  <Spelling Locale="en-US" />
+  <OverrideRuleVisibilities>False</OverrideRuleVisibilities>
+  <CustomDictionaries SearchFxCopDir="True" SearchUserProfile="True" SearchProjectDir="True" />
+  <SearchGlobalAssemblyCache>False</SearchGlobalAssemblyCache>
+  <DeadlockDetectionTimeout>120</DeadlockDetectionTimeout>
+  <IgnoreGeneratedCode>False</IgnoreGeneratedCode>
+ </ProjectOptions>
+ <Targets>
+  <Target Name="$(ProjectDir)/SharpFont/bin/Release/SharpFont.dll" Analyze="True" AnalyzeAllChildren="True" />
+ </Targets>
+ <Rules>
+  <RuleFiles>
+   <RuleFile Name="$(FxCopDir)\Rules\DesignRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="AbstractTypesShouldNotHaveConstructors" Enabled="True" />
+    <Rule Name="AssembliesShouldHaveValidStrongNames" Enabled="True" />
+    <Rule Name="AvoidEmptyInterfaces" Enabled="True" />
+    <Rule Name="AvoidExcessiveParametersOnGenericTypes" Enabled="True" />
+    <Rule Name="AvoidNamespacesWithFewTypes" Enabled="True" />
+    <Rule Name="CollectionsShouldImplementGenericInterface" Enabled="True" />
+    <Rule Name="ConsiderPassingBaseTypesAsParameters" Enabled="True" />
+    <Rule Name="DeclareEventHandlersCorrectly" Enabled="True" />
+    <Rule Name="DeclareTypesInNamespaces" Enabled="True" />
+    <Rule Name="DefaultParametersShouldNotBeUsed" Enabled="True" />
+    <Rule Name="DefineAccessorsForAttributeArguments" Enabled="True" />
+    <Rule Name="DoNotCatchGeneralExceptionTypes" Enabled="True" />
+    <Rule Name="DoNotDeclareProtectedMembersInSealedTypes" Enabled="True" />
+    <Rule Name="DoNotDeclareStaticMembersOnGenericTypes" Enabled="True" />
+    <Rule Name="DoNotDeclareVirtualMembersInSealedTypes" Enabled="True" />
+    <Rule Name="DoNotDeclareVisibleInstanceFields" Enabled="True" />
+    <Rule Name="DoNotExposeGenericLists" Enabled="True" />
+    <Rule Name="DoNotHideBaseClassMethods" Enabled="True" />
+    <Rule Name="DoNotNestGenericTypesInMemberSignatures" Enabled="True" />
+    <Rule Name="DoNotOverloadOperatorEqualsOnReferenceTypes" Enabled="True" />
+    <Rule Name="DoNotRaiseExceptionsInUnexpectedLocations" Enabled="True" />
+    <Rule Name="EnumeratorsShouldBeStronglyTyped" Enabled="True" />
+    <Rule Name="EnumsShouldHaveZeroValue" Enabled="True" />
+    <Rule Name="ExceptionsShouldBePublic" Enabled="True" />
+    <Rule Name="GenericMethodsShouldProvideTypeParameter" Enabled="True" />
+    <Rule Name="ICollectionImplementationsHaveStronglyTypedMembers" Enabled="True" />
+    <Rule Name="ImplementIDisposableCorrectly" Enabled="True" />
+    <Rule Name="ImplementStandardExceptionConstructors" Enabled="True" />
+    <Rule Name="IndexersShouldNotBeMultidimensional" Enabled="True" />
+    <Rule Name="InterfaceMethodsShouldBeCallableByChildTypes" Enabled="True" />
+    <Rule Name="ListsAreStronglyTyped" Enabled="True" />
+    <Rule Name="MarkAssembliesWithAssemblyVersion" Enabled="True" />
+    <Rule Name="MarkAssembliesWithClsCompliant" Enabled="True" />
+    <Rule Name="MarkAssembliesWithComVisible" Enabled="True" />
+    <Rule Name="MarkAttributesWithAttributeUsage" Enabled="True" />
+    <Rule Name="MarkEnumsWithFlags" Enabled="True" />
+    <Rule Name="MembersShouldNotExposeCertainConcreteTypes" Enabled="True" />
+    <Rule Name="NestedTypesShouldNotBeVisible" Enabled="True" />
+    <Rule Name="OverloadOperatorEqualsOnOverloadingAddAndSubtract" Enabled="True" />
+    <Rule Name="OverrideMethodsOnComparableTypes" Enabled="True" />
+    <Rule Name="PropertiesShouldNotBeWriteOnly" Enabled="True" />
+    <Rule Name="ProvideObsoleteAttributeMessage" Enabled="True" />
+    <Rule Name="ReplaceRepetitiveArgumentsWithParamsArray" Enabled="True" />
+    <Rule Name="StaticHolderTypesShouldBeSealed" Enabled="True" />
+    <Rule Name="StaticHolderTypesShouldNotHaveConstructors" Enabled="True" />
+    <Rule Name="StringUriOverloadsCallSystemUriOverloads" Enabled="True" />
+    <Rule Name="TypesShouldNotExtendCertainBaseTypes" Enabled="True" />
+    <Rule Name="TypesThatOwnDisposableFieldsShouldBeDisposable" Enabled="True" />
+    <Rule Name="TypesThatOwnNativeResourcesShouldBeDisposable" Enabled="True" />
+    <Rule Name="UriParametersShouldNotBeStrings" Enabled="True" />
+    <Rule Name="UriPropertiesShouldNotBeStrings" Enabled="True" />
+    <Rule Name="UriReturnValuesShouldNotBeStrings" Enabled="True" />
+    <Rule Name="UseEventsWhereAppropriate" Enabled="True" />
+    <Rule Name="UseGenericEventHandlerInstances" Enabled="True" />
+    <Rule Name="UseGenericsWhereAppropriate" Enabled="True" />
+    <Rule Name="UseIntegralOrStringArgumentForIndexers" Enabled="True" />
+    <Rule Name="UsePropertiesWhereAppropriate" Enabled="True" />
+   </RuleFile>
+   <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="CompoundWordsShouldBeCasedCorrectly" Enabled="True" />
+    <Rule Name="DoNotNameEnumValuesReserved" Enabled="True" />
+    <Rule Name="DoNotPrefixEnumValuesWithTypeName" Enabled="True" />
+    <Rule Name="EventsShouldNotHaveBeforeOrAfterPrefix" Enabled="True" />
+    <Rule Name="FlagsEnumsShouldHavePluralNames" Enabled="True" />
+    <Rule Name="IdentifiersShouldBeCasedCorrectly" Enabled="True" />
+    <Rule Name="IdentifiersShouldDifferByMoreThanCase" Enabled="True" />
+    <Rule Name="IdentifiersShouldHaveCorrectPrefix" Enabled="True" />
+    <Rule Name="IdentifiersShouldHaveCorrectSuffix" Enabled="True" />
+    <Rule Name="IdentifiersShouldNotContainTypeNames" Enabled="True" />
+    <Rule Name="IdentifiersShouldNotContainUnderscores" Enabled="True" />
+    <Rule Name="IdentifiersShouldNotHaveIncorrectPrefix" Enabled="True" />
+    <Rule Name="IdentifiersShouldNotHaveIncorrectSuffix" Enabled="True" />
+    <Rule Name="IdentifiersShouldNotMatchKeywords" Enabled="True" />
+    <Rule Name="OnlyFlagsEnumsShouldHavePluralNames" Enabled="True" />
+    <Rule Name="ParameterNamesShouldMatchBaseDeclaration" Enabled="True" />
+    <Rule Name="ParameterNamesShouldNotMatchMemberNames" Enabled="True" />
+    <Rule Name="PropertyNamesShouldNotMatchGetMethods" Enabled="True" />
+    <Rule Name="ResourceStringCompoundWordsShouldBeCasedCorrectly" Enabled="True" />
+    <Rule Name="ResourceStringsShouldBeSpelledCorrectly" Enabled="True" />
+    <Rule Name="TypeNamesShouldNotMatchNamespaces" Enabled="True" />
+    <Rule Name="UsePreferredTerms" Enabled="True" />
+   </RuleFile>
+   <RuleFile Name="$(FxCopDir)\Rules\PerformanceRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\PortabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\SecurityTransparencyRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\UsageRules.dll" Enabled="True" AllRulesEnabled="True" />
+  </RuleFiles>
+  <Groups />
+  <Settings />
+ </Rules>
+ <FxCopReport Version="10.0">
+  <Namespaces>
+   <Namespace Name="SharpFont.BDF">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2012-12-15 23:01:10Z">
+      <Issue>
+       <Item>SharpFont.BDF</Item>
+      </Issue>
+     </Message>
+     <Message Id="BDF" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
+      <Issue Name="Namespace">
+       <Item>BDF</Item>
+       <Item>SharpFont.BDF</Item>
+       <Item>Bdf</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="SharpFont.FNT">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2012-12-15 23:01:10Z">
+      <Issue>
+       <Item>SharpFont.FNT</Item>
+      </Issue>
+     </Message>
+     <Message Id="FNT" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
+      <Issue Name="Namespace">
+       <Item>FNT</Item>
+       <Item>SharpFont.FNT</Item>
+       <Item>Fnt</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+   <Namespace Name="SharpFont.PostScript">
+    <Messages>
+     <Message Id="PostScript" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2012-12-15 23:01:10Z">
+      <Issue Name="NamespaceShouldBeDiscreteTerm">
+       <Item>PostScript</Item>
+       <Item>SharpFont.PostScript</Item>
+       <Item>Postscript</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
+  </Namespaces>
+  <Targets>
+   <Target Name="$(ProjectDir)/SharpFont/bin/Release/SharpFont.dll">
+    <Modules>
+     <Module Name="sharpfont.dll">
+      <Namespaces>
+       <Namespace Name="SharpFont">
+        <Types>
+         <Type Name="BBox">
+          <Members>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'BBox.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="BitmapGlyph">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'BitmapGlyph.BitmapGlyph(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'BitmapGlyph.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+             <Accessor Name="#set_Reference(System.IntPtr)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'BitmapGlyph.Reference.set(IntPtr)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="BitmapSize">
+          <Members>
+           <Member Name="#.ctor(SharpFont.Internal.BitmapSizeRec)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'BitmapSize.BitmapSize(BitmapSizeRec)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'BitmapSize.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CharMap">
+          <Members>
+           <Member Name="#GetCharmapIndex()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'CharMap.GetCharmapIndex()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetCMapFormat()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'CharMap.GetCMapFormat()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetCMapLanguageId()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-16 08:12:49Z">
+              <Issue Certainty="50">
+               <Item>'CharMap.GetCMapLanguageId()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ClassicKernValidationFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'ClassicKernValidationFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Data">
+          <Messages>
+           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Created="2012-12-15 23:01:10Z">
+            <Issue Name="System">
+             <Item>'Data'</Item>
+             <Item>System.Data</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Data.Data(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'Data.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+             <Accessor Name="#set_Reference(System.IntPtr)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'Data.Reference.set(IntPtr)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="EmbeddingTypes">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2012-12-15 23:01:10Z" FixCategory="Breaking">
+            <Issue Name="FlagsRename">
+             <Item>'EmbeddingTypes'</Item>
+             <Item>'EmbeddingTypes.Installable'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Error">
+          <Messages>
+           <Message Id="Error" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2012-12-15 23:01:10Z">
+            <Issue Name="Type">
+             <Item>'Error'</Item>
+             <Item>Error</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'Error'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Face">
+          <Members>
+           <Member Name="#AvailableSizes">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Face.AvailableSizes'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#CharMaps">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Face.CharMaps'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ClassicKernValidate(SharpFont.ClassicKernValidationFlags)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Face.ClassicKernValidate(ClassicKernValidationFlags)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message Id="disposing" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'disposing'</Item>
+               <Item>'Face.Dispose(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FaceFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'Face.FaceFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetAdvance(System.UInt32,SharpFont.LoadFlags)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Face.GetAdvance(uint, LoadFlags)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetAdvances(System.UInt32,System.UInt32,SharpFont.LoadFlags)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Face.GetAdvances(uint, uint, LoadFlags)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetCidIsInternallyCidKeyed()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-16 08:12:49Z">
+              <Issue Certainty="50">
+               <Item>'Face.GetCidIsInternallyCidKeyed()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetFSTypeFlags()">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'Face.GetFSTypeFlags()'</Item>
+              </Issue>
+             </Message>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'Face.GetFSTypeFlags()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetMMVar()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'Face.GetMMVar()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetMultiMaster()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'Face.GetMultiMaster()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetPostscriptName()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'Face.GetPostscriptName()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetPSFontInfo()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'Face.GetPSFontInfo()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetPSFontPrivate()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'Face.GetPSFontPrivate()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetSfntNameCount()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'Face.GetSfntNameCount()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetWinFntHeader()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-16 08:12:49Z">
+              <Issue Certainty="50">
+               <Item>'Face.GetWinFntHeader()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetX11FontFormat()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'Face.GetX11FontFormat()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LoadChar(System.UInt32,SharpFont.LoadFlags,SharpFont.LoadTarget)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Face.LoadChar(uint, LoadFlags, LoadTarget)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LoadGlyph(System.UInt32,SharpFont.LoadFlags,SharpFont.LoadTarget)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Face.LoadGlyph(uint, LoadFlags, LoadTarget)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#OpenTypeValidate(SharpFont.OpenTypeValidationFlags,System.IntPtr&amp;,System.IntPtr&amp;,System.IntPtr&amp;,System.IntPtr&amp;,System.IntPtr&amp;)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Face.OpenTypeValidate(OpenTypeValidationFlags, out IntPtr, out IntPtr, out IntPtr, out IntPtr, out IntPtr)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#StyleFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'Face.StyleFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#TrueTypeGXValidate(SharpFont.TrueTypeValidationFlags,System.Byte[][],System.UInt32)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'Face.TrueTypeGXValidate(TrueTypeValidationFlags, byte[][], uint)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FaceFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'FaceFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="FreeTypeException">
+          <Messages>
+           <Message TypeName="ImplementISerializableCorrectly" Category="Microsoft.Usage" CheckId="CA2240" Created="2012-12-15 23:23:19Z">
+            <Issue>
+             <Item>'FreeTypeException'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032" Created="2012-12-15 23:01:10Z">
+            <Issue Name="MissingConstructor">
+             <Item>'FreeTypeException'</Item>
+             <Item>protected FreeTypeException(SerializationInfo, StreamingContext)</Item>
+            </Issue>
+            <Issue Name="MissingConstructor">
+             <Item>'FreeTypeException'</Item>
+             <Item>public FreeTypeException()</Item>
+            </Issue>
+            <Issue Name="MissingConstructor">
+             <Item>'FreeTypeException'</Item>
+             <Item>public FreeTypeException(String)</Item>
+            </Issue>
+            <Issue Name="MissingConstructor">
+             <Item>'FreeTypeException'</Item>
+             <Item>public FreeTypeException(String, Exception)</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="FT">
+          <Members>
+           <Member Name="#FT_Attach_File(System.IntPtr,System.String)">
+            <Messages>
+             <Message Id="1" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2012-12-15 23:01:10Z">
+              <Issue Name="ParameterImplicitAnsi">
+               <Item>'filepathname'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FT_Get_BDF_Property(System.IntPtr,System.String,System.IntPtr&amp;)">
+            <Messages>
+             <Message Id="1" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2012-12-15 23:01:10Z">
+              <Issue Name="ParameterImplicitAnsi">
+               <Item>'prop_name'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FT_Get_Module(System.IntPtr,System.String)">
+            <Messages>
+             <Message Id="1" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2012-12-15 23:01:10Z">
+              <Issue Name="ParameterImplicitAnsi">
+               <Item>'module_name'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FT_GetFile_From_Mac_ATS_Name(System.String,System.IntPtr&amp;,System.Int32&amp;)">
+            <Messages>
+             <Message Id="0" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2012-12-15 23:01:10Z">
+              <Issue Name="ParameterImplicitAnsi">
+               <Item>'fontName'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FT_GetFile_From_Mac_Name(System.String,System.IntPtr&amp;,System.Int32&amp;)">
+            <Messages>
+             <Message Id="0" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2012-12-15 23:01:10Z">
+              <Issue Name="ParameterImplicitAnsi">
+               <Item>'fontName'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FT_GetFilePath_From_Mac_ATS_Name(System.String,System.IntPtr,System.Int32,System.Int32&amp;)">
+            <Messages>
+             <Message Id="0" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2012-12-15 23:01:10Z">
+              <Issue Name="ParameterImplicitAnsi">
+               <Item>'fontName'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FT_New_Face(System.IntPtr,System.String,System.Int32,System.IntPtr&amp;)">
+            <Messages>
+             <Message Id="1" TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101" Created="2012-12-15 23:01:10Z">
+              <Issue Name="ParameterImplicitAnsi">
+               <Item>'filepathname'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FT_Reference_Library(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'FT.FT_Reference_Library(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FT_Set_Var_Blend_Coordinates(System.IntPtr,System.UInt32,System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'FT.FT_Set_Var_Blend_Coordinates(IntPtr, uint, IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FTBitmap">
+          <Members>
+           <Member Name="#BufferData">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'FTBitmap.BufferData'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message Id="disposing" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'disposing'</Item>
+               <Item>'FTBitmap.Dispose(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FTList">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'FTList.FTList(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#set_Reference(System.IntPtr)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'FTList.Reference.set(IntPtr)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FTMatrix">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2012-12-15 23:01:10Z">
+            <Issue Name="Equals">
+             <Item>'FTMatrix'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'FTMatrix'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="TypesThatOwnNativeResourcesShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1049" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'FTMatrix'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="FTSize">
+          <Members>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message Id="disposing" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'disposing'</Item>
+               <Item>'FTSize.Dispose(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FTStream">
+          <Messages>
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2012-12-15 23:01:10Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>'FTStream'</Item>
+             <Item>Stream</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="FTVector">
+          <Messages>
+           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2012-12-15 23:01:10Z">
+            <Issue Name="Equals">
+             <Item>'FTVector'</Item>
+            </Issue>
+            <Issue Name="op_Equality">
+             <Item>'FTVector'</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="TypesThatOwnNativeResourcesShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1049" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'FTVector'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Gasp">
+          <Messages>
+           <Message TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'Gasp'</Item>
+             <Item>0x4, 0x20, 0x40, 0x80, 0x100, 0x200, 0x400, 0x800, 0x1000, 0x2000, 0x4000, 0x8000, 0x10000, 0x20000, 0x40000, 0x80000, 0x100000, 0x200000, 0x400000, 0x800000, 0x1000000, 0x2000000, 0x4000000, 0x8000000, 0x10000000, 0x20000000, 0x40000000, 0x80000000, 0x100000000, 0x200000000, 0x400000000, 0x800000000, 0x1000000000, 0x2000000000, 0x4000000000, 0x8000000000, 0x10000000000, 0x20000000000, 0x40000000000, 0x80000000000, 0x100000000000, 0x200000000000, 0x400000000000, 0x800000000000, 0x1000000000000, 0x2000000000000, 0x4000000000000, 0x8000000000000, 0x10000000000000, 0x20000000000000, 0x40000000000000, 0x80000000000000, 0x100000000000000, 0x200000000000000, 0x400000000000000, 0x800000000000000, 0x1000000000000000, 0x2000000000000000, 0x4000000000000000, 0x8000000000000000</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'Gasp'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#NoTable">
+            <Messages>
+             <Message Id="NoTable" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>NoTable</Item>
+               <Item>'Gasp.NoTable'</Item>
+               <Item>Notable</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Generic">
+          <Messages>
+           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Created="2012-12-15 23:01:10Z">
+            <Issue Name="System">
+             <Item>'Generic'</Item>
+             <Item>System.Collections.Generic</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Generic.Generic(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(System.IntPtr,System.Int32)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Generic.Generic(IntPtr, int)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Glyph">
+          <Members>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message Id="disposing" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'disposing'</Item>
+               <Item>'Glyph.Dispose(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="GlyphMetrics">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'GlyphMetrics.GlyphMetrics(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'GlyphMetrics.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+             <Accessor Name="#set_Reference(System.IntPtr)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'GlyphMetrics.Reference.set(IntPtr)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="GlyphSlot">
+          <Members>
+           <Member Name="#GetGlyph()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'GlyphSlot.GetGlyph()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetSubGlyphInfo(System.UInt32,System.Int32&amp;,SharpFont.SubGlyphFlags&amp;,System.Int32&amp;,System.Int32&amp;,SharpFont.FTMatrix&amp;)">
+            <Messages>
+             <Message Id="flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'GlyphSlot.GetSubGlyphInfo(uint, out int, out SubGlyphFlags, out int, out int, out FTMatrix)'</Item>
+               <Item>flags</Item>
+               <Item>'flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Subglyphs">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'GlyphSlot.Subglyphs'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="LcdFilter">
+          <Messages>
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'LcdFilter'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Library">
+          <Members>
+           <Member Name="#.ctor(System.Boolean)">
+            <Messages>
+             <Message Id="duplicate" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'duplicate'</Item>
+               <Item>'Library.Library(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#.ctor(System.IntPtr,System.Boolean)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Library.Library(IntPtr, bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#AddChildStroker(SharpFont.Stroker)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Library.AddChildStroker(Stroker)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message Id="disposing" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'disposing'</Item>
+               <Item>'Library.Dispose(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetTrueTypeEngineType()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'Library.GetTrueTypeEngineType()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="LoadFlags">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2012-12-15 23:01:10Z" FixCategory="Breaking">
+            <Issue Name="FlagsRename">
+             <Item>'LoadFlags'</Item>
+             <Item>'LoadFlags.Default'</Item>
+            </Issue>
+           </Message>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'LoadFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#AdvanceFlagFastOnly">
+            <Messages>
+             <Message Id="Flag" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flag</Item>
+               <Item>'LoadFlags.AdvanceFlagFastOnly'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="LoadTarget">
+          <Messages>
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'LoadTarget'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Module">
+          <Messages>
+           <Message Id="Module" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2012-12-15 23:01:10Z">
+            <Issue Name="Type">
+             <Item>'Module'</Item>
+             <Item>Module</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ModuleClass">
+          <Members>
+           <Member Name="#Flags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'ModuleClass.Flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="OpenArgs">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'OpenArgs.OpenArgs(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Flags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'OpenArgs.Flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Params">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'OpenArgs.Params'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#set_Reference(System.IntPtr)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'OpenArgs.Reference.set(IntPtr)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="OpenFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'OpenFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="OpenTypeValidationFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'OpenTypeValidationFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Orientation">
+          <Members>
+           <Member Name="#PostScript">
+            <Messages>
+             <Message Id="PostScript" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>PostScript</Item>
+               <Item>'Orientation.PostScript'</Item>
+               <Item>Postscript</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Outline">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr,SharpFont.Library)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Outline.Outline(IntPtr, Library)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Contours">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Outline.Contours'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message Id="disposing" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'disposing'</Item>
+               <Item>'Outline.Dispose(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Flags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'Outline.Flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetBBox()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'Outline.GetBBox()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetCBox()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'Outline.GetCBox()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetInsideBorder()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'Outline.GetInsideBorder()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetOrientation()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'Outline.GetOrientation()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#GetOutsideBorder()">
+            <Messages>
+             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
+              <Issue Certainty="50">
+               <Item>'Outline.GetOutsideBorder()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Points">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Outline.Points'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Tags">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Outline.Tags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="OutlineFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'OutlineFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="OutlineGlyph">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'OutlineGlyph.OutlineGlyph(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'OutlineGlyph.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+             <Accessor Name="#set_Reference(System.IntPtr)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'OutlineGlyph.Reference.set(IntPtr)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Parameter">
+          <Members>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'Parameter.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ParamTag">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+            <Issue Name="NotFlagsNoZeroValue">
+             <Item>'ParamTag'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="RasterFlags">
+          <Messages>
+           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2012-12-15 23:23:19Z" FixCategory="Breaking">
+            <Issue Name="FlagsRename">
+             <Item>'RasterFlags'</Item>
+             <Item>'RasterFlags.Default'</Item>
+            </Issue>
+           </Message>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'RasterFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="RasterFuncs">
+          <Members>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'RasterFuncs.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="RasterParams">
+          <Members>
+           <Member Name="#Flags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'RasterParams.Flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="RasterResetFunc">
+          <Messages>
+           <Message Id="base" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
+            <Issue Name="DelegateParameter">
+             <Item>'RasterResetFunc'</Item>
+             <Item>base</Item>
+             <Item>'pool_base'</Item>
+             <Item>Base</Item>
+            </Issue>
+           </Message>
+           <Message Id="size" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
+            <Issue Name="DelegateParameter">
+             <Item>'RasterResetFunc'</Item>
+             <Item>size</Item>
+             <Item>'pool_size'</Item>
+             <Item>Size</Item>
+            </Issue>
+           </Message>
+           <Message TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707" Created="2012-12-15 23:01:10Z">
+            <Issue Name="DelegateParameter">
+             <Item>'RasterResetFunc'</Item>
+             <Item>'pool_base'</Item>
+            </Issue>
+            <Issue Name="DelegateParameter">
+             <Item>'RasterResetFunc'</Item>
+             <Item>'pool_size'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="RendererClass">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'RendererClass.RendererClass(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'RendererClass.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+             <Accessor Name="#set_Reference(System.IntPtr)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'RendererClass.Reference.set(IntPtr)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SizeMetrics">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'SizeMetrics.SizeMetrics(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'SizeMetrics.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+             <Accessor Name="#set_Reference(System.IntPtr)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'SizeMetrics.Reference.set(IntPtr)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SizeRequest">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'SizeRequest.SizeRequest(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#set_Reference(System.IntPtr)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'SizeRequest.Reference.set(IntPtr)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="StreamDesc">
+          <Members>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'StreamDesc.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Stroker">
+          <Members>
+           <Member Name="#BeginSubPath(SharpFont.FTVector,System.Boolean)">
+            <Messages>
+             <Message Id="SubPath" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>SubPath</Item>
+               <Item>'Stroker.BeginSubPath(FTVector, bool)'</Item>
+               <Item>Subpath</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message Id="disposing" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'disposing'</Item>
+               <Item>'Stroker.Dispose(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#EndSubPath()">
+            <Messages>
+             <Message Id="SubPath" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>SubPath</Item>
+               <Item>'Stroker.EndSubPath()'</Item>
+               <Item>Subpath</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="StyleFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'StyleFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="SubGlyph">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'SubGlyph.SubGlyph(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'SubGlyph.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SubGlyphFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'SubGlyphFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="TrueTypeValidationFlags">
+          <Messages>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'TrueTypeValidationFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="SharpFont.BDF">
+        <Types>
+         <Type Name="Property">
+          <Messages>
+           <Message Id="Property" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2012-12-15 23:01:10Z">
+            <Issue Name="Type">
+             <Item>'Property'</Item>
+             <Item>Property</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Integer">
+            <Messages>
+             <Message Id="integer" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2012-12-15 23:01:10Z">
+              <Issue Name="LanguageSpecificMember">
+               <Item>Integer</Item>
+               <Item>'Property.Integer'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'Property.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#Type">
+            <Messages>
+             <Message TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721" Created="2012-12-15 23:01:10Z">
+              <Issue Name="BaseType">
+               <Item>'Property.Type'</Item>
+               <Item>'object.GetType()'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="SharpFont.BDF.Internal">
+        <Types>
+         <Type Name="PropertyRec">
+          <Messages>
+           <Message Id="atom" TypeName="ValueTypeFieldsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1900" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+            <Issue>
+             <Item>'PropertyRec'</Item>
+             <Item>'PropertyRec.atom'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="SharpFont.Cache">
+        <Types>
+         <Type Name="CMapCache">
+          <Messages>
+           <Message TypeName="IdentifiersShouldNotHaveIncorrectPrefix" Category="Microsoft.Naming" CheckId="CA1722" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'CMapCache'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Lookup(System.IntPtr,System.Int32,System.UInt32)">
+            <Messages>
+             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberParameterAbbreviation">
+               <Item>'CMapCache.Lookup(IntPtr, int, uint)'</Item>
+               <Item>ID</Item>
+               <Item>'faceID'</Item>
+               <Item>Id</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FaceRequester">
+          <Messages>
+           <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
+            <Issue Name="DelegateParameterAbbreviation">
+             <Item>'FaceRequester'</Item>
+             <Item>ID</Item>
+             <Item>'faceID'</Item>
+             <Item>Id</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ImageCache">
+          <Members>
+           <Member Name="#LookupScaler(SharpFont.Cache.Scaler,SharpFont.LoadFlags,System.UInt32,SharpFont.Cache.Node&amp;)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'ImageCache.LookupScaler(Scaler, LoadFlags, uint, out Node)'</Item>
+               <Item>Flags</Item>
+               <Item>'loadFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ImageType">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'ImageType.ImageType(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FaceID">
+            <Messages>
+             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberAbbreviation">
+               <Item>ID</Item>
+               <Item>'ImageType.FaceID'</Item>
+               <Item>Id</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Flags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'ImageType.Flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#set_Reference(System.IntPtr)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'ImageType.Reference.set(IntPtr)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Manager">
+          <Members>
+           <Member Name="#Dispose(System.Boolean)">
+            <Messages>
+             <Message Id="disposing" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'disposing'</Item>
+               <Item>'Manager.Dispose(bool)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#library">
+            <Messages>
+             <Message TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Manager.library'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#LookupFace(System.IntPtr)">
+            <Messages>
+             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberParameterAbbreviation">
+               <Item>'Manager.LookupFace(IntPtr)'</Item>
+               <Item>ID</Item>
+               <Item>'faceID'</Item>
+               <Item>Id</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#RemoveFaceID(System.IntPtr)">
+            <Messages>
+             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberAbbreviation">
+               <Item>ID</Item>
+               <Item>'Manager.RemoveFaceID(IntPtr)'</Item>
+               <Item>Id</Item>
+              </Issue>
+              <Issue Name="MemberParameterAbbreviation">
+               <Item>'Manager.RemoveFaceID(IntPtr)'</Item>
+               <Item>ID</Item>
+               <Item>'faceID'</Item>
+               <Item>Id</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SBit">
+          <Members>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'SBit.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SBitCache">
+          <Members>
+           <Member Name="#LookupScaler(SharpFont.Cache.Scaler,SharpFont.LoadFlags,System.UInt32,SharpFont.Cache.Node&amp;)">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberParameterNoAlternate">
+               <Item>'SBitCache.LookupScaler(Scaler, LoadFlags, uint, out Node)'</Item>
+               <Item>Flags</Item>
+               <Item>'loadFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Scaler">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Scaler.Scaler(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FaceID">
+            <Messages>
+             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberAbbreviation">
+               <Item>ID</Item>
+               <Item>'Scaler.FaceID'</Item>
+               <Item>Id</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#set_Reference(System.IntPtr)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'Scaler.Reference.set(IntPtr)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="SharpFont.Cache.Internal">
+        <Types>
+         <Type Name="CMapCacheRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'CMapCacheRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ImageCacheRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'ImageCacheRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ImageTypeRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'ImageTypeRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ManagerRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'ManagerRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="NodeRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'NodeRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="SBitCacheRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'SBitCacheRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ScalerRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'ScalerRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="SharpFont.FNT">
+        <Types>
+         <Type Name="Header">
+          <Members>
+           <Member Name="#Copyright">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Header.Copyright'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Flags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'Header.Flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'Header.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#Reserved1">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Header.Reserved1'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="SharpFont.FNT.Internal">
+        <Types>
+         <Type Name="HeaderRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'HeaderRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="SharpFont.Internal">
+        <Types>
+         <Type Name="BBoxRec">
+          <Members>
+           <Member Name="#SizeInBytes">
+            <Accessors>
+             <Accessor Name="#get_SizeInBytes()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'BBoxRec.SizeInBytes.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="BitmapGlyphRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'BitmapGlyphRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="BitmapRec">
+          <Members>
+           <Member Name="#SizeInBytes">
+            <Accessors>
+             <Accessor Name="#get_SizeInBytes()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'BitmapRec.SizeInBytes.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="CharMapRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'CharMapRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#SizeInBytes">
+            <Accessors>
+             <Accessor Name="#get_SizeInBytes()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'CharMapRec.SizeInBytes.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FaceMarshsaler">
+          <Members>
+           <Member Name="#GetInstance(System.String)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'FaceMarshsaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="cookie" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'cookie'</Item>
+               <Item>'FaceMarshsaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="GlyphMetricsRec">
+          <Members>
+           <Member Name="#SizeInBytes">
+            <Accessors>
+             <Accessor Name="#get_SizeInBytes()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'GlyphMetricsRec.SizeInBytes.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="GlyphSlotRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'GlyphSlotRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="ListNodeMarshaler">
+          <Members>
+           <Member Name="#GetInstance(System.String)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'ListNodeMarshaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="cookie" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'cookie'</Item>
+               <Item>'ListNodeMarshaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ListRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'ListRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="MemoryMarshaler">
+          <Members>
+           <Member Name="#GetInstance(System.String)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'MemoryMarshaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="cookie" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'cookie'</Item>
+               <Item>'MemoryMarshaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="ModuleMarshaler">
+          <Members>
+           <Member Name="#GetInstance(System.String)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'ModuleMarshaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="cookie" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'cookie'</Item>
+               <Item>'ModuleMarshaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="OpenArgsRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'OpenArgsRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="OutlineGlyphRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'OutlineGlyphRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="OutlineRec">
+          <Members>
+           <Member Name="#SizeInBytes">
+            <Accessors>
+             <Accessor Name="#get_SizeInBytes()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'OutlineRec.SizeInBytes.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="RasterFuncsRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'RasterFuncsRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="RasterMarshaler">
+          <Members>
+           <Member Name="#GetInstance(System.String)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'RasterMarshaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="cookie" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'cookie'</Item>
+               <Item>'RasterMarshaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="RasterParamsMarshaler">
+          <Members>
+           <Member Name="#GetInstance(System.String)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'RasterParamsMarshaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="cookie" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'cookie'</Item>
+               <Item>'RasterParamsMarshaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SizeRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'SizeRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="SpanMarshaler">
+          <Members>
+           <Member Name="#GetInstance(System.String)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'SpanMarshaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="cookie" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'cookie'</Item>
+               <Item>'SpanMarshaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="StreamMarshaler">
+          <Members>
+           <Member Name="#GetInstance(System.String)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'StreamMarshaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+             <Message Id="cookie" TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
+              <Issue>
+               <Item>'cookie'</Item>
+               <Item>'StreamMarshaler.GetInstance(string)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="SharpFont.MultipleMasters">
+        <Types>
+         <Type Name="MMAxis">
+          <Members>
+           <Member Name="#.ctor(System.IntPtr)">
+            <Messages>
+             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'MMAxis.MMAxis(IntPtr)'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'MMAxis.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+             <Accessor Name="#set_Reference(System.IntPtr)">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'MMAxis.Reference.set(IntPtr)'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="MMVar">
+          <Members>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'MMVar.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="MultiMaster">
+          <Members>
+           <Member Name="#Axis">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'MultiMaster.Axis'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'MultiMaster.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="VarAxis">
+          <Members>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'VarAxis.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#StrID">
+            <Messages>
+             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberAbbreviation">
+               <Item>ID</Item>
+               <Item>'VarAxis.StrID'</Item>
+               <Item>Id</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="VarNamedStyle">
+          <Members>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'VarNamedStyle.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#StrID">
+            <Messages>
+             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberAbbreviation">
+               <Item>ID</Item>
+               <Item>'VarNamedStyle.StrID'</Item>
+               <Item>Id</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="SharpFont.MultipleMasters.Internal">
+        <Types>
+         <Type Name="MMVarRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'MMVarRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="MultiMasterRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'MultiMasterRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="VarAxisRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'VarAxisRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="VarNamedStyleRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'VarNamedStyleRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="SharpFont.PostScript">
+        <Types>
+         <Type Name="BlendFlags">
+          <Messages>
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'BlendFlags'</Item>
+            </Issue>
+           </Message>
+           <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+            <Issue Name="TypeNoAlternate">
+             <Item>Flags</Item>
+             <Item>'BlendFlags'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="DictionaryKeys">
+          <Messages>
+           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'DictionaryKeys'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="EncodingType">
+          <Members>
+           <Member Name="#ISOLatin1">
+            <Messages>
+             <Message Id="ISO" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
+              <Issue Name="Member">
+               <Item>ISO</Item>
+               <Item>'EncodingType.ISOLatin1'</Item>
+               <Item>Iso</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FaceDict">
+          <Members>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'FaceDict.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FaceInfo">
+          <Members>
+           <Member Name="#Xuid">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'FaceInfo.Xuid'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="FontInfo">
+          <Members>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'FontInfo.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Private">
+          <Messages>
+           <Message Id="Private" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2012-12-15 23:01:10Z">
+            <Issue Name="Type">
+             <Item>'Private'</Item>
+             <Item>Private</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#BlueValues">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Private.BlueValues'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FamilyBlues">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Private.FamilyBlues'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FamilyOtherBlues">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Private.FamilyOtherBlues'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#MinFeature">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Private.MinFeature'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#OtherBlues">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Private.OtherBlues'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'Private.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#SnapHeights">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Private.SnapHeights'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#SnapWidths">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Private.SnapWidths'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#UniqueID">
+            <Messages>
+             <Message Id="ID" TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberAbbreviation">
+               <Item>ID</Item>
+               <Item>'Private.UniqueID'</Item>
+               <Item>Id</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="SharpFont.TrueType">
+        <Types>
+         <Type Name="Header">
+          <Members>
+           <Member Name="#Created">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Header.Created'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Flags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'Header.Flags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Modified">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'Header.Modified'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'Header.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="HoriHeader">
+          <Members>
+           <Member Name="#LongMetrics">
+            <Messages>
+             <Message Id="long" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2012-12-15 23:01:10Z">
+              <Issue Name="LanguageSpecificMember">
+               <Item>Long</Item>
+               <Item>'HoriHeader.LongMetrics'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'HoriHeader.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#Reserved">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'HoriHeader.Reserved'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ShortMetrics">
+            <Messages>
+             <Message Id="short" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2012-12-15 23:01:10Z">
+              <Issue Name="LanguageSpecificMember">
+               <Item>Short</Item>
+               <Item>'HoriHeader.ShortMetrics'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="MaxProfile">
+          <Members>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'MaxProfile.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="OS2">
+          <Members>
+           <Member Name="#Panose">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'OS2.Panose'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'OS2.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#SelectionFlags">
+            <Messages>
+             <Message Id="Flags" TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberNoAlternate">
+               <Item>Flags</Item>
+               <Item>'OS2.SelectionFlags'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#VendorId">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-16 07:48:48Z">
+              <Issue>
+               <Item>'OS2.VendorId'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="Pclt">
+          <Members>
+           <Member Name="#CharacterComplement">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-16 07:48:48Z">
+              <Issue>
+               <Item>'Pclt.CharacterComplement'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#FileName">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-16 07:48:48Z">
+              <Issue>
+               <Item>'Pclt.FileName'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-16 07:48:48Z">
+                <Issue>
+                 <Item>'Pclt.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="PlatformId">
+          <Messages>
+           <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2012-12-16 07:48:48Z">
+            <Issue>
+             <Item>'PlatformId'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="Postscript">
+          <Messages>
+           <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'Postscript'</Item>
+             <Item>SharpFont.PostScript</Item>
+            </Issue>
+           </Message>
+          </Messages>
+          <Members>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'Postscript.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="SfntName">
+          <Members>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'SfntName.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+          </Members>
+         </Type>
+         <Type Name="VertHeader">
+          <Members>
+           <Member Name="#LongMetrics">
+            <Messages>
+             <Message Id="long" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2012-12-15 23:01:10Z">
+              <Issue Name="LanguageSpecificMember">
+               <Item>Long</Item>
+               <Item>'VertHeader.LongMetrics'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#MinimumTopSideBearing">
+            <Messages>
+             <Message Id="TopSide" TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702" Created="2012-12-15 23:01:10Z">
+              <Issue Name="MemberShouldBeDiscreteTerm">
+               <Item>TopSide</Item>
+               <Item>'VertHeader.MinimumTopSideBearing'</Item>
+               <Item>Topside</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#Reference">
+            <Accessors>
+             <Accessor Name="#get_Reference()">
+              <Messages>
+               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
+                <Issue>
+                 <Item>'VertHeader.Reference.get()'</Item>
+                </Issue>
+               </Message>
+              </Messages>
+             </Accessor>
+            </Accessors>
+           </Member>
+           <Member Name="#Reserved">
+            <Messages>
+             <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
+              <Issue>
+               <Item>'VertHeader.Reserved'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+           <Member Name="#ShortMetrics">
+            <Messages>
+             <Message Id="short" TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720" Created="2012-12-15 23:01:10Z">
+              <Issue Name="LanguageSpecificMember">
+               <Item>Short</Item>
+               <Item>'VertHeader.ShortMetrics'</Item>
+              </Issue>
+             </Message>
+            </Messages>
+           </Member>
+          </Members>
+         </Type>
+        </Types>
+       </Namespace>
+       <Namespace Name="SharpFont.TrueType.Internal">
+        <Types>
+         <Type Name="HeaderRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'HeaderRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="HoriHeaderRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'HoriHeaderRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="MaxProfileRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'MaxProfileRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="OS2Rec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'OS2Rec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="PCLTRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'PCLTRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="PostscriptRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'PostscriptRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+         <Type Name="VertHeaderRec">
+          <Messages>
+           <Message TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812" Created="2012-12-15 23:01:10Z">
+            <Issue>
+             <Item>'VertHeaderRec'</Item>
+            </Issue>
+           </Message>
+          </Messages>
+         </Type>
+        </Types>
+       </Namespace>
+      </Namespaces>
+     </Module>
+    </Modules>
+   </Target>
+  </Targets>
+  <Rules>
+   <Rule TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020">
+    <Resolution Name="Default">Consider merging the types defined in '{0}' with another namespace.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811">
+    <Resolution Name="Default">{0} appears to have no upstream public or protected callers.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUninstantiatedInternalClasses" Category="Microsoft.Performance" CheckId="CA1812">
+    <Resolution Name="Default">{0} is an internal class that is apparently never instantiated. If so, remove the code from the assembly. If this class is intended to contain only static methods, consider adding a private constructor to prevent the compiler from generating a default constructor.</Resolution>
+   </Rule>
+   <Rule TypeName="AvoidUnusedPrivateFields" Category="Microsoft.Performance" CheckId="CA1823">
+    <Resolution Name="Default">It appears that field {0} is never used or is only ever assigned to. Use this field or remove it.</Resolution>
+   </Rule>
+   <Rule TypeName="CompoundWordsShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1702">
+    <Resolution Name="MemberShouldBeDiscreteTerm">The compound word '{0}' in member name {1} exists as a discrete term. If your usage is intended to be single word, case it as '{2}' or strip the first token entirely if it represents any sort of Hungarian notation.</Resolution>
+    <Resolution Name="NamespaceShouldBeDiscreteTerm">The compound word '{0}' in namespace name '{1}' exists as a discrete term. If your usage is intended to be single word, case it as '{2}'.</Resolution>
+   </Rule>
+   <Rule TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217">
+    <Resolution Name="Default">{0} is marked with FlagsAttribute but a discrete member cannot be found for every settable bit that is used across the range of enum values. Remove FlagsAttribute from the type or define new members for the following (currently missing) values: {1}</Resolution>
+   </Rule>
+   <Rule TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008">
+    <Resolution Name="FlagsRename">In enum {0}, change the name of {1} to 'None'.</Resolution>
+    <Resolution Name="NotFlagsNoZeroValue">Add a member to {0} that has a value of zero with a suggested name of 'None'.</Resolution>
+   </Rule>
+   <Rule TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714">
+    <Resolution Name="Default">If enumeration name {0} is singular, change it to a plural form.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldBeCasedCorrectly" Category="Microsoft.Naming" CheckId="CA1709">
+    <Resolution Name="DelegateParameter">In delegate {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'.</Resolution>
+    <Resolution Name="DelegateParameterAbbreviation">In delegate {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'. '{3}' is an abbreviation and therefore is not subject to acronym casing guidelines.</Resolution>
+    <Resolution Name="Member">Correct the casing of '{0}' in member name {1} by changing it to '{2}'.</Resolution>
+    <Resolution Name="MemberAbbreviation">Correct the casing of '{0}' in member name {1} by changing it to '{2}'. '{2}' is an abbreviation and therefore is not subject to acronym casing guidelines.</Resolution>
+    <Resolution Name="MemberParameterAbbreviation">In member {0}, correct the casing of '{1}' in parameter name {2} by changing it to '{3}'. '{3}' is an abbreviation and therefore is not subject to acronym casing guidelines.</Resolution>
+    <Resolution Name="Namespace">Correct the casing of '{0}' in namespace name '{1}' by changing it to '{2}'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotContainTypeNames" Category="Microsoft.Naming" CheckId="CA1720">
+    <Resolution Name="LanguageSpecificMember">Consider replacing the language-specific data type identifier '{0}' in member name {1} with either a language-independent equivalent or a more generic term, such as 'value'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotContainUnderscores" Category="Microsoft.Naming" CheckId="CA1707">
+    <Resolution Name="DelegateParameter">In delegate {0}, remove the underscores from parameter name {1}.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotHaveIncorrectPrefix" Category="Microsoft.Naming" CheckId="CA1722">
+    <Resolution Name="Default">Remove the leading 'C' from type name {0}.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711">
+    <Resolution Name="TypeNoAlternate">Rename type name {0} so that it does not end in '{1}'.</Resolution>
+   </Rule>
+   <Rule TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716">
+    <Resolution Name="Type">Rename type {0} so that it no longer conflicts with the reserved language keyword '{1}'. Using a reserved keyword as the name of a type makes it harder for consumers in other languages to use the type.</Resolution>
+   </Rule>
+   <Rule TypeName="ImplementISerializableCorrectly" Category="Microsoft.Usage" CheckId="CA2240">
+    <Resolution Name="Default">Add an implementation of GetObjectData to type {0}.</Resolution>
+   </Rule>
+   <Rule TypeName="ImplementStandardExceptionConstructors" Category="Microsoft.Design" CheckId="CA1032">
+    <Resolution Name="MissingConstructor">Add the following constructor to {0}: {1}.</Resolution>
+   </Rule>
+   <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
+    <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
+   </Rule>
+   <Rule TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717">
+    <Resolution Name="Default">If the name {0} is plural, change it to its singular form.</Resolution>
+   </Rule>
+   <Rule TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815">
+    <Resolution Name="Equals">{0} should override Equals.</Resolution>
+    <Resolution Name="op_Equality">{0} should override the equality (==) and inequality (!=) operators.</Resolution>
+   </Rule>
+   <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
+    <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
+   </Rule>
+   <Rule TypeName="PropertyNamesShouldNotMatchGetMethods" Category="Microsoft.Naming" CheckId="CA1721">
+    <Resolution Name="BaseType">The property name {0} is confusing given the existence of inherited method {1}. Rename or remove this property.</Resolution>
+   </Rule>
+   <Rule TypeName="ReviewUnusedParameters" Category="Microsoft.Usage" CheckId="CA1801">
+    <Resolution Name="Default">Parameter {0} of {1} is never used. Remove the parameter or use it in the method body.</Resolution>
+   </Rule>
+   <Rule TypeName="SpecifyMarshalingForPInvokeStringArguments" Category="Microsoft.Globalization" CheckId="CA2101">
+    <Resolution Name="ParameterImplicitAnsi">To reduce security risk, marshal parameter {0} as Unicode, by setting DllImport.CharSet to CharSet.Unicode, or by explicitly marshaling the parameter as UnmanagedType.LPWStr. If you need to marshal this string as ANSI or system-dependent, specify MarshalAs explicitly, and set BestFitMapping=false; for added security, also set ThrowOnUnmappableChar=true.</Resolution>
+   </Rule>
+   <Rule TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724">
+    <Resolution Name="Default">The type name {0} conflicts in whole or in part with the namespace name '{1}'. Change either name to eliminate the conflict.</Resolution>
+    <Resolution Name="System">The type name {0} conflicts in whole or in part with the namespace name '{1}' defined in the .NET Framework. Rename the type to eliminate the conflict.</Resolution>
+   </Rule>
+   <Rule TypeName="TypesThatOwnNativeResourcesShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1049">
+    <Resolution Name="Default">Implement IDisposable on {0}.</Resolution>
+   </Rule>
+   <Rule TypeName="UsePreferredTerms" Category="Microsoft.Naming" CheckId="CA1726">
+    <Resolution Name="MemberNoAlternate">Replace the term '{0}' in member name {1} with an appropriate alternate or remove it entirely.</Resolution>
+    <Resolution Name="MemberParameterNoAlternate">In member {0}, replace the term '{1}' in parameter name {2} with an appropriate alternate or remove it entirely.</Resolution>
+    <Resolution Name="TypeNoAlternate">Replace the term '{0}' in type name {1} with an appropriate alternate or remove it entirely.</Resolution>
+   </Rule>
+   <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">
+    <Resolution Name="Default">Change {0} to a property if appropriate.</Resolution>
+   </Rule>
+   <Rule TypeName="ValueTypeFieldsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1900">
+    <Resolution Name="Default">Structure {0} contains the following non-portable fields: {1}.</Resolution>
+   </Rule>
+  </Rules>
+ </FxCopReport>
+</FxCopProject>

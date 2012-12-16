@@ -38,6 +38,6 @@ namespace SharpFont.TrueType
 		HorizontalHeader = 3,
 		VertHeader = 4,
 		Postscript = 5,
-		PCLT = 6
+		Pclt = 6
 	}
 }

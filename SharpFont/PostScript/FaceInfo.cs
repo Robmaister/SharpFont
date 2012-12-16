@@ -52,7 +52,7 @@ namespace SharpFont.PostScript
 
 		#region Properties
 
-		public string CIDFontName
+		public string CidFontName
 		{
 			get
 			{
@@ -60,7 +60,7 @@ namespace SharpFont.PostScript
 			}
 		}
 
-		public int CIDVersion
+		public int CidVersion
 		{
 			get
 			{
@@ -109,7 +109,7 @@ namespace SharpFont.PostScript
 		}
 
 		[CLSCompliant(false)]
-		public uint UIDBase
+		public uint UidBase
 		{
 			get
 			{
@@ -139,7 +139,7 @@ namespace SharpFont.PostScript
 		}
 
 		[CLSCompliant(false)]
-		public uint CIDMapOffset
+		public uint CidMapOffset
 		{
 			get
 			{
@@ -164,7 +164,7 @@ namespace SharpFont.PostScript
 		}
 
 		[CLSCompliant(false)]
-		public uint CIDCount
+		public uint CidCount
 		{
 			get
 			{

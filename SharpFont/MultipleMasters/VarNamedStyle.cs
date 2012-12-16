@@ -69,7 +69,7 @@ namespace SharpFont.MultipleMasters
 		/// Gets the entry in ‘name’ table identifying this style.
 		/// </summary>
 		[CLSCompliant(false)]
-		public uint StrID
+		public uint StrId
 		{
 			get
 			{

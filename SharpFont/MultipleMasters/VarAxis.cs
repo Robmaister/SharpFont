@@ -113,7 +113,7 @@ namespace SharpFont.MultipleMasters
 		/// Gets the entry in ‘name’ table (another GX version of ‘name’). Not meaningful for MM.
 		/// </summary>
 		[CLSCompliant(false)]
-		public uint StrID
+		public uint StrId
 		{
 			get
 			{

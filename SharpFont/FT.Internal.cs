@@ -54,10 +54,12 @@ namespace SharpFont
 		internal static extern void FT_Library_Version(IntPtr library, out int amajor, out int aminor, out int apatch);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
+		[return: MarshalAs(UnmanagedType.U1)]
 		internal static extern bool FT_Face_CheckTrueTypePatents(IntPtr face);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern bool FT_Face_SetUnpatentedHinting(IntPtr face, bool value);
+		[return: MarshalAs(UnmanagedType.U1)]
+		internal static extern bool FT_Face_SetUnpatentedHinting(IntPtr face, [MarshalAs(UnmanagedType.U1)] bool value);
 
 		#endregion
 
@@ -69,7 +71,7 @@ namespace SharpFont
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Done_FreeType(IntPtr library);
 
-		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
+		[DllImport(FreetypeDll, CallingConvention = CallConvention, CharSet = CharSet.Unicode)]
 		internal static extern Error FT_New_Face(IntPtr library, [MarshalAs(UnmanagedType.LPStr)] string filepathname, int face_index, out IntPtr aface);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
@@ -78,7 +80,7 @@ namespace SharpFont
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Open_Face(IntPtr library, IntPtr args, int face_index, out IntPtr aface);
 
-		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
+		[DllImport(FreetypeDll, CallingConvention = CallConvention, CharSet = CharSet.Unicode)]
 		internal static extern Error FT_Attach_File(IntPtr face, [MarshalAs(UnmanagedType.LPStr)] string filepathname);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
@@ -189,7 +191,7 @@ namespace SharpFont
 		internal static extern void FT_Glyph_Get_CBox(IntPtr glyph, GlyphBBoxMode bbox_mode, out IntPtr acbox);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Glyph_To_Bitmap(ref IntPtr the_glyph, RenderMode render_mode, ref FTVector origin, bool destroy);
+		internal static extern Error FT_Glyph_To_Bitmap(ref IntPtr the_glyph, RenderMode render_mode, ref FTVector origin, [MarshalAs(UnmanagedType.U1)] bool destroy);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern void FT_Done_Glyph(IntPtr glyph);
@@ -201,13 +203,13 @@ namespace SharpFont
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_New_Face_From_FOND(IntPtr library, IntPtr fond, int face_index, out IntPtr aface);
 
-		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
+		[DllImport(FreetypeDll, CallingConvention = CallConvention, CharSet = CharSet.Unicode)]
 		internal static extern Error FT_GetFile_From_Mac_Name([MarshalAs(UnmanagedType.LPStr)] string fontName, out IntPtr pathSpec, out int face_index);
 
-		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
+		[DllImport(FreetypeDll, CallingConvention = CallConvention, CharSet = CharSet.Unicode)]
 		internal static extern Error FT_GetFile_From_Mac_ATS_Name([MarshalAs(UnmanagedType.LPStr)] string fontName, out IntPtr pathSpec, out int face_index);
 
-		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
+		[DllImport(FreetypeDll, CallingConvention = CallConvention, CharSet = CharSet.Unicode)]
 		internal static extern Error FT_GetFilePath_From_Mac_ATS_Name([MarshalAs(UnmanagedType.LPStr)] string fontName, IntPtr path, int maxPathSize, out int face_index);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
@@ -280,6 +282,7 @@ namespace SharpFont
 		#region Type 1 Tables
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
+		[return: MarshalAs(UnmanagedType.U1)]
 		internal static extern bool FT_Has_PS_Glyph_Names(IntPtr face);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
@@ -305,17 +308,17 @@ namespace SharpFont
 
 		#region BDF and PCF Files
 
-		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
+		[DllImport(FreetypeDll, CallingConvention = CallConvention, CharSet = CharSet.Unicode)]
 		internal static extern Error FT_Get_BDF_Charset_ID(IntPtr face, [MarshalAs(UnmanagedType.LPStr)] out string acharset_encoding, [MarshalAs(UnmanagedType.LPStr)] out string acharset_registry);
 
-		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
+		[DllImport(FreetypeDll, CallingConvention = CallConvention, CharSet = CharSet.Unicode)]
 		internal static extern Error FT_Get_BDF_Property(IntPtr face, [MarshalAs(UnmanagedType.LPStr)] string prop_name, out IntPtr aproperty);
 
 		#endregion
 
 		#region CID Fonts
 
-		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
+		[DllImport(FreetypeDll, CallingConvention = CallConvention, CharSet = CharSet.Unicode)]
 		internal static extern Error FT_Get_CID_Registry_Ordering_Supplement(IntPtr face, [MarshalAs(UnmanagedType.LPStr)] out string registry, [MarshalAs(UnmanagedType.LPStr)] out string ordering, out int aproperty);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
@@ -555,10 +558,10 @@ namespace SharpFont
 		internal static extern void FT_Stroker_Rewind(IntPtr stroker);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Stroker_ParseOutline(IntPtr stroker, IntPtr outline, bool opened);
+		internal static extern Error FT_Stroker_ParseOutline(IntPtr stroker, IntPtr outline, [MarshalAs(UnmanagedType.U1)] bool opened);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Stroker_BeginSubPath(IntPtr stroker, ref FTVector to, bool open);
+		internal static extern Error FT_Stroker_BeginSubPath(IntPtr stroker, ref FTVector to, [MarshalAs(UnmanagedType.U1)] bool open);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Stroker_EndSubPath(IntPtr stroker);
@@ -588,10 +591,10 @@ namespace SharpFont
 		internal static extern void FT_Stroker_Done(IntPtr stroker);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Glyph_Stroke(ref IntPtr pglyph, IntPtr stoker, bool destroy);
+		internal static extern Error FT_Glyph_Stroke(ref IntPtr pglyph, IntPtr stoker, [MarshalAs(UnmanagedType.U1)] bool destroy);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Glyph_StrokeBorder(ref IntPtr pglyph, IntPtr stoker, bool inside, bool destroy);
+		internal static extern Error FT_Glyph_StrokeBorder(ref IntPtr pglyph, IntPtr stoker, [MarshalAs(UnmanagedType.U1)] bool inside, [MarshalAs(UnmanagedType.U1)] bool destroy);
 
 		#endregion
 
@@ -600,7 +603,7 @@ namespace SharpFont
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Add_Module(IntPtr library, IntPtr clazz);
 
-		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
+		[DllImport(FreetypeDll, CallingConvention = CallConvention, CharSet = CharSet.Unicode)]
 		internal static extern IntPtr FT_Get_Module(IntPtr library, [MarshalAs(UnmanagedType.LPStr)] string module_name);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]

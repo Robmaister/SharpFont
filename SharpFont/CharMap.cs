@@ -84,7 +84,7 @@ namespace SharpFont
 		/// TrueType specification and should be emulated for other formats.
 		/// </summary>
 		[CLSCompliant(false)]
-		public PlatformID PlatformID
+		public PlatformID PlatformId
 		{
 			get
 			{
@@ -97,7 +97,7 @@ namespace SharpFont
 		/// emulated similarly.
 		/// </summary>
 		[CLSCompliant(false)]
-		public ushort EncodingID
+		public ushort EncodingId
 		{
 			get
 			{
@@ -148,7 +148,7 @@ namespace SharpFont
 		/// default value.
 		/// </returns>
 		[CLSCompliant(false)]
-		public uint GetCMapLanguageID()
+		public uint GetCMapLanguageId()
 		{
 			return FT.FT_Get_CMap_Language_ID(Reference);
 		}

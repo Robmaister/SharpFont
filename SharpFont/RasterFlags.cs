@@ -29,6 +29,7 @@ namespace SharpFont
 	/// <summary>
 	/// A list of bit flag constants as used in the ‘flags’ field of a <see cref="RasterParams"/> structure.
 	/// </summary>
+	[Flags]
 	public enum RasterFlags
 	{
 		/// <summary>

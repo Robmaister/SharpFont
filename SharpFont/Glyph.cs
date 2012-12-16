@@ -377,6 +377,8 @@ namespace SharpFont
 
 				FT.FT_Done_Glyph(reference);
 
+				parentLibrary.RemoveChildGlyph(this);
+
 				reference = IntPtr.Zero;
 			}
 		}

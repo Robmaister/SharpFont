@@ -45,7 +45,7 @@ namespace SharpFont.Cache
 		#region Fields
 
 		private IntPtr reference;
-		private Library library;
+		private Library parentLibrary;
 
 		private bool disposed;
 
@@ -87,7 +87,7 @@ namespace SharpFont.Cache
 
 			Reference = mgrRef;
 
-			this.library = library;
+			this.parentLibrary = library;
 			library.AddChildManager(this);
 		}
 
@@ -168,15 +168,15 @@ namespace SharpFont.Cache
 		/// If a lookup fails with <see cref="Error.OutOfMemory"/> the cache has already been completely flushed, and
 		/// still no memory was available for the operation.
 		/// </para></remarks>
-		/// <param name="faceID">The ID of the face object.</param>
+		/// <param name="faceId">The ID of the face object.</param>
 		/// <returns>A handle to the face object.</returns>
-		public Face LookupFace(IntPtr faceID)
+		public Face LookupFace(IntPtr faceId)
 		{
 			if (disposed)
 				throw new ObjectDisposedException("Manager", "Cannot access a disposed object.");
 
 			IntPtr faceRef;
-			Error err = FT.FTC_Manager_LookupFace(Reference, faceID, out faceRef);
+			Error err = FT.FTC_Manager_LookupFace(Reference, faceId, out faceRef);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -230,13 +230,13 @@ namespace SharpFont.Cache
 		/// Such nodes are however modified internally so as to never appear in later lookups with the same
 		///  ‘faceID’ value, and to be immediately destroyed when released by all their users.
 		/// </para></remarks>
-		/// <param name="faceID">The FTC_FaceID to be removed.</param>
-		public void RemoveFaceID(IntPtr faceID)
+		/// <param name="faceId">The FTC_FaceID to be removed.</param>
+		public void RemoveFaceId(IntPtr faceId)
 		{
 			if (disposed)
 				throw new ObjectDisposedException("Manager", "Cannot access a disposed object.");
 
-			FT.FTC_Manager_RemoveFaceID(Reference, faceID);
+			FT.FTC_Manager_RemoveFaceID(Reference, faceId);
 		}
 
 		#endregion
@@ -258,6 +258,8 @@ namespace SharpFont.Cache
 			{
 				FT.FTC_Manager_Done(reference);
 				reference = IntPtr.Zero;
+
+				parentLibrary.RemoveChildManager(this);
 
 				disposed = true;
 			}

@@ -30,7 +30,7 @@ namespace SharpFont
 	/// A list of bit-field constants used within the ‘flags’ field of the <see cref="OpenArgs"/> structure.
 	/// </summary>
 	/// <remarks>
-	/// The <see cref="OpenFlags.Memory"/>, <see cref="OpenFlags.Stream"/>, and <see cref="OpenFlags.Pathname"/> flags
+	/// The <see cref="OpenFlags.Memory"/>, <see cref="OpenFlags.Stream"/>, and <see cref="OpenFlags.PathName"/> flags
 	/// are mutually exclusive.
 	/// </remarks>
 	[Flags]
@@ -49,7 +49,7 @@ namespace SharpFont
 		/// <summary>
 		/// Create a new input stream from a C path name.
 		/// </summary>
-		Pathname = 0x04,
+		PathName = 0x04,
 
 		/// <summary>
 		/// Use the ‘driver’ field.

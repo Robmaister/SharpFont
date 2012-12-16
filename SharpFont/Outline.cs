@@ -702,6 +702,8 @@ namespace SharpFont
 
 					if (err != Error.Ok)
 						throw new FreeTypeException(err);
+
+					parentLibrary.RemoveChildOutline(this);
 				}
 
 				reference = IntPtr.Zero;

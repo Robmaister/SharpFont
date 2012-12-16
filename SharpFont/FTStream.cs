@@ -268,7 +268,7 @@ namespace SharpFont
 		/// compiled with LZW support.
 		/// </para></remarks>
 		/// <param name="source">The source stream.</param>
-		public void OpenLZW(FTStream source)
+		public void OpenLzw(FTStream source)
 		{
 			Error err = FT.FT_Stream_OpenLZW(Reference, source.Reference);
 

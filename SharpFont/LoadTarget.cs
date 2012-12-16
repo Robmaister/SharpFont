@@ -78,11 +78,11 @@ namespace SharpFont
 		/// <summary>
 		/// A variant of <see cref="LoadTarget.Normal"/> optimized for horizontally decimated LCD displays.
 		/// </summary>
-		LCD = (RenderMode.LCD & 15) << 16,
+		Lcd = (RenderMode.Lcd & 15) << 16,
 
 		/// <summary>
 		/// A variant of <see cref="LoadTarget.Normal"/> optimized for vertically decimated LCD displays.
 		/// </summary>
-		VerticalLCD = (RenderMode.VerticalLCD & 15) << 16
+		VerticalLcd = (RenderMode.VerticalLcd & 15) << 16
 	}
 }

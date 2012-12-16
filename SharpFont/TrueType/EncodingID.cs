@@ -30,7 +30,7 @@ namespace SharpFont.TrueType
 	/// A list of valid values for the ‘encoding_id’ for TT_PLATFORM_APPLE_UNICODE charmaps and name entries.
 	/// </summary>
 	[CLSCompliant(false)]
-	public enum AppleEncodingID : ushort
+	public enum AppleEncodingId : ushort
 	{
 		/// <summary>Unicode version 1.0.</summary>
 		Default = 0,
@@ -39,7 +39,7 @@ namespace SharpFont.TrueType
 		Unicode11,
 
 		/// <summary>Deprecated (identical to preceding).</summary>
-		ISO10646,
+		Iso10646,
 
 		/// <summary>Unicode 2.0 and beyond (UTF-16 BMP only).</summary>
 		Unicode20,
@@ -55,7 +55,7 @@ namespace SharpFont.TrueType
 	/// A list of valid values for the ‘encoding_id’ for TT_PLATFORM_MACINTOSH charmaps and name entries.
 	/// </summary>
 	[CLSCompliant(false)]
-	public enum MacEncodingID : ushort
+	public enum MacEncodingId : ushort
 	{
 		/// <summary>Roman encoding.</summary>
 		Roman = 0,
@@ -164,7 +164,7 @@ namespace SharpFont.TrueType
 	/// A list of valid values for the ‘encoding_id’ for TT_PLATFORM_MICROSOFT charmaps and name entries.
 	/// </summary>
 	[CLSCompliant(false)]
-	public enum MicrosoftEncodingID : ushort
+	public enum MicrosoftEncodingId : ushort
 	{
 		/// <summary>
 		/// Corresponds to Microsoft symbol encoding. See FT_ENCODING_MS_SYMBOL.
@@ -179,7 +179,7 @@ namespace SharpFont.TrueType
 		/// <summary>
 		/// Corresponds to SJIS Japanese encoding. See FT_ENCODING_SJIS.
 		/// </summary>
-		SJIS = 2,
+		Sjis = 2,
 
 		/// <summary>
 		/// Corresponds to Simplified Chinese as used in Mainland China. See FT_ENCODING_GB2312.
@@ -205,7 +205,7 @@ namespace SharpFont.TrueType
 		/// Corresponds to UCS-4 or UTF-32 charmaps. This has been added to the OpenType specification version 1.4
 		/// (mid-2001.)
 		/// </summary>
-		UCS4 = 10,
+		Ucs4 = 10,
 	}
 
 	/// <summary>
@@ -213,7 +213,7 @@ namespace SharpFont.TrueType
 	/// extension!
 	/// </summary>
 	[CLSCompliant(false)]
-	public enum AdobeEncodingID : ushort
+	public enum AdobeEncodingId : ushort
 	{
 		/// <summary>Adobe standard encoding.</summary>
 		Standard = 0,

@@ -114,7 +114,7 @@ namespace SharpFont
 		/// Note that CID-keyed fonts which are in an SFNT wrapper don't have this flag set since the glyphs are
 		/// accessed in the normal way (using contiguous indices); the ‘CID-ness’ isn't visible to the application.
 		/// </para></summary>
-		CIDKeyed = 0x1000,
+		CidKeyed = 0x1000,
 
 		/// <summary><para>
 		/// Set if the font is ‘tricky’, this is, it always needs the font format's native hinting engine to get a

@@ -38,7 +38,5 @@ namespace SharpFont.Internal
 		internal IntPtr contours;
 
 		internal OutlineFlags flags;
-
-		internal static int SizeInBytes { get { return 8 + IntPtr.Size * 3; } }
 	}
 }

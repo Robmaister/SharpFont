@@ -32,7 +32,7 @@ namespace SharpFont.FNT
 	/// MAPPINGS/VENDORS/MICSFT/WINDOWS subdirectory. cp1361 is roughly a superset of
 	/// MAPPINGS/OBSOLETE/EASTASIA/KSC/JOHAB.TXT.
 	/// </summary>
-	public enum WinFntID : byte
+	public enum WinFntId : byte
 	{
 		/// <summary>
 		/// ANSI encoding. A superset of ISO 8859-1.
@@ -128,10 +128,10 @@ namespace SharpFont.FNT
 
 		/// <summary><para>
 		/// From Michael Pöttgen &lt;michael@poettgen.de&gt;:
-		/// The ‘Windows Font Mapping’ article says that <see cref="WinFntID.OEM"/> is used for the charset of vector
+		/// The ‘Windows Font Mapping’ article says that <see cref="WinFntId.Oem"/> is used for the charset of vector
 		/// fonts, like ‘modern.fon’, ‘roman.fon’, and ‘script.fon’ on Windows.
 		/// </para><para>
-		/// The ‘CreateFont’ documentation says: The <see cref="WinFntID.OEM"/> value specifies a character set that is
+		/// The ‘CreateFont’ documentation says: The <see cref="WinFntId.Oem"/> value specifies a character set that is
 		/// operating-system dependent.
 		/// </para><para>
 		/// The ‘IFIMETRICS’ documentation from the ‘Windows Driver Development Kit’ says: This font supports an
@@ -143,6 +143,6 @@ namespace SharpFont.FNT
 		/// support legacy applications. A German Windows version for example usually uses ANSI codepage 1252 and OEM
 		/// codepage 850.
 		/// </para></summary>
-		OEM = 255
+		Oem = 255
 	}
 }

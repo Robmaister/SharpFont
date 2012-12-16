@@ -38,10 +38,10 @@ namespace SharpFont.Cache
 	/// The face requester should not perform funny things on the returned face object, like creating a new
 	/// <see cref="FTSize"/> for it, or setting a transformation through <see cref="Face.SetTransform"/>!
 	/// </para></remarks>
-	/// <param name="faceID">The face ID to resolve.</param>
+	/// <param name="faceId">The face ID to resolve.</param>
 	/// <param name="library">A handle to a FreeType library object.</param>
 	/// <param name="requestData">Application-provided request data (see note below).</param>
 	/// <param name="aface">A new <see cref="Face"/> handle.</param>
 	/// <returns>FreeType error code. 0 means success.</returns>
-	public delegate Error FaceRequester(IntPtr faceID, IntPtr library, IntPtr requestData, out IntPtr aface);
+	public delegate Error FaceRequester(IntPtr faceId, IntPtr library, IntPtr requestData, out IntPtr aface);
 }

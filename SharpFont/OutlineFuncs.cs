@@ -211,7 +211,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets or sets the delta that is applied to coordinates before they are sent to the emitter, but after the
+		/// Gets the delta that is applied to coordinates before they are sent to the emitter, but after the
 		/// shift.
 		/// </summary>
 		public int Delta

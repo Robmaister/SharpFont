@@ -120,8 +120,9 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// For <see cref="GlyphFormat.Outline"/> renderers only. This is a pointer to its raster's class.
+		/// Gets a pointer to its raster's class.
 		/// </summary>
+		/// <remarks>For <see cref="GlyphFormat.Outline"/> renderers only.</remarks>
 		public RasterFuncs RasterClass
 		{
 			get

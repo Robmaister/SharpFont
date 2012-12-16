@@ -36,10 +36,10 @@ namespace SharpFont.TrueType
 	/// Possible values for ‘platform_id’, ‘encoding_id’, ‘language_id’, and ‘name_id’ are given in the file
 	/// ‘ttnameid.h’. For details please refer to the TrueType or OpenType specification.
 	/// </remarks>
-	/// <see cref="PlatformID"/>
-	/// <see cref="AppleEncodingID"/>
-	/// <see cref="MacEncodingID"/>
-	/// <see cref="MicrosoftEncodingID"/>
+	/// <see cref="PlatformId"/>
+	/// <see cref="AppleEncodingId"/>
+	/// <see cref="MacEncodingId"/>
+	/// <see cref="MicrosoftEncodingId"/>
 	public class SfntName
 	{
 		#region Fields
@@ -64,7 +64,7 @@ namespace SharpFont.TrueType
 		/// Gets the platform ID for ‘string’.
 		/// </summary>
 		[CLSCompliant(false)]
-		public PlatformID PlatformID
+		public PlatformId PlatformId
 		{
 			get
 			{
@@ -76,7 +76,7 @@ namespace SharpFont.TrueType
 		/// Gets the encoding ID for ‘string’.
 		/// </summary>
 		[CLSCompliant(false)]
-		public ushort EncodingID
+		public ushort EncodingId
 		{
 			get
 			{
@@ -88,7 +88,7 @@ namespace SharpFont.TrueType
 		/// Gets the language ID for ‘string’.
 		/// </summary>
 		[CLSCompliant(false)]
-		public ushort LanguageID
+		public ushort LanguageId
 		{
 			get
 			{
@@ -100,7 +100,7 @@ namespace SharpFont.TrueType
 		/// Gets an identifier for ‘string’.
 		/// </summary>
 		[CLSCompliant(false)]
-		public ushort NameID
+		public ushort NameId
 		{
 			get
 			{
@@ -120,7 +120,8 @@ namespace SharpFont.TrueType
 			get
 			{
 				//TODO look at TrueType specs, interpret string based on platform, encoding pair.
-				return string.Empty;
+				//return string.Empty;
+				return Marshal.PtrToStringUni(rec.@string, (int)rec.string_len);
 			}
 		}
 

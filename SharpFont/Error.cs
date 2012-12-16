@@ -167,7 +167,7 @@ namespace SharpFont
 		TooManyCaches = 0x70,
 
 		/// <summary>Invalid opcode.</summary>
-		InvalidOpcode = 0x80,
+		InvalidOpCode = 0x80,
 
 		/// <summary>Too few arguments.</summary>
 		TooFewArguments = 0x81,
@@ -191,10 +191,10 @@ namespace SharpFont
 		DebugOpCode = 0x87,
 
 		/// <summary>Found ENDF opcode in execution stream.</summary>
-		ENDFInExecStream = 0x88,
+		EndfInExecStream = 0x88,
 
 		/// <summary>Nested DEFS.</summary>
-		NestedDEFS = 0x89,
+		NestedDefs = 0x89,
 
 		/// <summary>Invalid code range.</summary>
 		InvalidCodeRange = 0x8A,

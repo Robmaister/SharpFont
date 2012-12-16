@@ -53,7 +53,7 @@ namespace SharpFont.PostScript
 
 		#region Properties
 
-		public int UniqueID
+		public int UniqueId
 		{
 			get
 			{

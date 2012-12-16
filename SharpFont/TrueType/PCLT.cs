@@ -32,7 +32,7 @@ namespace SharpFont.TrueType
 	/// <summary>
 	/// A structure used to model a TrueType PCLT table. All fields comply to the TrueType specification.
 	/// </summary>
-	public class PCLT
+	public class Pclt
 	{
 		#region Fields
 
@@ -43,7 +43,7 @@ namespace SharpFont.TrueType
 
 		#region Constructors
 
-		internal PCLT(IntPtr reference)
+		internal Pclt(IntPtr reference)
 		{
 			Reference = reference;
 		}
@@ -123,7 +123,7 @@ namespace SharpFont.TrueType
 			}
 		}
 
-		public string TypeFace
+		public string Typeface
 		{
 			get
 			{

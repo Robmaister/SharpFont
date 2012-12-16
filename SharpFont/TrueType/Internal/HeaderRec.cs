@@ -47,7 +47,7 @@ namespace SharpFont.TrueType.Internal
 		internal FT_Fixed Table_Version;
 		internal FT_Fixed Font_Revision;
 
-		internal FT_Long CheckSum_Adjust;
+		internal FT_Long Checksum_Adjust;
 		internal FT_Long Magic_Number;
 
 		internal ushort Flags;

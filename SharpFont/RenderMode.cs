@@ -66,15 +66,15 @@ namespace SharpFont
 		/// <summary>
 		/// This mode corresponds to horizontal RGB and BGR sub-pixel displays like LCD screens. It produces 8-bit
 		/// bitmaps that are 3 times the width of the original glyph outline in pixels, and which use the
-		/// <see cref="PixelMode.LCD"/> mode.
+		/// <see cref="PixelMode.Lcd"/> mode.
 		/// </summary>
-		LCD,
+		Lcd,
 
 		/// <summary>
 		/// This mode corresponds to vertical RGB and BGR sub-pixel displays (like PDA screens, rotated LCD displays,
 		/// etc.). It produces 8-bit bitmaps that are 3 times the height of the original glyph outline in pixels and
-		/// use the <see cref="PixelMode.VerticalLCD"/> mode.
+		/// use the <see cref="PixelMode.VerticalLcd"/> mode.
 		/// </summary>
-		VerticalLCD,
+		VerticalLcd,
 	}
 }

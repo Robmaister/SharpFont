@@ -31,7 +31,7 @@ namespace SharpFont.TrueType
 	/// <see cref="SfntName"/> structures.
 	/// </summary>
 	[CLSCompliant(false)]
-	public enum PlatformID : ushort
+	public enum PlatformId : ushort
 	{
 		/// <summary>
 		/// Used by Apple to indicate a Unicode character map and/or name entry. See TT_APPLE_ID_XXX for corresponding
@@ -51,7 +51,7 @@ namespace SharpFont.TrueType
 		/// This value was used to specify ISO/IEC 10646 charmaps. It is however now deprecated. See TT_ISO_ID_XXX for
 		/// a list of corresponding ‘encoding_id’ values.
 		/// </summary>
-		ISO = 2,
+		Iso = 2,
 
 		/// <summary>
 		/// Used by Microsoft to indicate Windows-specific charmaps. See TT_MS_ID_XXX for a list of corresponding

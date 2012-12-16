@@ -60,7 +60,5 @@ namespace SharpFont.Internal
 		internal FT_Pos vertBearingX;
 		internal FT_Pos vertBearingY;
 		internal FT_Pos vertAdvance;
-
-		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(FT_Pos)) * 8; } }
 	}
 }

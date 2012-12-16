@@ -329,7 +329,7 @@ namespace SharpFont
 		/// Gets the difference between hinted and unhinted left side bearing while autohinting is active. Zero
 		/// otherwise.
 		/// </summary>
-		public int DeltaLSB
+		public int DeltaLsb
 		{
 			get
 			{
@@ -341,7 +341,7 @@ namespace SharpFont
 		/// Gets the difference between hinted and unhinted right side bearing while autohinting is active. Zero
 		/// otherwise.
 		/// </summary>
-		public int DeltaRSB
+		public int DeltaRsb
 		{
 			get
 			{

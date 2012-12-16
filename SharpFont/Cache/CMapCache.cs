@@ -82,7 +82,7 @@ namespace SharpFont.Cache
 		/// <summary>
 		/// Translate a character code into a glyph index, using the charmap cache.
 		/// </summary>
-		/// <param name="faceID">The source face ID.</param>
+		/// <param name="faceId">The source face ID.</param>
 		/// <param name="cmapIndex">
 		/// The index of the charmap in the source face. Any negative value means to use the cache <see cref="Face"/>'s
 		/// default charmap.
@@ -90,9 +90,9 @@ namespace SharpFont.Cache
 		/// <param name="charCode">The character code (in the corresponding charmap).</param>
 		/// <returns>Glyph index. 0 means ‘no glyph’.</returns>
 		[CLSCompliant(false)]
-		public uint Lookup(IntPtr faceID, int cmapIndex, uint charCode)
+		public uint Lookup(IntPtr faceId, int cmapIndex, uint charCode)
 		{
-			return FT.FTC_CMapCache_Lookup(Reference, faceID, cmapIndex, charCode);
+			return FT.FTC_CMapCache_Lookup(Reference, faceId, cmapIndex, charCode);
 		}
 
 		#endregion

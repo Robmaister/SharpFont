@@ -55,7 +55,7 @@ namespace SharpFont.Cache
 		/// <summary>
 		/// Gets the face ID.
 		/// </summary>
-		public IntPtr FaceID
+		public IntPtr FaceId
 		{
 			get
 			{

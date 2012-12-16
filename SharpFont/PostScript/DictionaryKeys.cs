@@ -61,7 +61,7 @@ namespace SharpFont.PostScript
 		/// <summary>
 		/// A unique identifier for popular fonts assigned by Adobe.
 		/// </summary>
-		UniqueID,
+		UniqueId,
 
 		/// <summary>
 		/// The number of characters the font can draw.
@@ -215,7 +215,7 @@ namespace SharpFont.PostScript
 		Weight,
 		IsFixedPitch,
 		UnderlinePosition,
-		FsType,
+		FSType,
 		ItalicAngle
 	}
 }

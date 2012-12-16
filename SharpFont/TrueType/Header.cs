@@ -68,11 +68,11 @@ namespace SharpFont.TrueType
 			}
 		}
 
-		public int CheckSumAdjust
+		public int ChecksumAdjust
 		{
 			get
 			{
-				return (int)rec.CheckSum_Adjust;
+				return (int)rec.Checksum_Adjust;
 			}
 		}
 
@@ -168,7 +168,7 @@ namespace SharpFont.TrueType
 		}
 
 		[CLSCompliant(false)]
-		public ushort LowestRecPPEM
+		public ushort LowestRecPpem
 		{
 			get
 			{

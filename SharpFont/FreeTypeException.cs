@@ -29,6 +29,7 @@ namespace SharpFont
 	/// <summary>
 	/// An exception that gets thrown when FreeType returns an error code.
 	/// </summary>
+	[Serializable]
 	public class FreeTypeException : Exception
 	{
 		private Error error;
@@ -103,7 +104,7 @@ namespace SharpFont
 				case Error.RasterOverflow: return "Raster overflow.";
 				case Error.RasterNegativeHeight: return "Negative height while rastering.";
 				case Error.TooManyCaches: return "Too many registered caches.";
-				case Error.InvalidOpcode: return "Invalid opcode.";
+				case Error.InvalidOpCode: return "Invalid opcode.";
 				case Error.TooFewArguments: return "Too few arguments.";
 				case Error.StackOverflow: return "Stack overflow.";
 				case Error.CodeOverflow: return "Code overflow.";
@@ -111,8 +112,8 @@ namespace SharpFont
 				case Error.DivideByZero: return "Division by zero.";
 				case Error.InvalidReference: return "Invalid reference.";
 				case Error.DebugOpCode: return "Found debug opcode.";
-				case Error.ENDFInExecStream: return "Found ENDF opcode in execution stream.";
-				case Error.NestedDEFS: return "Nested DEFS.";
+				case Error.EndfInExecStream: return "Found ENDF opcode in execution stream.";
+				case Error.NestedDefs: return "Nested DEFS.";
 				case Error.InvalidCodeRange: return "Invalid code range.";
 				case Error.ExecutionTooLong: return "Execution context too long.";
 				case Error.TooManyFunctionDefs: return "Too many function definitions.";

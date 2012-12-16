@@ -233,7 +233,7 @@ namespace SharpFont.TrueType
 			}
 		}
 
-		public byte[] VendorID
+		public byte[] VendorId
 		{
 			get
 			{

@@ -47,7 +47,7 @@ namespace SharpFont
 	/// <see cref="Stream"/> is used.
 	/// </description></item>
 	/// <item><description>
-	/// Otherwise, if the <see cref="OpenFlags.Pathname"/> bit is set, assume that this is a normal file and use
+	/// Otherwise, if the <see cref="OpenFlags.PathName"/> bit is set, assume that this is a normal file and use
 	/// <see cref="PathName"/> to open it.
 	/// </description></item>
 	/// <item><description>
@@ -138,10 +138,10 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// This field is exclusively used by <see cref="Library.OpenFace"/>; it simply specifies the font driver to
-		/// use to open the face. If set to 0, FreeType tries to load the face with each one of the drivers in its
-		/// list.
+		/// Gets the font driver to use to open the face. If set to 0, FreeType tries to load the face with each one of
+		/// the drivers in its list.
 		/// </summary>
+		/// <remarks>This field is exclusively used by <see cref="Library.OpenFace"/>.</remarks>
 		public Module Driver
 		{
 			get

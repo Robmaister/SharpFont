@@ -34,7 +34,7 @@ namespace SharpFont.PostScript
 		None = 0,
 		Array,
 		Standard,
-		ISOLatin1,
+		IsoLatin1,
 		Expert
 	}
 }

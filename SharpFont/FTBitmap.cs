@@ -427,8 +427,8 @@ namespace SharpFont
 					return bmp;
 				}
 
-				case PixelMode.LCD:
-				case PixelMode.VerticalLCD:
+				case PixelMode.Lcd:
+				case PixelMode.VerticalLcd:
 				{
 					//TODO Should vertical LCD be different?
 					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format24bppRgb);

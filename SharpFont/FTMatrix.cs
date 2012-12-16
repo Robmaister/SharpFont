@@ -66,10 +66,10 @@ namespace SharpFont
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FTMatrix"/> struct.
 		/// </summary>
-		/// <param name="xx">Matrix coefficient.</param>
-		/// <param name="xy">Matrix coefficient.</param>
-		/// <param name="yx">Matrix coefficient.</param>
-		/// <param name="yy">Matrix coefficient.</param>
+		/// <param name="xx">Matrix coefficient XX.</param>
+		/// <param name="xy">Matrix coefficient XY.</param>
+		/// <param name="yx">Matrix coefficient YX.</param>
+		/// <param name="yy">Matrix coefficient YY.</param>
 		public FTMatrix(int xx, int xy, int yx, int yy)
 			: this()
 		{
@@ -89,8 +89,8 @@ namespace SharpFont
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FTMatrix"/> struct.
 		/// </summary>
-		/// <param name="row0">Matrix coefficients.</param>
-		/// <param name="row1">Matrix coefficients.</param>
+		/// <param name="row0">Matrix coefficients XX, XY.</param>
+		/// <param name="row1">Matrix coefficients YX, YY.</param>
 		public FTMatrix(FTVector row0, FTVector row1)
 			: this(row0.X, row0.Y, row1.X, row1.Y)
 		{

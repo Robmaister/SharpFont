@@ -36,6 +36,8 @@ namespace SharpFont
 		private IntPtr reference;
 		private bool disposed;
 
+		private Library parentLibrary;
+
 		#endregion
 
 		#region Constructors
@@ -53,6 +55,8 @@ namespace SharpFont
 				throw new FreeTypeException(err);
 
 			Reference = strokerRef;
+			library.AddChildStroker(this);
+			parentLibrary = library;
 		}
 
 		/// <summary>
@@ -372,6 +376,8 @@ namespace SharpFont
 			if (!disposed)
 			{
 				FT.FT_Stroker_Done(Reference);
+
+				parentLibrary.RemoveChildStroker(this);
 
 				disposed = true;
 			}

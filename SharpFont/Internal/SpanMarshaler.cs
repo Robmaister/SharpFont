@@ -43,7 +43,7 @@ namespace SharpFont.Internal
 		public void CleanUpManagedData(object managedObj)
 		{
 			if (managedObj == null)
-				throw new ArgumentNullException("ManagedObj");
+				throw new ArgumentNullException("managedObj");
 
 			if (managedObj.GetType() != typeof(Span))
 				throw new ArgumentException("Managed object is not a Span.");
@@ -62,7 +62,7 @@ namespace SharpFont.Internal
 		public IntPtr MarshalManagedToNative(object managedObj)
 		{
 			if (managedObj == null)
-				throw new ArgumentNullException("ManagedObj");
+				throw new ArgumentNullException("managedObj");
 
 			if (managedObj.GetType() != typeof(Span))
 				throw new ArgumentException("Managed object is not a Span.");

@@ -679,11 +679,11 @@ namespace SharpFont
 		/// </para><para>
 		/// If this macro is true, all functions defined in FT_CID_H are available.
 		/// </para></summary>
-		public bool IsCIDKeyed
+		public bool IsCidKeyed
 		{
 			get
 			{
-				return (FaceFlags & FaceFlags.CIDKeyed) == FaceFlags.CIDKeyed;
+				return (FaceFlags & FaceFlags.CidKeyed) == FaceFlags.CidKeyed;
 			}
 		}
 
@@ -893,7 +893,7 @@ namespace SharpFont
 		/// </para><para>
 		/// For subsetted CID-keyed fonts, <see cref="Error.InvalidArgument"/> is returned for invalid CID values (this
 		/// is, for CID values which don't have a corresponding glyph in the font). See the discussion of the
-		/// <see cref="SharpFont.FaceFlags.CIDKeyed"/> flag for more details.
+		/// <see cref="SharpFont.FaceFlags.CidKeyed"/> flag for more details.
 		/// </para></remarks>
 		/// <param name="glyphIndex">
 		/// The index of the glyph in the font file. For CID-keyed fonts (either in PS or in CFF format) this argument
@@ -1502,7 +1502,14 @@ namespace SharpFont
 		/// <param name="coords">The design coordinates array (each element must be between 0 and 1.0).</param>
 		public unsafe void SetVarBlendCoordinates(long[] coords)
 		{
-			SetMMBlendCoordinates(coords);
+			fixed (void* ptr = coords)
+			{
+				IntPtr coordsPtr = (IntPtr)ptr;
+				Error err = FT.FT_Set_Var_Blend_Coordinates(Reference, (uint)coords.Length, coordsPtr);
+
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+			}
 		}
 
 		#endregion
@@ -1542,8 +1549,8 @@ namespace SharpFont
 					return new MaxProfile(tableRef);
 				case SfntTag.OS2:
 					return new OS2(tableRef);
-				case SfntTag.PCLT:
-					return new PCLT(tableRef);
+				case SfntTag.Pclt:
+					return new Pclt(tableRef);
 				case SfntTag.Postscript:
 					return new Postscript(tableRef);
 				case SfntTag.VertHeader:
@@ -1791,7 +1798,7 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="encoding">Charset encoding, as a C string, owned by the face.</param>
 		/// <param name="registry">Charset registry, as a C string, owned by the face.</param>
-		public void GetBDFCharsetID(out string encoding, out string registry)
+		public void GetBdfCharsetId(out string encoding, out string registry)
 		{
 			Error err = FT.FT_Get_BDF_Charset_ID(Reference, out encoding, out registry);
 
@@ -1816,7 +1823,7 @@ namespace SharpFont
 		/// </para></remarks>
 		/// <param name="propertyName">The property name.</param>
 		/// <returns>The property.</returns>
-		public Property GetBDFProperty(string propertyName)
+		public Property GetBdfProperty(string propertyName)
 		{
 			IntPtr propertyRef;
 
@@ -1841,7 +1848,7 @@ namespace SharpFont
 		/// <param name="registry">The registry, as a C string, owned by the face.</param>
 		/// <param name="ordering">The ordering, as a C string, owned by the face.</param>
 		/// <param name="supplement">The supplement.</param>
-		public void GetCIDRegistryOrderingSupplement(out string registry, out string ordering, out int supplement)
+		public void GetCidRegistryOrderingSupplement(out string registry, out string ordering, out int supplement)
 		{
 			Error err = FT.FT_Get_CID_Registry_Ordering_Supplement(Reference, out registry, out ordering, out supplement);
 
@@ -1851,14 +1858,14 @@ namespace SharpFont
 
 		/// <summary>
 		/// Retrieve the type of the input face, CID keyed or not. In constrast to the 
-		/// <see cref="IsCIDKeyed"/> macro this function returns successfully also for CID-keyed fonts in an
+		/// <see cref="IsCidKeyed"/> macro this function returns successfully also for CID-keyed fonts in an
 		/// SNFT wrapper.
 		/// </summary>
 		/// <remarks>
 		/// This function only works with CID faces and OpenType fonts, returning an error otherwise.
 		/// </remarks>
 		/// <returns>The type of the face as an FT_Bool.</returns>
-		public bool GetCIDIsInternallyCIDKeyed()
+		public bool GetCidIsInternallyCidKeyed()
 		{
 			byte is_cid;
 			Error err = FT.FT_Get_CID_Is_Internally_CID_Keyed(Reference, out is_cid);
@@ -1878,7 +1885,7 @@ namespace SharpFont
 		/// <param name="glyphIndex">The input glyph index.</param>
 		/// <returns>The CID as an uint.</returns>
 		[CLSCompliant(false)]
-		public uint GetCIDFromGlyphIndex(uint glyphIndex)
+		public uint GetCidFromGlyphIndex(uint glyphIndex)
 		{
 			uint cid;
 			Error err = FT.FT_Get_CID_From_Glyph_Index(Reference, glyphIndex, out cid);
@@ -1916,7 +1923,7 @@ namespace SharpFont
 		/// Same as ‘ametrics_x_scale’ but for the vertical direction. optional (parameter can be NULL).
 		/// </param>
 		[CLSCompliant(false)]
-		public void GetPFRMetrics(out uint outlineResolution, out uint metricsResolution, out int metricsXScale, out int metricsYScale)
+		public void GetPfrMetrics(out uint outlineResolution, out uint metricsResolution, out int metricsXScale, out int metricsYScale)
 		{
 			Error err = FT.FT_Get_PFR_Metrics(Reference, out outlineResolution, out metricsResolution, out metricsXScale, out metricsYScale);
 
@@ -1933,14 +1940,14 @@ namespace SharpFont
 		/// <see cref="GetKerning"/> with the <see cref="KerningMode.Unscaled"/> mode, which always returns
 		/// distances converted to outline units.
 		/// </para><para>
-		/// You can use the value of the ‘x_scale’ and ‘y_scale’ parameters returned by <see cref="GetPFRMetrics"/> to
+		/// You can use the value of the ‘x_scale’ and ‘y_scale’ parameters returned by <see cref="GetPfrMetrics"/> to
 		/// scale these to device sub-pixels.
 		/// </para></remarks>
 		/// <param name="left">Index of the left glyph.</param>
 		/// <param name="right">Index of the right glyph.</param>
 		/// <returns>A kerning vector.</returns>
 		[CLSCompliant(false)]
-		public FTVector GetPFRKerning(uint left, uint right)
+		public FTVector GetPfrKerning(uint left, uint right)
 		{
 			FTVector vector;
 			Error err = FT.FT_Get_PFR_Kerning(Reference, left, right, out vector);
@@ -1955,13 +1962,13 @@ namespace SharpFont
 		/// Return a given glyph advance, expressed in original metrics units, from a PFR font.
 		/// </summary>
 		/// <remarks>
-		/// You can use the ‘x_scale’ or ‘y_scale’ results of <see cref="GetPFRMetrics"/> to convert the advance to
+		/// You can use the ‘x_scale’ or ‘y_scale’ results of <see cref="GetPfrMetrics"/> to convert the advance to
 		/// device sub-pixels (i.e., 1/64th of pixels).
 		/// </remarks>
 		/// <param name="glyphIndex">The glyph index.</param>
 		/// <returns>The glyph advance in metrics units.</returns>
 		[CLSCompliant(false)]
-		public int GetPFRAdvance(uint glyphIndex)
+		public int GetPfrAdvance(uint glyphIndex)
 		{
 			int advance;
 			Error err = FT.FT_Get_PFR_Advance(Reference, glyphIndex, out advance);
@@ -1983,7 +1990,7 @@ namespace SharpFont
 		/// This function only works with Windows FNT faces, returning an error otherwise.
 		/// </remarks>
 		/// <returns>The WinFNT header.</returns>
-		public FNT.Header GetWinFNTHeader()
+		public FNT.Header GetWinFntHeader()
 		{
 			IntPtr headerRef;
 			Error err = FT.FT_Get_WinFNT_Header(Reference, out headerRef);
@@ -2241,6 +2248,11 @@ namespace SharpFont
 			childSizes.Add(child);
 		}
 
+		internal void RemoveChildSize(FTSize child)
+		{
+			childSizes.Remove(child);
+		}
+
 		private void Dispose(bool disposing)
 		{
 			if (!disposed)
@@ -2252,10 +2264,12 @@ namespace SharpFont
 
 				childSizes.Clear();
 
-					Error err = FT.FT_Done_Face(reference);
+				Error err = FT.FT_Done_Face(reference);
 
-					if (err != Error.Ok)
-						throw new FreeTypeException(err);
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+
+				parentLibrary.RemoveChildFace(this);
 
 				reference = IntPtr.Zero;
 				rec = null;

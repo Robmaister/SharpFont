@@ -232,7 +232,7 @@ namespace SharpFont
 		/// <param name="fontName">Mac OS name of the font in ATS framework.</param>
 		/// <param name="faceIndex">Index of the face. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</param>
 		/// <returns>FSSpec to the file. For passing to <see cref="Library.NewFaceFromFSSpec"/>.</returns>
-		public static IntPtr GetFileFromMacATSName(string fontName, out int faceIndex)
+		public static IntPtr GetFileFromMacAtsName(string fontName, out int faceIndex)
 		{
 			IntPtr fsspec;
 
@@ -253,7 +253,7 @@ namespace SharpFont
 		/// allocate this buffer before calling this function.
 		/// </param>
 		/// <returns>Index of the face. For passing to <see cref="Library.NewFace"/>.</returns>
-		public static unsafe int GetFilePathFromMacATSName(string fontName, byte[] path)
+		public static unsafe int GetFilePathFromMacAtsName(string fontName, byte[] path)
 		{
 			int faceIndex;
 

@@ -638,6 +638,8 @@ namespace SharpFont
 		{
 			if (!disposed)
 			{
+				disposed = true;
+
 				//dipose all the children before disposing the library.
 				foreach (Face f in childFaces)
 					f.Dispose();
@@ -660,14 +662,12 @@ namespace SharpFont
 				childStrokers.Clear();
 				childManagers.Clear();
 
-				Error err = customMemory ? FT.FT_Done_Library(Reference) : FT.FT_Done_FreeType(Reference);
+				Error err = customMemory ? FT.FT_Done_Library(reference) : FT.FT_Done_FreeType(reference);
 
 				if (err != Error.Ok)
 					throw new FreeTypeException(err);
 
 				reference = IntPtr.Zero;
-
-				disposed = true;
 			}
 		}
 

@@ -464,15 +464,16 @@ namespace SharpFont
 		{
 			if (!disposed)
 			{
+				disposed = true;
+
 				if (user)
 				{
-					Error err = FT.FT_Bitmap_Done(library.Reference, Reference);
+					Error err = FT.FT_Bitmap_Done(library.Reference, reference);
 
 					if (err != Error.Ok)
 						throw new FreeTypeException(err);
 				}
 
-				disposed = true;
 				reference = IntPtr.Zero;
 				library = null;
 			}

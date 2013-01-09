@@ -231,7 +231,11 @@ namespace SharpFont
 					if (err != Error.Ok)
 						throw new FreeTypeException(err);
 
-					parentFace.RemoveChildSize(this);
+					// removes itself from the parent Face, with a check to prevent this from happening when Face is
+					// being disposed (Face disposes all it's children with a foreach loop, this causes an
+					// InvalidOperationException for modifying a collection during enumeration)
+					if (!parentFace.IsDisposed)
+						parentFace.RemoveChildSize(this);
 				}
 
 				reference = IntPtr.Zero;

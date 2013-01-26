@@ -256,12 +256,18 @@ namespace SharpFont.Cache
 		{
 			if (!disposed)
 			{
+				disposed = true;
+
 				FT.FTC_Manager_Done(reference);
 				reference = IntPtr.Zero;
 
-				parentLibrary.RemoveChildManager(this);
+				// removes itself from the parent Library, with a check to prevent this from happening when Library is
+				// being disposed (Library disposes all it's children with a foreach loop, this causes an
+				// InvalidOperationException for modifying a collection during enumeration)
+				if (!parentLibrary.IsDisposed)
+					parentLibrary.RemoveChildManager(this);
 
-				disposed = true;
+				
 			}
 		}
 

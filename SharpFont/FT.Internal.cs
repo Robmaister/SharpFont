@@ -609,6 +609,12 @@ namespace SharpFont
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Remove_Module(IntPtr library, IntPtr module);
 
+		[DllImport(FreetypeDll, CallingConvention = CallConvention, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+		internal static extern Error FT_Property_Set(IntPtr library, string module_name, string property_name, IntPtr value);
+
+		[DllImport(FreetypeDll, CallingConvention = CallConvention, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+		internal static extern Error FT_Property_Get(IntPtr library, string module_name, string property_name, out IntPtr value);
+
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Reference_Library(IntPtr library);
 

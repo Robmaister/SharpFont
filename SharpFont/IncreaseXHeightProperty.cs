@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -23,16 +23,33 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Runtime.InteropServices;
 
-namespace SharpFont.Internal
+using SharpFont.Internal;
+
+namespace SharpFont
 {
-	[StructLayout(LayoutKind.Sequential)]
-	internal struct GlyphRec
+	/// <summary>
+	/// The data exchange structure for the increase-x-height property.
+	/// </summary>
+	public class IncreaseXHeightProperty
 	{
-		internal IntPtr library;
-		private IntPtr clazz;
-		internal GlyphFormat format;
-		internal FTVector advance;
+		internal IncreaseXHeightPropertyRec rec;
+		private Face face;
+
+		public IncreaseXHeightProperty(Face face)
+		{
+			this.rec.face = face.Reference;
+			this.face = face;
+		}
+
+		internal IncreaseXHeightProperty(IncreaseXHeightPropertyRec rec, Face face)
+		{
+			this.rec = rec;
+			this.face = face;
+		}
+
+		public Face Face { get { return face; } }
+
+		public uint Limit { get { return rec.limit; } set { rec.limit = value; } }
 	}
 }

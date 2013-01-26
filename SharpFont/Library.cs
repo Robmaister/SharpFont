@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using SharpFont.Cache;
 using SharpFont.Internal;
 using SharpFont.TrueType;
+using System.Runtime.InteropServices;
 
 namespace SharpFont
 {
@@ -387,6 +388,188 @@ namespace SharpFont
 		}
 
 		/// <summary>
+		/// Set a property for a given module.
+		/// </summary>
+		/// <param name="moduleName">The module name.</param>
+		/// <param name="propertyName"><para>The property name. Properties are described in the ‘Synopsis’ subsection
+		/// of the module's documentation.
+		/// </para><para>
+		/// Note that only a few modules have properties.</para></param>
+		/// <param name="value">A generic pointer to a variable or structure which gives the new value of the property.
+		/// The exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
+		/// documentation.</param>
+		public void PropertySet(string moduleName, string propertyName, IntPtr value)
+		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
+			Error err = FT.FT_Property_Set(Reference, moduleName, propertyName, value);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Set a property for a given module.
+		/// </summary>
+		/// <param name="moduleName">The module name.</param>
+		/// <param name="propertyName"><para>The property name. Properties are described in the ‘Synopsis’ subsection
+		/// of the module's documentation.
+		/// </para><para>
+		/// Note that only a few modules have properties.</para></param>
+		/// <param name="value">A generic pointer to a variable or structure which gives the new value of the property.
+		/// The exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
+		/// documentation.</param>
+		public unsafe void PropertySet<T>(string moduleName, string propertyName, T value)
+			where T : struct
+		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
+			IntPtr ptr = IntPtr.Zero;
+			Marshal.StructureToPtr((object)value, ptr, false); //Should that last value be false? Any other way to get a pointer?
+
+			Error err = FT.FT_Property_Set(Reference, moduleName, propertyName, ptr);
+		}
+
+		/// <summary>
+		/// Set a property for a given module.
+		/// </summary>
+		/// <param name="moduleName">The module name.</param>
+		/// <param name="propertyName"><para>The property name. Properties are described in the ‘Synopsis’ subsection
+		/// of the module's documentation.
+		/// </para><para>
+		/// Note that only a few modules have properties.</para></param>
+		/// <param name="value">A generic pointer to a variable or structure which gives the new value of the property.
+		/// The exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
+		/// documentation.</param>
+		public unsafe void PropertySet(string moduleName, string propertyName, GlyphToScriptMapProperty value)
+		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
+			fixed (void* ptr = &value.rec)
+			{
+				Error err = FT.FT_Property_Set(Reference, moduleName, propertyName, (IntPtr)ptr);
+
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+			}
+		}
+
+		/// <summary>
+		/// Set a property for a given module.
+		/// </summary>
+		/// <param name="moduleName">The module name.</param>
+		/// <param name="propertyName"><para>The property name. Properties are described in the ‘Synopsis’ subsection
+		/// of the module's documentation.
+		/// </para><para>
+		/// Note that only a few modules have properties.</para></param>
+		/// <param name="value">A generic pointer to a variable or structure which gives the new value of the property.
+		/// The exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
+		/// documentation.</param>
+		public unsafe void PropertySet(string moduleName, string propertyName, IncreaseXHeightProperty value)
+		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
+			fixed (void* ptr = &value.rec)
+			{
+				Error err = FT.FT_Property_Set(Reference, moduleName, propertyName, (IntPtr)ptr);
+
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+			}
+		}
+
+		/// <summary>
+		/// Get a module's property value.
+		/// </summary>
+		/// <param name="moduleName">The module name.</param>
+		/// <param name="propertyName">The property name. Properties are described in the ‘Synopsis’ subsection of the
+		/// module's documentation.</param>
+		/// <param name="value">A generic pointer to a variable or structure which gives the value of the property. The
+		/// exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
+		/// documentation.</param>
+		public void PropertyGet(string moduleName, string propertyName, out IntPtr value)
+		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
+			Error err = FT.FT_Property_Get(Reference, moduleName, propertyName, out value);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Get a module's property value.
+		/// </summary>
+		/// <param name="moduleName">The module name.</param>
+		/// <param name="propertyName">The property name. Properties are described in the ‘Synopsis’ subsection of the
+		/// module's documentation.</param>
+		/// <param name="value">A generic pointer to a variable or structure which gives the value of the property. The
+		/// exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
+		/// documentation.</param>
+		public void PropertyGet<T>(string moduleName, string propertyName, out T value)
+		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
+			IntPtr ptr;
+			Error err = FT.FT_Property_Get(Reference, moduleName, propertyName, out ptr);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			value = PInvokeHelper.PtrToStructure<T>(ptr);
+		}
+
+		/// <summary>
+		/// Get a module's property value.
+		/// </summary>
+		/// <param name="moduleName">The module name.</param>
+		/// <param name="propertyName">The property name. Properties are described in the ‘Synopsis’ subsection of the
+		/// module's documentation.</param>
+		/// <param name="value">A generic pointer to a variable or structure which gives the value of the property. The
+		/// exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
+		/// documentation.</param>
+		public void PropertyGet(string moduleName, string propertyName, out GlyphToScriptMapProperty value)
+		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
+			IntPtr ptr;
+			Error err = FT.FT_Property_Get(Reference, moduleName, propertyName, out ptr);
+
+			GlyphToScriptMapPropertyRec ptrRec = PInvokeHelper.PtrToStructure<GlyphToScriptMapPropertyRec>(ptr);
+			Face face = childFaces.Find(f => f.Reference == ptrRec.face);
+			value = new GlyphToScriptMapProperty(ptrRec, face);
+		}
+
+		/// <summary>
+		/// Get a module's property value.
+		/// </summary>
+		/// <param name="moduleName">The module name.</param>
+		/// <param name="propertyName">The property name. Properties are described in the ‘Synopsis’ subsection of the
+		/// module's documentation.</param>
+		/// <param name="value">A generic pointer to a variable or structure which gives the value of the property. The
+		/// exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
+		/// documentation.</param>
+		public void PropertyGet(string moduleName, string propertyName, out IncreaseXHeightProperty value)
+		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
+			IntPtr ptr;
+			Error err = FT.FT_Property_Get(Reference, moduleName, propertyName, out ptr);
+
+			IncreaseXHeightPropertyRec ptrRec = PInvokeHelper.PtrToStructure<IncreaseXHeightPropertyRec>(ptr);
+			Face face = childFaces.Find(f => f.Reference == ptrRec.face);
+			value = new IncreaseXHeightProperty(ptrRec, face);
+		}
+
+		/// <summary>
 		/// Set a debug hook function for debugging the interpreter of a font format.
 		/// </summary>
 		/// <remarks><para>
@@ -396,7 +579,8 @@ namespace SharpFont
 		/// Since the internal headers of FreeType are no longer installed, the symbol ‘FT_DEBUG_HOOK_TRUETYPE’ isn't
 		/// available publicly. This is a bug and will be fixed in a forthcoming release.
 		/// </para></remarks>
-		/// <param name="hookIndex">The index of the debug hook. You should use the values defined in ‘ftobjs.h’, e.g., ‘FT_DEBUG_HOOK_TRUETYPE’.</param>
+		/// <param name="hookIndex">The index of the debug hook. You should use the values defined in ‘ftobjs.h’, e.g.,
+		/// ‘FT_DEBUG_HOOK_TRUETYPE’.</param>
 		/// <param name="debugHook">The function used to debug the interpreter.</param>
 		[CLSCompliant(false)]
 		public void SetDebugHook(uint hookIndex, IntPtr debugHook)

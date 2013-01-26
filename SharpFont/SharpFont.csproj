@@ -72,6 +72,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoHinterScript.cs" />
     <Compile Include="BBox.cs" />
     <Compile Include="Bdf\Internal\PropertyRec.cs" />
     <Compile Include="Bdf\Property.cs" />
@@ -103,6 +104,8 @@
     <Compile Include="Fnt\Header.cs" />
     <Compile Include="Fnt\Internal\HeaderRec.cs" />
     <Compile Include="FTList.cs" />
+    <Compile Include="GlyphToScriptMapProperty.cs" />
+    <Compile Include="IncreaseXHeightProperty.cs" />
     <Compile Include="Internal\BBoxRec.cs" />
     <Compile Include="Internal\BitmapGlyphRec.cs" />
     <Compile Include="Internal\BitmapRec.cs" />
@@ -114,6 +117,8 @@
     <Compile Include="Internal\GlyphMetricsRec.cs" />
     <Compile Include="Internal\GlyphRec.cs" />
     <Compile Include="Internal\GlyphSlotRec.cs" />
+    <Compile Include="Internal\GlyphToScriptMapPropertyRec.cs" />
+    <Compile Include="Internal\IncreaseXHeightPropertyRec.cs" />
     <Compile Include="Internal\ListNodeMarshaler.cs" />
     <Compile Include="Internal\ListNodeRec.cs" />
     <Compile Include="Internal\ListRec.cs" />

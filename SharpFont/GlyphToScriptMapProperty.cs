@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -25,14 +25,32 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-namespace SharpFont.Internal
+using SharpFont.Internal;
+
+namespace SharpFont
 {
-	[StructLayout(LayoutKind.Sequential)]
-	internal struct GlyphRec
+	/// <summary>
+	/// The data exchange structure for the glyph-to-script-map property.
+	/// </summary>
+	public class GlyphToScriptMapProperty
 	{
-		internal IntPtr library;
-		private IntPtr clazz;
-		internal GlyphFormat format;
-		internal FTVector advance;
+		internal GlyphToScriptMapPropertyRec rec;
+		private Face face;
+
+		public GlyphToScriptMapProperty(Face face)
+		{
+			rec.face = face.Reference;
+			this.face = face;
+		}
+
+		internal GlyphToScriptMapProperty(GlyphToScriptMapPropertyRec rec, Face face)
+		{
+			this.rec = rec;
+			this.face = face;
+		}
+
+		public Face Face { get { return face; } }
+
+		public IntPtr Map { get { return rec.map; } }
 	}
 }

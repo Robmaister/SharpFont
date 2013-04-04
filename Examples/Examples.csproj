@@ -52,7 +52,7 @@
     <Content Include="Fonts\SIL Open Font License 1.1.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="freetype.dll">
+    <Content Include="freetype6.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="FTL.TXT">

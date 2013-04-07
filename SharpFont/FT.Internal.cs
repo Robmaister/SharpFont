@@ -28,6 +28,7 @@ using System.Runtime.InteropServices;
 using SharpFont.Cache;
 using SharpFont.PostScript;
 using SharpFont.TrueType;
+using SharpFont.Internal;
 
 namespace SharpFont
 {
@@ -188,7 +189,7 @@ namespace SharpFont
 		internal static extern Error FT_Glyph_Transform(IntPtr glyph, ref FTMatrix matrix, ref FTVector delta);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern void FT_Glyph_Get_CBox(IntPtr glyph, GlyphBBoxMode bbox_mode, out IntPtr acbox);
+		internal static extern void FT_Glyph_Get_CBox(IntPtr glyph, GlyphBBoxMode bbox_mode, ref BBoxRec acbox);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Glyph_To_Bitmap(ref IntPtr the_glyph, RenderMode render_mode, ref FTVector origin, [MarshalAs(UnmanagedType.U1)] bool destroy);

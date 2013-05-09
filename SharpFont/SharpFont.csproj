@@ -77,6 +77,7 @@
     <Compile Include="Bdf\Internal\PropertyRec.cs" />
     <Compile Include="Bdf\Property.cs" />
     <Compile Include="Bdf\PropertyType.cs" />
+    <Compile Include="Cff\HintingEngine.cs" />
     <Compile Include="ClassicKernValidationFlags.cs" />
     <Compile Include="FTBitmap.cs" />
     <Compile Include="BitmapGlyph.cs" />

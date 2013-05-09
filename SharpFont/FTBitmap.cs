@@ -1,7 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012 Robert Rouhani <robert.rouhani@gmail.com>
-
-SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
+/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 

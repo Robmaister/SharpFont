@@ -85,7 +85,23 @@
     <Rule Name="UsePropertiesWhereAppropriate" Enabled="True" />
    </RuleFile>
    <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
-   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="True" />
+   <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="False">
+    <Rule Name="AutoLayoutTypesShouldNotBeComVisible" Enabled="True" />
+    <Rule Name="AvoidInt64ArgumentsForVB6Clients" Enabled="True" />
+    <Rule Name="AvoidNonpublicFieldsInComVisibleValueTypes" Enabled="True" />
+    <Rule Name="AvoidOverloadsInComVisibleInterfaces" Enabled="True" />
+    <Rule Name="AvoidStaticMembersInComVisibleTypes" Enabled="True" />
+    <Rule Name="CallGetLastErrorImmediatelyAfterPInvoke" Enabled="True" />
+    <Rule Name="ComRegistrationMethodsShouldBeMatched" Enabled="True" />
+    <Rule Name="ComRegistrationMethodsShouldNotBeVisible" Enabled="True" />
+    <Rule Name="ComVisibleTypeBaseTypesShouldBeComVisible" Enabled="True" />
+    <Rule Name="ComVisibleTypesShouldBeCreatable" Enabled="True" />
+    <Rule Name="DeclarePInvokesCorrectly" Enabled="True" />
+    <Rule Name="DoNotUseAutoDualClassInterfaceType" Enabled="True" />
+    <Rule Name="MarkBooleanPInvokeArgumentsWithMarshalAs" Enabled="True" />
+    <Rule Name="MarkComSourceInterfacesAsIDispatch" Enabled="True" />
+    <Rule Name="PInvokesShouldNotBeVisible" Enabled="True" />
+   </RuleFile>
    <RuleFile Name="$(FxCopDir)\Rules\MobilityRules.dll" Enabled="True" AllRulesEnabled="True" />
    <RuleFile Name="$(FxCopDir)\Rules\NamingRules.dll" Enabled="True" AllRulesEnabled="False">
     <Rule Name="CompoundWordsShouldBeCasedCorrectly" Enabled="True" />
@@ -102,7 +118,6 @@
     <Rule Name="IdentifiersShouldNotHaveIncorrectPrefix" Enabled="True" />
     <Rule Name="IdentifiersShouldNotHaveIncorrectSuffix" Enabled="True" />
     <Rule Name="IdentifiersShouldNotMatchKeywords" Enabled="True" />
-    <Rule Name="OnlyFlagsEnumsShouldHavePluralNames" Enabled="True" />
     <Rule Name="ParameterNamesShouldMatchBaseDeclaration" Enabled="True" />
     <Rule Name="ParameterNamesShouldNotMatchMemberNames" Enabled="True" />
     <Rule Name="PropertyNamesShouldNotMatchGetMethods" Enabled="True" />
@@ -185,6 +200,15 @@
      </Message>
     </Messages>
    </Namespace>
+   <Namespace Name="SharpFont.Cff">
+    <Messages>
+     <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2013-05-09 19:26:17Z">
+      <Issue>
+       <Item>SharpFont.Cff</Item>
+      </Issue>
+     </Message>
+    </Messages>
+   </Namespace>
    <Namespace Name="SharpFont.Fnt">
     <Messages>
      <Message TypeName="AvoidNamespacesWithFewTypes" Category="Microsoft.Design" CheckId="CA1020" Created="2012-12-16 09:42:25Z">
@@ -232,15 +256,6 @@
          </Type>
          <Type Name="BitmapGlyph">
           <Members>
-           <Member Name="#.ctor(System.IntPtr)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-              <Issue>
-               <Item>'BitmapGlyph.BitmapGlyph(IntPtr)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Reference">
             <Accessors>
              <Accessor Name="#get_Reference()">
@@ -248,15 +263,6 @@
                <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
                 <Issue>
                  <Item>'BitmapGlyph.Reference.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-             <Accessor Name="#set_Reference(System.IntPtr)">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-                <Issue>
-                 <Item>'BitmapGlyph.Reference.set(IntPtr)'</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -933,15 +939,6 @@
          </Type>
          <Type Name="OutlineGlyph">
           <Members>
-           <Member Name="#.ctor(System.IntPtr)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-              <Issue>
-               <Item>'OutlineGlyph.OutlineGlyph(IntPtr)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Reference">
             <Accessors>
              <Accessor Name="#get_Reference()">
@@ -949,15 +946,6 @@
                <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
                 <Issue>
                  <Item>'OutlineGlyph.Reference.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-             <Accessor Name="#set_Reference(System.IntPtr)">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-                <Issue>
-                 <Item>'OutlineGlyph.Reference.set(IntPtr)'</Item>
                 </Issue>
                </Message>
               </Messages>
@@ -1626,24 +1614,6 @@
        </Namespace>
        <Namespace Name="SharpFont.PostScript">
         <Types>
-         <Type Name="BlendFlags">
-          <Messages>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2012-12-15 23:01:10Z">
-            <Issue>
-             <Item>'BlendFlags'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="DictionaryKeys">
-          <Messages>
-           <Message TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717" Created="2012-12-15 23:01:10Z">
-            <Issue>
-             <Item>'DictionaryKeys'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="FaceDict">
           <Members>
            <Member Name="#Reference">
@@ -2118,9 +2088,6 @@
    </Rule>
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
-   </Rule>
-   <Rule TypeName="OnlyFlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1717">
-    <Resolution Name="Default">If the name {0} is plural, change it to its singular form.</Resolution>
    </Rule>
    <Rule TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815">
     <Resolution Name="Equals">{0} should override Equals.</Resolution>

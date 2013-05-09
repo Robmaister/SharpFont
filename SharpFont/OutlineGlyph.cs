@@ -42,25 +42,45 @@ namespace SharpFont
 	/// </para><para>
 	/// The outline's tables are always owned by the object and are destroyed with it.
 	/// </para></remarks>
-	public class OutlineGlyph
+	public class OutlineGlyph : IDisposable
 	{
 		#region Fields
 
-		private IntPtr reference;
+		private Glyph original;
 		private OutlineGlyphRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal OutlineGlyph(IntPtr reference)
+		internal OutlineGlyph(Glyph original)
 		{
-			Reference = reference;
+			this.original = original;
+			Reference = original.Reference; //sets the rec
+		}
+
+		/// <summary>
+		/// Finalizes an instance of the <see cref="OutlineGlyph"/> class.
+		/// </summary>
+		~OutlineGlyph()
+		{
+			Dispose(false);
 		}
 
 		#endregion
 
 		#region Properties
+
+		/// <summary>
+		/// Gets a value indicating whether the object has been disposed.
+		/// </summary>
+		public bool IsDisposed
+		{
+			get
+			{
+				return original.IsDisposed;
+			}
+		}
 
 		/// <summary>
 		/// Gets the root <see cref="Glyph"/> fields.
@@ -69,8 +89,10 @@ namespace SharpFont
 		{
 			get
 			{
-				//HACK fix this later.
-				return new Glyph(rec.root, null);
+				if (IsDisposed)
+					throw new ObjectDisposedException("Bitmap", "Cannot access a disposed object.");
+
+				return original;
 			}
 		}
 
@@ -81,6 +103,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (IsDisposed)
+					throw new ObjectDisposedException("Bitmap", "Cannot access a disposed object.");
+
 				return new Outline(rec.outline);
 			}
 		}
@@ -89,14 +114,62 @@ namespace SharpFont
 		{
 			get
 			{
-				return reference;
+				if (IsDisposed)
+					throw new ObjectDisposedException("Bitmap", "Cannot access a disposed object.");
+
+				return original.Reference;
 			}
 
 			set
 			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<OutlineGlyphRec>(reference);
+				if (IsDisposed)
+					throw new ObjectDisposedException("Bitmap", "Cannot access a disposed object.");
+
+				rec = PInvokeHelper.PtrToStructure<OutlineGlyphRec>(original.Reference);
 			}
+		}
+
+		#endregion
+
+		#region Operators
+
+		/// <summary>
+		/// Casts a <see cref="OutlineGlyph"/> back up to a <see cref="Glyph"/>. The eqivalent of
+		/// <see cref="OutlineGlyph.Root"/>.
+		/// </summary>
+		/// <param name="g">A <see cref="OutlineGlyph"/>.</param>
+		/// <returns>A <see cref="Glyph"/>.</returns>
+		public static implicit operator Glyph(OutlineGlyph g)
+		{
+			return g.original;
+		}
+
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// A CLS-compliant version of the implicit cast to <see cref="Glyph"/>.
+		/// </summary>
+		/// <returns>A <see cref="Glyph"/>.</returns>
+		public Glyph ToGlyph()
+		{
+			return (Glyph)this;
+		}
+
+		/// <summary>
+		/// Disposes an instance of the <see cref="OutlineGlyph"/> class.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if (disposing)
+				original.Dispose();
 		}
 
 		#endregion

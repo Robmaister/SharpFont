@@ -37,10 +37,9 @@ namespace SharpFont
 	[StructLayout(LayoutKind.Sequential)]
 	public sealed class SizeRequest
 	{
-		//HACK still need a rec for this.
-
 		#region Fields
 
+		//HACK still need a rec for this.
 		private IntPtr reference;
 
 		#endregion
@@ -57,7 +56,7 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// See <see cref="SizeRequestType"/>.
+		/// Gets the type of request. See <see cref="SizeRequestType"/>.
 		/// </summary>
 		public SizeRequestType RequestType
 		{

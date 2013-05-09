@@ -266,8 +266,6 @@ namespace SharpFont.Cache
 				// InvalidOperationException for modifying a collection during enumeration)
 				if (!parentLibrary.IsDisposed)
 					parentLibrary.RemoveChildManager(this);
-
-				
 			}
 		}
 

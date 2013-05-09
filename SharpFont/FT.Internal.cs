@@ -26,9 +26,9 @@ using System;
 using System.Runtime.InteropServices;
 
 using SharpFont.Cache;
+using SharpFont.Internal;
 using SharpFont.PostScript;
 using SharpFont.TrueType;
-using SharpFont.Internal;
 
 namespace SharpFont
 {
@@ -727,7 +727,7 @@ namespace SharpFont
 		#region OpenType Validation
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_OpenType_Validate(IntPtr face, OpenTypeValidationFlags validation_flags, out IntPtr BASE_table, out IntPtr GDEF_table, out IntPtr GPOS_table, out IntPtr GSUB_table, out IntPtr JSFT_table);
+		internal static extern Error FT_OpenType_Validate(IntPtr face, OpenTypeValidationFlags validation_flags, out IntPtr base_table, out IntPtr gdef_table, out IntPtr gpos_table, out IntPtr gsub_table, out IntPtr jsft_table);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern void FT_OpenType_Free(IntPtr face, IntPtr table);

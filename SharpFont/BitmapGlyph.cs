@@ -29,8 +29,6 @@ using SharpFont.Internal;
 
 namespace SharpFont
 {
-	//TODO some sort of pseudo-inheritance for glyphs following FreeType's method.
-
 	/// <summary>
 	/// A structure used for bitmap glyph images. This really is a ‘sub-class’ of <see cref="Glyph"/>.
 	/// </summary>
@@ -41,25 +39,45 @@ namespace SharpFont
 	/// The corresponding pixel buffer is always owned by <see cref="BitmapGlyph"/> and is thus created and destroyed
 	/// with it.
 	/// </para></remarks>
-	public class BitmapGlyph
+	public class BitmapGlyph : IDisposable
 	{
 		#region Fields
 
-		private IntPtr reference;
+		private Glyph original;
 		private BitmapGlyphRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal BitmapGlyph(IntPtr reference)
+		internal BitmapGlyph(Glyph original)
 		{
-			Reference = reference;
+			this.original = original;
+			Reference = original.Reference; //generates the rec.
+		}
+
+		/// <summary>
+		/// Finalizes an instance of the <see cref="BitmapGlyph"/> class.
+		/// </summary>
+		~BitmapGlyph()
+		{
+			Dispose(false);
 		}
 
 		#endregion
 
 		#region Properties
+
+		/// <summary>
+		/// Gets a value indicating whether the object has been disposed.
+		/// </summary>
+		public bool IsDisposed
+		{
+			get
+			{
+				return original.IsDisposed;
+			}
+		}
 
 		/// <summary>
 		/// Gets the root <see cref="Glyph"/> fields.
@@ -68,8 +86,10 @@ namespace SharpFont
 		{
 			get
 			{
-				//HACK fix this later.
-				return new Glyph(rec.root, null);
+				if (IsDisposed)
+					throw new ObjectDisposedException("Root", "Cannot access a disposed object.");
+
+				return original;
 			}
 		}
 
@@ -81,6 +101,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (IsDisposed)
+					throw new ObjectDisposedException("Left", "Cannot access a disposed object.");
+
 				return rec.left;
 			}
 		}
@@ -93,6 +116,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (IsDisposed)
+					throw new ObjectDisposedException("Top", "Cannot access a disposed object.");
+
 				return rec.top;
 			}
 		}
@@ -104,6 +130,9 @@ namespace SharpFont
 		{
 			get
 			{
+				if (IsDisposed)
+					throw new ObjectDisposedException("Bitmap", "Cannot access a disposed object.");
+
 				return new FTBitmap(rec.bitmap);
 			}
 		}
@@ -112,13 +141,64 @@ namespace SharpFont
 		{
 			get
 			{
-				return reference;
+				if (IsDisposed)
+					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
+
+				return original.Reference;
 			}
 
 			set
 			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<BitmapGlyphRec>(reference);
+				if (IsDisposed)
+					throw new ObjectDisposedException("Reference", "Cannot modify a disposed object.");
+
+				rec = PInvokeHelper.PtrToStructure<BitmapGlyphRec>(original.Reference);
+			}
+		}
+
+		#endregion
+
+		#region Operators
+
+		/// <summary>
+		/// Casts a <see cref="BitmapGlyph"/> back up to a <see cref="Glyph"/>. The eqivalent of
+		/// <see cref="BitmapGlyph.Root"/>.
+		/// </summary>
+		/// <param name="g">A <see cref="BitmapGlyph"/>.</param>
+		/// <returns>A <see cref="Glyph"/>.</returns>
+		public static implicit operator Glyph(BitmapGlyph g)
+		{
+			return g.original;
+		}
+
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// A CLS-compliant version of the implicit cast to <see cref="Glyph"/>.
+		/// </summary>
+		/// <returns>A <see cref="Glyph"/>.</returns>
+		public Glyph ToGlyph()
+		{
+			return (Glyph)this;
+		}
+
+		/// <summary>
+		/// Disposes an instance of the <see cref="BitmapGlyph"/> class.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				original.Dispose();
+				original = null;
 			}
 		}
 

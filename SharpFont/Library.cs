@@ -24,11 +24,11 @@ SOFTWARE.*/
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 using SharpFont.Cache;
 using SharpFont.Internal;
 using SharpFont.TrueType;
-using System.Runtime.InteropServices;
 
 namespace SharpFont
 {
@@ -412,6 +412,7 @@ namespace SharpFont
 		/// <summary>
 		/// Set a property for a given module.
 		/// </summary>
+		/// <typeparam name="T">The type of property to set.</typeparam>
 		/// <param name="moduleName">The module name.</param>
 		/// <param name="propertyName"><para>The property name. Properties are described in the ‘Synopsis’ subsection
 		/// of the module's documentation.
@@ -448,13 +449,11 @@ namespace SharpFont
 			if (disposed)
 				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
-			fixed (void* ptr = &value.rec)
-			{
-				Error err = FT.FT_Property_Set(Reference, moduleName, propertyName, (IntPtr)ptr);
+			GlyphToScriptMapPropertyRec rec = value.Rec;
+			Error err = FT.FT_Property_Set(Reference, moduleName, propertyName, (IntPtr)(&rec));
 
-				if (err != Error.Ok)
-					throw new FreeTypeException(err);
-			}
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
 		}
 
 		/// <summary>
@@ -473,13 +472,11 @@ namespace SharpFont
 			if (disposed)
 				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
-			fixed (void* ptr = &value.rec)
-			{
-				Error err = FT.FT_Property_Set(Reference, moduleName, propertyName, (IntPtr)ptr);
+			IncreaseXHeightPropertyRec rec = value.Rec;
+			Error err = FT.FT_Property_Set(Reference, moduleName, propertyName, (IntPtr)(&rec));
 
-				if (err != Error.Ok)
-					throw new FreeTypeException(err);
-			}
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
 		}
 
 		/// <summary>
@@ -505,6 +502,7 @@ namespace SharpFont
 		/// <summary>
 		/// Get a module's property value.
 		/// </summary>
+		/// <typeparam name="T">The type of property to get.</typeparam>
 		/// <param name="moduleName">The module name.</param>
 		/// <param name="propertyName">The property name. Properties are described in the ‘Synopsis’ subsection of the
 		/// module's documentation.</param>

@@ -33,9 +33,13 @@ namespace SharpFont
 	/// </summary>
 	public class IncreaseXHeightProperty
 	{
-		internal IncreaseXHeightPropertyRec rec;
+		private IncreaseXHeightPropertyRec rec;
 		private Face face;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="IncreaseXHeightProperty"/> class.
+		/// </summary>
+		/// <param name="face">The face to increase the X height of.</param>
 		public IncreaseXHeightProperty(Face face)
 		{
 			this.rec.face = face.Reference;
@@ -48,8 +52,46 @@ namespace SharpFont
 			this.face = face;
 		}
 
-		public Face Face { get { return face; } }
+		/// <summary>
+		/// Gets or sets the associated face.
+		/// </summary>
+		public Face Face
+		{
+			get
+			{
+				return face;
+			}
 
-		public uint Limit { get { return rec.limit; } set { rec.limit = value; } }
+			set
+			{
+				face = value;
+				rec.face = face.Reference;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the limit property.
+		/// </summary>
+		[CLSCompliant(false)]
+		public uint Limit
+		{
+			get
+			{
+				return rec.limit;
+			}
+
+			set
+			{
+				rec.limit = value;
+			}
+		}
+
+		internal IncreaseXHeightPropertyRec Rec
+		{
+			get
+			{
+				return rec;
+			}
+		}
 	}
 }

@@ -55,14 +55,6 @@ namespace SharpFont
 			parentLibrary.AddChildGlyph(this);
 		}
 
-		internal Glyph(GlyphRec rec, Library parentLibrary)
-		{
-			this.rec = rec;
-
-			this.parentLibrary = parentLibrary;
-			parentLibrary.AddChildGlyph(this);
-		}
-
 		/// <summary>
 		/// Finalizes an instance of the Glyph class.
 		/// </summary>
@@ -151,7 +143,61 @@ namespace SharpFont
 
 		#endregion
 
+		#region Operators
+
+		/// <summary>
+		/// Downcasts a <see cref="Glyph"/> to a <see cref="BitmapGlyph"/>
+		/// </summary>
+		/// <param name="g">A <see cref="Glyph"/>.</param>
+		/// <returns>A <see cref="BitmapGlyph"/>.</returns>
+		/// <exception cref="InvalidCastException">
+		/// If the <see cref="Glyph"/>'s format is not <see cref="GlyphFormat.Bitmap"/>.
+		/// </exception>
+		public static explicit operator BitmapGlyph(Glyph g)
+		{
+			if (g.Format == GlyphFormat.Bitmap)
+				return new BitmapGlyph(g);
+			else
+				throw new InvalidCastException("The glyph's format is not GlyphFormat.Bitmap.");
+		}
+
+		/// <summary>
+		/// Downcasts a <see cref="Glyph"/> to a <see cref="OutlineGlyph"/>
+		/// </summary>
+		/// <param name="g">A <see cref="Glyph"/>.</param>
+		/// <returns>A <see cref="OutlineGlyph"/>.</returns>
+		/// <exception cref="InvalidCastException">
+		/// If the <see cref="Glyph"/>'s format is not <see cref="GlyphFormat.Outline"/>.
+		/// </exception>
+		public static explicit operator OutlineGlyph(Glyph g)
+		{
+			if (g.Format == GlyphFormat.Outline)
+				return new OutlineGlyph(g);
+			else
+				throw new InvalidCastException("The glyph's format is not GlyphFormat.Outline.");
+		}
+
+		#endregion
+
 		#region Methods
+
+		/// <summary>
+		/// CLS-compliant equivalent of an explicit cast to <see cref="BitmapGlyph"/>.
+		/// </summary>
+		/// <returns>A <see cref="BitmapGlyph"/>.</returns>
+		public BitmapGlyph ToBitmapGlyph()
+		{
+			return (BitmapGlyph)this;
+		}
+
+		/// <summary>
+		/// CLS-compliant equivalent of an explicit cast to <see cref="OutlineGlyph"/>.
+		/// </summary>
+		/// <returns>A <see cref="OutlineGlyph"/>.</returns>
+		public OutlineGlyph ToOutlineGlyph()
+		{
+			return (OutlineGlyph)this;
+		}
 
 		/// <summary>
 		/// A function used to copy a glyph image. Note that the created <see cref="Glyph"/> object must be released
@@ -308,14 +354,17 @@ namespace SharpFont
 			IntPtr sourceRef = Reference;
 			Error err = FT.FT_Glyph_Stroke(ref sourceRef, stroker.Reference, destroy);
 
-			if (destroy)
+			if (destroy && err == Error.Ok)
 			{
-				//TODO when Glyph implements IDisposable, dispose the glyph.
+				//if FT_Glyph_Stroke destroys the glyph, keep the C# side synchronized.
+				disposed = true;
+				reference = IntPtr.Zero;
 			}
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
+			//check if the pointer didn't change.
 			if (sourceRef == Reference)
 				return this;
 			else
@@ -344,14 +393,17 @@ namespace SharpFont
 			IntPtr sourceRef = Reference;
 			Error err = FT.FT_Glyph_StrokeBorder(ref sourceRef, stroker.Reference, inside, destroy);
 
-			if (destroy)
+			if (destroy && err == Error.Ok)
 			{
-				//TODO when Glyph implements IDisposable, dispose the glyph.
+				//if FT_Glyph_Stroke destroys the glyph, keep the C# side synchronized.
+				disposed = true;
+				reference = IntPtr.Zero;
 			}
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
+			//check if the pointer didn't change.
 			if (sourceRef == Reference)
 				return this;
 			else

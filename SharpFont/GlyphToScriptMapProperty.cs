@@ -34,13 +34,16 @@ namespace SharpFont
 	/// </summary>
 	public class GlyphToScriptMapProperty
 	{
-		internal GlyphToScriptMapPropertyRec rec;
+		private GlyphToScriptMapPropertyRec rec;
 		private Face face;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GlyphToScriptMapProperty"/> class.
+		/// </summary>
+		/// <param name="face">The face to apply the property to.</param>
 		public GlyphToScriptMapProperty(Face face)
 		{
-			rec.face = face.Reference;
-			this.face = face;
+			Face = face;
 		}
 
 		internal GlyphToScriptMapProperty(GlyphToScriptMapPropertyRec rec, Face face)
@@ -49,8 +52,45 @@ namespace SharpFont
 			this.face = face;
 		}
 
-		public Face Face { get { return face; } }
+		/// <summary>
+		/// Gets or sets the associated face.
+		/// </summary>
+		public Face Face
+		{
+			get
+			{
+				return face;
+			}
 
-		public IntPtr Map { get { return rec.map; } }
+			set
+			{
+				face = value;
+				rec.face = face.Reference;
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the associated map.
+		/// </summary>
+		public IntPtr Map
+		{
+			get
+			{
+				return rec.map;
+			}
+
+			set
+			{
+				rec.map = value;
+			}
+		}
+
+		internal GlyphToScriptMapPropertyRec Rec
+		{
+			get
+			{
+				return rec;
+			}
+		}
 	}
 }

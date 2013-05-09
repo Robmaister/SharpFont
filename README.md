@@ -1,5 +1,4 @@
 # SharpFont
------------------------------------------------------------------------------------------------------------------------
 ### Cross-platform FreeType bindings for .NET
 
 SharpFont is a library that provides FreeType bindings for .NET. It's MIT licensed to make sure licensing doesn't get
@@ -29,7 +28,6 @@ Face face = new Face(library, "./myfont.ttf");
 ```
 
 ##Quick Start
-=======================================================================================================================
 
 Clone the repository and compile the solution. Copy `SharpFont.dll` to your project and include it as a reference. On
 Windows, you must include a compiled copy of FreeType2 as `freetype.dll` in the project's output directory. It is
@@ -44,7 +42,6 @@ Currently, Windows 64-bit systems require you to either compile SharpFont under 
 in further detail in the Known Issues section.
 
 ##Compiling FreeType on Windows
-=======================================================================================================================
 
 Thanks to [this StackOverflow answer](http://stackoverflow.com/a/7387618/1122135) for the directions:
 
@@ -65,7 +62,6 @@ compilation` section:
 Finally, complile the project (`F6` or Build -> Build Solution). `freetype.dll` will be output to `objs\win32\vc2010`.
 
 ##Known Issues
-=======================================================================================================================
 
 The biggest currently known issue is the Windows 64-bit incompatibility. This is a three part issue:
 
@@ -85,13 +81,12 @@ However, this can be restrictive to some applications. The best solution is to c
 64-bit `long`s, which I will look into and test in the near future.
 
 ##License
-=======================================================================================================================
 
 As metioned earlier, SharpFont is licensed under the MIT License. The terms of the MIT license are included in both the
 [LICENSE](SharpFont/tree/master/LICENSE) file and below:
 
 ```
-Copyright (c) 2012 Robert Rouhani <robert.rouhani@gmail.com>
+Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 

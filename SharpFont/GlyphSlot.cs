@@ -295,7 +295,7 @@ namespace SharpFont
 
 				for (int i = 0; i < count; i++)
 				{
-					subglyphs[i] = new SubGlyph(array, IntPtr.Size * i);
+					subglyphs[i] = new SubGlyph((IntPtr)(array.ToInt64() + IntPtr.Size * i));
 				}
 
 				return subglyphs;

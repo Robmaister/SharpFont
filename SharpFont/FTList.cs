@@ -55,7 +55,7 @@ namespace SharpFont
 	/// <summary>
 	/// A structure used to hold a simple doubly-linked list. These are used in many parts of FreeType.
 	/// </summary>
-	public class FTList
+	public sealed class FTList
 	{
 		#region Fields
 

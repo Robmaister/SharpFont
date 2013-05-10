@@ -830,12 +830,12 @@ namespace SharpFont
 		/// Resize the scale of the active <see cref="FTSize"/> object in a face.
 		/// </summary>
 		/// <param name="request">A pointer to a <see cref="SizeRequest"/>.</param>
-		public void RequestSize(SizeRequest request)
+		public unsafe void RequestSize(SizeRequest request)
 		{
 			if (disposed)
 				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
 
-			Error err = FT.FT_Request_Size(Reference, request.Reference);
+			Error err = FT.FT_Request_Size(Reference, (IntPtr)(&request));
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);

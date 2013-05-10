@@ -48,7 +48,6 @@
     <Rule Name="DoNotOverloadOperatorEqualsOnReferenceTypes" Enabled="True" />
     <Rule Name="DoNotRaiseExceptionsInUnexpectedLocations" Enabled="True" />
     <Rule Name="EnumeratorsShouldBeStronglyTyped" Enabled="True" />
-    <Rule Name="EnumsShouldHaveZeroValue" Enabled="True" />
     <Rule Name="ExceptionsShouldBePublic" Enabled="True" />
     <Rule Name="GenericMethodsShouldProvideTypeParameter" Enabled="True" />
     <Rule Name="ICollectionImplementationsHaveStronglyTypedMembers" Enabled="True" />
@@ -82,7 +81,6 @@
     <Rule Name="UseGenericEventHandlerInstances" Enabled="True" />
     <Rule Name="UseGenericsWhereAppropriate" Enabled="True" />
     <Rule Name="UseIntegralOrStringArgumentForIndexers" Enabled="True" />
-    <Rule Name="UsePropertiesWhereAppropriate" Enabled="True" />
    </RuleFile>
    <RuleFile Name="$(FxCopDir)\Rules\GlobalizationRules.dll" Enabled="True" AllRulesEnabled="True" />
    <RuleFile Name="$(FxCopDir)\Rules\InteroperabilityRules.dll" Enabled="True" AllRulesEnabled="False">
@@ -297,37 +295,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="CharMap">
-          <Members>
-           <Member Name="#GetCharmapIndex()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'CharMap.GetCharmapIndex()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetCMapFormat()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'CharMap.GetCMapFormat()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetCMapLanguageId()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-16 08:12:49Z">
-              <Issue Certainty="50">
-               <Item>'CharMap.GetCMapLanguageId()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="Data">
           <Messages>
            <Message TypeName="TypeNamesShouldNotMatchNamespaces" Category="Microsoft.Naming" CheckId="CA1724" Created="2012-12-15 23:01:10Z">
@@ -371,16 +338,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="EmbeddingTypes">
-          <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2012-12-15 23:01:10Z" FixCategory="Breaking">
-            <Issue Name="FlagsRename">
-             <Item>'EmbeddingTypes'</Item>
-             <Item>'EmbeddingTypes.Installable'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="Error">
           <Messages>
            <Message Id="Error" TypeName="IdentifiersShouldNotMatchKeywords" Category="Microsoft.Naming" CheckId="CA1716" Created="2012-12-15 23:01:10Z">
@@ -412,96 +369,6 @@
              <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
               <Issue>
                <Item>'Face.CharMaps'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetCidIsInternallyCidKeyed()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-16 08:12:49Z">
-              <Issue Certainty="50">
-               <Item>'Face.GetCidIsInternallyCidKeyed()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetFSTypeFlags()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'Face.GetFSTypeFlags()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetMMVar()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'Face.GetMMVar()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetMultiMaster()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'Face.GetMultiMaster()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetPostscriptName()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'Face.GetPostscriptName()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetPSFontInfo()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'Face.GetPSFontInfo()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetPSFontPrivate()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'Face.GetPSFontPrivate()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetSfntNameCount()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'Face.GetSfntNameCount()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetWinFntHeader()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-16 08:12:49Z">
-              <Issue Certainty="50">
-               <Item>'Face.GetWinFntHeader()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetX11FontFormat()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'Face.GetX11FontFormat()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -587,23 +454,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="FTMatrix">
-          <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2012-12-15 23:01:10Z">
-            <Issue Name="Equals">
-             <Item>'FTMatrix'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'FTMatrix'</Item>
-            </Issue>
-           </Message>
-           <Message TypeName="TypesThatOwnNativeResourcesShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1049" Created="2012-12-15 23:01:10Z">
-            <Issue>
-             <Item>'FTMatrix'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
          <Type Name="FTStream">
           <Messages>
            <Message TypeName="IdentifiersShouldNotHaveIncorrectSuffix" Category="Microsoft.Naming" CheckId="CA1711" Created="2012-12-15 23:01:10Z">
@@ -616,14 +466,6 @@
          </Type>
          <Type Name="FTVector">
           <Messages>
-           <Message TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815" Created="2012-12-15 23:01:10Z">
-            <Issue Name="Equals">
-             <Item>'FTVector'</Item>
-            </Issue>
-            <Issue Name="op_Equality">
-             <Item>'FTVector'</Item>
-            </Issue>
-           </Message>
            <Message TypeName="TypesThatOwnNativeResourcesShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1049" Created="2012-12-15 23:01:10Z">
             <Issue>
              <Item>'FTVector'</Item>
@@ -731,15 +573,6 @@
          </Type>
          <Type Name="GlyphSlot">
           <Members>
-           <Member Name="#GetGlyph()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'GlyphSlot.GetGlyph()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Subglyphs">
             <Messages>
              <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
@@ -756,29 +589,6 @@
            <Message TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027" Created="2012-12-15 23:01:10Z">
             <Issue>
              <Item>'LcdFilter'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="Library">
-          <Members>
-           <Member Name="#GetTrueTypeEngineType()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'Library.GetTrueTypeEngineType()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="LoadFlags">
-          <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2012-12-15 23:01:10Z" FixCategory="Breaking">
-            <Issue Name="FlagsRename">
-             <Item>'LoadFlags'</Item>
-             <Item>'LoadFlags.Default'</Item>
             </Issue>
            </Message>
           </Messages>
@@ -854,65 +664,11 @@
          </Type>
          <Type Name="Outline">
           <Members>
-           <Member Name="#.ctor(System.IntPtr,SharpFont.Library)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-              <Issue>
-               <Item>'Outline.Outline(IntPtr, Library)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Contours">
             <Messages>
              <Message TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819" Created="2012-12-15 23:01:10Z">
               <Issue>
                <Item>'Outline.Contours'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetBBox()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'Outline.GetBBox()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetCBox()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'Outline.GetCBox()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetInsideBorder()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'Outline.GetInsideBorder()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetOrientation()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'Outline.GetOrientation()'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#GetOutsideBorder()">
-            <Messages>
-             <Message TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024" Created="2012-12-15 23:01:10Z">
-              <Issue Certainty="50">
-               <Item>'Outline.GetOutsideBorder()'</Item>
               </Issue>
              </Message>
             </Messages>
@@ -970,25 +726,6 @@
             </Accessors>
            </Member>
           </Members>
-         </Type>
-         <Type Name="ParamTag">
-          <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2012-12-15 23:01:10Z" FixCategory="NonBreaking">
-            <Issue Name="NotFlagsNoZeroValue">
-             <Item>'ParamTag'</Item>
-            </Issue>
-           </Message>
-          </Messages>
-         </Type>
-         <Type Name="RasterFlags">
-          <Messages>
-           <Message TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008" Created="2012-12-15 23:23:19Z" FixCategory="Breaking">
-            <Issue Name="FlagsRename">
-             <Item>'RasterFlags'</Item>
-             <Item>'RasterFlags.Default'</Item>
-            </Issue>
-           </Message>
-          </Messages>
          </Type>
          <Type Name="RasterFuncs">
           <Members>
@@ -1072,67 +809,6 @@
            </Member>
           </Members>
          </Type>
-         <Type Name="SizeMetrics">
-          <Members>
-           <Member Name="#.ctor(System.IntPtr)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-              <Issue>
-               <Item>'SizeMetrics.SizeMetrics(IntPtr)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Reference">
-            <Accessors>
-             <Accessor Name="#get_Reference()">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-                <Issue>
-                 <Item>'SizeMetrics.Reference.get()'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-             <Accessor Name="#set_Reference(System.IntPtr)">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-                <Issue>
-                 <Item>'SizeMetrics.Reference.set(IntPtr)'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
-         </Type>
-         <Type Name="SizeRequest">
-          <Members>
-           <Member Name="#.ctor(System.IntPtr)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-              <Issue>
-               <Item>'SizeRequest.SizeRequest(IntPtr)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
-           <Member Name="#Reference">
-            <Accessors>
-             <Accessor Name="#set_Reference(System.IntPtr)">
-              <Messages>
-               <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-                <Issue>
-                 <Item>'SizeRequest.Reference.set(IntPtr)'</Item>
-                </Issue>
-               </Message>
-              </Messages>
-             </Accessor>
-            </Accessors>
-           </Member>
-          </Members>
-         </Type>
          <Type Name="StreamDesc">
           <Members>
            <Member Name="#Reference">
@@ -1178,15 +854,6 @@
          </Type>
          <Type Name="SubGlyph">
           <Members>
-           <Member Name="#.ctor(System.IntPtr)">
-            <Messages>
-             <Message TypeName="AvoidUncalledPrivateCode" Category="Microsoft.Performance" CheckId="CA1811" Created="2012-12-15 23:01:10Z">
-              <Issue>
-               <Item>'SubGlyph.SubGlyph(IntPtr)'</Item>
-              </Issue>
-             </Message>
-            </Messages>
-           </Member>
            <Member Name="#Reference">
             <Accessors>
              <Accessor Name="#get_Reference()">
@@ -2055,10 +1722,6 @@
    <Rule TypeName="DoNotMarkEnumsWithFlags" Category="Microsoft.Usage" CheckId="CA2217">
     <Resolution Name="Default">{0} is marked with FlagsAttribute but a discrete member cannot be found for every settable bit that is used across the range of enum values. Remove FlagsAttribute from the type or define new members for the following (currently missing) values: {1}</Resolution>
    </Rule>
-   <Rule TypeName="EnumsShouldHaveZeroValue" Category="Microsoft.Design" CheckId="CA1008">
-    <Resolution Name="FlagsRename">In enum {0}, change the name of {1} to 'None'.</Resolution>
-    <Resolution Name="NotFlagsNoZeroValue">Add a member to {0} that has a value of zero with a suggested name of 'None'.</Resolution>
-   </Rule>
    <Rule TypeName="FlagsEnumsShouldHavePluralNames" Category="Microsoft.Naming" CheckId="CA1714">
     <Resolution Name="Default">If enumeration name {0} is singular, change it to a plural form.</Resolution>
    </Rule>
@@ -2089,10 +1752,6 @@
    <Rule TypeName="MarkEnumsWithFlags" Category="Microsoft.Design" CheckId="CA1027">
     <Resolution Name="Default">The constituent members of {0} appear to represent flags that can be combined rather than discrete values. If this is correct, mark the enumeration with FlagsAttribute.</Resolution>
    </Rule>
-   <Rule TypeName="OverrideEqualsAndOperatorEqualsOnValueTypes" Category="Microsoft.Performance" CheckId="CA1815">
-    <Resolution Name="Equals">{0} should override Equals.</Resolution>
-    <Resolution Name="op_Equality">{0} should override the equality (==) and inequality (!=) operators.</Resolution>
-   </Rule>
    <Rule TypeName="PropertiesShouldNotReturnArrays" Category="Microsoft.Performance" CheckId="CA1819">
     <Resolution Name="Default">Change {0} to return a collection or make it a method.</Resolution>
    </Rule>
@@ -2105,9 +1764,6 @@
    </Rule>
    <Rule TypeName="TypesThatOwnNativeResourcesShouldBeDisposable" Category="Microsoft.Design" CheckId="CA1049">
     <Resolution Name="Default">Implement IDisposable on {0}.</Resolution>
-   </Rule>
-   <Rule TypeName="UsePropertiesWhereAppropriate" Category="Microsoft.Design" CheckId="CA1024">
-    <Resolution Name="Default">Change {0} to a property if appropriate.</Resolution>
    </Rule>
    <Rule TypeName="ValueTypeFieldsShouldBePortable" Category="Microsoft.Portability" CheckId="CA1900">
     <Resolution Name="Default">Structure {0} contains the following non-portable fields: {1}.</Resolution>

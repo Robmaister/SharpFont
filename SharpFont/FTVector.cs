@@ -47,7 +47,7 @@ namespace SharpFont
 	/// A simple structure used to store a 2D vector.
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
-	public struct FTVector
+	public struct FTVector : IEquatable<FTVector>
 	{
 		#region Fields
 
@@ -133,6 +133,32 @@ namespace SharpFont
 
 		#endregion
 
+		#region Operators
+
+		/// <summary>
+		/// Compares two instances of <see cref="FTVector"/> for equality.
+		/// </summary>
+		/// <param name="left">A <see cref="FTVector"/>.</param>
+		/// <param name="right">Another <see cref="FTVector"/>.</param>
+		/// <returns>A value indicating equality.</returns>
+		public static bool operator ==(FTVector left, FTVector right)
+		{
+			return left.Equals(right);
+		}
+
+		/// <summary>
+		/// Compares two instances of <see cref="FTVector"/> for inequality.
+		/// </summary>
+		/// <param name="left">A <see cref="FTVector"/>.</param>
+		/// <param name="right">Another <see cref="FTVector"/>.</param>
+		/// <returns>A value indicating inequality.</returns>
+		public static bool operator !=(FTVector left, FTVector right)
+		{
+			return !left.Equals(right);
+		}
+
+		#endregion
+
 		#region Methods
 
 		/// <summary><para>
@@ -203,6 +229,38 @@ namespace SharpFont
 		public void Polarize(out int length, out int angle)
 		{
 			FT.FT_Vector_Polarize(ref this, out length, out angle);
+		}
+
+		/// <summary>
+		/// Compares this instance of <see cref="FTVector"/> to another for equality.
+		/// </summary>
+		/// <param name="other">A <see cref="FTVector"/>.</param>
+		/// <returns>A value indicating equality.</returns>
+		public bool Equals(FTVector other)
+		{
+			return x == other.x && y == other.y;
+		}
+
+		/// <summary>
+		/// Compares this instance of <see cref="FTVector"/> to an object for equality.
+		/// </summary>
+		/// <param name="obj">An object.</param>
+		/// <returns>A value indicating equality.</returns>
+		public override bool Equals(object obj)
+		{
+			if (obj is FTVector)
+				return this.Equals((FTVector)obj);
+			else
+				return false;
+		}
+
+		/// <summary>
+		/// Gets a unique hash code for this instance.
+		/// </summary>
+		/// <returns>A hash code.</returns>
+		public override int GetHashCode()
+		{
+ 			 return x.GetHashCode() ^ y.GetHashCode();
 		}
 
 		#endregion

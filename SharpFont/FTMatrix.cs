@@ -52,7 +52,7 @@ namespace SharpFont
 	/// </code>
 	/// </summary>
 	[StructLayout(LayoutKind.Sequential)]
-	public struct FTMatrix
+	public struct FTMatrix : IEquatable<FTMatrix>
 	{
 		#region Fields
 
@@ -94,26 +94,6 @@ namespace SharpFont
 		public FTMatrix(FTVector row0, FTVector row1)
 			: this(row0.X, row0.Y, row1.X, row1.Y)
 		{
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="FTMatrix"/> struct.
-		/// </summary>
-		/// <param name="reference">A pointer to a matrix.</param>
-		internal FTMatrix(IntPtr reference)
-			: this()
-		{
-#if WIN64
-			xx = Marshal.ReadInt32(reference);
-			xy = Marshal.ReadInt32(reference, sizeof(int));
-			yx = Marshal.ReadInt32(reference, sizeof(int) * 2);
-			yy = Marshal.ReadInt32(reference, sizeof(int) * 3);
-#else
-			xx = Marshal.ReadIntPtr(reference);
-			xy = Marshal.ReadIntPtr(reference, IntPtr.Size);
-			yx = Marshal.ReadIntPtr(reference, IntPtr.Size * 2);
-			yy = Marshal.ReadIntPtr(reference, IntPtr.Size * 3);
-#endif
 		}
 
 		#endregion
@@ -202,6 +182,32 @@ namespace SharpFont
 
 		#endregion
 
+		#region Operators
+
+		/// <summary>
+		/// Compares two instances of <see cref="FTMatrix"/> for equality.
+		/// </summary>
+		/// <param name="left">A <see cref="FTMatrix"/>.</param>
+		/// <param name="right">Another <see cref="FTMatrix"/>.</param>
+		/// <returns>A value indicating equality.</returns>
+		public static bool operator ==(FTMatrix left, FTMatrix right)
+		{
+			return left.Equals(right);
+		}
+
+		/// <summary>
+		/// Compares two instances of <see cref="FTMatrix"/> for inequality.
+		/// </summary>
+		/// <param name="left">A <see cref="FTMatrix"/>.</param>
+		/// <param name="right">Another <see cref="FTMatrix"/>.</param>
+		/// <returns>A value indicating inequality.</returns>
+		public static bool operator !=(FTMatrix left, FTMatrix right)
+		{
+			return !left.Equals(right);
+		}
+
+		#endregion
+
 		#region Methods
 
 		/// <summary>
@@ -238,6 +244,42 @@ namespace SharpFont
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Compares this instance of <see cref="FTMatrix"/> to another for equality.
+		/// </summary>
+		/// <param name="other">A <see cref="FTMatrix"/>.</param>
+		/// <returns>A value indicating equality.</returns>
+		public bool Equals(FTMatrix other)
+		{
+			return
+				xx == other.xx &&
+				xy == other.xy &&
+				yx == other.yx &&
+				yy == other.yy;
+		}
+
+		/// <summary>
+		/// Compares this instance of <see cref="FTMatrix"/> to an object for equality.
+		/// </summary>
+		/// <param name="obj">An object.</param>
+		/// <returns>A value indicating equality.</returns>
+		public override bool Equals(object obj)
+		{
+			if (obj is FTMatrix)
+				return this.Equals((FTMatrix)obj);
+			else
+				return false;
+		}
+
+		/// <summary>
+		/// Gets a unique hash code for this instance.
+		/// </summary>
+		/// <returns>A hash code.</returns>
+		public override int GetHashCode()
+		{
+			return xx.GetHashCode() ^ xy.GetHashCode() ^ yx.GetHashCode() ^ yy.GetHashCode();
 		}
 
 		#endregion

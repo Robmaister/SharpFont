@@ -96,14 +96,6 @@ namespace SharpFont
 			parentMemory = memory; //TODO Should Memory be disposable as well?
 		}
 
-		internal Outline(IntPtr reference, Library parent)
-		{
-			Reference = reference;
-
-			parentLibrary = parent;
-			parentLibrary.AddChildOutline(this);
-		}
-
 		internal Outline(OutlineRec outlineInt)
 		{
 			this.rec = outlineInt;

@@ -49,17 +49,11 @@ namespace SharpFont
 	{
 		#region Fields
 
-		private IntPtr reference;
 		private SizeMetricsRec rec;
 
 		#endregion
 
 		#region Constructors
-
-		internal SizeMetrics(IntPtr reference)
-		{
-			Reference = reference;
-		}
 
 		internal SizeMetrics(SizeMetricsRec metricsInternal)
 		{
@@ -165,20 +159,6 @@ namespace SharpFont
 			get
 			{
 				return (int)rec.max_advance;
-			}
-		}
-
-		internal IntPtr Reference
-		{
-			get
-			{
-				return reference;
-			}
-
-			set
-			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<SizeMetricsRec>(reference);
 			}
 		}
 

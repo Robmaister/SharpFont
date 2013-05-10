@@ -51,11 +51,6 @@ namespace SharpFont
 			Reference = reference;
 		}
 
-		internal SubGlyph(IntPtr reference, int offset)
-		{
-			Reference = new IntPtr(reference.ToInt64() + offset);
-		}
-
 		#endregion
 
 		#region Properties

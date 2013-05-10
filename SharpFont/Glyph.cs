@@ -32,7 +32,7 @@ namespace SharpFont
 	/// <summary>
 	/// The root glyph structure contains a given glyph image plus its advance width in 16.16 fixed float format.
 	/// </summary>
-	public class Glyph : IDisposable
+	public sealed class Glyph : IDisposable
 	{
 		#region Fields
 

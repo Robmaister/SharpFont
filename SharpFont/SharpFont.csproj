@@ -139,6 +139,7 @@
     <Compile Include="Internal\RendererClassRec.cs" />
     <Compile Include="Internal\SizeMetricsRec.cs" />
     <Compile Include="Internal\SizeRec.cs" />
+    <Compile Include="Internal\SizeRequestRec.cs" />
     <Compile Include="Internal\SpanMarshaler.cs" />
     <Compile Include="Internal\SpanRec.cs" />
     <Compile Include="Internal\StreamDescRec.cs" />

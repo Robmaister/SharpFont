@@ -113,7 +113,7 @@ namespace SharpFont.PostScript
 		{
 			get
 			{
-				return new FTMatrix(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceDictRec), "font_matrix").ToInt64()));
+				return rec.font_matrix;
 			}
 		}
 
@@ -121,7 +121,7 @@ namespace SharpFont.PostScript
 		{
 			get
 			{
-				return new FTVector(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceDictRec), "font_offset").ToInt64()));
+				return rec.font_offset;
 			}
 		}
 

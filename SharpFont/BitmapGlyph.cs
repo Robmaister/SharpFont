@@ -39,7 +39,7 @@ namespace SharpFont
 	/// The corresponding pixel buffer is always owned by <see cref="BitmapGlyph"/> and is thus created and destroyed
 	/// with it.
 	/// </para></remarks>
-	public class BitmapGlyph : IDisposable
+	public sealed class BitmapGlyph : IDisposable
 	{
 		#region Fields
 

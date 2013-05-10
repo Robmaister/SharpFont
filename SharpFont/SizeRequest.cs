@@ -25,6 +25,22 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
+using SharpFont.Internal;
+
+#if WIN64
+using FT_26Dot6 = System.Int32;
+using FT_Fixed = System.Int32;
+using FT_Long = System.Int32;
+using FT_Pos = System.Int32;
+using FT_ULong = System.UInt32;
+#else
+using FT_26Dot6 = System.IntPtr;
+using FT_Fixed = System.IntPtr;
+using FT_Long = System.IntPtr;
+using FT_Pos = System.IntPtr;
+using FT_ULong = System.UIntPtr;
+#endif
+
 namespace SharpFont
 {
 	/// <summary>
@@ -35,21 +51,15 @@ namespace SharpFont
 	/// and vice versa.
 	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	public sealed class SizeRequest
+	public struct SizeRequest : IEquatable<SizeRequest>
 	{
 		#region Fields
 
-		//HACK still need a rec for this.
-		private IntPtr reference;
-
-		#endregion
-
-		#region Constructors
-
-		internal SizeRequest(IntPtr reference)
-		{
-			Reference = reference;
-		}
+		private SizeRequestType requestType;
+		private FT_Long width;
+		private FT_Long height;
+		private uint horiResolution;
+		private uint vertResolution;
 
 		#endregion
 
@@ -62,34 +72,44 @@ namespace SharpFont
 		{
 			get
 			{
-				return (SizeRequestType)Marshal.ReadInt32(reference, 0);
+				return requestType;
 			}
 		}
 
 		/// <summary>
-		/// Gets the desired width.
+		/// Gets or sets the desired width.
 		/// </summary>
 		public int Width
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 4);
+				return (int)width;
+			}
+
+			set
+			{
+				width = (FT_Long)value;
 			}
 		}
 
 		/// <summary>
-		/// Gets the desired height.
+		/// Gets or sets the desired height.
 		/// </summary>
 		public int Height
 		{
 			get
 			{
-				return Marshal.ReadInt32(reference, 8);
+				return (int)height;
+			}
+
+			set
+			{
+				height = (FT_Long)value;
 			}
 		}
 
 		/// <summary>
-		/// Gets the horizontal resolution. If set to zero, <see cref="Width"/> is treated as a 26.6 fractional pixel
+		/// Gets or sets the horizontal resolution. If set to zero, <see cref="Width"/> is treated as a 26.6 fractional pixel
 		/// value.
 		/// </summary>
 		[CLSCompliant(false)]
@@ -97,12 +117,17 @@ namespace SharpFont
 		{
 			get
 			{
-				return (uint)Marshal.ReadInt32(reference, 12);
+				return horiResolution;
+			}
+
+			set
+			{
+				horiResolution = value;
 			}
 		}
 
 		/// <summary>
-		/// Gets the horizontal resolution. If set to zero, <see cref="Height"/> is treated as a 26.6 fractional pixel
+		/// Gets or sets the horizontal resolution. If set to zero, <see cref="Height"/> is treated as a 26.6 fractional pixel
 		/// value.
 		/// </summary>
 		[CLSCompliant(false)]
@@ -110,21 +135,75 @@ namespace SharpFont
 		{
 			get
 			{
-				return (uint)Marshal.ReadInt32(reference, 16);
-			}
-		}
-
-		internal IntPtr Reference
-		{
-			get
-			{
-				return reference;
+				return vertResolution;
 			}
 
 			set
 			{
-				reference = value;
+				vertResolution = value;
 			}
+		}
+
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Compares two <see cref="SizeRequest"/>s for equality.
+		/// </summary>
+		/// <param name="left">A <see cref="SizeRequest"/>.</param>
+		/// <param name="right">Another <see cref="SizeRequest"/>.</param>
+		/// <returns>A value indicating equality.</returns>
+		public static bool operator ==(SizeRequest left, SizeRequest right)
+		{
+			return left.Equals(right);
+		}
+
+		/// <summary>
+		/// Compares two <see cref="SizeRequest"/>s for inequality.
+		/// </summary>
+		/// <param name="left">A <see cref="SizeRequest"/>.</param>
+		/// <param name="right">Another <see cref="SizeRequest"/>.</param>
+		/// <returns>A value indicating inequality.</returns>
+		public static bool operator !=(SizeRequest left, SizeRequest right)
+		{
+			return !left.Equals(right);
+		}
+
+		/// <summary>
+		/// Compares this instance of <see cref="SizeRequest"/> to another for equality.
+		/// </summary>
+		/// <param name="other">A <see cref="SizeRequest"/>.</param>
+		/// <returns>A value indicating equality.</returns>
+		public bool Equals(SizeRequest other)
+		{
+			return requestType == other.requestType &&
+				width == other.width &&
+				height == other.height &&
+				horiResolution == other.horiResolution &&
+				vertResolution == other.vertResolution;
+		}
+
+		/// <summary>
+		/// Compares this instance of <see cref="SizeRequest"/> to another object for equality.
+		/// </summary>
+		/// <param name="obj">An object.</param>
+		/// <returns>A value indicating equality.</returns>
+		public override bool Equals(object obj)
+		{
+			if (obj is SizeRequest)
+				return this.Equals((SizeRequest)obj);
+			else
+				return false;
+		}
+
+		/// <summary>
+		/// Gets a unique hash code for this instance.
+		/// </summary>
+		/// <returns>A unique hash code.</returns>
+		public override int GetHashCode()
+		{
+			return requestType.GetHashCode() ^ width.GetHashCode() ^ height.GetHashCode() ^ horiResolution.GetHashCode() ^ vertResolution.GetHashCode();
 		}
 
 		#endregion

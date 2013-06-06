@@ -29,16 +29,25 @@ Face face = new Face(library, "./myfont.ttf");
 
 ##Quick Start
 
+###NuGet
+SharpFont is available on [NuGet](https://nuget.org/packages/SharpFont/). It can be installed by issuing the following
+command in the package manager console:
+
+```
+PM> Install-Package SharpFont
+```
+
+###From Source
 Clone the repository and compile the solution. Copy `SharpFont.dll` to your project and include it as a reference. On
-Windows, you must include a compiled copy of FreeType2 as `freetype.dll` in the project's output directory. It is
+Windows, you must include a compiled copy of FreeType2 as `freetype6.dll` in the project's output directory. It is
 possible to rename the file by changing the filename constant in
 [FT.Internal.cs](SharpFont/tree/master/SharpFont/FT.Internal.cs) and recompile. On Linux and OSX (and any other
 Mono-supported platform), you must also copy `SharpFont.dll.config` to the project's output directory.
 
-A 32-bit copy of `freetype.dll` is included in the [Examples](SharpFont/tree/master/Examples) project.
+A 32-bit copy of `freetype6.dll` is included in the [Examples](SharpFont/tree/master/Examples) project.
 
 Currently, Windows 64-bit systems require you to either compile SharpFont under the WIN64 configurations and include a
-64-bit copy of `freetype.dll` or to compile your project as an x86 project (instead of Any CPU). I describe this issue
+64-bit copy of `freetype6.dll` or to compile your project as an x86 project (instead of Any CPU). I describe this issue
 in further detail in the Known Issues section.
 
 ##Compiling FreeType on Windows
@@ -49,7 +58,7 @@ Thanks to [this StackOverflow answer](http://stackoverflow.com/a/7387618/1122135
  2. Open `builds\win32\vc2010\freetype.sln` (or whatever version of Visual Studio you have) in Visual Studio.
  3. Change the compile configuration from Debug to Release.
  4. Open the project properties window through Project -> Properties.
- 5. In the `General` selection, change the `Target Name` to `freetype` and the `Configuration Type` to `Dynamic Library
+ 5. In the `General` selection, change the `Target Name` to `freetype6` and the `Configuration Type` to `Dynamic Library
 (.dll)`.
  6. Open up `ftoption.h` (in the project's `Header Files` section) and add the following two lines near the `DLL export
 compilation` section:
@@ -59,7 +68,7 @@ compilation` section:
 #define FT_BASE(x) __declspec(dllexport) x
 ```
 
-Finally, complile the project (`F6` or Build -> Build Solution). `freetype.dll` will be output to `objs\win32\vc2010`.
+Finally, complile the project (`F6` or Build -> Build Solution). `freetype6.dll` will be output to `objs\win32\vc2010`.
 
 ##Known Issues
 

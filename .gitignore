@@ -49,3 +49,5 @@ _ReSharper*/
 *.userprefs
 *.pidb
 
+#NuGet
+*.nupkg

@@ -41,10 +41,10 @@ PM> Install-Package SharpFont
 Clone the repository and compile the solution. Copy `SharpFont.dll` to your project and include it as a reference. On
 Windows, you must include a compiled copy of FreeType2 as `freetype6.dll` in the project's output directory. It is
 possible to rename the file by changing the filename constant in
-[FT.Internal.cs](SharpFont/tree/master/SharpFont/FT.Internal.cs) and recompile. On Linux and OSX (and any other
+[FT.Internal.cs](SharpFont/blob/master/SharpFont/FT.Internal.cs) and recompile. On Linux and OSX (and any other
 Mono-supported platform), you must also copy `SharpFont.dll.config` to the project's output directory.
 
-A 32-bit copy of `freetype6.dll` is included in the [Examples](SharpFont/tree/master/Examples) project.
+A 32-bit copy of `freetype6.dll` is included in the [Examples](SharpFont/blob/master/Examples) project.
 
 Currently, Windows 64-bit systems require you to either compile SharpFont under the WIN64 configurations and include a
 64-bit copy of `freetype6.dll` or to compile your project as an x86 project (instead of Any CPU). I describe this issue
@@ -92,7 +92,7 @@ However, this can be restrictive to some applications. The best solution is to c
 ##License
 
 As metioned earlier, SharpFont is licensed under the MIT License. The terms of the MIT license are included in both the
-[LICENSE](SharpFont/tree/master/LICENSE) file and below:
+[LICENSE](SharpFont/blob/master/LICENSE) file and below:
 
 ```
 Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
@@ -116,4 +116,12 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```
+
+The Windows binary of FreeType that is included in the Examples project and in the NuGet package is redistributed under
+the FreeType License (FTL).
+
+```
+Portions of this software are copyright (c) 2013 The FreeType Project
+(www.freetype.org). All rights reserved.
 ```

@@ -19,6 +19,5 @@
 	<file src="SharpFont.dll.config" target="content" />
 	<file src="..\nuget\install.ps1" target="tools" />
 	<file src="..\Examples\freetype6.dll" target="content" />
-	<file src="..\Examples\FTL.TXT" target="" />
   </files>
 </package>

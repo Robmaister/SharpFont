@@ -55,9 +55,6 @@
     <Content Include="freetype6.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="FTL.TXT">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="Fonts\Cousine-Regular-Latin.ttf">

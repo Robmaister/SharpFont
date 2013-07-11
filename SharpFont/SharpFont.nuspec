@@ -15,9 +15,10 @@
     <tags>freetype font bindings wrapper text</tags>
   </metadata>
   <files>
-	<file src="..\README.md" target="" />
-	<file src="SharpFont.dll.config" target="content" />
-	<file src="..\nuget\install.ps1" target="tools" />
-	<file src="..\Examples\freetype6.dll" target="content" />
+    <file src="..\README.md" target="" />
+    <file src="SharpFont.dll.config" target="Content" />
+    <file src="..\nuget\uninstall.ps1" target="Tools" />
+    <file src="..\nuget\install.ps1" target="Tools" />
+    <file src="..\Examples\freetype6.dll" target="Content" />
   </files>
 </package>

@@ -112,7 +112,7 @@ namespace SharpFont
 		internal static extern Error FT_Load_Char(IntPtr face, uint char_code, int load_flags);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern void FT_Set_Transform(IntPtr face, ref FTMatrix matrix, ref FTVector delta);
+		internal static extern void FT_Set_Transform(IntPtr face, IntPtr matrix, IntPtr delta);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Render_Glyph(IntPtr slot, RenderMode render_mode);

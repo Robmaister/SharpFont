@@ -956,14 +956,85 @@ namespace SharpFont
 		/// </para><para>
 		/// Note that this also transforms the ‘face.glyph.advance’ field, but not the values in ‘face.glyph.metrics’.
 		/// </para></remarks>
-		/// <param name="matrix">A pointer to the transformation's 2x2 matrix. Use 0 for the identity matrix.</param>
-		/// <param name="delta">A pointer to the translation vector. Use 0 for the null vector.</param>
-		public void SetTransform(FTMatrix matrix, FTVector delta)
+		/// <param name="matrix">
+		/// A pointer to the transformation's 2x2 matrix. Use the method overloads for the identity matrix.
+		/// </param>
+		/// <param name="delta">
+		/// A pointer to the translation vector. Use the method overloads for the null vector.
+		/// </param>
+		public unsafe void SetTransform(FTMatrix matrix, FTVector delta)
 		{
 			if (disposed)
 				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
 
-			FT.FT_Set_Transform(Reference, ref matrix, ref delta);
+			
+			FT.FT_Set_Transform(Reference, (IntPtr)(&matrix), (IntPtr)(&delta));
+		}
+
+		/// <summary>
+		/// A function used to set the transformation that is applied to glyph images when they are loaded into a glyph
+		/// slot through <see cref="LoadGlyph"/> with the identity matrix.
+		/// </summary>
+		/// <remarks><para>
+		/// The transformation is only applied to scalable image formats after the glyph has been loaded. It means that
+		/// hinting is unaltered by the transformation and is performed on the character size given in the last call to
+		/// <see cref="SetCharSize"/> or <see cref="SetPixelSizes"/>.
+		/// </para><para>
+		/// Note that this also transforms the ‘face.glyph.advance’ field, but not the values in ‘face.glyph.metrics’.
+		/// </para></remarks>
+		/// <param name="delta">
+		/// A pointer to the translation vector. Use the method overloads for the null vector.
+		/// </param>
+		public unsafe void SetTransform(FTVector delta)
+		{
+			if (disposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
+
+			FT.FT_Set_Transform(Reference, IntPtr.Zero, (IntPtr)(&delta));
+		}
+
+		/// <summary>
+		/// A function used to set the transformation that is applied to glyph images when they are loaded into a glyph
+		/// slot through <see cref="LoadGlyph"/> with the null vector.
+		/// </summary>
+		/// <remarks><para>
+		/// The transformation is only applied to scalable image formats after the glyph has been loaded. It means that
+		/// hinting is unaltered by the transformation and is performed on the character size given in the last call to
+		/// <see cref="SetCharSize"/> or <see cref="SetPixelSizes"/>.
+		/// </para><para>
+		/// Note that this also transforms the ‘face.glyph.advance’ field, but not the values in ‘face.glyph.metrics’.
+		/// </para></remarks>
+		/// <param name="matrix">
+		/// A pointer to the transformation's 2x2 matrix. Use the method overloads for the identity matrix.
+		/// </param>
+		public unsafe void SetTransform(FTMatrix matrix)
+		{
+			if (disposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
+
+			FT.FT_Set_Transform(Reference, (IntPtr)(&matrix), IntPtr.Zero);
+		}
+
+		/// <summary>
+		/// A function used to set the transformation that is applied to glyph images when they are loaded into a glyph
+		/// slot through <see cref="LoadGlyph"/> with the null vector and the identity matrix.
+		/// </summary>
+		/// <remarks><para>
+		/// The transformation is only applied to scalable image formats after the glyph has been loaded. It means that
+		/// hinting is unaltered by the transformation and is performed on the character size given in the last call to
+		/// <see cref="SetCharSize"/> or <see cref="SetPixelSizes"/>.
+		/// </para><para>
+		/// Note that this also transforms the ‘face.glyph.advance’ field, but not the values in ‘face.glyph.metrics’.
+		/// </para></remarks>
+		public unsafe void SetTransform()
+		{
+			if (disposed)
+				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
+
+
+			FT.FT_Set_Transform(Reference, IntPtr.Zero, IntPtr.Zero);
 		}
 
 		/// <summary>

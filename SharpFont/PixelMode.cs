@@ -73,6 +73,15 @@ namespace SharpFont
 		/// the bitmap is three times taller than the original glyph image. See also
 		/// <see cref="RenderMode.VerticalLcd"/>.
 		/// </summary>
-		VerticalLcd
+		VerticalLcd,
+
+		/// <summary>
+		/// An image with four 8-bit channels per pixel, representing a color image (such as emoticons) with alpha
+		/// channel. For each pixel, the format is BGRA, which means, the blue channel comes first in memory. The color
+		/// channels are pre-multiplied and in the sRGB colorspace. For example, full red at half-translucent opacity
+		/// will be represented as ‘00,00,80,80’, not ‘00,00,FF,80’.
+		/// </summary>
+		/// <seealso cref="LoadFlags.Color"/>
+		Bgra
 	}
 }

@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/Robmaister/SharpFont</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Updated to FreeType 2.4.12.</releaseNotes>
+    <releaseNotes>Updated to FreeType 2.5.0.1.</releaseNotes>
     <copyright>Copyright (c) 2012-2013 Robert Rouhani</copyright>
     <tags>freetype font bindings wrapper text</tags>
   </metadata>

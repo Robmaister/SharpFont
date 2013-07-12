@@ -160,6 +160,14 @@ namespace SharpFont
 		/// </summary>
 		NoAutohint = 0x8000,
 
+		/// <summary>
+		/// This flag is used to request loading of color embedded-bitmap images. The resulting color bitmaps, if
+		/// available, will have the <see cref="PixelMode.Bgra"/> format. When the flag is not used and color bitmaps
+		/// are found, they will be converted to 256-level gray bitmaps transparently. Those bitmaps will be in the
+		/// <see cref="PixelMode.Gray"/> format.
+		/// </summary>
+		Color = 0x100000,
+
 		/// <summary><para>
 		/// A bit-flag to be OR-ed with the ‘flags’ parameter of the <see cref="Face.GetAdvance"/> and
 		/// <see cref="Face.GetAdvances"/> functions.

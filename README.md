@@ -58,13 +58,14 @@ Thanks to [this StackOverflow answer](http://stackoverflow.com/a/7387618/1122135
  2. Open `builds\win32\vc2010\freetype.sln` (or whatever version of Visual Studio you have) in Visual Studio.
  3. Change the compile configuration from Debug to Release.
  4. Open the project properties window through Project -> Properties.
- 5. In the `General` selection, change the `Target Name` to `freetype6` and the `Configuration Type` to `Dynamic Library
-(.dll)`.
- 6. Open up `ftoption.h` (in the project's `Header Files` section) and add the following two lines near the `DLL export
-compilation` section:
+ 5. In the `General` selection, change the `Target Name` to `freetype6` and the `Configuration Type` to `Dynamic
+Library (.dll)`.
+ 6. Open up `ftoption.h` (in the project's `Header Files` section) and add the following three lines near the `DLL
+export compilation` section:
 
 ```C
 #define FT_EXPORT(x) __declspec(dllexport) x
+#define FT_EXPORT_DEF(x) __declspec(dllexport) x
 #define FT_BASE(x) __declspec(dllexport) x
 ```
 

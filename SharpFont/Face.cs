@@ -49,6 +49,8 @@ namespace SharpFont
 
 		private bool disposed;
 
+		private GCHandle memoryFaceHandle;
+
 		private Library parentLibrary;
 		private List<FTSize> childSizes;
 
@@ -97,16 +99,14 @@ namespace SharpFont
 		public unsafe Face(Library library, byte[] file, int faceIndex)
 			: this()
 		{
-			fixed (byte* ptr = file)
-			{
-				IntPtr reference;
-				Error err = FT.FT_New_Memory_Face(library.Reference, (IntPtr)ptr, file.Length, faceIndex, out reference);
+			memoryFaceHandle = GCHandle.Alloc(file, GCHandleType.Pinned);
+			IntPtr reference;
+			Error err = FT.FT_New_Memory_Face(library.Reference, memoryFaceHandle.AddrOfPinnedObject(), file.Length, faceIndex, out reference);
 
-				if (err != Error.Ok)
-					throw new FreeTypeException(err);
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
 
-				Reference = reference;
-			}
+			Reference = reference;
 
 			parentLibrary = library;
 			parentLibrary.AddChildFace(this);
@@ -2348,6 +2348,7 @@ namespace SharpFont
 
 				reference = IntPtr.Zero;
 				rec = null;
+				memoryFaceHandle.Free();
 			}
 		}
 

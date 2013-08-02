@@ -112,7 +112,28 @@ namespace SharpFont
 			parentLibrary.AddChildFace(this);
 		}
 
-		/// <summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Face"/> class from a file that's already loaded into memory.
+        /// </summary>
+        /// <param name="library">The parent library.</param>
+        /// <param name="bufferPtr"></param>
+        /// <param name="length"></param>
+        /// <param name="faceIndex">The index of the face to take from the file.</param>
+	    public Face(Library library, IntPtr bufferPtr, int length, int faceIndex)
+	        : this()
+	    {
+            Error err = FT.FT_New_Memory_Face(library.Reference, bufferPtr, length, faceIndex, out reference);
+
+	        if (err != Error.Ok)
+	            throw new FreeTypeException(err);
+
+            Reference = reference;
+
+	        parentLibrary = library;
+	        parentLibrary.AddChildFace(this);
+	    }
+
+	    /// <summary>
 		/// Initializes a new instance of the Face class.
 		/// </summary>
 		/// <param name="reference">A pointer to the unmanaged memory containing the Face.</param>
@@ -2348,7 +2369,9 @@ namespace SharpFont
 
 				reference = IntPtr.Zero;
 				rec = null;
-				memoryFaceHandle.Free();
+
+                if (memoryFaceHandle.IsAllocated)
+                    memoryFaceHandle.Free();
 			}
 		}
 

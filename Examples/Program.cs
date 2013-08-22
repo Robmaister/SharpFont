@@ -145,7 +145,7 @@ namespace Examples
 				if (face.HasKerning && i < text.Length - 1)
 				{
 					char cNext = text[i + 1];
-					width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
+					penX += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
 				}
 			}
 

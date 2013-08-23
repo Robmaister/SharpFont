@@ -74,6 +74,11 @@ namespace SharpFont
 			{
 				return requestType;
 			}
+
+			set
+			{
+				requestType = value;
+			}
 		}
 
 		/// <summary>

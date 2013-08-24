@@ -103,6 +103,7 @@ namespace Examples
 
 			//create a new bitmap that fits the string.
 			Bitmap bmp = new Bitmap(width, height);
+			Graphics g = Graphics.FromImage(bmp);
 
 			//draw the string
 			for (int i = 0; i < text.Length; i++)
@@ -127,17 +128,8 @@ namespace Examples
 					continue;
 				}
 
-				BitmapData data = bmp.LockBits(new Rectangle(penX, penY + (bmp.Height - face.Glyph.Bitmap.Rows), face.Glyph.Bitmap.Width, face.Glyph.Bitmap.Rows), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
-				byte[] pixelAlphas = new byte[face.Glyph.Bitmap.Width * face.Glyph.Bitmap.Rows];
-				Marshal.Copy(face.Glyph.Bitmap.Buffer, pixelAlphas, 0, pixelAlphas.Length);
-
-				for (int j = 0; j < pixelAlphas.Length; j++)
-				{
-					int pixelOffset = (j / data.Width) * data.Stride + (j % data.Width * 4);
-					Marshal.WriteByte(data.Scan0, pixelOffset + 3, pixelAlphas[j]);
-				}
-
-				bmp.UnlockBits(data);
+				Bitmap cBmp = face.Glyph.Bitmap.ToGdipBitmap(Color.Red);
+				g.DrawImageUnscaled(cBmp, penX, penY + (bmp.Height - face.Glyph.Bitmap.Rows));
 
 				penX += (int)face.Glyph.Advance.X >> 6;
 				penY += (int)face.Glyph.Advance.Y >> 6;
@@ -149,6 +141,7 @@ namespace Examples
 				}
 			}
 
+			g.Dispose();
 			return bmp;
 		}
 

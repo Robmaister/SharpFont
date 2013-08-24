@@ -373,11 +373,16 @@ namespace SharpFont
 			return new FTBitmap(bitmapRef);
 		}
 
+		public Bitmap ToGdipBitmap()
+		{
+			return ToGdipBitmap(Color.Black);
+		}
+
 		/// <summary>
 		/// Copies the contents of the <see cref="FTBitmap"/> to a <see cref="Bitmap"/>.
 		/// </summary>
 		/// <returns>A <see cref="Bitmap"/> containing this bitmap's data.</returns>
-		public Bitmap ToGdipBitmap()
+		public Bitmap ToGdipBitmap(Color color)
 		{
 			if (disposed)
 				throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
@@ -388,10 +393,15 @@ namespace SharpFont
 				{
 					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format1bppIndexed);
 					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format1bppIndexed);
-					Marshal.Copy(BufferData, 0, locked.Scan0, rec.width * rec.rows);
+					for (int i = 0; i < rec.rows; i++)
+						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, rec.width);
 					bmp.UnlockBits(locked);
-					bmp.Palette.Entries[0] = Color.FromArgb(0, 0, 0, 0);
-					bmp.Palette.Entries[1] = Color.FromArgb(1, 0, 0, 0);
+
+					ColorPalette palette = bmp.Palette;
+					palette.Entries[0] = Color.FromArgb(0, color);
+					palette.Entries[1] = Color.FromArgb(1, color);
+					bmp.Palette = palette;
+
 					return bmp;
 				}
 
@@ -399,13 +409,14 @@ namespace SharpFont
 				{
 					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format4bppIndexed);
 					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format4bppIndexed);
-					Marshal.Copy(BufferData, 0, locked.Scan0, rec.width * rec.rows);
+					for (int i = 0; i < rec.rows; i++)
+						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, rec.width);
 					bmp.UnlockBits(locked);
 
-					for (int i = 0; i < 16; i++)
-					{
-						bmp.Palette.Entries[i] = Color.FromArgb((int)((i / 15) * 255), 0, 0, 0);
-					}
+					ColorPalette palette = bmp.Palette;
+					for (int i = 0; i < palette.Entries.Length; i++)
+						palette.Entries[i] = Color.FromArgb(i * 17, color);
+					bmp.Palette = palette;
 
 					return bmp;
 				}
@@ -414,33 +425,41 @@ namespace SharpFont
 				{
 					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format8bppIndexed);
 					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
-					Marshal.Copy(BufferData, 0, locked.Scan0, rec.width * rec.rows);
+					for (int i = 0; i < rec.rows; i++)
+						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, rec.width);
 					bmp.UnlockBits(locked);
 
-					for (int i = 0; i < 256; i++)
-					{
-						bmp.Palette.Entries[i] = Color.FromArgb(i, 0, 0, 0);
-					}
+					ColorPalette palette = bmp.Palette;
+					for (int i = 0; i < palette.Entries.Length; i++)
+						palette.Entries[i] = Color.FromArgb(i, color);
+					bmp.Palette = palette;
 
 					return bmp;
 				}
 
 				case PixelMode.Lcd:
-				case PixelMode.VerticalLcd:
 				{
-					//TODO Should vertical LCD be different?
-					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format24bppRgb);
-					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
-					Marshal.Copy(BufferData, 0, locked.Scan0, rec.width * rec.rows);
+					//TODO apply color
+					int bmpWidth = rec.width / 3;
+					Bitmap bmp = new Bitmap(bmpWidth, rec.rows, PixelFormat.Format24bppRgb);
+					var locked = bmp.LockBits(new Rectangle(0, 0, bmpWidth, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+					for (int i = 0; i < rec.rows; i++)
+						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, rec.width);
 					bmp.UnlockBits(locked);
-
-					for (int i = 0; i < 256; i++)
-					{
-						bmp.Palette.Entries[i] = Color.FromArgb(i, 0, 0, 0);
-					}
 
 					return bmp;
 				}
+				/*case PixelMode.VerticalLcd:
+				{
+					int bmpHeight = rec.rows / 3;
+					Bitmap bmp = new Bitmap(rec.width, bmpHeight, PixelFormat.Format24bppRgb);
+					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, bmpHeight), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+					for (int i = 0; i < bmpHeight; i++)
+						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, rec.width);
+					bmp.UnlockBits(locked);
+
+					return bmp;
+				}*/
 
 				default:
 					throw new InvalidOperationException("System.Drawing.Bitmap does not support this pixel mode.");

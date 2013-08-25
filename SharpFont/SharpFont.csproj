@@ -79,6 +79,8 @@
     <Compile Include="Bdf\PropertyType.cs" />
     <Compile Include="Cff\HintingEngine.cs" />
     <Compile Include="ClassicKernValidationFlags.cs" />
+    <Compile Include="Fixed16Dot16.cs" />
+    <Compile Include="Fixed26Dot6.cs" />
     <Compile Include="FTBitmap.cs" />
     <Compile Include="BitmapGlyph.cs" />
     <Compile Include="BitmapSize.cs" />

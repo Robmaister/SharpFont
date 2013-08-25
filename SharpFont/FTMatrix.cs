@@ -103,19 +103,19 @@ namespace SharpFont
 		/// <summary>
 		/// Gets or sets the matrix coefficient.
 		/// </summary>
-		public int XX
+		public Fixed16Dot16 XX
 		{
 			get
 			{
-				return (int)xx;
+				return Fixed16Dot16.FromRawValue((int)xx);
 			}
 
 			set
 			{
 #if WIN64
-				xx = value;
+				xx = value.Value;
 #else
-				xx = (IntPtr)value;
+				xx = (IntPtr)value.Value;
 #endif
 			}
 		}
@@ -123,19 +123,19 @@ namespace SharpFont
 		/// <summary>
 		/// Gets or sets the matrix coefficient.
 		/// </summary>
-		public int XY
+		public Fixed16Dot16 XY
 		{
 			get
 			{
-				return (int)xy;
+				return Fixed16Dot16.FromRawValue((int)xy);
 			}
 
 			set
 			{
 #if WIN64
-				xy = value;
+				xy = value.Value;
 #else
-				xy = (IntPtr)value;
+				xy = (IntPtr)value.Value;
 #endif
 			}
 		}
@@ -143,19 +143,19 @@ namespace SharpFont
 		/// <summary>
 		/// Gets or sets the matrix coefficient.
 		/// </summary>
-		public int YX
+		public Fixed16Dot16 YX
 		{
 			get
 			{
-				return (int)yx;
+				return Fixed16Dot16.FromRawValue((int)yx);
 			}
 
 			set
 			{
 #if WIN64
-				yx = value;
+				yx = value.Value;
 #else
-				yx = (IntPtr)value;
+				yx = (IntPtr)value.Value;
 #endif
 			}
 		}
@@ -163,19 +163,19 @@ namespace SharpFont
 		/// <summary>
 		/// Gets or sets the matrix coefficient.
 		/// </summary>
-		public int YY
+		public Fixed16Dot16 YY
 		{
 			get
 			{
-				return (int)yy;
+				return Fixed16Dot16.FromRawValue((int)yy);
 			}
 
 			set
 			{
 #if WIN64
-				yy = value;
+				yy = value.Value;
 #else
-				yy = (IntPtr)value;
+				yy = (IntPtr)value.Value;
 #endif
 			}
 		}

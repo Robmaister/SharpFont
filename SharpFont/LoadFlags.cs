@@ -136,7 +136,7 @@ namespace SharpFont
 		NoRecurse = 0x0400,
 
 		/// <summary>
-		/// Indicates that the transform matrix set by <see cref="Face.SetTransform"/> should be ignored.
+		/// Indicates that the transform matrix set by <see cref="Face.SetTransform()"/> should be ignored.
 		/// </summary>
 		IgnoreTransform = 0x0800,
 

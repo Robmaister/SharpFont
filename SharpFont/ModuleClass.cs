@@ -113,11 +113,11 @@ namespace SharpFont
 		/// <summary>
 		/// Gets the version, as a 16.16 fixed number (major.minor).
 		/// </summary>
-		public int Version
+		public Fixed16Dot16 Version
 		{
 			get
 			{
-				return (int)rec.module_version;
+				return Fixed16Dot16.FromRawValue((int)rec.module_version);
 			}
 		}
 
@@ -125,11 +125,11 @@ namespace SharpFont
 		/// Gets the version of FreeType this module requires, as a 16.16 fixed number (major.minor). Starts at version
 		/// 2.0, i.e., 0x20000.
 		/// </summary>
-		public int Requires
+		public Fixed16Dot16 Requires
 		{
 			get
 			{
-				return (int)rec.module_requires;
+				return Fixed16Dot16.FromRawValue((int)rec.module_requires);
 			}
 		}
 

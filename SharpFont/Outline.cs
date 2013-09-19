@@ -96,9 +96,10 @@ namespace SharpFont
 			parentMemory = memory; //TODO Should Memory be disposable as well?
 		}
 
-		internal Outline(OutlineRec outlineInt)
+		internal Outline(IntPtr reference, OutlineRec outlineInt)
 		{
 			this.rec = outlineInt;
+			Reference = reference;
 
 			duplicate = true;
 		}
@@ -469,9 +470,9 @@ namespace SharpFont
 			//TODO cleanup/move to the outlinefuncs class
 			IntPtr funcInterfaceRef = Marshal.AllocHGlobal(OutlineFuncsRec.SizeInBytes);
 			Marshal.WriteIntPtr(funcInterfaceRef, Marshal.GetFunctionPointerForDelegate(funcInterface.MoveFunction));
-			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "line_to"), Marshal.GetFunctionPointerForDelegate(funcInterface.LineFuction));
-			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "conic_to"), Marshal.GetFunctionPointerForDelegate(funcInterface.ConicFunction));
-			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "cubic_to"), Marshal.GetFunctionPointerForDelegate(funcInterface.CubicFunction));
+			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "lineTo"), Marshal.GetFunctionPointerForDelegate(funcInterface.LineFuction));
+			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "conicTo"), Marshal.GetFunctionPointerForDelegate(funcInterface.ConicFunction));
+			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "cubicTo"), Marshal.GetFunctionPointerForDelegate(funcInterface.CubicFunction));
 
 			Marshal.WriteInt32(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "shift"), funcInterface.Shift);
 			Marshal.WriteInt32(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "delta"), funcInterface.Delta);

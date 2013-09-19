@@ -106,7 +106,7 @@ namespace SharpFont
 				if (IsDisposed)
 					throw new ObjectDisposedException("Bitmap", "Cannot access a disposed object.");
 
-				return new Outline(rec.outline);
+				return new Outline(Marshal.OffsetOf(typeof(GlyphSlotRec), "outline"), rec.outline);
 			}
 		}
 

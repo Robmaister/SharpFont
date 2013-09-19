@@ -99,7 +99,7 @@ namespace SharpFont
 		internal Outline(IntPtr reference, OutlineRec outlineInt)
 		{
 			this.rec = outlineInt;
-			Reference = reference;
+			this.reference = reference;
 
 			duplicate = true;
 		}

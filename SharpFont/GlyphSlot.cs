@@ -259,7 +259,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Outline(Marshal.OffsetOf(typeof(GlyphSlotRec), "outline"), rec.outline);
+				return new Outline(new IntPtr(Reference.ToInt64() + Marshal.OffsetOf(typeof(GlyphSlotRec), "outline").ToInt64()), rec.outline);
 			}
 		}
 

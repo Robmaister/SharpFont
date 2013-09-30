@@ -72,7 +72,7 @@ namespace SharpFont.Internal
 
 		internal GenericRec generic;
 
-		internal BBoxRec bbox;
+		internal BBox bbox;
 
 		internal ushort units_per_EM;
 		internal short ascender;

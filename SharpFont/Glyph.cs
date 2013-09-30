@@ -290,10 +290,10 @@ namespace SharpFont
 			if (disposed)
 				throw new ObjectDisposedException("Glyph", "Cannot access a disposed object.");
 
-			BBoxRec box = new BBoxRec();
-			FT.FT_Glyph_Get_CBox(Reference, mode, ref box);
+			BBox box;
+			FT.FT_Glyph_Get_CBox(Reference, mode, out box);
 
-			return new BBox(box);
+			return box;
 		}
 
 		/// <summary>

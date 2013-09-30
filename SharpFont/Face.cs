@@ -417,7 +417,7 @@ namespace SharpFont
 				if (disposed)
 					throw new ObjectDisposedException("BBox", "Cannot access a disposed object.");
 
-				return new BBox(rec.bbox);
+				return rec.bbox;
 			}
 		}
 

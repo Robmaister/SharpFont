@@ -104,7 +104,7 @@ namespace SharpFont.PostScript
 		{
 			get
 			{
-				return new BBox(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceInfoRec), "font_bbox").ToInt64()));
+				return rec.font_bbox;
 			}
 		}
 

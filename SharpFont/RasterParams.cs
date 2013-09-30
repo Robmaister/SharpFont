@@ -211,7 +211,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new BBox(rec.clip_box);
+				return rec.clip_box;
 			}
 		}
 

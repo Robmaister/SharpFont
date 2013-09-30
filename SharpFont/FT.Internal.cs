@@ -189,7 +189,7 @@ namespace SharpFont
 		internal static extern Error FT_Glyph_Transform(IntPtr glyph, ref FTMatrix matrix, ref FTVector delta);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern void FT_Glyph_Get_CBox(IntPtr glyph, GlyphBBoxMode bbox_mode, ref BBoxRec acbox);
+		internal static extern void FT_Glyph_Get_CBox(IntPtr glyph, GlyphBBoxMode bbox_mode, out BBox acbox);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Glyph_To_Bitmap(ref IntPtr the_glyph, RenderMode render_mode, ref FTVector origin, [MarshalAs(UnmanagedType.U1)] bool destroy);
@@ -490,13 +490,13 @@ namespace SharpFont
 		internal static extern Error FT_Outline_Check(IntPtr outline);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Outline_Get_BBox(IntPtr outline, out IntPtr abbox);
+		internal static extern Error FT_Outline_Get_BBox(IntPtr outline, out BBox abbox);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Outline_Decompose(IntPtr outline, IntPtr func_interface, IntPtr user);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern void FT_Outline_Get_CBox(IntPtr outline, out IntPtr acbox);
+		internal static extern void FT_Outline_Get_CBox(IntPtr outline, out BBox acbox);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Outline_Get_Bitmap(IntPtr library, IntPtr outline, IntPtr abitmap);

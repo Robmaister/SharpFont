@@ -439,13 +439,13 @@ namespace SharpFont
 			if (disposed)
 				throw new ObjectDisposedException("Outline", "Cannot access a disposed object.");
 
-			IntPtr bboxRef;
-			Error err = FT.FT_Outline_Get_BBox(reference, out bboxRef);
+			BBox bbox;
+			Error err = FT.FT_Outline_Get_BBox(reference, out bbox);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new BBox(bboxRef);
+			return bbox;
 		}
 
 		/// <summary>
@@ -501,10 +501,10 @@ namespace SharpFont
 			if (disposed)
 				throw new ObjectDisposedException("Outline", "Cannot access a disposed object.");
 
-			IntPtr cboxRef;
-			FT.FT_Outline_Get_CBox(reference, out cboxRef);
+			BBox cbox;
+			FT.FT_Outline_Get_CBox(reference, out cbox);
 
-			return new BBox(cboxRef);
+			return cbox;
 		}
 
 		/// <summary>

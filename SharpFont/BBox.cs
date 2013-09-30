@@ -25,7 +25,19 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using SharpFont.Internal;
+#if WIN64
+using FT_26Dot6 = System.Int32;
+using FT_Fixed = System.Int32;
+using FT_Long = System.Int32;
+using FT_Pos = System.Int32;
+using FT_ULong = System.UInt32;
+#else
+using FT_26Dot6 = System.IntPtr;
+using FT_Fixed = System.IntPtr;
+using FT_Long = System.IntPtr;
+using FT_Pos = System.IntPtr;
+using FT_ULong = System.UIntPtr;
+#endif
 
 namespace SharpFont
 {
@@ -33,25 +45,31 @@ namespace SharpFont
 	/// A structure used to hold an outline's bounding box, i.e., the
 	/// coordinates of its extrema in the horizontal and vertical directions.
 	/// </summary>
-	public sealed class BBox
+	[StructLayout(LayoutKind.Sequential)]
+	public struct BBox : IEquatable<BBox>
 	{
 		#region Fields
 
-		private IntPtr reference;
-		private BBoxRec rec;
+		private FT_Pos xMin, yMin;
+		private FT_Pos xMax, yMax;
 
 		#endregion
 
 		#region Constructors
 
-		internal BBox(IntPtr reference)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BBox"/> struct.
+		/// </summary>
+		/// <param name="left">The left bound.</param>
+		/// <param name="bottom">The bottom bound.</param>
+		/// <param name="right">The right bound.</param>
+		/// <param name="top">The upper bound.</param>
+		public BBox(int left, int bottom, int right, int top)
 		{
-			Reference = reference;
-		}
-
-		internal BBox(BBoxRec bboxInt)
-		{
-			this.rec = bboxInt;
+			xMin = (IntPtr)left;
+			yMin = (IntPtr)bottom;
+			xMax = (IntPtr)right;
+			yMax = (IntPtr)top;
 		}
 
 		#endregion
@@ -65,7 +83,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)rec.xMin;
+				return (int)xMin;
 			}
 		}
 
@@ -76,7 +94,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)rec.yMin;
+				return (int)yMin;
 			}
 		}
 
@@ -87,7 +105,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)rec.xMax;
+				return (int)xMax;
 			}
 		}
 
@@ -98,22 +116,84 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)rec.yMax;
+				return (int)yMax;
 			}
 		}
 
-		internal IntPtr Reference
-		{
-			get
-			{
-				return reference;
-			}
+		#endregion
 
-			set
-			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<BBoxRec>(reference);
-			}
+		#region Operators
+
+		/// <summary>
+		/// Compares two instances of <see cref="BBox"/> for equality.
+		/// </summary>
+		/// <param name="left">A <see cref="BBox"/>.</param>
+		/// <param name="right">Another <see cref="BBox"/>.</param>
+		/// <returns>A value indicating equality.</returns>
+		public static bool operator ==(BBox left, BBox right)
+		{
+			return left.Equals(right);
+		}
+
+		/// <summary>
+		/// Compares two instances of <see cref="BBox"/> for inequality.
+		/// </summary>
+		/// <param name="left">A <see cref="BBox"/>.</param>
+		/// <param name="right">Another <see cref="BBox"/>.</param>
+		/// <returns>A value indicating inequality.</returns>
+		public static bool operator !=(BBox left, BBox right)
+		{
+			return !left.Equals(right);
+		}
+
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Compares this instance of <see cref="BBox"/> to another for equality.
+		/// </summary>
+		/// <param name="other">A <see cref="BBox"/>.</param>
+		/// <returns>A value indicating equality.</returns>
+		public bool Equals(BBox other)
+		{
+			return
+				xMin == other.xMin &&
+				yMin == other.yMin &&
+				xMax == other.xMax &&
+				yMax == other.yMax;
+		}
+
+		/// <summary>
+		/// Compares this instance of <see cref="BBox"/> to an object for equality.
+		/// </summary>
+		/// <param name="obj">An object.</param>
+		/// <returns>A value indicating equality.</returns>
+		public override bool Equals(object obj)
+		{
+			if (obj is BBox)
+				return this.Equals((BBox)obj);
+
+			return false;
+		}
+
+		/// <summary>
+		/// Gets a unique hash code for this instance.
+		/// </summary>
+		/// <returns>A hash code.</returns>
+		public override int GetHashCode()
+		{
+			//TODO better hash algo
+			return xMin.GetHashCode() ^ yMin.GetHashCode() ^ xMax.GetHashCode() ^ yMax.GetHashCode();
+		}
+
+		/// <summary>
+		/// Gets a string that represents this instance.
+		/// </summary>
+		/// <returns>A string representation of this instance.</returns>
+		public override string ToString()
+		{
+			return "Min: (" + (int)xMin + ", " + (int)yMin + "), Max: (" + (int)xMax + ", " + (int)yMax + ")";
 		}
 
 		#endregion

@@ -107,7 +107,6 @@
     <Compile Include="FTList.cs" />
     <Compile Include="GlyphToScriptMapProperty.cs" />
     <Compile Include="IncreaseXHeightProperty.cs" />
-    <Compile Include="Internal\BBoxRec.cs" />
     <Compile Include="Internal\BitmapGlyphRec.cs" />
     <Compile Include="Internal\BitmapRec.cs" />
     <Compile Include="Internal\BitmapSizeRec.cs" />

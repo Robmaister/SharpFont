@@ -59,7 +59,7 @@ namespace SharpFont.PostScript.Internal
 		internal int supplement;
 
 		internal FontInfoRec font_info;
-		internal BBoxRec font_bbox;
+		internal BBox font_bbox;
 		internal FT_ULong uid_base;
 
 		internal int num_xuid;

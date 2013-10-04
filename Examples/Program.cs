@@ -104,6 +104,7 @@ namespace Examples
 			//create a new bitmap that fits the string.
 			Bitmap bmp = new Bitmap(width, height);
 			Graphics g = Graphics.FromImage(bmp);
+			g.Clear(Color.Gray);
 
 			//draw the string
 			for (int i = 0; i < text.Length; i++)
@@ -128,7 +129,7 @@ namespace Examples
 					continue;
 				}
 
-				Bitmap cBmp = face.Glyph.Bitmap.ToGdipBitmap(Color.Red);
+				Bitmap cBmp = face.Glyph.Bitmap.ToGdipBitmap(Color.Firebrick);
 				g.DrawImageUnscaled(cBmp, penX, penY + (bmp.Height - face.Glyph.Bitmap.Rows));
 
 				penX += (int)face.Glyph.Advance.X >> 6;

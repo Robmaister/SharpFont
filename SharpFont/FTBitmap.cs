@@ -400,8 +400,8 @@ namespace SharpFont
 					ColorPalette palette = bmp.Palette;
 					palette.Entries[0] = Color.FromArgb(0, color);
 					palette.Entries[1] = Color.FromArgb(1, color);
-					bmp.Palette = palette;
 
+					bmp.Palette = palette;
 					return bmp;
 				}
 
@@ -415,9 +415,12 @@ namespace SharpFont
 
 					ColorPalette palette = bmp.Palette;
 					for (int i = 0; i < palette.Entries.Length; i++)
-						palette.Entries[i] = Color.FromArgb(i * 17, color);
-					bmp.Palette = palette;
+					{
+						float a = (i * 17) / 255f;
+						palette.Entries[i] = Color.FromArgb(i * 17, (int)(color.R * a), (int)(color.G * a), (int)(color.B * a));
+					}
 
+					bmp.Palette = palette;
 					return bmp;
 				}
 
@@ -431,9 +434,12 @@ namespace SharpFont
 
 					ColorPalette palette = bmp.Palette;
 					for (int i = 0; i < palette.Entries.Length; i++)
-						palette.Entries[i] = Color.FromArgb(i, color);
-					bmp.Palette = palette;
+					{
+						float a = i / 255f;
+						palette.Entries[i] = Color.FromArgb(i, (int)(color.R * a), (int)(color.G * a), (int)(color.B * a));
+					}
 
+					bmp.Palette = palette;
 					return bmp;
 				}
 

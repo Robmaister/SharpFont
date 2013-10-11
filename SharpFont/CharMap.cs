@@ -26,6 +26,7 @@ using System;
 using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
+using SharpFont.TrueType;
 
 namespace SharpFont
 {
@@ -84,7 +85,7 @@ namespace SharpFont
 		/// TrueType specification and should be emulated for other formats.
 		/// </summary>
 		[CLSCompliant(false)]
-		public PlatformID PlatformId
+		public PlatformId PlatformId
 		{
 			get
 			{

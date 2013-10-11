@@ -25,6 +25,8 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
+using SharpFont.TrueType;
+
 namespace SharpFont.Internal
 {
 	/// <summary>
@@ -38,7 +40,7 @@ namespace SharpFont.Internal
 	{
 		internal IntPtr face;
 		internal Encoding encoding;
-		internal PlatformID platform_id;
+		internal PlatformId platform_id;
 		internal ushort encoding_id;
 	}
 }

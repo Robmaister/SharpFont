@@ -82,27 +82,27 @@ namespace SharpFont
 		/// Indicates that the font contains multiple masters and is capable of interpolating between them. See the
 		/// multiple-masters specific API for details.
 		/// </summary>
-		MultipleMasters = 0x0100,
+		MultipleMasters = 0x0080,
 
 		/// <summary>
 		/// Indicates that the font contains glyph names that can be retrieved through
 		/// <see cref="Face.GetGlyphName(uint, int)"/>. Note that some TrueType fonts contain broken glyph name
 		/// tables. Use the function <see cref="Face.HasPSGlyphNames"/> when needed.
 		/// </summary>
-		GlyphNames = 0x0200,
+		GlyphNames = 0x0100,
 
 		/// <summary>
 		/// Used internally by FreeType to indicate that a face's stream was provided by the client application and
 		/// should not be destroyed when <see cref="Face.Dispose()"/> is called. Don't read or test this flag.
 		/// </summary>
-		ExternalStream = 0x0400,
+		ExternalStream = 0x0200,
 
 		/// <summary>
 		/// Set if the font driver has a hinting machine of its own. For example, with TrueType fonts, it makes sense
 		/// to use data from the SFNT ‘gasp’ table only if the native TrueType hinting engine (with the bytecode
 		/// interpreter) is available and active.
 		/// </summary>
-		Hinter = 0x0800,
+		Hinter = 0x0400,
 
 		/// <summary><para>
 		/// Set if the font is CID-keyed. In that case, the font is not accessed by glyph indices but by CID values.
@@ -114,7 +114,7 @@ namespace SharpFont
 		/// Note that CID-keyed fonts which are in an SFNT wrapper don't have this flag set since the glyphs are
 		/// accessed in the normal way (using contiguous indices); the ‘CID-ness’ isn't visible to the application.
 		/// </para></summary>
-		CidKeyed = 0x1000,
+		CidKeyed = 0x0800,
 
 		/// <summary><para>
 		/// Set if the font is ‘tricky’, this is, it always needs the font format's native hinting engine to get a
@@ -129,6 +129,6 @@ namespace SharpFont
 		/// Currently, there are about a dozen TrueType fonts in the list of tricky fonts; they are hard-coded in file
 		/// ‘ttobjs.c’.
 		/// </para></summary>
-		Tricky = 0x2000
+		Tricky = 0x1000
 	}
 }

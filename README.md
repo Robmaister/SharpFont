@@ -52,6 +52,14 @@ in further detail in the Known Issues section.
 
 ##Compiling FreeType on Windows
 
+The included copy of `freetype6.dll` is something I build on my machine when a new version of FreeType is released.
+This means that it may not work on older versions of Windows. If this is the case, you can compile FreeType yourself
+from source.
+
+**Note**: Any copy of `freetype6.dll` can work as a drop-in replacement, including
+[this copy](http://gnuwin32.sourceforge.net/packages/freetype.htm) from the GnuWin32 project. Older versions such as
+that one may crash with a `EntryPointException` when using newer APIs.
+
 Thanks to [this StackOverflow answer](http://stackoverflow.com/a/7387618/1122135) for the directions:
 
  1. Download the latest [FreeType source code](http://sourceforge.net/projects/freetype/files/freetype2/).

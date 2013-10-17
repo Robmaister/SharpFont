@@ -66,10 +66,17 @@ namespace SharpFont
 		/// <param name="top">The upper bound.</param>
 		public BBox(int left, int bottom, int right, int top)
 		{
+#if WIN64
+			xMin = left;
+			yMin = bottom;
+			xMax = right;
+			yMax = top;
+#else
 			xMin = (IntPtr)left;
 			yMin = (IntPtr)bottom;
 			xMax = (IntPtr)right;
 			yMax = (IntPtr)top;
+#endif
 		}
 
 		#endregion

@@ -184,7 +184,7 @@
     <Compile Include="TrueTypeValidationFlags.cs" />
     <Compile Include="TrueType\Internal\SfntNameRec.cs" />
     <Compile Include="TrueType\SfntName.cs" />
-    <Compile Include="TrueType\EncodingId.cs" />
+    <Compile Include="TrueType\EncodingID.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="Face.cs" />
     <Compile Include="FaceFlags.cs" />
@@ -223,8 +223,8 @@
     <Compile Include="TrueType\Internal\VertHeaderRec.cs" />
     <Compile Include="TrueType\MaxProfile.cs" />
     <Compile Include="TrueType\OS2.cs" />
-    <Compile Include="TrueType\Pclt.cs" />
-    <Compile Include="TrueType\PlatformId.cs" />
+    <Compile Include="TrueType\PCLT.cs" />
+    <Compile Include="TrueType\PlatformID.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PostScript\DictionaryKeys.cs" />
     <Compile Include="RenderMode.cs" />

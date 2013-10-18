@@ -44,6 +44,11 @@ possible to rename the file by changing the filename constant in
 [FT.Internal.cs](SharpFont/blob/master/SharpFont/FT.Internal.cs) and recompile. On Linux and OSX (and any other
 Mono-supported platform), you must also copy `SharpFont.dll.config` to the project's output directory.
 
+####Mono
+If compiling on the command line, `xbuild` will choose the Debug WIN64 configuration by default, which will cause
+issues. Instead, run `make` to compile with the proper configuration.
+
+####FreeType
 A 32-bit copy of `freetype6.dll` is included in the [Examples](SharpFont/blob/master/Examples) project.
 
 Currently, Windows 64-bit systems require you to either compile SharpFont under the WIN64 configurations and include a

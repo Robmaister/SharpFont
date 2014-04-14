@@ -176,7 +176,7 @@ namespace SharpFont
 
 				for (int i = 0; i < count; i++)
 				{
-					points[i] = new FTVector(new IntPtr(array.ToInt64() + IntPtr.Size * i));
+					points[i] = new FTVector(new IntPtr(array.ToInt64() + (IntPtr.Size * i * 2)));
 				}
 
 				return points;
@@ -213,7 +213,7 @@ namespace SharpFont
 
 				for (int i = 0; i < count; i++)
 				{
-					tags[i] = Marshal.ReadByte(array, IntPtr.Size * i);
+					tags[i] = Marshal.ReadByte(array, sizeof(byte) * i);
 				}
 
 				return tags;
@@ -242,7 +242,7 @@ namespace SharpFont
 
 				for (int i = 0; i < count; i++)
 				{
-					contours[i] = Marshal.ReadInt16(array, IntPtr.Size * i);
+					contours[i] = Marshal.ReadInt16(array, sizeof(short) * i);
 				}
 
 				return contours;

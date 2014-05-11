@@ -58,11 +58,23 @@ namespace SharpFont.Internal
 
 		internal FT_Long num_glyphs;
 
-		[MarshalAs(UnmanagedType.LPStr)]
-		internal string family_name;
+		internal IntPtr _family_name;
+		internal string family_name
+		{
+			get
+			{
+				return Marshal.PtrToStringAnsi(_family_name);
+			}
+		}
 
-		[MarshalAs(UnmanagedType.LPStr)]
-		internal string style_name;
+		internal IntPtr _style_name;
+		internal string style_name
+		{
+			get
+			{
+				return Marshal.PtrToStringAnsi(_style_name);
+			}
+		}
 
 		internal int num_fixed_sizes;
 		internal IntPtr available_sizes;

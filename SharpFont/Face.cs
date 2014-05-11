@@ -272,7 +272,7 @@ namespace SharpFont
 				if (disposed)
 					throw new ObjectDisposedException("FamilyName", "Cannot access a disposed object.");
 
-				return rec.family_name;
+				return Marshal.PtrToStringAnsi(rec.family_name);
 			}
 		}
 
@@ -289,7 +289,7 @@ namespace SharpFont
 				if (disposed)
 					throw new ObjectDisposedException("StyleName", "Cannot access a disposed object.");
 
-				return rec.style_name;
+				return Marshal.PtrToStringAnsi(rec.style_name);
 			}
 		}
 

@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: CLSCompliant(true)]
+[assembly: InternalsVisibleTo("SharpFont.HarfBuzz, PublicKey=0024000004800000940000000602000000240000525341310004000001000100bfa6d85b0d27c914bc0fe0b18b7f05e0b2ac082c9e154b1739325f4e5537a3dc24712151df168ff0b28699c42cfc39f5f604c6321615d0dc1cd295422d2d244a172d24de1b01d1ced6854ed8d0cc82dd20409a1555f355160612869002de0bc9a9e50eaaa762ec4ebb46943adc18e829a0eb2ee45f47a2d9d46e808c736c77e9")]
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information

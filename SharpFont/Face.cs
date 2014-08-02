@@ -725,6 +725,14 @@ namespace SharpFont
 			}
 		}
 
+		public bool HasColor
+		{
+			get
+			{
+				return (FaceFlags & FaceFlags.Color) == FaceFlags.Color;
+			}
+		}
+
 		internal IntPtr Reference
 		{
 			get

@@ -645,6 +645,9 @@ namespace SharpFont
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Stream_OpenGzip(IntPtr stream, IntPtr source);
 
+		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
+		internal static extern Error FT_Gzip_Uncompress(IntPtr memory, IntPtr output, ref IntPtr output_len, IntPtr input, IntPtr input_len);
+
 		#endregion
 
 		#region LZW Streams

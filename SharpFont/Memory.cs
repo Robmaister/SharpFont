@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2014 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -144,6 +144,36 @@ namespace SharpFont
 				reference = value;
 				rec = PInvokeHelper.PtrToStructure<MemoryRec>(reference);
 			}
+		}
+
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Decompress a zipped input buffer into an output buffer. This function is modeled after zlib's ‘uncompress’
+		/// function.
+		/// </summary>
+		/// <remarks>
+		/// This function may return <see cref="Error.UnimplementedFeature"/> if your build of FreeType was not
+		/// compiled with zlib support.
+		/// </remarks>
+		/// <param name="input">The input buffer.</param>
+		/// <param name="output">The output buffer.</param>
+		/// <returns>The length of the used data in output.</returns>
+		public unsafe int GzipUncompress(byte[] input, byte[] output)
+		{
+			IntPtr len = (IntPtr)output.Length;
+
+			fixed (byte* inPtr = input, outPtr = output)
+			{
+				Error err = FT.FT_Gzip_Uncompress(Reference, (IntPtr)outPtr, ref len, (IntPtr)inPtr, (IntPtr)input.Length);
+
+				if (err != Error.Ok)
+					throw new FreeTypeException(err);
+			}
+
+			return (int)len;
 		}
 
 		#endregion

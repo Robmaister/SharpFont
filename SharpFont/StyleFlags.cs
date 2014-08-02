@@ -37,19 +37,13 @@ namespace SharpFont
 	[Flags]
 	public enum StyleFlags
 	{
-		/// <summary>
-		/// No style flags.
-		/// </summary>
+		/// <summary>No style flags.</summary>
 		None = 0x00,
 
-		/// <summary>
-		/// Indicates that a given face style is italic or oblique.
-		/// </summary>
+		/// <summary>Indicates that a given face style is italic or oblique.</summary>
 		Italic = 0x01,
 
-		/// <summary>
-		/// Indicates that a given face is bold.
-		/// </summary>
+		/// <summary>Indicates that a given face is bold.</summary>
 		Bold = 0x02
 	}
 }

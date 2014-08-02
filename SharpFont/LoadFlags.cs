@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2014 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -63,7 +63,7 @@ namespace SharpFont
 		/// Note that by default, the glyph loader doesn't render outlines into bitmaps. The following flags are used
 		/// to modify this default behaviour to more specific and useful cases.
 		/// </summary>
-		Default = 0x0000,
+		Default = 0x000000,
 
 		/// <summary><para>
 		/// Don't scale the outline glyph loaded, but keep it in font units.
@@ -71,7 +71,7 @@ namespace SharpFont
 		/// This flag implies <see cref="LoadFlags.NoHinting"/> and <see cref="LoadFlags.NoBitmap"/>, and unsets
 		/// <see cref="LoadFlags.Render"/>.
 		/// </para></summary>
-		NoScale = 0x0001,
+		NoScale = 0x000001,
 
 		/// <summary><para>
 		/// Disable hinting. This generally generates ‘blurrier’ bitmap glyph when the glyph is rendered in any of the
@@ -79,7 +79,7 @@ namespace SharpFont
 		/// </para><para>
 		/// This flag is implied by <see cref="LoadFlags.NoScale"/>.
 		/// </para></summary>
-		NoHinting = 0x0002,
+		NoHinting = 0x000002,
 
 		/// <summary><para>
 		/// Call <see cref="GlyphSlot.RenderGlyph"/> after the glyph is loaded. By default, the glyph is rendered in
@@ -88,41 +88,42 @@ namespace SharpFont
 		/// </para><para>
 		/// This flag is unset by <see cref="LoadFlags.NoScale"/>.
 		/// </para></summary>
-		Render = 0x0004,
+		Render = 0x000004,
 
 		/// <summary><para>
 		/// Ignore bitmap strikes when loading. Bitmap-only fonts ignore this flag.
 		/// </para><para>
 		/// <see cref="LoadFlags.NoScale"/> always sets this flag.
 		/// </para></summary>
-		NoBitmap = 0x0008,
+		NoBitmap = 0x000008,
 
 		/// <summary>
 		/// Load the glyph for vertical text layout. Don't use it as it is problematic currently.
 		/// </summary>
-		VerticalLayout = 0x0010,
+		VerticalLayout = 0x000010,
 
 		/// <summary>
 		/// Indicates that the auto-hinter is preferred over the font's native hinter. See also the note below.
 		/// </summary>
-		ForceAutohint = 0x0020,
+		ForceAutohint = 0x000020,
 
 		/// <summary>
 		/// Indicates that the font driver should crop the loaded bitmap glyph (i.e., remove all space around its black
 		/// bits). Not all drivers implement this.
 		/// </summary>
-		CropBitmap = 0x0040,
+		CropBitmap = 0x000040,
 
 		/// <summary>
 		/// Indicates that the font driver should perform pedantic verifications during glyph loading. This is mostly
 		/// used to detect broken glyphs in fonts. By default, FreeType tries to handle broken fonts also.
 		/// </summary>
-		Pedantic = 0x0080,
+		Pedantic = 0x000080,
 
 		/// <summary>
 		/// Ignored. Deprecated.
 		/// </summary>
-		IgnoreGlobalAdvanceWidth = 0x0200,
+		[Obsolete("Ignored. Deprecated.")]
+		IgnoreGlobalAdvanceWidth = 0x000200,
 
 		/// <summary><para>
 		/// This flag is only used internally. It merely indicates that the font driver should not load composite
@@ -133,12 +134,12 @@ namespace SharpFont
 		/// </para><para>
 		/// This flag implies <see cref="LoadFlags.NoScale"/> and <see cref="LoadFlags.IgnoreTransform"/>.
 		/// </para></summary>
-		NoRecurse = 0x0400,
+		NoRecurse = 0x000400,
 
 		/// <summary>
 		/// Indicates that the transform matrix set by <see cref="Face.SetTransform"/> should be ignored.
 		/// </summary>
-		IgnoreTransform = 0x0800,
+		IgnoreTransform = 0x000800,
 
 		/// <summary><para>
 		/// This flag is used with <see cref="LoadFlags.Render"/> to indicate that you want to render an outline glyph
@@ -147,18 +148,18 @@ namespace SharpFont
 		/// Note that this has no effect on the hinting algorithm used. You should rather use
 		/// <see cref="LoadTarget.Mono"/> so that the monochrome-optimized hinting algorithm is used.
 		/// </para></summary>
-		Monochrome = 0x1000,
+		Monochrome = 0x001000,
 
 		/// <summary>
 		/// Indicates that the ‘linearHoriAdvance’ and ‘linearVertAdvance’ fields of <see cref="GlyphSlot"/> should be
 		/// kept in font units. See <see cref="GlyphSlot"/> for details.
 		/// </summary>
-		LinearDesign = 0x2000,
+		LinearDesign = 0x002000,
 
 		/// <summary>
 		/// Disable auto-hinter. See also the note below.
 		/// </summary>
-		NoAutohint = 0x8000,
+		NoAutohint = 0x008000,
 
 		/// <summary>
 		/// This flag is used to request loading of color embedded-bitmap images. The resulting color bitmaps, if

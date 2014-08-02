@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2014 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -202,22 +202,22 @@ namespace SharpFont
 			return new Face(this, file, faceIndex);
 		}
 
-        /// <summary>
-        /// This function calls <see cref="OpenFace"/> to open a font which has been loaded into memory.
-        /// </summary>
-        /// <param name="bufferPtr">A pointer to the beginning of the font data.</param>
-        /// <param name="length">Length of the buffer</param>
-        /// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
-        /// <returns>
-        /// A handle to a new face object. If ‘faceIndex’ is greater than or equal to zero, it must be non-NULL.
-        /// </returns>
-        public Face NewMemoryFace(IntPtr bufferPtr, int length, int faceIndex)
-        {
-            if (disposed)
-                throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+		/// <summary>
+		/// This function calls <see cref="OpenFace"/> to open a font which has been loaded into memory.
+		/// </summary>
+		/// <param name="bufferPtr">A pointer to the beginning of the font data.</param>
+		/// <param name="length">Length of the buffer</param>
+		/// <param name="faceIndex">The index of the face within the font. The first face has index 0.</param>
+		/// <returns>
+		/// A handle to a new face object. If ‘faceIndex’ is greater than or equal to zero, it must be non-NULL.
+		/// </returns>
+		public Face NewMemoryFace(IntPtr bufferPtr, int length, int faceIndex)
+		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
-            return new Face(this, bufferPtr, length, faceIndex);
-        }
+			return new Face(this, bufferPtr, length, faceIndex);
+		}
 
 		/// <summary>
 		/// Create a <see cref="Face"/> object from a given resource described by <see cref="OpenArgs"/>.

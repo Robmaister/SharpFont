@@ -1,4 +1,5 @@
-# SharpFont
+SharpFont [![NuGet Version](http://img.shields.io/nuget/v/SharpNav.svg)](https://www.nuget.org/packages/SharpNav) [![NuGet Downloads](http://img.shields.io/nuget/dt/SharpNav.svg)](https://www.nuget.org/packages/SharpNav) [![Gratipay Tips](https://img.shields.io/gratipay/Robmaister.svg)](https://gratipay.com/Robmaister)
+=========
 ### Cross-platform FreeType bindings for .NET
 
 SharpFont is a library that provides FreeType bindings for .NET. It's MIT licensed to make sure licensing doesn't get

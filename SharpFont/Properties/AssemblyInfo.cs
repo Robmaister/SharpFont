@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Robmaister")]
 [assembly: AssemblyProduct("SharpFont")]
-[assembly: AssemblyCopyright("Copyright (c) Robert Rouhani 2012-2013")]
+[assembly: AssemblyCopyright("Copyright (c) Robert Rouhani 2012-2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

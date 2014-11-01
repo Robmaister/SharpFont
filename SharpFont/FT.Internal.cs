@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2014 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -493,7 +493,7 @@ namespace SharpFont
 		internal static extern Error FT_Outline_Get_BBox(IntPtr outline, out BBox abbox);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Outline_Decompose(IntPtr outline, IntPtr func_interface, IntPtr user);
+		internal static extern Error FT_Outline_Decompose(IntPtr outline, ref OutlineFuncsRec func_interface, IntPtr user);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern void FT_Outline_Get_CBox(IntPtr outline, out BBox acbox);

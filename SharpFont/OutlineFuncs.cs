@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2014 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -97,7 +97,13 @@ namespace SharpFont
 	/// </remarks>
 	public class OutlineFuncs
 	{
+		#region Fields
+
 		private OutlineFuncsRec rec;
+
+		#endregion
+
+		#region Constructors
 
 		/// <summary>
 		/// Initializes a new instance of the OutlineFuncs class.
@@ -117,10 +123,10 @@ namespace SharpFont
 		/// <param name="delta">A delta to transform by.</param>
 		public OutlineFuncs(MoveToFunc moveTo, LineToFunc lineTo, ConicToFunc conicTo, CubicToFunc cubicTo, int shift, int delta)
 		{
-			rec.moveTo = moveTo;
-			rec.lineTo = lineTo;
-			rec.conicTo = conicTo;
-			rec.cubicTo = cubicTo;
+			rec.moveTo = Marshal.GetFunctionPointerForDelegate(moveTo);
+			rec.lineTo = Marshal.GetFunctionPointerForDelegate(lineTo);
+			rec.conicTo = Marshal.GetFunctionPointerForDelegate(conicTo);
+			rec.cubicTo = Marshal.GetFunctionPointerForDelegate(cubicTo);
 			rec.shift = shift;
 
 			#if WIN64
@@ -130,6 +136,10 @@ namespace SharpFont
 			#endif
 		}
 
+		#endregion
+
+		#region Properties
+
 		/// <summary>
 		/// Gets or sets the ‘move to’ emitter.
 		/// </summary>
@@ -137,28 +147,28 @@ namespace SharpFont
 		{
 			get
 			{
-				return rec.moveTo;
+				return (MoveToFunc)Marshal.GetDelegateForFunctionPointer(rec.moveTo, typeof(MoveToFunc));
 			}
 
 			set
 			{
-				rec.moveTo = value;
+				rec.moveTo = Marshal.GetFunctionPointerForDelegate(value);
 			}
 		}
 
 		/// <summary>
 		/// Gets or sets the segment emitter.
 		/// </summary>
-		public LineToFunc LineFuction
+		public LineToFunc LineFunction
 		{
 			get
 			{
-				return rec.lineTo;
+				return (LineToFunc)Marshal.GetDelegateForFunctionPointer(rec.lineTo, typeof(LineToFunc));
 			}
 
 			set
 			{
-				rec.lineTo = value;
+				rec.lineTo = Marshal.GetFunctionPointerForDelegate(value);
 			}
 		}
 
@@ -169,12 +179,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return rec.conicTo;
+				return (ConicToFunc)Marshal.GetDelegateForFunctionPointer(rec.conicTo, typeof(ConicToFunc));
 			}
 
 			set
 			{
-				rec.conicTo = value;
+				rec.conicTo = Marshal.GetFunctionPointerForDelegate(value);
 			}
 		}
 
@@ -185,12 +195,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return rec.cubicTo;
+				return (CubicToFunc)Marshal.GetDelegateForFunctionPointer(rec.cubicTo, typeof(CubicToFunc));
 			}
 
 			set
 			{
-				rec.cubicTo = value;
+				rec.cubicTo = Marshal.GetFunctionPointerForDelegate(value);
 			}
 		}
 
@@ -226,5 +236,17 @@ namespace SharpFont
 				funcsInt.delta = (IntPtr)value;
 			}*/
 		}
+
+		//TODO make a reference parameter instead?
+		//HACK this copies the struct
+		internal OutlineFuncsRec Record
+		{
+			get
+			{
+				return rec;
+			}
+		}
+
+		#endregion
 	}
 }

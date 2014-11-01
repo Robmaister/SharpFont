@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2014 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -467,19 +467,8 @@ namespace SharpFont
 			if (funcInterface == null)
 				throw new ArgumentNullException("funcInterface");
 
-			//TODO cleanup/move to the outlinefuncs class
-			IntPtr funcInterfaceRef = Marshal.AllocHGlobal(OutlineFuncsRec.SizeInBytes);
-			Marshal.WriteIntPtr(funcInterfaceRef, Marshal.GetFunctionPointerForDelegate(funcInterface.MoveFunction));
-			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "lineTo"), Marshal.GetFunctionPointerForDelegate(funcInterface.LineFuction));
-			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "conicTo"), Marshal.GetFunctionPointerForDelegate(funcInterface.ConicFunction));
-			Marshal.WriteIntPtr(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "cubicTo"), Marshal.GetFunctionPointerForDelegate(funcInterface.CubicFunction));
-
-			Marshal.WriteInt32(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "shift"), funcInterface.Shift);
-			Marshal.WriteInt32(funcInterfaceRef, (int)Marshal.OffsetOf(typeof(OutlineFuncsRec), "delta"), funcInterface.Delta);
-
-			Error err = FT.FT_Outline_Decompose(reference, funcInterfaceRef, user);
-
-			Marshal.FreeHGlobal(funcInterfaceRef);
+			OutlineFuncsRec ofRec = funcInterface.Record;
+			Error err = FT.FT_Outline_Decompose(reference, ref ofRec, user);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);

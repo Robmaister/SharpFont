@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2014 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -44,10 +44,10 @@ namespace SharpFont.Internal
 	[StructLayout(LayoutKind.Sequential)]
 	internal struct OutlineFuncsRec
 	{
-		internal MoveToFunc moveTo;
-		internal LineToFunc lineTo;
-		internal ConicToFunc conicTo;
-		internal CubicToFunc cubicTo;
+		internal IntPtr moveTo;
+		internal IntPtr lineTo;
+		internal IntPtr conicTo;
+		internal IntPtr cubicTo;
 		internal int shift;
 		internal FT_Pos delta;
 

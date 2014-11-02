@@ -39,7 +39,7 @@ namespace SharpFont
 	/// <param name="user">A typeless pointer which is passed from the caller of the decomposition function.</param>
 	/// <returns>Error code. 0 means success.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate int MoveToFunc(FTVector to, IntPtr user);
+	public delegate int MoveToFunc(ref FTVector to, IntPtr user);
 
 	/// <summary><para>
 	/// A function pointer type used to describe the signature of a ‘line to’ function during outline
@@ -51,7 +51,7 @@ namespace SharpFont
 	/// <param name="user">A typeless pointer which is passed from the caller of the decomposition function.</param>
 	/// <returns>Error code. 0 means success.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate int LineToFunc(FTVector to, IntPtr user);
+	public delegate int LineToFunc(ref FTVector to, IntPtr user);
 
 	/// <summary><para>
 	/// A function pointer type used to describe the signature of a ‘conic to’ function during outline walking or
@@ -66,7 +66,7 @@ namespace SharpFont
 	/// <param name="user">A typeless pointer which is passed from the caller of the decomposition function.</param>
 	/// <returns>Error code. 0 means success.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate int ConicToFunc(FTVector control, FTVector to, IntPtr user);
+	public delegate int ConicToFunc(ref FTVector control, ref FTVector to, IntPtr user);
 
 	/// <summary><para>
 	/// A function pointer type used to describe the signature of a ‘cubic to’ function during outline walking or
@@ -80,7 +80,7 @@ namespace SharpFont
 	/// <param name="user">A typeless pointer which is passed from the caller of the decomposition function.</param>
 	/// <returns>Error code. 0 means success.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate int CubicToFunc(FTVector control1, FTVector control2, FTVector to, IntPtr user);
+	public delegate int CubicToFunc(ref FTVector control1, ref FTVector control2, ref FTVector to, IntPtr user);
 
 	/// <summary>
 	/// A structure to hold various function pointers used during outline decomposition in order to emit segments,

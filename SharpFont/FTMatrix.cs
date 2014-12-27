@@ -27,19 +27,11 @@ using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
 
-#if WIN64
 using FT_26Dot6 = System.Int32;
 using FT_Fixed = System.Int32;
 using FT_Long = System.Int32;
 using FT_Pos = System.Int32;
 using FT_ULong = System.UInt32;
-#else
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
-using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
-using FT_ULong = System.UIntPtr;
-#endif
 
 namespace SharpFont
 {
@@ -73,17 +65,10 @@ namespace SharpFont
 		public FTMatrix(int xx, int xy, int yx, int yy)
 			: this()
 		{
-#if WIN64
 			this.xx = xx;
 			this.xy = xy;
 			this.yx = yx;
 			this.yy = yy;
-#else
-			this.xx = (IntPtr)xx;
-			this.xy = (IntPtr)xy;
-			this.yx = (IntPtr)yx;
-			this.yy = (IntPtr)yy;
-#endif
 		}
 
 		/// <summary>
@@ -112,11 +97,7 @@ namespace SharpFont
 
 			set
 			{
-#if WIN64
 				xx = value;
-#else
-				xx = (IntPtr)value;
-#endif
 			}
 		}
 
@@ -132,11 +113,7 @@ namespace SharpFont
 
 			set
 			{
-#if WIN64
 				xy = value;
-#else
-				xy = (IntPtr)value;
-#endif
 			}
 		}
 
@@ -152,11 +129,7 @@ namespace SharpFont
 
 			set
 			{
-#if WIN64
 				yx = value;
-#else
-				yx = (IntPtr)value;
-#endif
 			}
 		}
 
@@ -172,11 +145,7 @@ namespace SharpFont
 
 			set
 			{
-#if WIN64
 				yy = value;
-#else
-				yy = (IntPtr)value;
-#endif
 			}
 		}
 

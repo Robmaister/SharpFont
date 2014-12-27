@@ -71,7 +71,7 @@ namespace SharpFont
 		public Generic(IntPtr data, GenericFinalizer finalizer)
 		{
 			rec.data = data;
-			rec.finalizer = finalizer;
+			//rec.finalizer = finalizer;
 		}
 
 		internal Generic(GenericRec genInternal)
@@ -125,7 +125,7 @@ namespace SharpFont
 		/// Gets or sets a pointer to a <see cref="GenericFinalizer"/> function, which will be called when the object
 		/// is destroyed. If this field is set to NULL, no code will be called.
 		/// </summary>
-		public GenericFinalizer Finalizer
+		/*public GenericFinalizer Finalizer
 		{
 			get
 			{
@@ -136,7 +136,7 @@ namespace SharpFont
 			{
 				rec.finalizer = value;
 			}
-		}
+		}*/
 
 		#endregion
 
@@ -146,7 +146,8 @@ namespace SharpFont
 		internal void WriteToUnmanagedMemory(IntPtr location)
 		{
 			Marshal.WriteIntPtr(location, rec.data);
-			Marshal.WriteIntPtr(location, IntPtr.Size, Marshal.GetFunctionPointerForDelegate(rec.finalizer));
+			//Marshal.WriteIntPtr(location, IntPtr.Size, Marshal.GetFunctionPointerForDelegate(rec.finalizer));
+			Marshal.WriteIntPtr(location, IntPtr.Size, rec.finalizer);
 		}
 
 		#endregion

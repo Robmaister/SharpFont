@@ -27,19 +27,11 @@ using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
 
-#if WIN64
 using FT_26Dot6 = System.Int32;
 using FT_Fixed = System.Int32;
 using FT_Long = System.Int32;
 using FT_Pos = System.Int32;
 using FT_ULong = System.UInt32;
-#else
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
-using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
-using FT_ULong = System.UIntPtr;
-#endif
 
 namespace SharpFont
 {
@@ -51,8 +43,8 @@ namespace SharpFont
 	{
 		#region Fields
 
-		private FT_Long x;
-		private FT_Long y;
+		private int x;
+		private int y;
 
 		#endregion
 
@@ -66,25 +58,15 @@ namespace SharpFont
 		public FTVector(int x, int y)
 			: this()
 		{
-#if WIN64
 			this.x = x;
 			this.y = y;
-#else
-			this.x = (IntPtr)x;
-			this.y = (IntPtr)y;
-#endif
 		}
 
 		internal FTVector(IntPtr reference)
 			: this()
 		{
-#if WIN64
 			this.x = Marshal.ReadInt32(reference);
 			this.y = Marshal.ReadInt32(reference, sizeof(int));
-#else
-			this.x = Marshal.ReadIntPtr(reference);
-			this.y = Marshal.ReadIntPtr(reference, IntPtr.Size);
-#endif
 		}
 
 		#endregion
@@ -98,16 +80,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)x;
+				return x;
 			}
 
 			set
 			{
-#if WIN64
 				x = value;
-#else
-				x = (IntPtr)value;
-#endif
 			}
 		}
 
@@ -118,16 +96,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)y;
+				return y;
 			}
 
 			set
 			{
-#if WIN64
 				y = value;
-#else
-				y = (IntPtr)value;
-#endif
 			}
 		}
 
@@ -260,7 +234,7 @@ namespace SharpFont
 		/// <returns>A hash code.</returns>
 		public override int GetHashCode()
 		{
- 			 return x.GetHashCode() ^ y.GetHashCode();
+			 return x.GetHashCode() ^ y.GetHashCode();
 		}
 
 		#endregion

@@ -63,6 +63,12 @@ namespace SharpFont
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Library"/> class.
 		/// </summary>
+		/// <remarks>
+		/// SharpFont assumes that you have the correct version of FreeType for your operating system and processor
+		/// architecture. If you get a <see cref="BadImageFormatException"/> here on Windows, there's a good chance
+		/// that you're trying to run your program as a 64-bit process and have a 32-bit version of FreeType or vice
+		/// versa. See the SharpFont.Examples project for how to handle this situation.
+		/// </remarks>
 		public Library()
 			: this(false)
 		{

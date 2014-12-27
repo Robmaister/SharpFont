@@ -31,6 +31,6 @@ namespace SharpFont.Internal
 	internal struct GenericRec
 	{
 		internal IntPtr data;
-		internal GenericFinalizer finalizer;
+		internal IntPtr finalizer;
 	}
 }

@@ -24,8 +24,8 @@ using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading;
 
 using SharpFont;
 
@@ -33,9 +33,25 @@ namespace Examples
 {
 	class Program
 	{
+		//HACK if only Windows had a package manager... sigh
+		[DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		private static extern bool SetDllDirectory(string path);
+
 		public static void Main(string[] args)
 		{
 			//TODO make several examples in an example browser
+
+			//HACK I'm making the assumption that the .dll.config will correctly resolve Linux and OS X.
+			//Therefore only Windows needs to switch dirs.
+			int p = (int)Environment.OSVersion.Platform;
+			if (p != 4 && p != 6 && p != 128)
+			{
+				//Thanks StackOverflow! http://stackoverflow.com/a/2594135/1122135
+				string path = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+				path = Path.Combine(path, IntPtr.Size == 8 ? "x64" : "x86");
+				if (!SetDllDirectory(path))
+					throw new System.ComponentModel.Win32Exception();
+			}
 
 			try
 			{

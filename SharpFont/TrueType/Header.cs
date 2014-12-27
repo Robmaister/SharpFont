@@ -106,11 +106,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				#if WIN64
-				return rec.Created;
-				#else
 				return Array.ConvertAll<IntPtr, int>(rec.Created, new Converter<IntPtr, int>(delegate(IntPtr i) { return (int)i; }));
-				#endif
 			}
 		}
 
@@ -118,11 +114,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				#if WIN64
-				return rec.Created;
-				#else
 				return Array.ConvertAll<IntPtr, int>(rec.Created, new Converter<IntPtr, int>(delegate(IntPtr i) { return (int)i; }));
-				#endif
 			}
 		}
 

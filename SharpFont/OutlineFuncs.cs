@@ -128,12 +128,7 @@ namespace SharpFont
 			rec.conicTo = Marshal.GetFunctionPointerForDelegate(conicTo);
 			rec.cubicTo = Marshal.GetFunctionPointerForDelegate(cubicTo);
 			rec.shift = shift;
-
-			#if WIN64
 			rec.delta = delta;
-			#else
-			rec.delta = (IntPtr)delta;
-			#endif
 		}
 
 		#endregion

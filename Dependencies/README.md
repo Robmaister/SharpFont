@@ -15,9 +15,9 @@ following structure:
      - FREETYPE MAJOR.MINOR.PATCH
        - COMPILER (e.g. msvc12, mingw)
          - deps
-           - DEP1.dll
-           - DEP2.dll
-           - DEP3.dll
+            - DEP1.dll
+            - DEP2.dll
+            - DEP3.dll
          - DEP1
            - freetype6.dll
          - DEP2

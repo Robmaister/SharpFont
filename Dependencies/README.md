@@ -11,20 +11,20 @@ For FreeType, we will support and store a large number of versions in the
 following structure:
 
  - Dependencies
-   - freetype2
-     - FREETYPE MAJOR.MINOR.PATCH
-       - COMPILER (e.g. msvc12, mingw)
-         - deps
-            - DEP1.dll
-            - DEP2.dll
-            - DEP3.dll
-         - DEP1
-           - freetype6.dll
-         - DEP2
-           - freetype6.dll
-         - DEP1-DEP3
-           - freetype6.dll
-         - freetype6.dll
+    - freetype2
+       - FREETYPE MAJOR.MINOR.PATCH
+          - COMPILER (e.g. msvc12, mingw)
+             - deps
+                - DEP1.dll
+                - DEP2.dll
+                - DEP3.dll
+             - DEP1
+                - freetype6.dll
+             - DEP2
+                - freetype6.dll
+             - DEP1-DEP3
+                - freetype6.dll
+             - freetype6.dll
 
 In this example I only use .dll's, but any other platform is fine, so long as
 it is different than the build distributed with the OS/package manager

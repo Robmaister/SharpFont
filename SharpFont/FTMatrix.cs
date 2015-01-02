@@ -27,11 +27,11 @@ using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
 
-using FT_26Dot6 = System.Int32;
-using FT_Fixed = System.Int32;
-using FT_Long = System.Int32;
-using FT_Pos = System.Int32;
-using FT_ULong = System.UInt32;
+using FT_26Dot6 = System.IntPtr;
+using FT_Fixed = System.IntPtr;
+using FT_Long = System.IntPtr;
+using FT_Pos = System.IntPtr;
+using FT_ULong = System.UIntPtr;
 
 namespace SharpFont
 {
@@ -65,10 +65,10 @@ namespace SharpFont
 		public FTMatrix(int xx, int xy, int yx, int yy)
 			: this()
 		{
-			this.xx = xx;
-			this.xy = xy;
-			this.yx = yx;
-			this.yy = yy;
+			this.xx = (IntPtr)xx;
+			this.xy = (IntPtr)xy;
+			this.yx = (IntPtr)yx;
+			this.yy = (IntPtr)yy;
 		}
 
 		/// <summary>
@@ -97,7 +97,7 @@ namespace SharpFont
 
 			set
 			{
-				xx = value;
+				xx = (IntPtr)value;
 			}
 		}
 
@@ -113,7 +113,7 @@ namespace SharpFont
 
 			set
 			{
-				xy = value;
+				xy = (IntPtr)value;
 			}
 		}
 
@@ -129,7 +129,7 @@ namespace SharpFont
 
 			set
 			{
-				yx = value;
+				yx = (IntPtr)value;
 			}
 		}
 
@@ -145,7 +145,7 @@ namespace SharpFont
 
 			set
 			{
-				yy = value;
+				yy = (IntPtr)value;
 			}
 		}
 

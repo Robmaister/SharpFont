@@ -27,11 +27,11 @@ using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
 
-using FT_26Dot6 = System.Int32;
-using FT_Fixed = System.Int32;
-using FT_Long = System.Int32;
-using FT_Pos = System.Int32;
-using FT_ULong = System.UInt32;
+using FT_26Dot6 = System.IntPtr;
+using FT_Fixed = System.IntPtr;
+using FT_Long = System.IntPtr;
+using FT_Pos = System.IntPtr;
+using FT_ULong = System.UIntPtr;
 
 namespace SharpFont
 {
@@ -43,8 +43,8 @@ namespace SharpFont
 	{
 		#region Fields
 
-		private int x;
-		private int y;
+		private IntPtr x;
+		private IntPtr y;
 
 		#endregion
 
@@ -58,15 +58,15 @@ namespace SharpFont
 		public FTVector(int x, int y)
 			: this()
 		{
-			this.x = x;
-			this.y = y;
+			this.x = (IntPtr)x;
+			this.y = (IntPtr)y;
 		}
 
 		internal FTVector(IntPtr reference)
 			: this()
 		{
-			this.x = Marshal.ReadInt32(reference);
-			this.y = Marshal.ReadInt32(reference, sizeof(int));
+			this.x = Marshal.ReadIntPtr(reference);
+			this.y = Marshal.ReadIntPtr(reference, IntPtr.Size);
 		}
 
 		#endregion
@@ -80,12 +80,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return x;
+				return (int)x;
 			}
 
 			set
 			{
-				x = value;
+				x = (IntPtr)value;
 			}
 		}
 
@@ -96,12 +96,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return y;
+				return (int)y;
 			}
 
 			set
 			{
-				y = value;
+				y = (IntPtr)value;
 			}
 		}
 

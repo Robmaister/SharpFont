@@ -25,11 +25,11 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using FT_26Dot6 = System.Int32;
-using FT_Fixed = System.Int32;
-using FT_Long = System.Int32;
-using FT_Pos = System.Int32;
-using FT_ULong = System.UInt32;
+using FT_26Dot6 = System.IntPtr;
+using FT_Fixed = System.IntPtr;
+using FT_Long = System.IntPtr;
+using FT_Pos = System.IntPtr;
+using FT_ULong = System.UIntPtr;
 
 namespace SharpFont
 {
@@ -58,10 +58,10 @@ namespace SharpFont
 		/// <param name="top">The upper bound.</param>
 		public BBox(int left, int bottom, int right, int top)
 		{
-			xMin = left;
-			yMin = bottom;
-			xMax = right;
-			yMax = top;
+			xMin = (IntPtr)left;
+			yMin = (IntPtr)bottom;
+			xMax = (IntPtr)right;
+			yMax = (IntPtr)top;
 		}
 
 		#endregion

@@ -121,7 +121,7 @@ namespace SharpFont
 		internal static extern Error FT_Get_Kerning(IntPtr face, uint left_glyph, uint right_glyph, KerningMode kern_mode, out FTVector akerning);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Get_Track_Kerning(IntPtr face, int point_size, int degree, out int akerning);
+		internal static extern Error FT_Get_Track_Kerning(IntPtr face, Fixed16Dot16 point_size, int degree, out Fixed16Dot16 akerning);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Get_Glyph_Name(IntPtr face, uint glyph_index, IntPtr buffer, uint buffer_max);
@@ -333,7 +333,7 @@ namespace SharpFont
 		#region PFR Fonts
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Get_PFR_Metrics(IntPtr face, out uint aoutline_resolution, out uint ametrics_resolution, out int ametrics_x_scale, out int ametrics_y_scale);
+		internal static extern Error FT_Get_PFR_Metrics(IntPtr face, out uint aoutline_resolution, out uint ametrics_resolution, out Fixed16Dot16 ametrics_x_scale, out Fixed16Dot16 ametrics_y_scale);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Get_PFR_Kerning(IntPtr face, uint left, uint right, out FTVector avector);
@@ -371,22 +371,22 @@ namespace SharpFont
 		#region Computations
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern int FT_MulDiv(int a, int b, int c);
+		internal static extern Fixed16Dot16 FT_MulDiv(Fixed16Dot16 a, Fixed16Dot16 b, Fixed16Dot16 c);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern int FT_MulFix(int a, int b);
+		internal static extern Fixed16Dot16 FT_MulFix(IntPtr a, Fixed16Dot16 b);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern int FT_DivFix(int a, int b);
+		internal static extern Fixed16Dot16 FT_DivFix(IntPtr a, Fixed16Dot16 b);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern int FT_RoundFix(int a);
+		internal static extern Fixed16Dot16 FT_RoundFix(Fixed16Dot16 a);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern int FT_CeilFix(int a);
+		internal static extern Fixed16Dot16 FT_CeilFix(Fixed16Dot16 a);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern int FT_FloorFix(int a);
+		internal static extern Fixed16Dot16 FT_FloorFix(Fixed16Dot16 a);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern void FT_Vector_Transform(ref FTVector vec, ref FTMatrix matrix);
@@ -398,34 +398,34 @@ namespace SharpFont
 		internal static extern Error FT_Matrix_Invert(ref FTMatrix matrix);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern int FT_Sin(int angle);
+		internal static extern Fixed16Dot16 FT_Sin(Fixed16Dot16 angle);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern int FT_Cos(int angle);
+		internal static extern Fixed16Dot16 FT_Cos(Fixed16Dot16 angle);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern int FT_Tan(int angle);
+		internal static extern Fixed16Dot16 FT_Tan(Fixed16Dot16 angle);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern int FT_Atan2(int x, int y);
+		internal static extern Fixed16Dot16 FT_Atan2(Fixed16Dot16 x, Fixed16Dot16 y);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern int FT_Angle_Diff(int angle1, int angle2);
+		internal static extern Fixed16Dot16 FT_Angle_Diff(Fixed16Dot16 angle1, Fixed16Dot16 angle2);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern void FT_Vector_Unit(out FTVector vec, int angle);
+		internal static extern void FT_Vector_Unit(out FTVector vec, Fixed16Dot16 angle);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern void FT_Vector_Rotate(ref FTVector vec, int angle);
+		internal static extern void FT_Vector_Rotate(ref FTVector vec, Fixed16Dot16 angle);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern int FT_Vector_Length(ref FTVector vec);
+		internal static extern Fixed16Dot16 FT_Vector_Length(ref FTVector vec);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern void FT_Vector_Polarize(ref FTVector vec, out int length, out int angle);
+		internal static extern void FT_Vector_Polarize(ref FTVector vec, out Fixed16Dot16 length, out Fixed16Dot16 angle);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern void FT_Vector_From_Polar(out FTVector vec, int length, int angle);
+		internal static extern void FT_Vector_From_Polar(out FTVector vec, Fixed16Dot16 length, Fixed16Dot16 angle);
 
 		#endregion
 
@@ -553,7 +553,7 @@ namespace SharpFont
 		internal static extern Error FT_Stroker_New(IntPtr library, out IntPtr astroker);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern void FT_Stroker_Set(IntPtr stroker, int radius, StrokerLineCap line_cap, StrokerLineJoin line_join, int miter_limit);
+		internal static extern void FT_Stroker_Set(IntPtr stroker, int radius, StrokerLineCap line_cap, StrokerLineJoin line_join, Fixed16Dot16 miter_limit);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern void FT_Stroker_Rewind(IntPtr stroker);

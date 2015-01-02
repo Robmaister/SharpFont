@@ -44,22 +44,22 @@ namespace SharpFont
 		/// <summary>
 		/// The angle pi expressed in FT_Angle units.
 		/// </summary>
-		public const int AnglePI = 180 << 16;
+		public static readonly Fixed16Dot16 AnglePI = new Fixed16Dot16(180);
 
 		/// <summary>
 		/// The angle 2*pi expressed in FT_Angle units.
 		/// </summary>
-		public const int Angle2PI = AnglePI * 2;
+		public static readonly Fixed16Dot16 Angle2PI = new Fixed16Dot16(360);
 
 		/// <summary>
 		/// The angle pi/2 expressed in FT_Angle units.
 		/// </summary>
-		public const int AnglePI2 = AnglePI / 2;
+		public static readonly Fixed16Dot16 AnglePI2 = new Fixed16Dot16(90);
 
 		/// <summary>
 		/// The angle pi/4 expressed in FT_Angle units.
 		/// </summary>
-		public const int AnglePI4 = AnglePI / 4;
+		public static readonly Fixed16Dot16 AnglePI4 = new Fixed16Dot16(45);
 
 		/// <summary><para>
 		/// A very simple function used to perform the computation ‘(a*b)/c’ with maximal accuracy (it uses a 64-bit
@@ -75,7 +75,7 @@ namespace SharpFont
 		/// The result of ‘(a*b)/c’. This function never traps when trying to divide by zero; it simply returns
 		/// ‘MaxInt’ or ‘MinInt’ depending on the signs of ‘a’ and ‘b’.
 		/// </returns>
-		public static int MulDiv(int a, int b, int c)
+		public static Fixed16Dot16 MulDiv(Fixed16Dot16 a, Fixed16Dot16 b, Fixed16Dot16 c)
 		{
 			return FT_MulDiv(a, b, c);
 		}
@@ -95,9 +95,9 @@ namespace SharpFont
 		/// <param name="a">The first multiplier.</param>
 		/// <param name="b">The second multiplier. Use a 16.16 factor here whenever possible (see note below).</param>
 		/// <returns>The result of ‘(a*b)/0x10000’.</returns>
-		public static int MulFix(int a, int b)
+		public static Fixed16Dot16 MulFix(int a, Fixed16Dot16 b)
 		{
-			return FT_MulFix(a, b);
+			return FT_MulFix((IntPtr)a, b);
 		}
 
 		/// <summary>
@@ -111,9 +111,9 @@ namespace SharpFont
 		/// <param name="a">The first multiplier.</param>
 		/// <param name="b">The second multiplier. Use a 16.16 factor here whenever possible (see note below).</param>
 		/// <returns>The result of ‘(a*0x10000)/b’.</returns>
-		public static int DivFix(int a, int b)
+		public static Fixed16Dot16 DivFix(int a, Fixed16Dot16 b)
 		{
-			return FT_DivFix(a, b);
+			return FT_DivFix((IntPtr)a, b);
 		}
 
 		/// <summary>
@@ -121,7 +121,8 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="a">The number to be rounded.</param>
 		/// <returns>The result of ‘(a + 0x8000) &amp; -0x10000’.</returns>
-		public static int RoundFix(int a)
+		[Obsolete("Use Fixed16Dot16.RoundFix() instead.")]
+		public static Fixed16Dot16 RoundFix(Fixed16Dot16 a)
 		{
 			return FT_RoundFix(a);
 		}
@@ -131,7 +132,8 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="a">The number for which the ceiling function is to be computed.</param>
 		/// <returns>The result of ‘(a + 0x10000 - 1) &amp; -0x10000’.</returns>
-		public static int CeilFix(int a)
+		[Obsolete("Use Fixed16Dot16.CeilingFix() instead.")]
+		public static Fixed16Dot16 CeilFix(Fixed16Dot16 a)
 		{
 			return FT_CeilFix(a);
 		}
@@ -141,7 +143,8 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="a">The number for which the floor function is to be computed.</param>
 		/// <returns>The result of ‘a &amp; -0x10000’.</returns>
-		public static int FloorFix(int a)
+		[Obsolete("Use Fixed16Dot16.FloorFix() instead.")]
+		public static Fixed16Dot16 FloorFix(Fixed16Dot16 a)
 		{
 			return FT_FloorFix(a);
 		}
@@ -154,7 +157,7 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="angle">The input angle.</param>
 		/// <returns>The sinus value.</returns>
-		public static int Sin(int angle)
+		public static Fixed16Dot16 Sin(Fixed16Dot16 angle)
 		{
 			return FT_Sin(angle);
 		}
@@ -167,7 +170,7 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="angle">The input angle.</param>
 		/// <returns>The cosinus value.</returns>
-		public static int Cos(int angle)
+		public static Fixed16Dot16 Cos(Fixed16Dot16 angle)
 		{
 			return FT_Cos(angle);
 		}
@@ -177,7 +180,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="angle">The input angle.</param>
 		/// <returns>The tangent value.</returns>
-		public static int Tan(int angle)
+		public static Fixed16Dot16 Tan(Fixed16Dot16 angle)
 		{
 			return FT_Tan(angle);
 		}
@@ -188,7 +191,7 @@ namespace SharpFont
 		/// <param name="x">The horizontal vector coordinate.</param>
 		/// <param name="y">The vertical vector coordinate.</param>
 		/// <returns>The arc-tangent value (i.e. angle).</returns>
-		public static int Atan2(int x, int y)
+		public static Fixed16Dot16 Atan2(Fixed16Dot16 x, Fixed16Dot16 y)
 		{
 			return FT_Atan2(x, y);
 		}
@@ -199,7 +202,7 @@ namespace SharpFont
 		/// <param name="angle1">First angle.</param>
 		/// <param name="angle2">Second angle.</param>
 		/// <returns>Constrained value of ‘value2-value1’.</returns>
-		public static int AngleDiff(int angle1, int angle2)
+		public static Fixed16Dot16 AngleDiff(Fixed16Dot16 angle1, Fixed16Dot16 angle2)
 		{
 			return FT_Angle_Diff(angle1, angle2);
 		}

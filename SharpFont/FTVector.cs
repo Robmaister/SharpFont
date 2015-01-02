@@ -143,7 +143,7 @@ namespace SharpFont
 		/// </para></summary>
 		/// <param name="angle">The address of angle.</param>
 		/// <returns>The address of target vector.</returns>
-		public static FTVector Unit(int angle)
+		public static FTVector Unit(Fixed16Dot16 angle)
 		{
 			FTVector vec;
 			FT.FT_Vector_Unit(out vec, angle);
@@ -157,7 +157,7 @@ namespace SharpFont
 		/// <param name="length">The vector length.</param>
 		/// <param name="angle">The vector angle.</param>
 		/// <returns>The address of source vector.</returns>
-		public static FTVector FromPolar(int length, int angle)
+		public static FTVector FromPolar(Fixed16Dot16 length, Fixed16Dot16 angle)
 		{
 			FTVector vec;
 			FT.FT_Vector_From_Polar(out vec, length, angle);
@@ -181,7 +181,7 @@ namespace SharpFont
 		/// Rotate a vector by a given angle.
 		/// </summary>
 		/// <param name="angle">The address of angle.</param>
-		public void Rotate(int angle)
+		public void Rotate(Fixed16Dot16 angle)
 		{
 			FT.FT_Vector_Rotate(ref this, angle);
 		}
@@ -190,7 +190,7 @@ namespace SharpFont
 		/// Return the length of a given vector.
 		/// </summary>
 		/// <returns>The vector length, expressed in the same units that the original vector coordinates.</returns>
-		public int Length()
+		public Fixed16Dot16 Length()
 		{
 			return FT.FT_Vector_Length(ref this);
 		}
@@ -200,7 +200,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="length">The vector length.</param>
 		/// <param name="angle">The vector angle.</param>
-		public void Polarize(out int length, out int angle)
+		public void Polarize(out Fixed16Dot16 length, out Fixed16Dot16 angle)
 		{
 			FT.FT_Vector_Polarize(ref this, out length, out angle);
 		}

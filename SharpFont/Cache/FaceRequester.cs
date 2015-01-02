@@ -36,7 +36,7 @@ namespace SharpFont.Cache
 	/// <see cref="Manager(Library, uint, uint, ulong, FaceRequester, IntPtr)"/> is called.
 	/// </para><para>
 	/// The face requester should not perform funny things on the returned face object, like creating a new
-	/// <see cref="FTSize"/> for it, or setting a transformation through <see cref="Face.SetTransform"/>!
+	/// <see cref="FTSize"/> for it, or setting a transformation through <see cref="Face.SetTransform()"/>!
 	/// </para></remarks>
 	/// <param name="faceId">The face ID to resolve.</param>
 	/// <param name="library">A handle to a FreeType library object.</param>

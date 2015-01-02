@@ -94,11 +94,11 @@ namespace SharpFont
 		/// Gets a 16.16 fractional scaling value used to convert horizontal metrics from font units to 26.6 fractional
 		/// pixels. Only relevant for scalable font formats.
 		/// </summary>
-		public int ScaleX
+		public Fixed16Dot16 ScaleX
 		{
 			get
 			{
-				return (int)rec.x_scale;
+				return Fixed16Dot16.FromRawValue((int)rec.x_scale);
 			}
 		}
 
@@ -106,11 +106,11 @@ namespace SharpFont
 		/// Gets a 16.16 fractional scaling value used to convert vertical metrics from font units to 26.6 fractional
 		/// pixels. Only relevant for scalable font formats.
 		/// </summary>
-		public int ScaleY
+		public Fixed16Dot16 ScaleY
 		{
 			get
 			{
-				return (int)rec.y_scale;
+				return Fixed16Dot16.FromRawValue((int)rec.y_scale);
 			}
 		}
 

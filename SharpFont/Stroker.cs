@@ -118,7 +118,7 @@ namespace SharpFont
 		/// The miter limit for the <see cref="StrokerLineJoin.MiterFixed"/> and
 		/// <see cref="StrokerLineJoin.MiterVariable"/> line join styles, expressed as 16.16 fixed point value.
 		/// </param>
-		public void Set(int radius, StrokerLineCap lineCap, StrokerLineJoin lineJoin, int miterLimit)
+		public void Set(int radius, StrokerLineCap lineCap, StrokerLineJoin lineJoin, Fixed16Dot16 miterLimit)
 		{
 			if (disposed)
 				throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");

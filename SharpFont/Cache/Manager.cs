@@ -159,7 +159,7 @@ namespace SharpFont.Cache
 		/// The <see cref="Face"/> object doesn't necessarily have a current size object (i.e., <see cref="Face.Size"/>
 		/// can be 0). If you need a specific ‘font size’, use <see cref="Manager.LookupSize"/> instead.
 		/// </para><para>
-		/// Never change the face's transformation matrix (i.e., never call the <see cref="Face.SetTransform"/>
+		/// Never change the face's transformation matrix (i.e., never call the <see cref="Face.SetTransform()"/>
 		/// function) on a returned face! If you need to transform glyphs, do it yourself after glyph loading.
 		/// </para><para>
 		/// When you perform a lookup, out-of-memory errors are detected within the lookup and force incremental

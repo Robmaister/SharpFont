@@ -923,7 +923,7 @@ namespace SharpFont
 		/// A function used to load a single glyph into the glyph slot of a face object.
 		/// </summary>
 		/// <remarks><para>
-		/// The loaded glyph may be transformed. See <see cref="SetTransform"/> for the details.
+		/// The loaded glyph may be transformed. See <see cref="SetTransform()"/> for the details.
 		/// </para><para>
 		/// For subsetted CID-keyed fonts, <see cref="Error.InvalidArgument"/> is returned for invalid CID values (this
 		/// is, for CID values which don't have a corresponding glyph in the font). See the discussion of the
@@ -1107,12 +1107,12 @@ namespace SharpFont
 		/// <param name="pointSize">The point size in 16.16 fractional points.</param>
 		/// <param name="degree">The degree of tightness.</param>
 		/// <returns>The kerning in 16.16 fractional points.</returns>
-		public int GetTrackKerning(int pointSize, int degree)
+		public Fixed16Dot16 GetTrackKerning(Fixed16Dot16 pointSize, int degree)
 		{
 			if (disposed)
 				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
 
-			int kerning;
+			Fixed16Dot16 kerning;
 
 			Error err = FT.FT_Get_Track_Kerning(Reference, pointSize, degree, out kerning);
 
@@ -2028,7 +2028,7 @@ namespace SharpFont
 		/// Same as ‘ametrics_x_scale’ but for the vertical direction. optional (parameter can be NULL).
 		/// </param>
 		[CLSCompliant(false)]
-		public void GetPfrMetrics(out uint outlineResolution, out uint metricsResolution, out int metricsXScale, out int metricsYScale)
+		public void GetPfrMetrics(out uint outlineResolution, out uint metricsResolution, out Fixed16Dot16 metricsXScale, out Fixed16Dot16 metricsYScale)
 		{
 			Error err = FT.FT_Get_PFR_Metrics(Reference, out outlineResolution, out metricsResolution, out metricsXScale, out metricsYScale);
 
@@ -2152,7 +2152,7 @@ namespace SharpFont
 		/// backend doesn't have a quick way to retrieve the advances.
 		/// </para><para>
 		/// A scaled advance is returned in 16.16 format but isn't transformed by the affine transformation specified
-		/// by <see cref="SetTransform"/>.
+		/// by <see cref="SetTransform()"/>.
 		/// </para></remarks>
 		/// <param name="glyphIndex">The glyph index.</param>
 		/// <param name="flags">
@@ -2190,7 +2190,7 @@ namespace SharpFont
 		/// </para><para>
 		/// Scaled advances are returned in 16.16 format but aren't transformed
 		/// by the affine transformation specified by
-		/// <see cref="SetTransform"/>.
+		/// <see cref="SetTransform()"/>.
 		/// </para></remarks>
 		/// <param name="start">The first glyph index.</param>
 		/// <param name="count">The number of advance values you want to retrieve.</param>

@@ -88,64 +88,64 @@ namespace SharpFont
 		/// <summary>
 		/// Gets or sets the matrix coefficient.
 		/// </summary>
-		public int XX
+		public Fixed16Dot16 XX
 		{
 			get
 			{
-				return (int)xx;
+				return Fixed16Dot16.FromRawValue((int)xx);
 			}
 
 			set
 			{
-				xx = (IntPtr)value;
+				xx = (IntPtr)value.Value;
 			}
 		}
 
 		/// <summary>
 		/// Gets or sets the matrix coefficient.
 		/// </summary>
-		public int XY
+		public Fixed16Dot16 XY
 		{
 			get
 			{
-				return (int)xy;
+				return Fixed16Dot16.FromRawValue((int)xy);
 			}
 
 			set
 			{
-				xy = (IntPtr)value;
+				xy = (IntPtr)value.Value;
 			}
 		}
 
 		/// <summary>
 		/// Gets or sets the matrix coefficient.
 		/// </summary>
-		public int YX
+		public Fixed16Dot16 YX
 		{
 			get
 			{
-				return (int)yx;
+				return Fixed16Dot16.FromRawValue((int)yx);
 			}
 
 			set
 			{
-				yx = (IntPtr)value;
+				yx = (IntPtr)value.Value;
 			}
 		}
 
 		/// <summary>
 		/// Gets or sets the matrix coefficient.
 		/// </summary>
-		public int YY
+		public Fixed16Dot16 YY
 		{
 			get
 			{
-				return (int)yy;
+				return Fixed16Dot16.FromRawValue((int)yy);
 			}
 
 			set
 			{
-				yy = (IntPtr)value;
+				yy = (IntPtr)value.Value;
 			}
 		}
 

@@ -25,10 +25,7 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
 using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 
 namespace SharpFont.TrueType.Internal
@@ -36,7 +33,7 @@ namespace SharpFont.TrueType.Internal
 	[StructLayout(LayoutKind.Sequential)]
 	internal class MaxProfileRec
 	{
-		internal FT_Fixed version;
+		internal FT_Long version;
 		internal ushort numGlyphs;
 		internal ushort maxPoints;
 		internal ushort maxContours;

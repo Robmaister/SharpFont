@@ -25,10 +25,7 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
 using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 
 namespace SharpFont.Internal
@@ -39,11 +36,11 @@ namespace SharpFont.Internal
 		internal ushort x_ppem;
 		internal ushort y_ppem;
 
-		internal FT_Fixed x_scale;
-		internal FT_Fixed y_scale;
-		internal FT_Pos ascender;
-		internal FT_Pos descender;
-		internal FT_Pos height;
-		internal FT_Pos max_advance;
+		internal FT_Long x_scale;
+		internal FT_Long y_scale;
+		internal FT_Long ascender;
+		internal FT_Long descender;
+		internal FT_Long height;
+		internal FT_Long max_advance;
 	}
 }

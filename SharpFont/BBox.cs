@@ -25,10 +25,7 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
 using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 
 namespace SharpFont
@@ -42,8 +39,8 @@ namespace SharpFont
 	{
 		#region Fields
 
-		private FT_Pos xMin, yMin;
-		private FT_Pos xMax, yMax;
+		private FT_Long xMin, yMin;
+		private FT_Long xMax, yMax;
 
 		#endregion
 

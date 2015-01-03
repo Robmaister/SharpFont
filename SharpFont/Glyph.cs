@@ -318,7 +318,7 @@ namespace SharpFont
 		/// A boolean that indicates that the original glyph image should be destroyed by this function. It is never
 		/// destroyed in case of error.
 		/// </param>
-		public void ToBitmap(RenderMode renderMode, FTVector origin, bool destroy)
+		public void ToBitmap(RenderMode renderMode, FTVector26Dot6 origin, bool destroy)
 		{
 			if (disposed)
 				throw new ObjectDisposedException("Glyph", "Cannot access a disposed object.");

@@ -164,11 +164,11 @@ namespace SharpFont
 		/// <see cref="LoadFlags.LinearDesign"/> is set when loading the glyph. This field can be important to perform
 		/// correct WYSIWYG layout. Only relevant for outline glyphs.
 		/// </summary>
-		public int LinearHorizontalAdvance
+		public Fixed16Dot16 LinearHorizontalAdvance
 		{
 			get
 			{
-				return (int)rec.linearHoriAdvance;
+				return Fixed16Dot16.FromRawValue((int)rec.linearHoriAdvance);
 			}
 		}
 
@@ -177,11 +177,11 @@ namespace SharpFont
 		/// <see cref="LoadFlags.LinearDesign"/> is set when loading the glyph. This field can be important to perform
 		/// correct WYSIWYG layout. Only relevant for outline glyphs.
 		/// </summary>
-		public int LinearVerticalAdvance
+		public Fixed16Dot16 LinearVerticalAdvance
 		{
 			get
 			{
-				return (int)rec.linearVertAdvance;
+				return Fixed16Dot16.FromRawValue((int)rec.linearVertAdvance);
 			}
 		}
 
@@ -191,7 +191,7 @@ namespace SharpFont
 		/// <see cref="LoadFlags.VerticalLayout"/>, it uses either the ‘horiAdvance’ or the ‘vertAdvance’ value of
 		/// ‘metrics’ field.
 		/// </summary>
-		public FTVector Advance
+		public FTVector26Dot6 Advance
 		{
 			get
 			{

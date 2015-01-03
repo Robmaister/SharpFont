@@ -25,10 +25,7 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
 using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 
 namespace SharpFont.Internal
@@ -41,8 +38,6 @@ namespace SharpFont.Internal
 		internal IntPtr conicTo;
 		internal IntPtr cubicTo;
 		internal int shift;
-		internal FT_Pos delta;
-
-		internal static int SizeInBytes { get { return IntPtr.Size * 4 + sizeof(int) + Marshal.SizeOf(typeof(FT_Pos)); } }
+		internal FT_Long delta;
 	}
 }

@@ -72,7 +72,7 @@ namespace Examples
 						Console.WriteLine("Style: " + face.StyleName);
 						Console.WriteLine("Style flags: " + face.StyleFlags);
 
-						face.SetCharSize(0, 32 * 64, 0, 96);
+						face.SetCharSize(0, 32, 0, 96);
 
 						Console.WriteLine("\nWriting string \"Hello World!\":");
 						Bitmap bmp = RenderString(face, "Hello World!");
@@ -105,16 +105,16 @@ namespace Examples
 				uint glyphIndex = face.GetCharIndex(c);
 				face.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
 
-				width += (int)face.Glyph.Advance.X >> 6;
+				width += (int)face.Glyph.Advance.X;
 
 				if (face.HasKerning && i < text.Length - 1)
 				{
 					char cNext = text[i + 1];
-					width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
+					width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X;
 				}
 
-				if (face.Glyph.Metrics.Height >> 6 > height)
-					height = (int)face.Glyph.Metrics.Height >> 6;
+				if ((int)face.Glyph.Metrics.Height > height)
+					height = (int)face.Glyph.Metrics.Height;
 			}
 
 			//create a new bitmap that fits the string.
@@ -133,28 +133,28 @@ namespace Examples
 
 				if (c == ' ')
 				{
-					penX += (int)face.Glyph.Advance.X >> 6;
+					penX += (int)face.Glyph.Advance.X;
 
 					if (face.HasKerning && i < text.Length - 1)
 					{
 						char cNext = text[i + 1];
-						width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
+						width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X;
 					}
 
-					penY += (int)face.Glyph.Advance.Y >> 6;
+					penY += (int)face.Glyph.Advance.Y;
 					continue;
 				}
 
 				Bitmap cBmp = face.Glyph.Bitmap.ToGdipBitmap(Color.Firebrick);
 				g.DrawImageUnscaled(cBmp, penX, penY + (bmp.Height - face.Glyph.Bitmap.Rows));
 
-				penX += (int)face.Glyph.Advance.X >> 6;
-				penY += (int)face.Glyph.Advance.Y >> 6;
+				penX += (int)face.Glyph.Advance.X;
+				penY += (int)face.Glyph.Advance.Y;
 
 				if (face.HasKerning && i < text.Length - 1)
 				{
 					char cNext = text[i + 1];
-					penX += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X >> 6;
+					penX += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X;
 				}
 			}
 

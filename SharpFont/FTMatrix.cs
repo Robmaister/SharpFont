@@ -27,12 +27,6 @@ using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
 
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
-using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
-using FT_ULong = System.UIntPtr;
-
 namespace SharpFont
 {
 	/// <summary>
@@ -48,8 +42,8 @@ namespace SharpFont
 	{
 		#region Fields
 
-		private FT_Fixed xx, xy;
-		private FT_Fixed yx, yy;
+		private IntPtr xx, xy;
+		private IntPtr yx, yy;
 
 		#endregion
 
@@ -77,7 +71,7 @@ namespace SharpFont
 		/// <param name="row0">Matrix coefficients XX, XY.</param>
 		/// <param name="row1">Matrix coefficients YX, YY.</param>
 		public FTMatrix(FTVector row0, FTVector row1)
-			: this(row0.X, row0.Y, row1.X, row1.Y)
+			: this(row0.X.Value, row0.Y.Value, row1.X.Value, row1.Y.Value)
 		{
 		}
 

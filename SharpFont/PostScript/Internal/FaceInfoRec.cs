@@ -27,10 +27,7 @@ using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
 
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
 using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 
 namespace SharpFont.PostScript.Internal
@@ -40,7 +37,7 @@ namespace SharpFont.PostScript.Internal
 	{
 		[MarshalAs(UnmanagedType.LPStr)]
 		internal string cid_font_name;
-		internal FT_Fixed cid_version;
+		internal FT_Long cid_version;
 		internal int cid_font_type;
 
 		[MarshalAs(UnmanagedType.LPStr)]

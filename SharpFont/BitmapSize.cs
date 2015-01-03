@@ -96,33 +96,33 @@ namespace SharpFont
 		/// Gets the nominal size of the strike in 26.6 fractional points. This
 		/// field is not very useful.
 		/// </summary>
-		public int Size
+		public Fixed26Dot6 Size
 		{
 			get
 			{
-				return (int)rec.size;
+				return Fixed26Dot6.FromRawValue((int)rec.size);
 			}
 		}
 
 		/// <summary>
 		/// Gets the horizontal ppem (nominal width) in 26.6 fractional pixels.
 		/// </summary>
-		public int NominalWidth
+		public Fixed26Dot6 NominalWidth
 		{
 			get
 			{
-				return (int)rec.x_ppem;
+				return Fixed26Dot6.FromRawValue((int)rec.x_ppem);
 			}
 		}
 
 		/// <summary>
 		/// Gets the vertical ppem (nominal height) in 26.6 fractional pixels.
 		/// </summary>
-		public int NominalHeight
+		public Fixed26Dot6 NominalHeight
 		{
 			get
 			{
-				return (int)rec.y_ppem;
+				return Fixed26Dot6.FromRawValue((int)rec.y_ppem);
 			}
 		}
 

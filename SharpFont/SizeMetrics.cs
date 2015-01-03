@@ -118,11 +118,11 @@ namespace SharpFont
 		/// Gets the ascender in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
-		public int Ascender
+		public Fixed26Dot6 Ascender
 		{
 			get
 			{
-				return (int)rec.ascender;
+				return Fixed26Dot6.FromRawValue((int)rec.ascender);
 			}
 		}
 
@@ -130,11 +130,11 @@ namespace SharpFont
 		/// Gets the descender in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
-		public int Descender
+		public Fixed26Dot6 Descender
 		{
 			get
 			{
-				return (int)rec.descender;
+				return Fixed26Dot6.FromRawValue((int)rec.descender);
 			}
 		}
 
@@ -142,11 +142,11 @@ namespace SharpFont
 		/// Gets the height in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
-		public int Height
+		public Fixed26Dot6 Height
 		{
 			get
 			{
-				return (int)rec.height;
+				return Fixed26Dot6.FromRawValue((int)rec.height);
 			}
 		}
 
@@ -154,11 +154,11 @@ namespace SharpFont
 		/// Gets the maximal advance width in 26.6 fractional pixels.
 		/// </summary>
 		/// <see cref="Face"/>
-		public int MaxAdvance
+		public Fixed26Dot6 MaxAdvance
 		{
 			get
 			{
-				return (int)rec.max_advance;
+				return Fixed26Dot6.FromRawValue((int)rec.max_advance);
 			}
 		}
 

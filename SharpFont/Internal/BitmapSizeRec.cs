@@ -25,10 +25,7 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
 using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 
 namespace SharpFont.Internal
@@ -45,10 +42,10 @@ namespace SharpFont.Internal
 		internal short height;
 		internal short width;
 
-		internal FT_Pos size;
+		internal FT_Long size;
 
-		internal FT_Pos x_ppem;
-		internal FT_Pos y_ppem;
+		internal FT_Long x_ppem;
+		internal FT_Long y_ppem;
 
 		internal static int SizeInBytes { get { return Marshal.SizeOf(typeof(BitmapSizeRec)); } }
 	}

@@ -27,10 +27,7 @@ using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
 
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
 using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 
 namespace SharpFont.PostScript.Internal
@@ -41,9 +38,9 @@ namespace SharpFont.PostScript.Internal
 		internal PrivateRec private_dict;
 
 		internal uint len_buildchar;
-		internal FT_Fixed forcebold_threshold;
-		internal FT_Pos stroke_width;
-		internal FT_Fixed expansion_factor;
+		internal FT_Long forcebold_threshold;
+		internal FT_Long stroke_width;
+		internal FT_Long expansion_factor;
 
 		internal byte paint_type;
 		internal byte font_type;

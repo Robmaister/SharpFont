@@ -56,6 +56,7 @@
     <Compile Include="ClassicKernValidationFlags.cs" />
     <Compile Include="Fixed16Dot16.cs" />
     <Compile Include="Fixed26Dot6.cs" />
+    <Compile Include="Fixed2Dot14.cs" />
     <Compile Include="FTBitmap.cs" />
     <Compile Include="BitmapGlyph.cs" />
     <Compile Include="BitmapSize.cs" />
@@ -82,6 +83,8 @@
     <Compile Include="Fnt\Header.cs" />
     <Compile Include="Fnt\Internal\HeaderRec.cs" />
     <Compile Include="FTList.cs" />
+    <Compile Include="FTUnitVector.cs" />
+    <Compile Include="FTVector26Dot6.cs" />
     <Compile Include="GlyphToScriptMapProperty.cs" />
     <Compile Include="IncreaseXHeightProperty.cs" />
     <Compile Include="Internal\BitmapGlyphRec.cs" />

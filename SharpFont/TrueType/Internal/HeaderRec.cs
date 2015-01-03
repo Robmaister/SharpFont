@@ -25,10 +25,7 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
 using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 
 namespace SharpFont.TrueType.Internal
@@ -36,8 +33,8 @@ namespace SharpFont.TrueType.Internal
 	[StructLayout(LayoutKind.Sequential)]
 	internal class HeaderRec
 	{
-		internal FT_Fixed Table_Version;
-		internal FT_Fixed Font_Revision;
+		internal FT_Long Table_Version;
+		internal FT_Long Font_Revision;
 
 		internal FT_Long Checksum_Adjust;
 		internal FT_Long Magic_Number;

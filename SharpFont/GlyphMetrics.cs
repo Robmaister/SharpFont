@@ -36,7 +36,7 @@ namespace SharpFont
 	/// </summary>
 	/// <remarks>
 	/// If not disabled with <see cref="LoadFlags.NoHinting"/>, the values represent dimensions of the hinted glyph (in
-	/// case hinting is applicable).
+	/// case hinting is applicable). 
 	/// </remarks>
 	public sealed class GlyphMetrics
 	{
@@ -64,92 +64,100 @@ namespace SharpFont
 		#region Properties
 
 		/// <summary>
-		/// Gets the glyph's width.
+		/// Gets the glyph's width. If getting metrics from a face loaded with <see cref="LoadFlags.NoScale"/>, call
+		/// <see cref="Fixed26Dot6.Value"/> to get the unscaled value.
 		/// </summary>
-		public int Width
+		public Fixed26Dot6 Width
 		{
 			get
 			{
-				return (int)rec.width;
+				return Fixed26Dot6.FromRawValue((int)rec.width);
 			}
 		}
 
 		/// <summary>
-		/// Gets the glyph's height.
+		/// Gets the glyph's height. If getting metrics from a face loaded with <see cref="LoadFlags.NoScale"/>, call
+		/// <see cref="Fixed26Dot6.Value"/> to get the unscaled value.
 		/// </summary>
-		public int Height
+		public Fixed26Dot6 Height
 		{
 			get
 			{
-				return (int)rec.height;
+				return Fixed26Dot6.FromRawValue((int)rec.height);
 			}
 		}
 
 		/// <summary>
-		/// Gets the left side bearing for horizontal layout.
+		/// Gets the left side bearing for horizontal layout. If getting metrics from a face loaded with
+		/// <see cref="LoadFlags.NoScale"/>, call <see cref="Fixed26Dot6.Value"/> to get the unscaled value.
 		/// </summary>
-		public int HorizontalBearingX
+		public Fixed26Dot6 HorizontalBearingX
 		{
 			get
 			{
-				return (int)rec.horiBearingX;
+				return Fixed26Dot6.FromRawValue((int)rec.horiBearingX);
 			}
 		}
 
 		/// <summary>
-		/// Gets the top side bearing for horizontal layout.
+		/// Gets the top side bearing for horizontal layout. If getting metrics from a face loaded with
+		/// <see cref="LoadFlags.NoScale"/>, call <see cref="Fixed26Dot6.Value"/> to get the unscaled value.
 		/// </summary>
-		public int HorizontalBearingY
+		public Fixed26Dot6 HorizontalBearingY
 		{
 			get
 			{
-				return (int)rec.horiBearingY;
+				return Fixed26Dot6.FromRawValue((int)rec.horiBearingY);
 			}
 		}
 
 		/// <summary>
-		/// Gets the advance width for horizontal layout.
+		/// Gets the advance width for horizontal layout. If getting metrics from a face loaded with
+		/// <see cref="LoadFlags.NoScale"/>, call <see cref="Fixed26Dot6.Value"/> to get the unscaled value.
 		/// </summary>
-		public int HorizontalAdvance
+		public Fixed26Dot6 HorizontalAdvance
 		{
 			get
 			{
-				return (int)rec.horiAdvance;
+				return Fixed26Dot6.FromRawValue((int)rec.horiAdvance);
 			}
 		}
 
 		/// <summary>
-		/// Gets the left side bearing for vertical layout.
+		/// Gets the left side bearing for vertical layout. If getting metrics from a face loaded with
+		/// <see cref="LoadFlags.NoScale"/>, call <see cref="Fixed26Dot6.Value"/> to get the unscaled value.
 		/// </summary>
-		public int VerticalBearingX
+		public Fixed26Dot6 VerticalBearingX
 		{
 			get
 			{
-				return (int)rec.vertBearingX;
+				return Fixed26Dot6.FromRawValue((int)rec.vertBearingX);
 			}
 		}
 
 		/// <summary>
 		/// Gets the top side bearing for vertical layout. Larger positive values mean further below the vertical glyph
-		/// origin.
+		/// origin. If getting metrics from a face loaded with <see cref="LoadFlags.NoScale"/>, call
+		/// <see cref="Fixed26Dot6.Value"/> to get the unscaled value.
 		/// </summary>
-		public int VerticalBearingY
+		public Fixed26Dot6 VerticalBearingY
 		{
 			get
 			{
-				return (int)rec.vertBearingY;
+				return Fixed26Dot6.FromRawValue((int)rec.vertBearingY);
 			}
 		}
 
 		/// <summary>
 		/// Gets the advance height for vertical layout. Positive values mean the glyph has a positive advance
-		/// downward.
+		/// downward. If getting metrics from a face loaded with <see cref="LoadFlags.NoScale"/>, call
+		/// <see cref="Fixed26Dot6.Value"/> to get the unscaled value.
 		/// </summary>
-		public int VerticalAdvance
+		public Fixed26Dot6 VerticalAdvance
 		{
 			get
 			{
-				return (int)rec.vertAdvance;
+				return Fixed26Dot6.FromRawValue((int)rec.vertAdvance);
 			}
 		}
 

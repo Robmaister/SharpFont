@@ -359,12 +359,12 @@ namespace SharpFont
 		/// 	FT_Outline_Embolden( &amp;face-&gt;slot-&gt;outline, strength );
 		/// </example>
 		/// <param name="strength">How strong the glyph is emboldened. Expressed in 26.6 pixel format.</param>
-		public void Embolden(int strength)
+		public void Embolden(Fixed26Dot6 strength)
 		{
 			if (disposed)
 				throw new ObjectDisposedException("Outline", "Cannot access a disposed object.");
 
-			Error err = FT.FT_Outline_Embolden(reference, strength);
+			Error err = FT.FT_Outline_Embolden(reference, (IntPtr)strength.Value);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);

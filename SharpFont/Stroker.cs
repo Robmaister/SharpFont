@@ -123,7 +123,7 @@ namespace SharpFont
 			if (disposed)
 				throw new ObjectDisposedException("Stroker", "Cannot access a disposed object.");
 
-			FT.FT_Stroker_Set(Reference, radius, lineCap, lineJoin, miterLimit);
+			FT.FT_Stroker_Set(Reference, radius, lineCap, lineJoin, (IntPtr)miterLimit.Value);
 		}
 
 		/// <summary>

@@ -25,10 +25,7 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
 using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 
 namespace SharpFont.MultipleMasters.Internal
@@ -39,9 +36,9 @@ namespace SharpFont.MultipleMasters.Internal
 		[MarshalAs(UnmanagedType.LPStr)]
 		internal string name;
 
-		internal FT_Fixed minimum;
-		internal FT_Fixed def;
-		internal FT_Fixed maximum;
+		internal FT_Long minimum;
+		internal FT_Long def;
+		internal FT_Long maximum;
 
 		internal FT_ULong tag;
 		internal uint strid;

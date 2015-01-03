@@ -25,10 +25,7 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
 using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 
 namespace SharpFont.TrueType.Internal
@@ -36,8 +33,8 @@ namespace SharpFont.TrueType.Internal
 	[StructLayout(LayoutKind.Sequential)]
 	internal class PostscriptRec
 	{
-		internal FT_Fixed FormatType;
-		internal FT_Fixed italicAngle;
+		internal FT_Long FormatType;
+		internal FT_Long italicAngle;
 		internal short underlinePosition;
 		internal short underlineThickness;
 		internal FT_ULong isFixedPitch;

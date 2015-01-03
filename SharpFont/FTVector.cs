@@ -27,12 +27,6 @@ using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
 
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
-using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
-using FT_ULong = System.UIntPtr;
-
 namespace SharpFont
 {
 	/// <summary>
@@ -55,11 +49,11 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="x">The horizontal coordinate.</param>
 		/// <param name="y">The vertical coordinate.</param>
-		public FTVector(int x, int y)
+		public FTVector(Fixed16Dot16 x, Fixed16Dot16 y)
 			: this()
 		{
-			this.x = (IntPtr)x;
-			this.y = (IntPtr)y;
+			this.x = (IntPtr)x.Value;
+			this.y = (IntPtr)y.Value;
 		}
 
 		internal FTVector(IntPtr reference)
@@ -76,32 +70,32 @@ namespace SharpFont
 		/// <summary>
 		/// Gets or sets the horizontal coordinate.
 		/// </summary>
-		public int X
+		public Fixed16Dot16 X
 		{
 			get
 			{
-				return (int)x;
+				return Fixed16Dot16.FromRawValue((int)x);
 			}
 
 			set
 			{
-				x = (IntPtr)value;
+				x = (IntPtr)value.Value;
 			}
 		}
 
 		/// <summary>
 		/// Gets or sets the vertical coordinate.
 		/// </summary>
-		public int Y
+		public Fixed16Dot16 Y
 		{
 			get
 			{
-				return (int)y;
+				return Fixed16Dot16.FromRawValue((int)y);
 			}
 
 			set
 			{
-				y = (IntPtr)value;
+				y = (IntPtr)value.Value;
 			}
 		}
 
@@ -146,7 +140,7 @@ namespace SharpFont
 		public static FTVector Unit(Fixed16Dot16 angle)
 		{
 			FTVector vec;
-			FT.FT_Vector_Unit(out vec, angle);
+			FT.FT_Vector_Unit(out vec, (IntPtr)angle.Value);
 
 			return vec;
 		}
@@ -160,7 +154,7 @@ namespace SharpFont
 		public static FTVector FromPolar(Fixed16Dot16 length, Fixed16Dot16 angle)
 		{
 			FTVector vec;
-			FT.FT_Vector_From_Polar(out vec, length, angle);
+			FT.FT_Vector_From_Polar(out vec, (IntPtr)length.Value, (IntPtr)angle.Value);
 
 			return vec;
 		}
@@ -183,7 +177,7 @@ namespace SharpFont
 		/// <param name="angle">The address of angle.</param>
 		public void Rotate(Fixed16Dot16 angle)
 		{
-			FT.FT_Vector_Rotate(ref this, angle);
+			FT.FT_Vector_Rotate(ref this, (IntPtr)angle.Value);
 		}
 
 		/// <summary>
@@ -192,7 +186,7 @@ namespace SharpFont
 		/// <returns>The vector length, expressed in the same units that the original vector coordinates.</returns>
 		public Fixed16Dot16 Length()
 		{
-			return FT.FT_Vector_Length(ref this);
+			return Fixed16Dot16.FromRawValue((int)FT.FT_Vector_Length(ref this));
 		}
 
 		/// <summary>
@@ -202,7 +196,11 @@ namespace SharpFont
 		/// <param name="angle">The vector angle.</param>
 		public void Polarize(out Fixed16Dot16 length, out Fixed16Dot16 angle)
 		{
-			FT.FT_Vector_Polarize(ref this, out length, out angle);
+			IntPtr tmpLength, tmpAngle;
+			FT.FT_Vector_Polarize(ref this, out tmpLength, out tmpAngle);
+
+			length = Fixed16Dot16.FromRawValue((int)tmpLength);
+			angle =  Fixed16Dot16.FromRawValue((int)tmpAngle);
 		}
 
 		/// <summary>

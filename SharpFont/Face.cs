@@ -891,12 +891,12 @@ namespace SharpFont
 		/// <param name="horizontalResolution">The horizontal resolution in dpi.</param>
 		/// <param name="verticalResolution">The vertical resolution in dpi.</param>
 		[CLSCompliant(false)]
-		public void SetCharSize(int width, int height, uint horizontalResolution, uint verticalResolution)
+		public void SetCharSize(Fixed26Dot6 width, Fixed26Dot6 height, uint horizontalResolution, uint verticalResolution)
 		{
 			if (disposed)
 				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
 
-			Error err = FT.FT_Set_Char_Size(Reference, width, height, horizontalResolution, verticalResolution);
+			Error err = FT.FT_Set_Char_Size(Reference, (IntPtr)width.Value, (IntPtr)height.Value, horizontalResolution, verticalResolution);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -1112,14 +1112,14 @@ namespace SharpFont
 			if (disposed)
 				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
 
-			Fixed16Dot16 kerning;
+			IntPtr kerning;
 
-			Error err = FT.FT_Get_Track_Kerning(Reference, pointSize, degree, out kerning);
+			Error err = FT.FT_Get_Track_Kerning(Reference, (IntPtr)pointSize.Value, degree, out kerning);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return kerning;
+			return Fixed16Dot16.FromRawValue((int)kerning);
 		}
 
 		/// <summary>
@@ -2030,7 +2030,11 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public void GetPfrMetrics(out uint outlineResolution, out uint metricsResolution, out Fixed16Dot16 metricsXScale, out Fixed16Dot16 metricsYScale)
 		{
-			Error err = FT.FT_Get_PFR_Metrics(Reference, out outlineResolution, out metricsResolution, out metricsXScale, out metricsYScale);
+			IntPtr tmpXScale, tmpYScale;
+			Error err = FT.FT_Get_PFR_Metrics(Reference, out outlineResolution, out metricsResolution, out tmpXScale, out tmpYScale);
+
+			metricsXScale = Fixed16Dot16.FromRawValue((int)tmpXScale);
+			metricsYScale = Fixed16Dot16.FromRawValue((int)tmpYScale);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -2166,15 +2170,15 @@ namespace SharpFont
 		/// layout. Otherwise, it is the horizontal advance in a horizontal layout.
 		/// </para></returns>
 		[CLSCompliant(false)]
-		public int GetAdvance(uint glyphIndex, LoadFlags flags)
+		public Fixed16Dot16 GetAdvance(uint glyphIndex, LoadFlags flags)
 		{
-			int padvance;
+			IntPtr padvance;
 			Error err = FT.FT_Get_Advance(Reference, glyphIndex, flags, out padvance);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return padvance;
+			return Fixed16Dot16.FromRawValue((int)padvance);
 		}
 
 		/// <summary>
@@ -2199,7 +2203,7 @@ namespace SharpFont
 		/// </para><para>
 		/// If <see cref="LoadFlags.VerticalLayout"/> is set, these are the vertical advances corresponding to a vertical layout. Otherwise, they are the horizontal advances in a horizontal layout.</para></returns>
 		[CLSCompliant(false)]
-		public unsafe int[] GetAdvances(uint start, uint count, LoadFlags flags)
+		public unsafe Fixed16Dot16[] GetAdvances(uint start, uint count, LoadFlags flags)
 		{
 			IntPtr advPtr;
 			Error err = FT.FT_Get_Advances(Reference, start, count, flags, out advPtr);
@@ -2208,11 +2212,11 @@ namespace SharpFont
 				throw new FreeTypeException(err);
 
 			//create a new array and copy the data from the pointer over
-			int[] advances = new int[count];
-			int* ptr = (int*)advPtr;
+			Fixed16Dot16[] advances = new Fixed16Dot16[count];
+			IntPtr* ptr = (IntPtr*)advPtr;
 
 			for (int i = 0; i < count; i++)
-				advances[i] = ptr[i];
+				advances[i] = Fixed16Dot16.FromRawValue((int)ptr[i]);
 
 			return advances;
 		}

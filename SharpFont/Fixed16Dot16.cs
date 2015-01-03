@@ -35,7 +35,27 @@ namespace SharpFont
 	public struct Fixed16Dot16 : IEquatable<Fixed16Dot16>, IComparable<Fixed16Dot16>
 	{
 		#region Fields
-		
+
+		/// <summary>
+		/// The angle pi expressed in FT_Angle units.
+		/// </summary>
+		public static readonly Fixed16Dot16 AnglePI = new Fixed16Dot16(180);
+
+		/// <summary>
+		/// The angle 2*pi expressed in FT_Angle units.
+		/// </summary>
+		public static readonly Fixed16Dot16 Angle2PI = new Fixed16Dot16(360);
+
+		/// <summary>
+		/// The angle pi/2 expressed in FT_Angle units.
+		/// </summary>
+		public static readonly Fixed16Dot16 AnglePI2 = new Fixed16Dot16(90);
+
+		/// <summary>
+		/// The angle pi/4 expressed in FT_Angle units.
+		/// </summary>
+		public static readonly Fixed16Dot16 AnglePI4 = new Fixed16Dot16(45);
+
 		/// <summary>
 		/// The raw 16.16 integer.
 		/// </summary>
@@ -209,6 +229,26 @@ namespace SharpFont
 		#region Operators
 
 		/// <summary>
+		/// Casts a <see cref="System.Int16"/> to a <see cref="Fixed16Dot16"/>.
+		/// </summary>
+		/// <param name="value">A <see cref="System.Int16"/> value.</param>
+		/// <returns>The equivalent <see cref="Fixed16Dot16"/> value.</returns>
+		public static implicit operator Fixed16Dot16(short value)
+		{
+			return new Fixed16Dot16(value);
+		}
+
+		/// <summary>
+		/// Casts a <see cref="System.Int32"/> to a <see cref="Fixed16Dot16"/>.
+		/// </summary>
+		/// <param name="value">A <see cref="System.Int32"/> value.</param>
+		/// <returns>The equivalent <see cref="Fixed16Dot16"/> value.</returns>
+		public static explicit operator Fixed16Dot16(int value)
+		{
+			return new Fixed16Dot16(value);
+		}
+
+		/// <summary>
 		/// Casts a <see cref="System.Single"/> to a <see cref="Fixed16Dot16"/>.
 		/// </summary>
 		/// <param name="value">A <see cref="System.Single"/> value.</param>
@@ -236,6 +276,19 @@ namespace SharpFont
 		public static explicit operator Fixed16Dot16(decimal value)
 		{
 			return new Fixed16Dot16(value);
+		}
+
+		/// <summary>
+		/// Casts a <see cref="Fixed16Dot16"/> to a <see cref="System.Int32"/>.
+		/// </summary>
+		/// <remarks>
+		/// This operation can result in a loss of data.
+		/// </remarks>
+		/// <param name="value">A <see cref="Fixed16Dot16"/> value.</param>
+		/// <returns>The equivalent <see cref="System.Int32"/> value.</returns>
+		public static explicit operator int(Fixed16Dot16 value)
+		{
+			return value.ToInt32();
 		}
 
 		/// <summary>
@@ -401,7 +454,7 @@ namespace SharpFont
 		public Fixed16Dot16 FloorFix()
 		{
 			//TODO does the P/Invoke overhead make this slower than re-implementing in C#? Test it
-			return FT.FT_FloorFix(this);
+			return FromRawValue((int)FT.FT_FloorFix((IntPtr)this.Value));
 		}
 
 		/// <summary>
@@ -420,7 +473,7 @@ namespace SharpFont
 		/// <returns>The truncated number in 16.16 format.</returns>
 		public Fixed16Dot16 RoundFix()
 		{
-			return FT.FT_RoundFix(this);
+			return FromRawValue((int)FT.FT_RoundFix((IntPtr)this.Value));
 		}
 
 		/// <summary>
@@ -439,7 +492,7 @@ namespace SharpFont
 		/// <returns>The next whole number in 16.16 format.</returns>
 		public Fixed16Dot16 CeilingFix()
 		{
-			return FT.FT_CeilFix(this);
+			return FromRawValue((int)FT.FT_CeilFix((IntPtr)this.Value));
 		}
 
 		/// <summary>

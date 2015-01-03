@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace SharpFont
 {
 	/// <summary>
-	/// Represents a fixed-point decimal value with 16 bits of decimal precision.
+	/// Represents a fixed-point decimal value with 6 bits of decimal precision.
 	/// </summary>
 	[Serializable]
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -209,6 +209,26 @@ namespace SharpFont
 		#region Operators
 
 		/// <summary>
+		/// Casts a <see cref="System.Int16"/> to a <see cref="Fixed26Dot6"/>.
+		/// </summary>
+		/// <param name="value">A <see cref="System.Int16"/> value.</param>
+		/// <returns>The equivalent <see cref="Fixed26Dot6"/> value.</returns>
+		public static implicit operator Fixed26Dot6(short value)
+		{
+			return new Fixed26Dot6(value);
+		}
+
+		/// <summary>
+		/// Casts a <see cref="System.Int32"/> to a <see cref="Fixed26Dot6"/>.
+		/// </summary>
+		/// <param name="value">A <see cref="System.Int32"/> value.</param>
+		/// <returns>The equivalent <see cref="Fixed26Dot6"/> value.</returns>
+		public static explicit operator Fixed26Dot6(int value)
+		{
+			return new Fixed26Dot6(value);
+		}
+
+		/// <summary>
 		/// Casts a <see cref="System.Single"/> to a <see cref="Fixed26Dot6"/>.
 		/// </summary>
 		/// <param name="value">A <see cref="System.Single"/> value.</param>
@@ -236,6 +256,19 @@ namespace SharpFont
 		public static explicit operator Fixed26Dot6(decimal value)
 		{
 			return new Fixed26Dot6(value);
+		}
+
+		/// <summary>
+		/// Casts a <see cref="Fixed26Dot6"/> to a <see cref="System.Int32"/>.
+		/// </summary>
+		/// <remarks>
+		/// This operation can result in a loss of data.
+		/// </remarks>
+		/// <param name="value">A <see cref="Fixed26Dot6"/> value.</param>
+		/// <returns>The equivalent <see cref="System.Int32"/> value.</returns>
+		public static explicit operator int(Fixed26Dot6 value)
+		{
+			return value.ToInt32();
 		}
 
 		/// <summary>

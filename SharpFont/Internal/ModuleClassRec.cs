@@ -25,10 +25,7 @@ SOFTWARE.*/
 using System;
 using System.Runtime.InteropServices;
 
-using FT_26Dot6 = System.IntPtr;
-using FT_Fixed = System.IntPtr;
 using FT_Long = System.IntPtr;
-using FT_Pos = System.IntPtr;
 using FT_ULong = System.UIntPtr;
 
 namespace SharpFont.Internal
@@ -41,8 +38,8 @@ namespace SharpFont.Internal
 
 		[MarshalAs(UnmanagedType.LPStr)]
 		internal string module_name;
-		internal FT_Fixed module_version;
-		internal FT_Fixed module_requires;
+		internal FT_Long module_version;
+		internal FT_Long module_requires;
 
 		internal IntPtr module_interface;
 

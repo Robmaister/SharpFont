@@ -41,26 +41,6 @@ namespace SharpFont
 	{
 		#region Computations
 
-		/// <summary>
-		/// The angle pi expressed in FT_Angle units.
-		/// </summary>
-		public static readonly Fixed16Dot16 AnglePI = new Fixed16Dot16(180);
-
-		/// <summary>
-		/// The angle 2*pi expressed in FT_Angle units.
-		/// </summary>
-		public static readonly Fixed16Dot16 Angle2PI = new Fixed16Dot16(360);
-
-		/// <summary>
-		/// The angle pi/2 expressed in FT_Angle units.
-		/// </summary>
-		public static readonly Fixed16Dot16 AnglePI2 = new Fixed16Dot16(90);
-
-		/// <summary>
-		/// The angle pi/4 expressed in FT_Angle units.
-		/// </summary>
-		public static readonly Fixed16Dot16 AnglePI4 = new Fixed16Dot16(45);
-
 		/// <summary><para>
 		/// A very simple function used to perform the computation ‘(a*b)/c’ with maximal accuracy (it uses a 64-bit
 		/// intermediate integer whenever necessary).
@@ -77,7 +57,8 @@ namespace SharpFont
 		/// </returns>
 		public static Fixed16Dot16 MulDiv(Fixed16Dot16 a, Fixed16Dot16 b, Fixed16Dot16 c)
 		{
-			return FT_MulDiv(a, b, c);
+
+			return Fixed16Dot16.FromRawValue((int)FT.FT_MulDiv((IntPtr)a.Value, (IntPtr)b.Value, (IntPtr)c.Value));
 		}
 
 		/// <summary>
@@ -97,7 +78,7 @@ namespace SharpFont
 		/// <returns>The result of ‘(a*b)/0x10000’.</returns>
 		public static Fixed16Dot16 MulFix(int a, Fixed16Dot16 b)
 		{
-			return FT_MulFix((IntPtr)a, b);
+			return Fixed16Dot16.FromRawValue((int)FT.FT_MulFix((IntPtr)a, (IntPtr)b.Value));
 		}
 
 		/// <summary>
@@ -113,7 +94,7 @@ namespace SharpFont
 		/// <returns>The result of ‘(a*0x10000)/b’.</returns>
 		public static Fixed16Dot16 DivFix(int a, Fixed16Dot16 b)
 		{
-			return FT_DivFix((IntPtr)a, b);
+			return Fixed16Dot16.FromRawValue((int)FT.FT_DivFix((IntPtr)a, (IntPtr)b.Value));
 		}
 
 		/// <summary>
@@ -124,7 +105,7 @@ namespace SharpFont
 		[Obsolete("Use Fixed16Dot16.RoundFix() instead.")]
 		public static Fixed16Dot16 RoundFix(Fixed16Dot16 a)
 		{
-			return FT_RoundFix(a);
+			return Fixed16Dot16.FromRawValue((int)FT.FT_RoundFix((IntPtr)a.Value));
 		}
 
 		/// <summary>
@@ -135,7 +116,7 @@ namespace SharpFont
 		[Obsolete("Use Fixed16Dot16.CeilingFix() instead.")]
 		public static Fixed16Dot16 CeilFix(Fixed16Dot16 a)
 		{
-			return FT_CeilFix(a);
+			return Fixed16Dot16.FromRawValue((int)FT.FT_CeilFix((IntPtr)a.Value));
 		}
 
 		/// <summary>
@@ -146,7 +127,7 @@ namespace SharpFont
 		[Obsolete("Use Fixed16Dot16.FloorFix() instead.")]
 		public static Fixed16Dot16 FloorFix(Fixed16Dot16 a)
 		{
-			return FT_FloorFix(a);
+			return Fixed16Dot16.FromRawValue((int)FT.FT_FloorFix((IntPtr)a.Value));
 		}
 
 		/// <summary>
@@ -159,7 +140,7 @@ namespace SharpFont
 		/// <returns>The sinus value.</returns>
 		public static Fixed16Dot16 Sin(Fixed16Dot16 angle)
 		{
-			return FT_Sin(angle);
+			return Fixed16Dot16.FromRawValue((int)FT.FT_Sin((IntPtr)angle.Value));
 		}
 
 		/// <summary>
@@ -172,7 +153,7 @@ namespace SharpFont
 		/// <returns>The cosinus value.</returns>
 		public static Fixed16Dot16 Cos(Fixed16Dot16 angle)
 		{
-			return FT_Cos(angle);
+			return Fixed16Dot16.FromRawValue((int)FT.FT_Cos((IntPtr)angle.Value));
 		}
 
 		/// <summary>
@@ -182,7 +163,7 @@ namespace SharpFont
 		/// <returns>The tangent value.</returns>
 		public static Fixed16Dot16 Tan(Fixed16Dot16 angle)
 		{
-			return FT_Tan(angle);
+			return Fixed16Dot16.FromRawValue((int)FT.FT_Tan((IntPtr)angle.Value));
 		}
 
 		/// <summary>
@@ -193,7 +174,7 @@ namespace SharpFont
 		/// <returns>The arc-tangent value (i.e. angle).</returns>
 		public static Fixed16Dot16 Atan2(Fixed16Dot16 x, Fixed16Dot16 y)
 		{
-			return FT_Atan2(x, y);
+			return Fixed16Dot16.FromRawValue((int)FT.FT_Atan2((IntPtr)x.Value, (IntPtr)y.Value));
 		}
 
 		/// <summary>
@@ -204,7 +185,7 @@ namespace SharpFont
 		/// <returns>Constrained value of ‘value2-value1’.</returns>
 		public static Fixed16Dot16 AngleDiff(Fixed16Dot16 angle1, Fixed16Dot16 angle2)
 		{
-			return FT_Angle_Diff(angle1, angle2);
+			return Fixed16Dot16.FromRawValue((int)FT.FT_Angle_Diff((IntPtr)angle1.Value, (IntPtr)angle2.Value));
 		}
 
 		#endregion

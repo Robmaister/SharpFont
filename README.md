@@ -50,11 +50,7 @@ If compiling on the command line, `xbuild` will choose the Debug WIN64 configura
 issues. Instead, run `make` to compile with the proper configuration.
 
 ####FreeType
-A 32-bit copy of `freetype6.dll` is included in the [Examples](SharpFont/blob/master/Examples) project.
-
-Currently, Windows 64-bit systems require you to either compile SharpFont under the WIN64 configurations and include a
-64-bit copy of `freetype6.dll` or to compile your project as an x86 project (instead of Any CPU). I describe this issue
-in further detail in the Known Issues section.
+A copy of `freetype6.dll` can be found in the [Dependencies](https://github.com/Robmaister/SharpFont/tree/master/Dependencies) directory.
 
 ##Compiling FreeType on Windows
 

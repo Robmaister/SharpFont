@@ -1,0 +1,4 @@
+[submodule "Dependencies"]
+	path = Dependencies
+	url = git@github.com:Robmaister/SharpFont.Dependencies.git
+	ignore = dirty

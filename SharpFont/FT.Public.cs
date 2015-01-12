@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2013, 2015 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -57,7 +57,6 @@ namespace SharpFont
 		/// </returns>
 		public static Fixed16Dot16 MulDiv(Fixed16Dot16 a, Fixed16Dot16 b, Fixed16Dot16 c)
 		{
-
 			return Fixed16Dot16.FromRawValue((int)FT.FT_MulDiv((IntPtr)a.Value, (IntPtr)b.Value, (IntPtr)c.Value));
 		}
 

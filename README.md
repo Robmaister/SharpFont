@@ -83,7 +83,11 @@ Thanks to [this StackOverflow answer][6] for the directions:
  4. Open the project properties window through Project -> Properties.
  5. In the `General` selection, change the `Target Name` to `freetype6` and
  the `Configuration Type` to `Dynamic Library (.dll)`.
- 6. Open up `ftoption.h` (in the project's `Header Files` section) and add the
+ 6. **If compiling for 64-bit** 
+   - Apply a patch to the source code (see [Known Issues](#known-issues)).
+   - Open up Configuration Manager (the last option in  the dropdown menu when
+   changing your compile configuration) and change `Platform` to `x64`.
+ 7. Open up `ftoption.h` (in the project's `Header Files` section) and add the
  following three lines near the `DLL export compilation` section:
 
 ```C
@@ -91,12 +95,6 @@ Thanks to [this StackOverflow answer][6] for the directions:
 #define FT_EXPORT_DEF(x) __declspec(dllexport) x
 #define FT_BASE(x) __declspec(dllexport) x
 ```
-
- 7. **If compiling for 64-bit** apply a patch to the source code (see 
- [Known Issues](#Known Issues)).
- 8. **Also only for 64-bit** open up Configuration Manager (the last option in
- the dropdown menu when changing your compile configuration) and change
- `Platform` to `x64`.
 
 Finally, complile the project (`F6` or Build -> Build Solution).
 `freetype6.dll` will be output to `objs\win32\vc2010`. If this is a build that

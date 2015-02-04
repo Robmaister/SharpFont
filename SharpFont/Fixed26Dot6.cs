@@ -31,7 +31,7 @@ namespace SharpFont
 	/// Represents a fixed-point decimal value with 6 bits of decimal precision.
 	/// </summary>
 	[Serializable]
-	[StructLayout(LayoutKind.Sequential, Pack = 1)]
+	[StructLayout(LayoutKind.Sequential)]
 	public struct Fixed26Dot6 : IEquatable<Fixed26Dot6>, IComparable<Fixed26Dot6>
 	{
 		#region Fields
@@ -223,7 +223,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="value">A <see cref="System.Int32"/> value.</param>
 		/// <returns>The equivalent <see cref="Fixed26Dot6"/> value.</returns>
-		public static explicit operator Fixed26Dot6(int value)
+		public static implicit operator Fixed26Dot6(int value)
 		{
 			return new Fixed26Dot6(value);
 		}
@@ -233,7 +233,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="value">A <see cref="System.Single"/> value.</param>
 		/// <returns>The equivalent <see cref="Fixed26Dot6"/> value.</returns>
-		public static explicit operator Fixed26Dot6(float value)
+		public static implicit operator Fixed26Dot6(float value)
 		{
 			return new Fixed26Dot6(value);
 		}
@@ -243,7 +243,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="value">A <see cref="System.Double"/> value.</param>
 		/// <returns>The equivalent <see cref="Fixed26Dot6"/> value.</returns>
-		public static explicit operator Fixed26Dot6(double value)
+		public static implicit operator Fixed26Dot6(double value)
 		{
 			return new Fixed26Dot6(value);
 		}
@@ -253,7 +253,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="value">A <see cref="System.Decimal"/> value.</param>
 		/// <returns>The equivalent <see cref="Fixed26Dot6"/> value.</returns>
-		public static explicit operator Fixed26Dot6(decimal value)
+		public static implicit operator Fixed26Dot6(decimal value)
 		{
 			return new Fixed26Dot6(value);
 		}

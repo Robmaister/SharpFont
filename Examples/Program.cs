@@ -26,6 +26,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 using SharpFont;
 
@@ -33,14 +34,12 @@ namespace Examples
 {
 	class Program
 	{
-		//HACK if only Windows had a package manager... sigh
 		[DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
 		private static extern bool SetDllDirectory(string path);
 
+		[STAThread]
 		public static void Main(string[] args)
 		{
-			//TODO make several examples in an example browser
-
 			//HACK I'm making the assumption that the .dll.config will correctly resolve Linux and OS X.
 			//Therefore only Windows needs to switch dirs.
 			int p = (int)Environment.OSVersion.Platform;
@@ -53,7 +52,11 @@ namespace Examples
 					throw new System.ComponentModel.Win32Exception();
 			}
 
-			try
+			var form = new ExampleForm();
+			Application.EnableVisualStyles();
+			Application.Run(form);
+
+			/*try
 			{
 				using (Library lib = new Library())
 				{
@@ -88,14 +91,14 @@ namespace Examples
 				Console.Write(e.Error.ToString());
 			}
 
-			Console.ReadKey();
+			Console.ReadKey();*/
 		}
 
 		public static Bitmap RenderString(Face face, string text)
 		{
-			int penX = 0, penY = 0;
-			int width = 0;
-			int height = 0;
+			float penX = 0, penY = 0;
+			float width = 0;
+			float height = 0;
 
 			//measure the size of the string before rendering it, requirement of Bitmap.
 			for (int i = 0; i < text.Length; i++)
@@ -105,22 +108,22 @@ namespace Examples
 				uint glyphIndex = face.GetCharIndex(c);
 				face.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
 
-				width += (int)face.Glyph.Advance.X;
+				width += (float)face.Glyph.Advance.X;
 
 				if (face.HasKerning && i < text.Length - 1)
 				{
 					char cNext = text[i + 1];
-					width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X;
+					width += (float)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X;
 				}
 
-				if ((int)face.Glyph.Metrics.Height > height)
-					height = (int)face.Glyph.Metrics.Height;
+				if ((float)face.Glyph.Metrics.Height > height)
+					height = (float)face.Glyph.Metrics.Height;
 			}
 
 			//create a new bitmap that fits the string.
-			Bitmap bmp = new Bitmap(width, height);
+			Bitmap bmp = new Bitmap((int)Math.Ceiling(width), (int)Math.Ceiling(height));
 			Graphics g = Graphics.FromImage(bmp);
-			g.Clear(Color.Gray);
+			g.Clear(SystemColors.Control);
 
 			//draw the string
 			for (int i = 0; i < text.Length; i++)
@@ -133,43 +136,37 @@ namespace Examples
 
 				if (c == ' ')
 				{
-					penX += (int)face.Glyph.Advance.X;
+					penX += (float)face.Glyph.Advance.X;
 
 					if (face.HasKerning && i < text.Length - 1)
 					{
 						char cNext = text[i + 1];
-						width += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X;
+						width += (float)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X;
 					}
 
-					penY += (int)face.Glyph.Advance.Y;
+					penY += (float)face.Glyph.Advance.Y;
 					continue;
 				}
 
-				Bitmap cBmp = face.Glyph.Bitmap.ToGdipBitmap(Color.Firebrick);
-				g.DrawImageUnscaled(cBmp, penX, penY + (bmp.Height - face.Glyph.Bitmap.Rows));
+				Bitmap cBmp = face.Glyph.Bitmap.ToGdipBitmap(Color.Black);
 
-				penX += (int)face.Glyph.Advance.X;
-				penY += (int)face.Glyph.Advance.Y;
+				//Not using g.DrawImage because some characters come out blurry/clipped.
+				//g.DrawImage(cBmp, penX + face.Glyph.BitmapLeft, penY + (bmp.Height - face.Glyph.Bitmap.Rows));
+				g.DrawImageUnscaled(cBmp, (int)Math.Round(penX + face.Glyph.BitmapLeft), (int)Math.Round(penY + (bmp.Height - face.Glyph.BitmapTop)));
+
+				penX += (float)face.Glyph.Metrics.HorizontalAdvance;
+				penY += (float)face.Glyph.Advance.Y;
 
 				if (face.HasKerning && i < text.Length - 1)
 				{
 					char cNext = text[i + 1];
-					penX += (int)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X;
+					var kern = face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default);
+					penX += (float)kern.X;
 				}
 			}
 
 			g.Dispose();
 			return bmp;
-		}
-
-		/// <summary>
-		/// Called when Face is destroyed.
-		/// </summary>
-		/// <param name="face">Pointer to the face</param>
-		public static void OnFaceDestroyed(IntPtr face)
-		{
-			//Console.WriteLine(face.FamilyName);
-			Console.WriteLine("Face destroyed!");
 		}
 	}
 }

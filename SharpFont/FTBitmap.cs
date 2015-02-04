@@ -387,6 +387,9 @@ namespace SharpFont
 			if (disposed)
 				throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
 
+			if (rec.width == 0 || rec.rows == 0)
+				throw new InvalidOperationException("Invalid image size - one or both dimensions are 0.");
+
 			switch (rec.pixel_mode)
 			{
 				case PixelMode.Mono:

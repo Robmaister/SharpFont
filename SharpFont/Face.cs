@@ -1087,13 +1087,13 @@ namespace SharpFont
 		/// pixels for fixed-sizes formats.
 		/// </returns>
 		[CLSCompliant(false)]
-		public FTVector GetKerning(uint leftGlyph, uint rightGlyph, KerningMode mode)
+		public FTVector26Dot6 GetKerning(uint leftGlyph, uint rightGlyph, KerningMode mode)
 		{
 			if (disposed)
 				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
 
-			FTVector kern;
-			Error err = FT.FT_Get_Kerning(Reference, leftGlyph, rightGlyph, mode, out kern);
+			FTVector26Dot6 kern;
+			Error err = FT.FT_Get_Kerning(Reference, leftGlyph, rightGlyph, (uint)KerningMode.Unscaled, out kern);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);

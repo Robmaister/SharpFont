@@ -1,3 +1,5 @@
+#Output Directory
+/[Bb]inaries
 
 #OS junk files
 [Tt]humbs.db
@@ -35,9 +37,6 @@ Ankh.NoLoad
 _ReSharper*/
 *.resharper
 [Tt]est[Rr]esult*
-
-#Project files
-[Bb]uild/
 
 #Subversion files
 .svn

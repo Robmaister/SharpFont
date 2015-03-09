@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SharpFont</id>
+    <version>3.0.0-beta</version>
+    <title>SharpFont</title>
+    <authors>Robert Rouhani</authors>
+    <owners>Robert Rouhani</owners>
+    <licenseUrl>https://github.com/Robmaister/SharpFont/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Robmaister/SharpFont</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Cross-platform FreeType bindings for C#.</description>
+    <releaseNotes>
+        - Updated to FreeType 2.5.5 and started depending on an external package for freetype6.dll.
+        - Introduced new APIs for 26.6, 16.16, and 2.14 fixed-point types, breaking backwards compatibility.
+        - Started using different version numbers than FreeType, following Semantic Versioning.
+    </releaseNotes>
+    <copyright>Copyright (c) 2012-2015 Robert Rouhani</copyright>
+    <tags>freetype font bindings wrapper text rendering</tags>
+    <dependencies>
+        <dependency id="SharpFont.Dependencies" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="SharpFont.props" target="build" />
+    <file src="..\..\Binaries\SharpFont\Release\SharpFont.dll.config" target="config" />
+    <file src="..\..\Binaries\SharpFont\Release\SharpFont.dll" target="lib\net20" />
+  </files>
+</package>

@@ -10,11 +10,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SharpFont")]
-[assembly: AssemblyDescription("Cross-platform FreeType bindings for .NET")]
+[assembly: AssemblyDescription("Cross-platform FreeType bindings for C#")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Robmaister")]
 [assembly: AssemblyProduct("SharpFont")]
-[assembly: AssemblyCopyright("Copyright (c) Robert Rouhani 2012-2014")]
+[assembly: AssemblyCopyright("Copyright (c) Robert Rouhani 2012-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -36,5 +36,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.5.3.0")]
+[assembly: AssemblyVersion("3.0.0.100")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+//The SemVer version
+[assembly: AssemblyInformationalVersion("3.0.0-beta")]

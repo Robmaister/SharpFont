@@ -402,7 +402,7 @@ namespace SharpFont
 
 					ColorPalette palette = bmp.Palette;
 					palette.Entries[0] = Color.FromArgb(0, color);
-					palette.Entries[1] = Color.FromArgb(1, color);
+					palette.Entries[1] = Color.FromArgb(255, color);
 
 					bmp.Palette = palette;
 					return bmp;

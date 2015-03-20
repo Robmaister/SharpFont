@@ -68,11 +68,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\Dependencies\freetype2\2.5.3\msvc11-x64\freetype6.dll">
+    <Content Include="..\..\Dependencies\freetype2\2.5.5\msvc10\x64\freetype6.dll">
       <Link>x64\freetype6.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\..\Dependencies\freetype2\2.5.3\msvc11-x86\freetype6.dll">
+    <Content Include="..\..\Dependencies\freetype2\2.5.5\msvc10\x86\freetype6.dll">
       <Link>x86\freetype6.dll</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

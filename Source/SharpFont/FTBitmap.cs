@@ -397,7 +397,7 @@ namespace SharpFont
 					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format1bppIndexed);
 					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format1bppIndexed);
 					for (int i = 0; i < rec.rows; i++)
-						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, rec.width);
+						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
 					bmp.UnlockBits(locked);
 
 					ColorPalette palette = bmp.Palette;
@@ -413,7 +413,7 @@ namespace SharpFont
 					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format4bppIndexed);
 					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format4bppIndexed);
 					for (int i = 0; i < rec.rows; i++)
-						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, rec.width);
+                        PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
 					bmp.UnlockBits(locked);
 
 					ColorPalette palette = bmp.Palette;
@@ -432,7 +432,7 @@ namespace SharpFont
 					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format8bppIndexed);
 					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
 					for (int i = 0; i < rec.rows; i++)
-						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, rec.width);
+                        PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
 					bmp.UnlockBits(locked);
 
 					ColorPalette palette = bmp.Palette;
@@ -453,7 +453,7 @@ namespace SharpFont
 					Bitmap bmp = new Bitmap(bmpWidth, rec.rows, PixelFormat.Format24bppRgb);
 					var locked = bmp.LockBits(new Rectangle(0, 0, bmpWidth, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 					for (int i = 0; i < rec.rows; i++)
-						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, rec.width);
+                        PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
 					bmp.UnlockBits(locked);
 
 					return bmp;

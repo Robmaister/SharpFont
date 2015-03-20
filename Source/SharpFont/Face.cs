@@ -586,6 +586,9 @@ namespace SharpFont
 				if (disposed)
 					throw new ObjectDisposedException("CharMap", "Cannot access a disposed object.");
 
+                if (rec.charmap == IntPtr.Zero)
+                    return null;
+
 				return new CharMap(rec.charmap, this);
 			}
 		}

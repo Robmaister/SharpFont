@@ -94,7 +94,7 @@ namespace Examples
 			Console.ReadKey();*/
 		}
 
-		public static Bitmap RenderString(Face face, string text)
+		public static Bitmap RenderString(Library library, Face face, string text)
 		{
 			float penX = 0, penY = 0;
 			float width = 0;
@@ -148,7 +148,12 @@ namespace Examples
 					continue;
 				}
 
-				Bitmap cBmp = face.Glyph.Bitmap.ToGdipBitmap(Color.Black);
+                //if (face.Glyph.Bitmap == null)
+                  //  continue;
+
+                //FTBitmap ftbmp = face.Glyph.Bitmap.Copy(library);
+                FTBitmap ftbmp = face.Glyph.Bitmap;
+				Bitmap cBmp = ftbmp.ToGdipBitmap(Color.Black);
 
 				//Not using g.DrawImage because some characters come out blurry/clipped.
 				//g.DrawImage(cBmp, penX + face.Glyph.BitmapLeft, penY + (bmp.Height - face.Glyph.Bitmap.Rows));

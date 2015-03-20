@@ -26,7 +26,7 @@ namespace Examples
 			InitializeComponent();
 
 			fontFolder = "Fonts/";
-			sampleText = "DUNAMIS";
+			sampleText = "SharpFont";
 		}
 
 		private void ExampleForm_Load(object sender, EventArgs e)
@@ -43,7 +43,7 @@ namespace Examples
 			if (lib == null || fontFace == null)
 				return;
 
-			pictureBoxText.Image = Program.RenderString(fontFace, sampleText);
+			pictureBoxText.Image = Program.RenderString(lib, fontFace, sampleText);
 		}
 
 		private void mainMenuEditSharpFont_Click(object sender, EventArgs e)

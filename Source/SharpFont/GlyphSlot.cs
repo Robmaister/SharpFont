@@ -222,7 +222,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new FTBitmap(rec.bitmap, parentLibrary);
+				return new FTBitmap(new IntPtr(Reference.ToInt64() + Marshal.OffsetOf(typeof(GlyphSlotRec), "bitmap").ToInt64()), rec.bitmap, parentLibrary);
 			}
 		}
 

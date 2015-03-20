@@ -84,6 +84,13 @@ namespace SharpFont
 			this.library = library;
 		}
 
+        internal FTBitmap(IntPtr reference, BitmapRec bmpInt, Library library)
+        {
+            this.reference = reference;
+            this.rec = bmpInt;
+            this.library = library;
+        }
+
 		internal FTBitmap(IntPtr reference)
 			: this(reference, null)
 		{
@@ -255,7 +262,7 @@ namespace SharpFont
 				if (disposed)
 					throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
 
-				byte[] data = new byte[rec.rows * rec.width];
+				byte[] data = new byte[rec.rows * rec.pitch];
 				Marshal.Copy(rec.buffer, data, 0, data.Length);
 				return data;
 			}

@@ -148,9 +148,6 @@ namespace Examples
 					continue;
 				}
 
-                //if (face.Glyph.Bitmap == null)
-                  //  continue;
-
                 //FTBitmap ftbmp = face.Glyph.Bitmap.Copy(library);
                 FTBitmap ftbmp = face.Glyph.Bitmap;
 				Bitmap cBmp = ftbmp.ToGdipBitmap(Color.Black);

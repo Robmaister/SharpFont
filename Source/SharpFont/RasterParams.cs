@@ -65,6 +65,7 @@ namespace SharpFont
 	/// <param name="x">The pixel's x coordinate.</param>
 	/// <param name="user">User-supplied data that is passed to the callback.</param>
 	/// <returns>1 if the pixel is ‘set’, 0 otherwise.</returns>
+    [Obsolete("This type is deprecated. Do not use it. See FreeType docuementation.")]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate int RasterBitTestFunc(int y, int x, IntPtr user);
 
@@ -77,6 +78,7 @@ namespace SharpFont
 	/// <param name="y">The pixel's y coordinate.</param>
 	/// <param name="x">The pixel's x coordinate.</param>
 	/// <param name="user">User-supplied data that is passed to the callback.</param>
+    [Obsolete("This type is deprecated. Do not use it. See FreeType docuementation.")]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
 	public delegate void RasterBitSetFunc(int y, int x, IntPtr user);
 
@@ -122,7 +124,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new FTBitmap(rec.target);
+				return new FTBitmap(rec.target, null);
 			}
 		}
 
@@ -162,6 +164,7 @@ namespace SharpFont
 		/// <summary>
 		/// Gets the black span drawing callback. UNIMPLEMENTED!
 		/// </summary>
+        [Obsolete]
 		public RasterSpanFunc BlackSpans
 		{
 			get
@@ -173,6 +176,7 @@ namespace SharpFont
 		/// <summary>
 		/// Gets the bit test callback. UNIMPLEMENTED!
 		/// </summary>
+        [Obsolete]
 		public RasterBitTestFunc BitTest
 		{
 			get
@@ -184,6 +188,7 @@ namespace SharpFont
 		/// <summary>
 		/// Gets the bit set callback. UNIMPLEMENTED!
 		/// </summary>
+        [Obsolete]
 		public RasterBitSetFunc BitSet
 		{
 			get

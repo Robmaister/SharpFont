@@ -522,16 +522,16 @@ namespace SharpFont
 		#region Bitmap Handling
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern void FT_Bitmap_New(out IntPtr abitmap);
+		internal static extern void FT_Bitmap_New(IntPtr abitmap);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Bitmap_Copy(IntPtr library, IntPtr source, out IntPtr target);
+		internal static extern Error FT_Bitmap_Copy(IntPtr library, IntPtr source, IntPtr target);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Bitmap_Embolden(IntPtr library, IntPtr bitmap, IntPtr xStrength, IntPtr yStrength);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Bitmap_Convert(IntPtr library, IntPtr source, out IntPtr target, int alignment);
+		internal static extern Error FT_Bitmap_Convert(IntPtr library, IntPtr source, IntPtr target, int alignment);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_GlyphSlot_Own_Bitmap(IntPtr slot);

@@ -63,8 +63,8 @@ namespace SharpFont
 		/// <param name="library">The parent <see cref="Library"/>.</param>
 		public FTBitmap(Library library)
 		{
-			IntPtr bitmapRef;
-			FT.FT_Bitmap_New(out bitmapRef);
+            IntPtr bitmapRef = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(BitmapRec)));
+			FT.FT_Bitmap_New(bitmapRef);
 			Reference = bitmapRef;
 
 			this.library = library;
@@ -75,13 +75,6 @@ namespace SharpFont
 		{
 			Reference = reference;
 			this.library = library;
-			user = true;
-		}
-
-		internal FTBitmap(BitmapRec bmpInt, Library library)
-		{
-			this.rec = bmpInt;
-			this.library = library;
 		}
 
         internal FTBitmap(IntPtr reference, BitmapRec bmpInt, Library library)
@@ -90,17 +83,6 @@ namespace SharpFont
             this.rec = bmpInt;
             this.library = library;
         }
-
-		internal FTBitmap(IntPtr reference)
-			: this(reference, null)
-		{
-			user = true;
-		}
-
-		internal FTBitmap(BitmapRec bmpInt)
-			: this(bmpInt, null)
-		{
-		}
 
 		/// <summary>
 		/// Finalizes an instance of the <see cref="FTBitmap"/> class.
@@ -305,13 +287,15 @@ namespace SharpFont
 			if (library == null)
 				throw new ArgumentNullException("library");
 
-			IntPtr bitmapRef;
-			Error err = FT.FT_Bitmap_Copy(library.Reference, Reference, out bitmapRef);
+            FTBitmap newBitmap = new FTBitmap(library);
+            IntPtr bmpRef = newBitmap.reference;
+			Error err = FT.FT_Bitmap_Copy(library.Reference, Reference, bmpRef);
+            newBitmap.Reference = bmpRef;
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new FTBitmap(bitmapRef);
+			return newBitmap;
 		}
 
 		/// <summary>
@@ -371,13 +355,15 @@ namespace SharpFont
 			if (library == null)
 				throw new ArgumentNullException("library");
 
-			IntPtr bitmapRef;
-			Error err = FT.FT_Bitmap_Convert(library.Reference, Reference, out bitmapRef, alignment);
+            FTBitmap newBitmap = new FTBitmap(library);
+            IntPtr bmpRef = newBitmap.reference;
+			Error err = FT.FT_Bitmap_Convert(library.Reference, Reference, bmpRef, alignment);
+            newBitmap.Reference = bmpRef;
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new FTBitmap(bitmapRef);
+			return newBitmap;
 		}
 
 		public Bitmap ToGdipBitmap()
@@ -505,6 +491,8 @@ namespace SharpFont
 
 					if (err != Error.Ok)
 						throw new FreeTypeException(err);
+
+                    Marshal.FreeHGlobal(reference);
 				}
 
 				reference = IntPtr.Zero;

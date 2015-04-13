@@ -2,7 +2,7 @@ XBUILD              := xbuild
 XBUILDFLAGS_RELEASE := /p:Configuration=Release
 XBUILDFLAGS_DEBUG   := /p:Configuration=Debug
 
-SOLUTION            := SharpFont.sln
+SOLUTION            := Source/SharpFont.sln
 
 release:
 	$(XBUILD) $(XBUILDFLAGS_RELEASE) $(SOLUTION)

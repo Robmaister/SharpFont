@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SharpFont</id>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <title>SharpFont</title>
     <authors>Robert Rouhani</authors>
     <owners>Robert Rouhani</owners>
@@ -11,10 +11,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Cross-platform FreeType bindings for C#.</description>
     <releaseNotes>
-- Updated to FreeType 2.5.5 and started depending on an external package for freetype6.dll.
-- Introduced new APIs for 26.6, 16.16, and 2.14 fixed-point types, breaking backwards compatibility.
-- Started using different version numbers than FreeType, following Semantic Versioning.
-- Several minor bugfixes.
+      - Removed dependency on X11/XQuartz on OS X
     </releaseNotes>
     <copyright>Copyright (c) 2012-2015 Robert Rouhani</copyright>
     <tags>freetype font bindings wrapper text rendering</tags>

@@ -162,7 +162,7 @@ namespace SharpFont
 		/// <returns>The result of the addition.</returns>
 		public static Fixed26Dot6 Add(Fixed26Dot6 left, Fixed26Dot6 right)
 		{
-			return new Fixed26Dot6(left.value + right.value);
+			return Fixed26Dot6.FromRawValue(left.value + right.value);
 		}
 
 		/// <summary>
@@ -173,7 +173,7 @@ namespace SharpFont
 		/// <returns>The result of the subtraction.</returns>
 		public static Fixed26Dot6 Subtract(Fixed26Dot6 left, Fixed26Dot6 right)
 		{
-			return new Fixed26Dot6(left.value - right.value);
+            return Fixed26Dot6.FromRawValue(left.value - right.value);
 		}
 
 		/// <summary>

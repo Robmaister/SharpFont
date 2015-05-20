@@ -31,12 +31,8 @@ using SharpFont.Internal;
 namespace SharpFont
 {
 	/// <summary>
-	/// Provides an API very similar to the original FreeType API.
+	/// Miscellaneous FreeType2 functions that don't fit anywhere else.
 	/// </summary>
-	/// <remarks>
-	/// Useful for porting over C code that relies on FreeType. For everything else, use the instance methods of the
-	/// classes provided by SharpFont, they are designed to follow .NET naming and style conventions.
-	/// </remarks>
 	public static partial class FT
 	{
 		#region Computations
@@ -55,6 +51,7 @@ namespace SharpFont
 		/// The result of ‘(a*b)/c’. This function never traps when trying to divide by zero; it simply returns
 		/// ‘MaxInt’ or ‘MinInt’ depending on the signs of ‘a’ and ‘b’.
 		/// </returns>
+		[Obsolete("Use Fixed16Dot16.MultiplyDivide() instead.")]
 		public static Fixed16Dot16 MulDiv(Fixed16Dot16 a, Fixed16Dot16 b, Fixed16Dot16 c)
 		{
 			return Fixed16Dot16.FromRawValue((int)FT.FT_MulDiv((IntPtr)a.Value, (IntPtr)b.Value, (IntPtr)c.Value));
@@ -75,6 +72,7 @@ namespace SharpFont
 		/// <param name="a">The first multiplier.</param>
 		/// <param name="b">The second multiplier. Use a 16.16 factor here whenever possible (see note below).</param>
 		/// <returns>The result of ‘(a*b)/0x10000’.</returns>
+		[Obsolete("Use Fixed16Dot16.MultiplyFix() instead.")]
 		public static Fixed16Dot16 MulFix(int a, Fixed16Dot16 b)
 		{
 			return Fixed16Dot16.FromRawValue((int)FT.FT_MulFix((IntPtr)a, (IntPtr)b.Value));
@@ -91,6 +89,7 @@ namespace SharpFont
 		/// <param name="a">The first multiplier.</param>
 		/// <param name="b">The second multiplier. Use a 16.16 factor here whenever possible (see note below).</param>
 		/// <returns>The result of ‘(a*0x10000)/b’.</returns>
+		[Obsolete("Use Fixed16Dot16.DivideFix() instead.")]
 		public static Fixed16Dot16 DivFix(int a, Fixed16Dot16 b)
 		{
 			return Fixed16Dot16.FromRawValue((int)FT.FT_DivFix((IntPtr)a, (IntPtr)b.Value));
@@ -137,6 +136,7 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="angle">The input angle.</param>
 		/// <returns>The sinus value.</returns>
+		[Obsolete("Use Fixed16Dot16.Sin() instead.")]
 		public static Fixed16Dot16 Sin(Fixed16Dot16 angle)
 		{
 			return Fixed16Dot16.FromRawValue((int)FT.FT_Sin((IntPtr)angle.Value));
@@ -150,6 +150,7 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="angle">The input angle.</param>
 		/// <returns>The cosinus value.</returns>
+		[Obsolete("Use Fixed16Dot16.Cos() instead.")]
 		public static Fixed16Dot16 Cos(Fixed16Dot16 angle)
 		{
 			return Fixed16Dot16.FromRawValue((int)FT.FT_Cos((IntPtr)angle.Value));
@@ -160,6 +161,7 @@ namespace SharpFont
 		/// </summary>
 		/// <param name="angle">The input angle.</param>
 		/// <returns>The tangent value.</returns>
+		[Obsolete("Use Fixed16Dot16.Tan() instead.")]
 		public static Fixed16Dot16 Tan(Fixed16Dot16 angle)
 		{
 			return Fixed16Dot16.FromRawValue((int)FT.FT_Tan((IntPtr)angle.Value));
@@ -171,6 +173,7 @@ namespace SharpFont
 		/// <param name="x">The horizontal vector coordinate.</param>
 		/// <param name="y">The vertical vector coordinate.</param>
 		/// <returns>The arc-tangent value (i.e. angle).</returns>
+		[Obsolete("Use Fixed16Dot16.Atan2() instead.")]
 		public static Fixed16Dot16 Atan2(Fixed16Dot16 x, Fixed16Dot16 y)
 		{
 			return Fixed16Dot16.FromRawValue((int)FT.FT_Atan2((IntPtr)x.Value, (IntPtr)y.Value));
@@ -182,6 +185,7 @@ namespace SharpFont
 		/// <param name="angle1">First angle.</param>
 		/// <param name="angle2">Second angle.</param>
 		/// <returns>Constrained value of ‘value2-value1’.</returns>
+		[Obsolete("Use Fixed16Dot16.AngleDiff() instead.")]
 		public static Fixed16Dot16 AngleDiff(Fixed16Dot16 angle1, Fixed16Dot16 angle2)
 		{
 			return Fixed16Dot16.FromRawValue((int)FT.FT_Angle_Diff((IntPtr)angle1.Value, (IntPtr)angle2.Value));

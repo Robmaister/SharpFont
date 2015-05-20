@@ -63,7 +63,7 @@ namespace SharpFont
 		/// <param name="library">The parent <see cref="Library"/>.</param>
 		public FTBitmap(Library library)
 		{
-            IntPtr bitmapRef = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(BitmapRec)));
+			IntPtr bitmapRef = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(BitmapRec)));
 			FT.FT_Bitmap_New(bitmapRef);
 			Reference = bitmapRef;
 
@@ -77,12 +77,12 @@ namespace SharpFont
 			this.library = library;
 		}
 
-        internal FTBitmap(IntPtr reference, BitmapRec bmpInt, Library library)
-        {
-            this.reference = reference;
-            this.rec = bmpInt;
-            this.library = library;
-        }
+		internal FTBitmap(IntPtr reference, BitmapRec bmpInt, Library library)
+		{
+			this.reference = reference;
+			this.rec = bmpInt;
+			this.library = library;
+		}
 
 		/// <summary>
 		/// Finalizes an instance of the <see cref="FTBitmap"/> class.
@@ -287,10 +287,10 @@ namespace SharpFont
 			if (library == null)
 				throw new ArgumentNullException("library");
 
-            FTBitmap newBitmap = new FTBitmap(library);
-            IntPtr bmpRef = newBitmap.reference;
+			FTBitmap newBitmap = new FTBitmap(library);
+			IntPtr bmpRef = newBitmap.reference;
 			Error err = FT.FT_Bitmap_Copy(library.Reference, Reference, bmpRef);
-            newBitmap.Reference = bmpRef;
+			newBitmap.Reference = bmpRef;
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -355,10 +355,10 @@ namespace SharpFont
 			if (library == null)
 				throw new ArgumentNullException("library");
 
-            FTBitmap newBitmap = new FTBitmap(library);
-            IntPtr bmpRef = newBitmap.reference;
+			FTBitmap newBitmap = new FTBitmap(library);
+			IntPtr bmpRef = newBitmap.reference;
 			Error err = FT.FT_Bitmap_Convert(library.Reference, Reference, bmpRef, alignment);
-            newBitmap.Reference = bmpRef;
+			newBitmap.Reference = bmpRef;
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -366,15 +366,19 @@ namespace SharpFont
 			return newBitmap;
 		}
 
+		/// <summary>
+		/// Copies the contents of the <see cref="FTBitmap"/> to a GDI+ <see cref="Bitmap"/>.
+		/// </summary>
+		/// <returns>A GDI+ <see cref="Bitmap"/> containing this bitmap's data.</returns>
 		public Bitmap ToGdipBitmap()
 		{
 			return ToGdipBitmap(Color.Black);
 		}
 
 		/// <summary>
-		/// Copies the contents of the <see cref="FTBitmap"/> to a <see cref="Bitmap"/>.
+		/// Copies the contents of the <see cref="FTBitmap"/> to a GDI+ <see cref="Bitmap"/>.
 		/// </summary>
-		/// <returns>A <see cref="Bitmap"/> containing this bitmap's data.</returns>
+		/// <returns>A GDI+ <see cref="Bitmap"/> containing this bitmap's data.</returns>
 		public Bitmap ToGdipBitmap(Color color)
 		{
 			if (disposed)
@@ -406,7 +410,7 @@ namespace SharpFont
 					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format4bppIndexed);
 					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format4bppIndexed);
 					for (int i = 0; i < rec.rows; i++)
-                        PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
+						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
 					bmp.UnlockBits(locked);
 
 					ColorPalette palette = bmp.Palette;
@@ -425,7 +429,7 @@ namespace SharpFont
 					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format8bppIndexed);
 					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
 					for (int i = 0; i < rec.rows; i++)
-                        PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
+						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
 					bmp.UnlockBits(locked);
 
 					ColorPalette palette = bmp.Palette;
@@ -446,7 +450,7 @@ namespace SharpFont
 					Bitmap bmp = new Bitmap(bmpWidth, rec.rows, PixelFormat.Format24bppRgb);
 					var locked = bmp.LockBits(new Rectangle(0, 0, bmpWidth, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 					for (int i = 0; i < rec.rows; i++)
-                        PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
+						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
 					bmp.UnlockBits(locked);
 
 					return bmp;
@@ -492,7 +496,7 @@ namespace SharpFont
 					if (err != Error.Ok)
 						throw new FreeTypeException(err);
 
-                    Marshal.FreeHGlobal(reference);
+					Marshal.FreeHGlobal(reference);
 				}
 
 				reference = IntPtr.Zero;

@@ -193,7 +193,7 @@ namespace SharpFont
 		/// <returns>The result of the subtraction.</returns>
 		public static Fixed16Dot16 Subtract(Fixed16Dot16 left, Fixed16Dot16 right)
 		{
-            return Fixed16Dot16.FromRawValue(left.value - right.value);
+			return Fixed16Dot16.FromRawValue(left.value - right.value);
 		}
 
 		/// <summary>
@@ -211,6 +211,28 @@ namespace SharpFont
 		}
 
 		/// <summary>
+		/// A very simple function used to perform the computation ‘(a*b)/0x10000’ with maximal accuracy. Most of the
+		/// time this is used to multiply a given value by a 16.16 fixed float factor.
+		/// </summary>
+		/// <remarks><para>
+		/// NOTE: This is a native FreeType function.
+		/// </para><para>
+		/// This function has been optimized for the case where the absolute value of ‘a’ is less than 2048, and ‘b’ is
+		/// a 16.16 scaling factor. As this happens mainly when scaling from notional units to fractional pixels in
+		/// FreeType, it resulted in noticeable speed improvements between versions 2.x and 1.x.
+		/// </para><para>
+		/// As a conclusion, always try to place a 16.16 factor as the second argument of this function; this can make
+		/// a great difference.
+		/// </para></remarks>
+		/// <param name="a">The first multiplier.</param>
+		/// <param name="b">The second multiplier. Use a 16.16 factor here whenever possible (see note below).</param>
+		/// <returns>The result of ‘(a*b)/0x10000’.</returns>
+		public static Fixed16Dot16 MultiplyFix(int a, Fixed16Dot16 b)
+		{
+			return Fixed16Dot16.FromRawValue((int)FT.FT_MulFix((IntPtr)a, (IntPtr)b.Value));
+		}
+
+		/// <summary>
 		/// Divides one 16.16 values from another.
 		/// </summary>
 		/// <param name="left">The left operand.</param>
@@ -222,6 +244,68 @@ namespace SharpFont
 			Fixed16Dot16 ans = new Fixed16Dot16();
 			ans.value = (int)div;
 			return ans;
+		}
+
+		/// <summary>
+		/// A very simple function used to perform the computation ‘(a*0x10000)/b’ with maximal accuracy. Most of the
+		/// time, this is used to divide a given value by a 16.16 fixed float factor.
+		/// </summary>
+		/// <remarks><para>
+		/// NOTE: This is a native FreeType function.
+		/// </para><para>
+		/// The optimization for <see cref="DivideFix"/> is simple: If (a &lt;&lt; 16) fits in 32 bits, then the division
+		/// is computed directly. Otherwise, we use a specialized version of <see cref="MultiplyDivide"/>.
+		/// </para></remarks>
+		/// <param name="a">The first multiplier.</param>
+		/// <param name="b">The second multiplier. Use a 16.16 factor here whenever possible (see note below).</param>
+		/// <returns>The result of ‘(a*0x10000)/b’.</returns>
+		public static Fixed16Dot16 DivideFix(int a, Fixed16Dot16 b)
+		{
+			return Fixed16Dot16.FromRawValue((int)FT.FT_DivFix((IntPtr)a, (IntPtr)b.Value));
+		}
+
+		/// <summary><para>
+		/// A very simple function used to perform the computation ‘(a*b)/c’ with maximal accuracy (it uses a 64-bit
+		/// intermediate integer whenever necessary).
+		/// </para><para>
+		/// This function isn't necessarily as fast as some processor specific operations, but is at least completely
+		/// portable.
+		/// </para></summary>
+		/// <remarks>This is a native FreeType function.</remarks>
+		/// <param name="a">The first multiplier.</param>
+		/// <param name="b">The second multiplier.</param>
+		/// <param name="c">The divisor.</param>
+		/// <returns>
+		/// The result of ‘(a*b)/c’. This function never traps when trying to divide by zero; it simply returns
+		/// ‘MaxInt’ or ‘MinInt’ depending on the signs of ‘a’ and ‘b’.
+		/// </returns>
+		public static Fixed16Dot16 MultiplyDivide(Fixed16Dot16 a, Fixed16Dot16 b, Fixed16Dot16 c)
+		{
+			return Fixed16Dot16.FromRawValue((int)FT.FT_MulDiv((IntPtr)a.Value, (IntPtr)b.Value, (IntPtr)c.Value));
+		}
+
+		/// <summary>
+		/// Return the arc-tangent corresponding to a given vector (x,y) in the 2d plane.
+		/// </summary>
+		/// <remarks>This is a native FreeType function.</remarks>
+		/// <param name="x">The horizontal vector coordinate.</param>
+		/// <param name="y">The vertical vector coordinate.</param>
+		/// <returns>The arc-tangent value (i.e. angle).</returns>
+		public static Fixed16Dot16 Atan2(Fixed16Dot16 x, Fixed16Dot16 y)
+		{
+			return Fixed16Dot16.FromRawValue((int)FT.FT_Atan2((IntPtr)x.Value, (IntPtr)y.Value));
+		}
+
+		/// <summary>
+		/// Return the difference between two angles. The result is always constrained to the [-PI..PI] interval.
+		/// </summary>
+		/// <remarks>This is a native FreeType function.</remarks>
+		/// <param name="angle1">First angle.</param>
+		/// <param name="angle2">Second angle.</param>
+		/// <returns>Constrained value of ‘value2-value1’.</returns>
+		public static Fixed16Dot16 AngleDiff(Fixed16Dot16 angle1, Fixed16Dot16 angle2)
+		{
+			return Fixed16Dot16.FromRawValue((int)FT.FT_Angle_Diff((IntPtr)angle1.Value, (IntPtr)angle2.Value));
 		}
 
 		#endregion
@@ -448,9 +532,10 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Removes the decimal part of the value.
+		/// A very simple function used to compute the floor function of a 16.16 fixed number.
 		/// </summary>
-		/// <returns>The truncated number in 16.16 format.</returns>
+		/// <remarks>This is a native FreeType function.</remarks>
+		/// <returns>The result of ‘a &amp; -0x10000’.</returns>
 		public Fixed16Dot16 FloorFix()
 		{
 			//TODO does the P/Invoke overhead make this slower than re-implementing in C#? Test it
@@ -468,9 +553,10 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Rounds to the nearest whole number.
+		/// A very simple function used to round a 16.16 fixed number.
 		/// </summary>
-		/// <returns>The truncated number in 16.16 format.</returns>
+		/// <remarks>This is a native FreeType function.</remarks>
+		/// <returns>The result of ‘(a + 0x8000) &amp; -0x10000’.</returns>
 		public Fixed16Dot16 RoundFix()
 		{
 			return FromRawValue((int)FT.FT_RoundFix((IntPtr)this.Value));
@@ -487,12 +573,51 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Rounds up to the next whole number.
+		/// A very simple function used to compute the ceiling function of a 16.16 fixed number.
 		/// </summary>
-		/// <returns>The next whole number in 16.16 format.</returns>
+		/// <remarks>This is a native FreeType function.</remarks>
+		/// <returns>The result of ‘(a + 0x10000 - 1) &amp; -0x10000’.</returns>
 		public Fixed16Dot16 CeilingFix()
 		{
 			return FromRawValue((int)FT.FT_CeilFix((IntPtr)this.Value));
+		}
+
+		/// <summary>
+		/// Return the sinus of a given angle in fixed point format.
+		/// </summary>
+		/// <remarks><para>
+		/// NOTE: This is a native FreeType function.
+		/// </para><para>
+		/// If you need both the sinus and cosinus for a given angle, use the function <see cref="FTVector.Unit"/>.
+		/// </para></remarks>
+		/// <returns>The sinus value.</returns>
+		public Fixed16Dot16 Sin()
+		{
+			return Fixed16Dot16.FromRawValue((int)FT.FT_Sin((IntPtr)this.Value));
+		}
+
+		/// <summary>
+		/// Return the cosinus of a given angle in fixed point format.
+		/// </summary>
+		/// <remarks><para>
+		/// NOTE: This is a native FreeType function.
+		/// </para><para>
+		/// If you need both the sinus and cosinus for a given angle, use the function <see cref="FTVector.Unit"/>.
+		/// </para></remarks>
+		/// <returns>The cosinus value.</returns>
+		public Fixed16Dot16 Cos()
+		{
+			return Fixed16Dot16.FromRawValue((int)FT.FT_Cos((IntPtr)this.Value));
+		}
+
+		/// <summary>
+		/// Return the tangent of a given angle in fixed point format.
+		/// </summary>
+		/// <remarks>This is a native FreeType function.</remarks>
+		/// <returns>The tangent value.</returns>
+		public Fixed16Dot16 Tan()
+		{
+			return Fixed16Dot16.FromRawValue((int)FT.FT_Tan((IntPtr)this.Value));
 		}
 
 		/// <summary>
@@ -560,11 +685,41 @@ namespace SharpFont
 		/// <summary>
 		/// Returns a string that represents the current object.
 		/// </summary>
+		/// <param name="provider">An object that supplies culture-specific formatting information.</param>
+		/// <returns>A string that represents the current object.</returns>
+		public string ToString(IFormatProvider provider)
+		{
+			return ToDecimal().ToString(provider);
+		}
+
+		/// <summary>
+		/// Returns a string that represents the current object.
+		/// </summary>
+		/// <param name="format">A numeric format string.</param>
+		/// <returns>A string that represents the current object.</returns>
+		public string ToString(string format)
+		{
+			return ToDecimal().ToString(format);
+		}
+
+		/// <summary>
+		/// Returns a string that represents the current object.
+		/// </summary>
+		/// <param name="format">A numeric format string.</param>
+		/// <param name="provider">An object that supplies culture-specific formatting information.</param>
+		/// <returns>A string that represents the current object.</returns>
+		public string ToString(string format, IFormatProvider provider)
+		{
+			return ToDecimal().ToString(format, provider);
+		}
+
+		/// <summary>
+		/// Returns a string that represents the current object.
+		/// </summary>
 		/// <returns>A string that represents the current object.</returns>
 		public override string ToString()
 		{
-			//TODO overloads with string formatting.
-			return ToDouble().ToString();
+			return ToDecimal().ToString();
 		}
 
 		/// <summary>

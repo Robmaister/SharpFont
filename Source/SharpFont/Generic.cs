@@ -51,6 +51,7 @@ namespace SharpFont
 	/// which will be called by FreeType when the object is destroyed (for example, the previous client example would
 	/// put the address of the glyph cache destructor in the ‘finalizer’ field).
 	/// </para></summary>
+	[Obsolete("Use the Tag property and Disposed event.")]
 	public class Generic
 	{
 		#region Fields

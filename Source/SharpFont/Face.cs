@@ -75,7 +75,7 @@ namespace SharpFont
 		/// <param name="path">The path of the font file.</param>
 		/// <param name="faceIndex">The index of the face to take from the file.</param>
 		public Face(Library library, string path, int faceIndex)
-			: this()
+			: this(library)
 		{
 			IntPtr reference;
 			Error err = FT.FT_New_Face(library.Reference, path, faceIndex, out reference);
@@ -84,8 +84,6 @@ namespace SharpFont
 				throw new FreeTypeException(err);
 
 			Reference = reference;
-			parentLibrary = library;
-			parentLibrary.AddChildFace(this);
 		}
 
 		//TODO make an overload with a FileStream instead of a byte[]
@@ -97,7 +95,7 @@ namespace SharpFont
 		/// <param name="file">The loaded file.</param>
 		/// <param name="faceIndex">The index of the face to take from the file.</param>
 		public unsafe Face(Library library, byte[] file, int faceIndex)
-			: this()
+			: this(library)
 		{
 			memoryFaceHandle = GCHandle.Alloc(file, GCHandleType.Pinned);
 			IntPtr reference;
@@ -107,9 +105,6 @@ namespace SharpFont
 				throw new FreeTypeException(err);
 
 			Reference = reference;
-
-			parentLibrary = library;
-			parentLibrary.AddChildFace(this);
 		}
 
 		/// <summary>
@@ -120,7 +115,7 @@ namespace SharpFont
 		/// <param name="length"></param>
 		/// <param name="faceIndex">The index of the face to take from the file.</param>
 		public Face(Library library, IntPtr bufferPtr, int length, int faceIndex)
-			: this()
+			: this(library)
 		{
 			Error err = FT.FT_New_Memory_Face(library.Reference, bufferPtr, length, faceIndex, out reference);
 
@@ -128,20 +123,22 @@ namespace SharpFont
 				throw new FreeTypeException(err);
 
 			Reference = reference;
-
-			parentLibrary = library;
-			parentLibrary.AddChildFace(this);
 		}
 
 		/// <summary>
-		/// Initializes a new instance of the Face class.
+		/// Initializes a new instance of the <see cref="Face"/> class.
 		/// </summary>
 		/// <param name="reference">A pointer to the unmanaged memory containing the Face.</param>
 		/// <param name="parent">The parent <see cref="Library"/>.</param>
 		internal Face(IntPtr reference, Library parent)
-			: this()
+			: this(parent)
 		{
 			Reference = reference;
+		}
+
+		private Face(Library parent)
+		{
+			childSizes = new List<FTSize>();
 
 			if (parent != null)
 			{
@@ -155,18 +152,22 @@ namespace SharpFont
 			}
 		}
 
-		private Face()
-		{
-			childSizes = new List<FTSize>();
-		}
-
 		/// <summary>
-		/// Finalizes an instance of the Face class.
+		/// Finalizes an instance of the <see cref="Face"/> class.
 		/// </summary>
 		~Face()
 		{
 			Dispose(false);
 		}
+
+		#endregion
+
+		#region Events
+
+		/// <summary>
+		/// Occurs when the face is disposed.
+		/// </summary>
+		public event EventHandler Disposed;
 
 		#endregion
 
@@ -386,6 +387,7 @@ namespace SharpFont
 		/// Gets or sets a field reserved for client uses.
 		/// </summary>
 		/// <see cref="Generic"/>
+		[Obsolete("Use the Tag property and Disposed event.")]
 		public Generic Generic
 		{
 			get
@@ -586,8 +588,8 @@ namespace SharpFont
 				if (disposed)
 					throw new ObjectDisposedException("CharMap", "Cannot access a disposed object.");
 
-                if (rec.charmap == IntPtr.Zero)
-                    return null;
+				if (rec.charmap == IntPtr.Zero)
+					return null;
 
 				return new CharMap(rec.charmap, this);
 			}
@@ -728,6 +730,9 @@ namespace SharpFont
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether the font has color glyph tables.
+		/// </summary>
 		public bool HasColor
 		{
 			get
@@ -735,6 +740,12 @@ namespace SharpFont
 				return (FaceFlags & FaceFlags.Color) == FaceFlags.Color;
 			}
 		}
+
+		/// <summary>
+		/// Gets or sets ser data to identify this instance. Ignored by both FreeType and SharpFont.
+		/// </summary>
+		/// <remarks>This is a replacement for FT_Generic in FreeType.</remarks>
+		public object Tag { get; set; }
 
 		internal IntPtr Reference
 		{
@@ -2392,6 +2403,10 @@ namespace SharpFont
 
 				if (memoryFaceHandle.IsAllocated)
 					memoryFaceHandle.Free();
+
+				EventHandler handler = Disposed;
+				if (handler != null)
+					handler(this, EventArgs.Empty);
 			}
 		}
 

@@ -173,7 +173,7 @@ namespace SharpFont
 		/// <returns>The result of the subtraction.</returns>
 		public static Fixed2Dot14 Subtract(Fixed2Dot14 left, Fixed2Dot14 right)
 		{
-            return Fixed2Dot14.FromRawValue((short)(left.value - right.value));
+			return Fixed2Dot14.FromRawValue((short)(left.value - right.value));
 		}
 
 		/// <summary>
@@ -479,11 +479,41 @@ namespace SharpFont
 		/// <summary>
 		/// Returns a string that represents the current object.
 		/// </summary>
+		/// <param name="provider">An object that supplies culture-specific formatting information.</param>
+		/// <returns>A string that represents the current object.</returns>
+		public string ToString(IFormatProvider provider)
+		{
+			return ToDecimal().ToString(provider);
+		}
+
+		/// <summary>
+		/// Returns a string that represents the current object.
+		/// </summary>
+		/// <param name="format">A numeric format string.</param>
+		/// <returns>A string that represents the current object.</returns>
+		public string ToString(string format)
+		{
+			return ToDecimal().ToString(format);
+		}
+
+		/// <summary>
+		/// Returns a string that represents the current object.
+		/// </summary>
+		/// <param name="format">A numeric format string.</param>
+		/// <param name="provider">An object that supplies culture-specific formatting information.</param>
+		/// <returns>A string that represents the current object.</returns>
+		public string ToString(string format, IFormatProvider provider)
+		{
+			return ToDecimal().ToString(format, provider);
+		}
+
+		/// <summary>
+		/// Returns a string that represents the current object.
+		/// </summary>
 		/// <returns>A string that represents the current object.</returns>
 		public override string ToString()
 		{
-			//TODO overloads with string formatting.
-			return ToDouble().ToString();
+			return ToDecimal().ToString();
 		}
 
 		/// <summary>

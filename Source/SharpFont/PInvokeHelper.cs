@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2013, 2015 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -47,7 +47,9 @@ namespace SharpFont
 		/// A method to copy data from one pointer to another, byte by byte.
 		/// </summary>
 		/// <param name="source">The source pointer.</param>
+		/// <param name="sourceOffset">An offset into the source buffer.</param>
 		/// <param name="destination">The destination pointer.</param>
+		/// <param name="destinationOffset">An offset into the destination buffer.</param>
 		/// <param name="count">The number of bytes to copy.</param>
 		internal static unsafe void Copy(IntPtr source, int sourceOffset, IntPtr destination, int destinationOffset, int count)
 		{

@@ -92,6 +92,15 @@ namespace SharpFont
 
 		#endregion
 
+		#region Events
+
+		/// <summary>
+		/// Occurs when the size is disposed.
+		/// </summary>
+		public event EventHandler Disposed;
+
+		#endregion
+
 		#region Properties
 
 		/// <summary>
@@ -123,6 +132,7 @@ namespace SharpFont
 		/// Gets or sets a typeless pointer, which is unused by the FreeType library or any of its drivers. It can be used by
 		/// client applications to link their own data to each size object.
 		/// </summary>
+		[Obsolete("Use the Tag property and Disposed event instead.")]
 		public Generic Generic
 		{
 			get
@@ -156,6 +166,12 @@ namespace SharpFont
 				return new SizeMetrics(rec.metrics);
 			}
 		}
+
+		/// <summary>
+		/// Gets or sets ser data to identify this instance. Ignored by both FreeType and SharpFont.
+		/// </summary>
+		/// <remarks>This is a replacement for FT_Generic in FreeType.</remarks>
+		public object Tag { get; set; }
 
 		internal IntPtr Reference
 		{
@@ -232,14 +248,18 @@ namespace SharpFont
 						throw new FreeTypeException(err);
 				}
 
-                // removes itself from the parent Face, with a check to prevent this from happening when Face is
-                // being disposed (Face disposes all it's children with a foreach loop, this causes an
-                // InvalidOperationException for modifying a collection during enumeration)
-                if (parentFace != null && !parentFace.IsDisposed)
-                    parentFace.RemoveChildSize(this);
+				// removes itself from the parent Face, with a check to prevent this from happening when Face is
+				// being disposed (Face disposes all it's children with a foreach loop, this causes an
+				// InvalidOperationException for modifying a collection during enumeration)
+				if (parentFace != null && !parentFace.IsDisposed)
+					parentFace.RemoveChildSize(this);
 
 				reference = IntPtr.Zero;
 				rec = null;
+
+				EventHandler handler = Disposed;
+				if (handler != null)
+					handler(this, EventArgs.Empty);
 			}
 		}
 

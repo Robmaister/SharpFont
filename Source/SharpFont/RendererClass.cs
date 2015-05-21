@@ -127,7 +127,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new RasterFuncs(reference, Marshal.OffsetOf(typeof(RendererClassRec), "raster_class"));
+				return new RasterFuncs(PInvokeHelper.AbsoluteOffsetOf<RendererClassRec>(Reference, "raster_class"));
 			}
 		}
 

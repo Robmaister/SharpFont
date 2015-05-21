@@ -60,5 +60,19 @@ namespace SharpFont
 			while (dst != end)
 				*dst++ = *src++;
 		}
+
+		/// <summary>
+		/// A common pattern in SharpFont is to pass a pointer to a memory address inside of a struct. This method
+		/// works for all cases and provides a generic API.
+		/// </summary>
+		/// <see cref="Marshal.OffsetOf"/>
+		/// <typeparam name="T">The type of the struct to take an offset from.</typeparam>
+		/// <param name="start">A pointer to the start of a struct.</param>
+		/// <param name="fieldName">The name of the field to get an offset to.</param>
+		/// <returns><code>start</code> + the offset of the <code>fieldName</code> field in <code>T</code>.</returns>
+		internal static IntPtr AbsoluteOffsetOf<T>(IntPtr start, string fieldName)
+		{
+			return new IntPtr(start.ToInt64() + Marshal.OffsetOf(typeof(T), fieldName).ToInt64());
+		}
 	}
 }

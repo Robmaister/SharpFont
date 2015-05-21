@@ -79,11 +79,6 @@ namespace SharpFont
 			Reference = reference;
 		}
 
-		internal Memory(IntPtr reference, IntPtr offset)
-			: this(new IntPtr(reference.ToInt64() + offset.ToInt64()))
-		{
-		}
-
 		#endregion
 
 		#region Properties

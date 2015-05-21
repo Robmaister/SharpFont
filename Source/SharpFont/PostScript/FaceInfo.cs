@@ -96,7 +96,7 @@ namespace SharpFont.PostScript
 		{
 			get
 			{
-				return new FontInfo(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceInfoRec), "font_info").ToInt64()));
+				return new FontInfo(PInvokeHelper.AbsoluteOffsetOf<FaceInfoRec>(Reference, "font_info"));
 			}
 		}
 
@@ -180,7 +180,7 @@ namespace SharpFont.PostScript
 		{
 			get
 			{
-				return new FaceDict(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceInfo), "font_dicts").ToInt64()));
+				return new FaceDict(PInvokeHelper.AbsoluteOffsetOf<FaceInfoRec>(Reference, "font_dicts"));
 			}
 		}
 

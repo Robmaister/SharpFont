@@ -119,7 +119,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new StreamDesc(reference, Marshal.OffsetOf(typeof(StreamRec), "descriptor"));
+				return new StreamDesc(PInvokeHelper.AbsoluteOffsetOf<StreamRec>(Reference, "descriptor"));
 			}
 		}
 
@@ -131,7 +131,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new StreamDesc(reference, Marshal.OffsetOf(typeof(StreamRec), "pathname"));
+				return new StreamDesc(PInvokeHelper.AbsoluteOffsetOf<StreamRec>(Reference, "pathname"));
 			}
 		}
 
@@ -166,7 +166,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return new Memory(reference, Marshal.OffsetOf(typeof(StreamRec), "memory"));
+				return new Memory(PInvokeHelper.AbsoluteOffsetOf<StreamRec>(Reference, "memory"));
 			}
 		}
 

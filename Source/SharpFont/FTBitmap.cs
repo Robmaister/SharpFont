@@ -244,6 +244,7 @@ namespace SharpFont
 				if (disposed)
 					throw new ObjectDisposedException("FTBitmap", "Cannot access a disposed object.");
 
+				//TODO deal with negative pitch
 				byte[] data = new byte[rec.rows * rec.pitch];
 				Marshal.Copy(rec.buffer, data, 0, data.Length);
 				return data;
@@ -387,6 +388,7 @@ namespace SharpFont
 			if (rec.width == 0 || rec.rows == 0)
 				throw new InvalidOperationException("Invalid image size - one or both dimensions are 0.");
 
+			//TODO deal with negative pitch
 			switch (rec.pixel_mode)
 			{
 				case PixelMode.Mono:

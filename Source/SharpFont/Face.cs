@@ -404,7 +404,8 @@ namespace SharpFont
 					throw new ObjectDisposedException("Generic", "Cannot access a disposed object.");
 
 				//rec.generic = value;
-				value.WriteToUnmanagedMemory(new IntPtr(reference.ToInt64() + Marshal.OffsetOf(typeof(FaceRec), "generic").ToInt64()));
+
+				value.WriteToUnmanagedMemory(PInvokeHelper.AbsoluteOffsetOf<FaceRec>(Reference, "generic"));
 				Reference = reference;
 			}
 		}

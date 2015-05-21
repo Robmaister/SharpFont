@@ -133,7 +133,7 @@ namespace SharpFont
 				if (IsDisposed)
 					throw new ObjectDisposedException("Bitmap", "Cannot access a disposed object.");
 
-                return new FTBitmap(new IntPtr(Reference.ToInt64() + Marshal.OffsetOf(typeof(BitmapGlyphRec), "bitmap").ToInt64()), rec.bitmap, null);
+				return new FTBitmap(PInvokeHelper.AbsoluteOffsetOf<BitmapGlyphRec>(Reference, "bitmap"), rec.bitmap, null);
 			}
 		}
 

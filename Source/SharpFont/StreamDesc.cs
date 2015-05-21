@@ -49,11 +49,6 @@ namespace SharpFont
 			Reference = reference;
 		}
 
-		internal StreamDesc(IntPtr reference, IntPtr offset)
-			: this(new IntPtr(reference.ToInt64() + offset.ToInt64()))
-		{
-		}
-
 		#endregion
 
 		#region Properties

@@ -121,11 +121,6 @@ namespace SharpFont
 			Reference = reference;
 		}
 
-		internal RasterFuncs(IntPtr reference, IntPtr offset)
-			: this(new IntPtr(reference.ToInt64() + offset.ToInt64()))
-		{
-		}
-
 		#endregion
 
 		#region Properties

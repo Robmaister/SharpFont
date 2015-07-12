@@ -59,59 +59,18 @@ effectively redundant. However, you can still build SharpFont by calling
 A large number of FreeType builds for Windows are now available in the
 [SharpFont.Dependencies][4] repository.
 
-##Compiling FreeType on Windows
-
-The copies of `freetype6.dll` that the Examples project uses by default are
-chosen based on what works on my machine, and I will probably update it as
-soon as a new version of FreeType is released. This means that it may not work
-on older versions of Windows. If this is the case, you can either modify
-the project file to point to another included version of freetype or you can
-compile FreeType yourself from source.
-
-**Note**: Any copy of `freetype6.dll` can work as a drop-in replacement,
-including [this copy][5] from the GnuWin32 project. Older versions such as
-that one may crash with a `EntryPointException` when using newer APIs. **If on
-a 64-bit machine** not patching the source code will cause SharpFont to crash
-in weird places.
-
-Thanks to [this StackOverflow answer][6] for the directions:
-
- 1. Download the latest [FreeType source code][7].
- 2. Open `builds\win32\vc2010\freetype.sln` (or whatever version of Visual
- Studio you have) in Visual Studio.
- 3. Change the compile configuration from Debug to Release.
- 4. Open the project properties window through Project -> Properties.
- 5. In the `General` selection, change the `Target Name` to `freetype6` and
- the `Configuration Type` to `Dynamic Library (.dll)`.
- 6. **If compiling for 64-bit** 
-   - Apply a patch to the source code (see [Known Issues](#known-issues)).
-   - Open up Configuration Manager (the last option in  the dropdown menu when
-   changing your compile configuration) and change `Platform` to `x64`.
- 7. Open up `ftoption.h` (in the project's `Header Files` section) and add the
- following three lines near the `DLL export compilation` section:
-
-```C
-#define FT_EXPORT(x) __declspec(dllexport) x
-#define FT_EXPORT_DEF(x) __declspec(dllexport) x
-#define FT_BASE(x) __declspec(dllexport) x
-```
-
-Finally, complile the project (`F6` or Build -> Build Solution).
-`freetype6.dll` will be output to `objs\win32\vc2010`. If this is a build that
-isn't included in [Dependencies][4], consider forking and submitting a pull
-request with your new build.
-
 ##Known Issues
 
 The biggest currently known issue is the Windows 64-bit incompatibility. A
 patch must be applied to FreeType before it will work properly with SharpFont.
 
-TODO: make a .patch file
+This patch is included in [SharpFont.Dependencies/freetype2][5] along with
+instructions.
 
 ##License
 
 As metioned earlier, SharpFont is licensed under the MIT License. The terms of
-the MIT license are included in both the [LICENSE][8] file and below:
+the MIT license are included in both the [LICENSE][6] file and below:
 
 ```
 Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
@@ -150,7 +109,5 @@ Portions of this software are copyright (c) 2015 The FreeType Project
 [2]: https://nuget.org/packages/SharpFont/
 [3]: SharpFont/FT.Internal.cs
 [4]: https://github.com/Robmaister/SharpFont.Dependencies
-[5]: http://gnuwin32.sourceforge.net/packages/freetype.htm
-[6]: http://stackoverflow.com/a/7387618/1122135
-[7]: http://sourceforge.net/projects/freetype/files/freetype2/
-[8]: LICENSE
+[5]: https://github.com/Robmaister/SharpFont.Dependencies/tree/master/freetype2
+[6]: LICENSE

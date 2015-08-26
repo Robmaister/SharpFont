@@ -169,6 +169,15 @@ namespace SharpFont
 		/// </summary>
 		Color = 0x100000,
 
+		/// <summary>
+		/// This flag sets computing glyph metrics without the use of bundled
+		/// metrics tables. Well-behaving fonts have optimized bundled metrics
+		/// and these should be used. This flag is mainly used by font
+		/// validating or font editing applications which need to ignore, verify
+		/// or edit those tables.
+		/// <summary>
+		ComputeMetrics = 0x200000,
+
 		/// <summary><para>
 		/// A bit-flag to be OR-ed with the ‘flags’ parameter of the <see cref="Face.GetAdvance"/> and
 		/// <see cref="Face.GetAdvances"/> functions.

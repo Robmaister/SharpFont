@@ -1108,7 +1108,7 @@ namespace SharpFont
 				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
 
 			FTVector26Dot6 kern;
-			Error err = FT.FT_Get_Kerning(Reference, leftGlyph, rightGlyph, (uint)KerningMode.Unscaled, out kern);
+			Error err = FT.FT_Get_Kerning(Reference, leftGlyph, rightGlyph, (uint)mode, out kern);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);

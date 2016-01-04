@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Robmaister")]
 [assembly: AssemblyProduct("SharpFont")]
-[assembly: AssemblyCopyright("Copyright (c) Robert Rouhani 2012-2015")]
+[assembly: AssemblyCopyright("Copyright (c) Robert Rouhani 2012-2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -36,8 +36,8 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.0.1.200")]
+[assembly: AssemblyVersion("3.1.0.200")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
 
 //The SemVer version
-[assembly: AssemblyInformationalVersion("3.0.1")]
+[assembly: AssemblyInformationalVersion("3.1.0")]

@@ -136,6 +136,7 @@ namespace SharpFont
 		/// Gets a typeless pointer which is unused by the FreeType library or any of its drivers. It can be used by
 		/// client applications to link their own data to each glyph slot object.
 		/// </summary>
+		[Obsolete("Use the Tag property, Dispose callback not handled currently.")]
 		public Generic Generic
 		{
 			get
@@ -348,6 +349,8 @@ namespace SharpFont
 				return (int)rec.rsb_delta;
 			}
 		}
+
+		public object Tag { get; set; }
 
 		/// <summary>
 		/// Gets other data. Really wicked formats can use this pointer to present their own glyph image to client

@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013, 2015 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2013, 2015-2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -162,9 +162,7 @@ namespace SharpFont
 		/// <returns>The result of the addition.</returns>
 		public static Fixed26Dot6 Add(Fixed26Dot6 left, Fixed26Dot6 right)
 		{
-			Fixed26Dot6 ans = new Fixed26Dot6();
-			ans.value = left.value + right.value;
-			return ans;
+			return Fixed26Dot6.FromRawValue(left.value + right.value);
 		}
 
 		/// <summary>
@@ -175,9 +173,7 @@ namespace SharpFont
 		/// <returns>The result of the subtraction.</returns>
 		public static Fixed26Dot6 Subtract(Fixed26Dot6 left, Fixed26Dot6 right)
 		{
-			Fixed26Dot6 ans = new Fixed26Dot6();
-			ans.value = left.value - right.value;
-			return ans;
+			return Fixed26Dot6.FromRawValue(left.value - right.value);
 		}
 
 		/// <summary>

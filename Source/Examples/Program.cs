@@ -55,43 +55,6 @@ namespace Examples
 			var form = new ExampleForm();
 			Application.EnableVisualStyles();
 			Application.Run(form);
-
-			/*try
-			{
-				using (Library lib = new Library())
-				{
-					Console.WriteLine("FreeType version: " + lib.Version + "\n");
-
-					using (Face face = lib.NewFace(@"Fonts/Cousine-Regular-Latin.ttf", 0))
-					{
-						//attach a finalizer delegate
-						face.Generic = new Generic(IntPtr.Zero, OnFaceDestroyed);
-
-						//write out some basic font information
-						Console.WriteLine("Information for font " + face.FamilyName);
-						Console.WriteLine("====================================");
-						Console.WriteLine("Number of faces: " + face.FaceCount);
-						Console.WriteLine("Face flags: " + face.FaceFlags);
-						Console.WriteLine("Style: " + face.StyleName);
-						Console.WriteLine("Style flags: " + face.StyleFlags);
-
-						face.SetCharSize(0, 32, 0, 96);
-
-						Console.WriteLine("\nWriting string \"Hello World!\":");
-						Bitmap bmp = RenderString(face, "Hello World!");
-						bmp.Save("helloworld.png", ImageFormat.Png);
-						bmp.Dispose();
-
-						Console.WriteLine("Done!\n");
-					}
-				}
-			}
-			catch (FreeTypeException e)
-			{
-				Console.Write(e.Error.ToString());
-			}
-
-			Console.ReadKey();*/
 		}
 
 		public static Bitmap RenderString(Library library, Face face, string text)
@@ -99,6 +62,9 @@ namespace Examples
 			float penX = 0, penY = 0;
 			float width = 0;
 			float height = 0;
+
+			//both bottom and top are positive for simplicity
+			float top = 0, bottom = 0;
 
 			//measure the size of the string before rendering it, requirement of Bitmap.
 			for (int i = 0; i < text.Length; i++)
@@ -116,9 +82,16 @@ namespace Examples
 					width += (float)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X;
 				}
 
-				if ((float)face.Glyph.Metrics.Height > height)
-					height = (float)face.Glyph.Metrics.Height;
+				float glyphTop = (float)face.Glyph.Metrics.HorizontalBearingY;
+				float glyphBottom = (float)(face.Glyph.Metrics.Height - face.Glyph.Metrics.HorizontalBearingY);
+
+				if (glyphTop > top)
+					top = glyphTop;
+				if (glyphBottom > bottom)
+					bottom = glyphBottom;
 			}
+
+			height = top + bottom;
 
 			//create a new bitmap that fits the string.
 			Bitmap bmp = new Bitmap((int)Math.Ceiling(width), (int)Math.Ceiling(height));
@@ -145,25 +118,25 @@ namespace Examples
 					}
 
 					penY += (float)face.Glyph.Advance.Y;
-					continue;
 				}
-
-                //FTBitmap ftbmp = face.Glyph.Bitmap.Copy(library);
-                FTBitmap ftbmp = face.Glyph.Bitmap;
-				Bitmap cBmp = ftbmp.ToGdipBitmap(Color.Black);
-
-				//Not using g.DrawImage because some characters come out blurry/clipped.
-				//g.DrawImage(cBmp, penX + face.Glyph.BitmapLeft, penY + (bmp.Height - face.Glyph.Bitmap.Rows));
-				g.DrawImageUnscaled(cBmp, (int)Math.Round(penX + face.Glyph.BitmapLeft), (int)Math.Round(penY + (bmp.Height - face.Glyph.BitmapTop)));
-
-				penX += (float)face.Glyph.Metrics.HorizontalAdvance;
-				penY += (float)face.Glyph.Advance.Y;
-
-				if (face.HasKerning && i < text.Length - 1)
+				else
 				{
-					char cNext = text[i + 1];
-					var kern = face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default);
-					penX += (float)kern.X;
+					//FTBitmap ftbmp = face.Glyph.Bitmap.Copy(library);
+					FTBitmap ftbmp = face.Glyph.Bitmap;
+					Bitmap cBmp = ftbmp.ToGdipBitmap(Color.Black);
+
+					//Not using g.DrawImage because some characters come out blurry/clipped.
+					g.DrawImageUnscaled(cBmp, (int)Math.Round(penX + face.Glyph.BitmapLeft), (int)Math.Round(penY + (top - (float)face.Glyph.Metrics.HorizontalBearingY)));
+
+					penX += (float)face.Glyph.Metrics.HorizontalAdvance;
+					penY += (float)face.Glyph.Advance.Y;
+
+					if (face.HasKerning && i < text.Length - 1)
+					{
+						char cNext = text[i + 1];
+						var kern = face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default);
+						penX += (float)kern.X;
+					}
 				}
 			}
 

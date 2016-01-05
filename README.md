@@ -73,7 +73,7 @@ As metioned earlier, SharpFont is licensed under the MIT License. The terms of
 the MIT license are included in both the [LICENSE][6] file and below:
 
 ```
-Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+Copyright (c) 2012-2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -100,7 +100,7 @@ The Windows binary of FreeType that is included in the Examples project and in
 the NuGet package is redistributed under the FreeType License (FTL).
 
 ```
-Portions of this software are copyright (c) 2015 The FreeType Project
+Portions of this software are copyright (c) 2016 The FreeType Project
 (www.freetype.org). All rights reserved.
 ```
 

@@ -28,5 +28,6 @@
     <file src="SharpFont.props" target="build" />
     <file src="..\..\Binaries\SharpFont\Release\SharpFont.dll.config" target="config" />
     <file src="..\..\Binaries\SharpFont\Release\SharpFont.dll" target="lib\net20" />
+    <file src="..\..\Binaries\SharpFont\Release\SharpFont.xml" target="lib\net20" />
   </files>
 </package>

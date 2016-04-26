@@ -88,6 +88,11 @@ namespace Examples
 			openFontDialog.ShowDialog();
 		}
 
+		private void mainMenuFileExit_Click(object sender, EventArgs e)
+		{
+			Application.Exit();
+		}
+
 		private void toolStripComboBox1_TextUpdate(object sender, EventArgs e)
 		{
 

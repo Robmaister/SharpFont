@@ -95,6 +95,7 @@
 			this.mainMenuFileExit.Name = "mainMenuFileExit";
 			this.mainMenuFileExit.Size = new System.Drawing.Size(152, 22);
 			this.mainMenuFileExit.Text = "Exit";
+			this.mainMenuFileExit.Click += new System.EventHandler(this.mainMenuFileExit_Click);
 			// 
 			// mainMenuEdit
 			// 

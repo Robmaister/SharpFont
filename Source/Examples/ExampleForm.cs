@@ -85,7 +85,10 @@ namespace Examples
 
 		private void mainMenuFileOpen_Click(object sender, EventArgs e)
 		{
-			openFontDialog.ShowDialog();
+			if(openFontDialog.ShowDialog() == DialogResult.OK)
+				{
+					listBoxFont.Items.Add(openFontDialog.FileName);
+				}
 		}
 
 		private void mainMenuFileExit_Click(object sender, EventArgs e)

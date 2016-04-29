@@ -84,6 +84,7 @@ namespace Examples
 			fontFace = new Face(lib, Path.Combine(Path.GetFullPath(fontFolder), (string)listBoxFont.SelectedItem));
 			fontFace.SetCharSize(0, 62, 0, 96);
 			pictureBoxText.Invalidate();
+			pictureBoxText.Image = Program.RenderString(lib, fontFace, sampleText);
 		}
 
 		private void mainMenuFileOpen_Click(object sender, EventArgs e)

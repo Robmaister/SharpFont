@@ -205,7 +205,7 @@
 			this.pictureBoxText.Size = new System.Drawing.Size(326, 288);
 			this.pictureBoxText.TabIndex = 0;
 			this.pictureBoxText.TabStop = false;
-			this.pictureBoxText.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxText_Paint);
+			//this.pictureBoxText.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBoxText_Paint);
 			// 
 			// listBoxFont
 			// 

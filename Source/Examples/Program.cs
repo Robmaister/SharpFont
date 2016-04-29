@@ -93,6 +93,9 @@ namespace Examples
 
 			height = top + bottom;
 
+			if (width == 0 || height == 0)
+				return null;
+
 			//create a new bitmap that fits the string.
 			Bitmap bmp = new Bitmap((int)Math.Ceiling(width), (int)Math.Ceiling(height));
 			Graphics g = Graphics.FromImage(bmp);

@@ -64,6 +64,9 @@ namespace Examples
 
 		private void RebuildFontList()
 		{
+			if ( !Directory.Exists(fontFolder) )
+				return;
+
 			//HACK only checking for ttf even though FreeType supports far more formats.
 			foreach (var file in Directory.GetFiles(fontFolder, "*.ttf"))
 				listBoxFont.Items.Add(Path.GetFileName(file));
@@ -81,11 +84,15 @@ namespace Examples
 			fontFace = new Face(lib, Path.Combine(Path.GetFullPath(fontFolder), (string)listBoxFont.SelectedItem));
 			fontFace.SetCharSize(0, 62, 0, 96);
 			pictureBoxText.Invalidate();
+			pictureBoxText.Image = Program.RenderString(lib, fontFace, sampleText);
 		}
 
 		private void mainMenuFileOpen_Click(object sender, EventArgs e)
 		{
-			openFontDialog.ShowDialog();
+			if(openFontDialog.ShowDialog() == DialogResult.OK)
+				{
+					listBoxFont.Items.Add(openFontDialog.FileName);
+				}
 		}
 
 		private void mainMenuFileExit_Click(object sender, EventArgs e)

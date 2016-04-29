@@ -64,6 +64,9 @@ namespace Examples
 
 		private void RebuildFontList()
 		{
+			if ( !Directory.Exists(fontFolder) )
+				return;
+
 			//HACK only checking for ttf even though FreeType supports far more formats.
 			foreach (var file in Directory.GetFiles(fontFolder, "*.ttf"))
 				listBoxFont.Items.Add(Path.GetFileName(file));

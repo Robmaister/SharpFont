@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2015 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -200,7 +200,7 @@ namespace SharpFont
 			FT.FT_Vector_Polarize(ref this, out tmpLength, out tmpAngle);
 
 			length = Fixed16Dot16.FromRawValue((int)tmpLength);
-			angle =  Fixed16Dot16.FromRawValue((int)tmpAngle);
+			angle = Fixed16Dot16.FromRawValue((int)tmpAngle);
 		}
 
 		/// <summary>

@@ -31,7 +31,7 @@ namespace SharpFont
 	/// A simple structure used to store a 2D vector unit vector. Uses <see cref="Fixed2Dot14"/> types.
 	/// </summary>
 	[Serializable]
-	[StructLayout(LayoutKind.Sequential, Pack=1)]
+	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	public struct FTUnitVector
 	{
 		/// <summary>

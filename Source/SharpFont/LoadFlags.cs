@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2015 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -175,7 +175,7 @@ namespace SharpFont
 		/// and these should be used. This flag is mainly used by font
 		/// validating or font editing applications which need to ignore, verify
 		/// or edit those tables.
-		/// <summary>
+		/// </summary>
 		ComputeMetrics = 0x200000,
 
 		/// <summary><para>

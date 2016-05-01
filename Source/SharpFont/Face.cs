@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2015 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -111,8 +111,8 @@ namespace SharpFont
 		/// Initializes a new instance of the <see cref="Face"/> class from a file that's already loaded into memory.
 		/// </summary>
 		/// <param name="library">The parent library.</param>
-		/// <param name="bufferPtr"></param>
-		/// <param name="length"></param>
+		/// <param name="bufferPtr">A pointer to a buffer of a loaded file. Must not be freed before <see cref="Dispose()"/>.</param>
+		/// <param name="length">The length of bufferPtr.</param>
 		/// <param name="faceIndex">The index of the face to take from the file.</param>
 		public Face(Library library, IntPtr bufferPtr, int length, int faceIndex)
 			: this(library)
@@ -402,8 +402,6 @@ namespace SharpFont
 			{
 				if (disposed)
 					throw new ObjectDisposedException("Generic", "Cannot access a disposed object.");
-
-				//rec.generic = value;
 
 				value.WriteToUnmanagedMemory(PInvokeHelper.AbsoluteOffsetOf<FaceRec>(Reference, "generic"));
 				Reference = reference;
@@ -743,9 +741,13 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets or sets ser data to identify this instance. Ignored by both FreeType and SharpFont.
+		/// Gets or sets an object used to identify this instance of <see cref="Face"/>. This object will not be
+		/// modified or accessed internally.
 		/// </summary>
-		/// <remarks>This is a replacement for FT_Generic in FreeType.</remarks>
+		/// <remarks>
+		/// This is a replacement for FT_Generic in FreeType. If you are retrieving the same object multiple times
+		/// from functions, this object will not appear in new copies.
+		/// </remarks>
 		public object Tag { get; set; }
 
 		internal IntPtr Reference
@@ -1016,7 +1018,6 @@ namespace SharpFont
 			if (disposed)
 				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
 
-			
 			FT.FT_Set_Transform(Reference, (IntPtr)(&matrix), (IntPtr)(&delta));
 		}
 
@@ -1038,7 +1039,6 @@ namespace SharpFont
 		{
 			if (disposed)
 				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
-
 
 			FT.FT_Set_Transform(Reference, IntPtr.Zero, (IntPtr)(&delta));
 		}
@@ -1062,7 +1062,6 @@ namespace SharpFont
 			if (disposed)
 				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
 
-
 			FT.FT_Set_Transform(Reference, (IntPtr)(&matrix), IntPtr.Zero);
 		}
 
@@ -1081,7 +1080,6 @@ namespace SharpFont
 		{
 			if (disposed)
 				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
-
 
 			FT.FT_Set_Transform(Reference, IntPtr.Zero, IntPtr.Zero);
 		}

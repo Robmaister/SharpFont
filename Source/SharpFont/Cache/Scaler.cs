@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2013, 2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -92,8 +92,8 @@ namespace SharpFont.Cache
 		}
 
 		/// <summary>
-		/// Gets a boolean. If true, the ‘width’ and ‘height’ fields are interpreted as integer pixel character sizes.
-		/// Otherwise, they are expressed as 1/64th of points.
+		/// Gets a value indicating whether the ‘width’ and ‘height’ fields are interpreted as integer pixel character
+		/// sizes. Otherwise, they are expressed as 1/64th of points.
 		/// </summary>
 		public bool Pixel
 		{

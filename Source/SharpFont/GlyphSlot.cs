@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013, 2015 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2013, 2015-2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -350,6 +350,14 @@ namespace SharpFont
 			}
 		}
 
+		/// <summary>
+		/// Gets or sets an object used to identify this instance of <see cref="GlyphSlot"/>. This object will not be
+		/// modified or accessed internally.
+		/// </summary>
+		/// <remarks>
+		/// This is a replacement for FT_Generic in FreeType. If you are retrieving the same object multiple times
+		/// from functions, this object will not appear in new copies.
+		/// </remarks>
 		public object Tag { get; set; }
 
 		/// <summary>

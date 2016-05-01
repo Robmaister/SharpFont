@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013, 2015 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2013, 2015-2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -386,7 +386,8 @@ namespace SharpFont
 		/// <summary>
 		/// Copies the contents of the <see cref="FTBitmap"/> to a GDI+ <see cref="Bitmap"/>.
 		/// </summary>
-		/// <returns>A GDI+ <see cref="Bitmap"/> containing this bitmap's data.</returns>
+		/// <param name="color">The color of the text.</param>
+		/// <returns>A GDI+ <see cref="Bitmap"/> containing this bitmap's data with a transparent background.</returns>
 		public Bitmap ToGdipBitmap(Color color)
 		{
 			if (disposed)
@@ -402,8 +403,10 @@ namespace SharpFont
 				{
 					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format1bppIndexed);
 					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format1bppIndexed);
+
 					for (int i = 0; i < rec.rows; i++)
 						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
+
 					bmp.UnlockBits(locked);
 
 					ColorPalette palette = bmp.Palette;
@@ -418,8 +421,10 @@ namespace SharpFont
 				{
 					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format4bppIndexed);
 					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format4bppIndexed);
+
 					for (int i = 0; i < rec.rows; i++)
 						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
+
 					bmp.UnlockBits(locked);
 
 					ColorPalette palette = bmp.Palette;
@@ -437,8 +442,10 @@ namespace SharpFont
 				{
 					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format8bppIndexed);
 					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
+
 					for (int i = 0; i < rec.rows; i++)
 						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
+
 					bmp.UnlockBits(locked);
 
 					ColorPalette palette = bmp.Palette;
@@ -473,8 +480,10 @@ namespace SharpFont
 					int bmpWidth = rec.width / 3;
 					Bitmap bmp = new Bitmap(bmpWidth, rec.rows, PixelFormat.Format24bppRgb);
 					var locked = bmp.LockBits(new Rectangle(0, 0, bmpWidth, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+
 					for (int i = 0; i < rec.rows; i++)
 						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
+
 					bmp.UnlockBits(locked);
 
 					return bmp;

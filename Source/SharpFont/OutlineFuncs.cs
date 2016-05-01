@@ -95,11 +95,21 @@ namespace SharpFont
 	/// </code>
 	/// Set the values of ‘shift’ and ‘delta’ to 0 to get the original point coordinates.
 	/// </remarks>
-	public class OutlineFuncs
+	public class OutlineFuncs : IDisposable
 	{
 		#region Fields
 
-		private OutlineFuncsRec rec;
+		private MoveToFunc moveToFunc;
+		private LineToFunc lineToFunc;
+		private ConicToFunc conicToFunc;
+		private CubicToFunc cubicToFunc;
+		private GCHandle moveToPin;
+		private GCHandle lineToPin;
+		private GCHandle conicToPin;
+		private GCHandle cubicToPin;
+
+		private int shift;
+		private IntPtr delta;
 
 		#endregion
 
@@ -123,12 +133,12 @@ namespace SharpFont
 		/// <param name="delta">A delta to transform by.</param>
 		public OutlineFuncs(MoveToFunc moveTo, LineToFunc lineTo, ConicToFunc conicTo, CubicToFunc cubicTo, int shift, int delta)
 		{
-			rec.moveTo = Marshal.GetFunctionPointerForDelegate(moveTo);
-			rec.lineTo = Marshal.GetFunctionPointerForDelegate(lineTo);
-			rec.conicTo = Marshal.GetFunctionPointerForDelegate(conicTo);
-			rec.cubicTo = Marshal.GetFunctionPointerForDelegate(cubicTo);
-			rec.shift = shift;
-			rec.delta = (IntPtr)delta;
+			moveToFunc = moveTo;
+			lineToFunc = lineTo;
+			conicToFunc = conicTo;
+			cubicToFunc = cubicTo;
+			this.shift = shift;
+			this.delta = (IntPtr) delta;
 		}
 
 		#endregion
@@ -142,12 +152,15 @@ namespace SharpFont
 		{
 			get
 			{
-				return (MoveToFunc)Marshal.GetDelegateForFunctionPointer(rec.moveTo, typeof(MoveToFunc));
+				return moveToFunc;
 			}
-
 			set
 			{
-				rec.moveTo = Marshal.GetFunctionPointerForDelegate(value);
+				if (moveToPin.IsAllocated) {
+					moveToPin.Free();
+				}
+				moveToFunc = value;
+				moveToPin = GCHandle.Alloc(moveToFunc);
 			}
 		}
 
@@ -156,14 +169,18 @@ namespace SharpFont
 		/// </summary>
 		public LineToFunc LineFunction
 		{
+
 			get
 			{
-				return (LineToFunc)Marshal.GetDelegateForFunctionPointer(rec.lineTo, typeof(LineToFunc));
+				return lineToFunc;
 			}
-
 			set
 			{
-				rec.lineTo = Marshal.GetFunctionPointerForDelegate(value);
+				if (lineToPin.IsAllocated) {
+					lineToPin.Free();
+				}
+				lineToFunc = value;
+				lineToPin = GCHandle.Alloc(lineToFunc);
 			}
 		}
 
@@ -172,14 +189,18 @@ namespace SharpFont
 		/// </summary>
 		public ConicToFunc ConicFunction
 		{
+
 			get
 			{
-				return (ConicToFunc)Marshal.GetDelegateForFunctionPointer(rec.conicTo, typeof(ConicToFunc));
+				return conicToFunc;
 			}
-
 			set
 			{
-				rec.conicTo = Marshal.GetFunctionPointerForDelegate(value);
+				if (conicToPin.IsAllocated) {
+					conicToPin.Free();
+				}
+				conicToFunc = value;
+				conicToPin = GCHandle.Alloc(conicToFunc);
 			}
 		}
 
@@ -188,14 +209,18 @@ namespace SharpFont
 		/// </summary>
 		public CubicToFunc CubicFunction
 		{
+
 			get
 			{
-				return (CubicToFunc)Marshal.GetDelegateForFunctionPointer(rec.cubicTo, typeof(CubicToFunc));
+				return cubicToFunc;
 			}
-
 			set
 			{
-				rec.cubicTo = Marshal.GetFunctionPointerForDelegate(value);
+				if (cubicToPin.IsAllocated) {
+					cubicToPin.Free();
+				}
+				cubicToFunc = value;
+				cubicToPin = GCHandle.Alloc(cubicToFunc);
 			}
 		}
 
@@ -206,12 +231,12 @@ namespace SharpFont
 		{
 			get
 			{
-				return rec.shift;
+				return shift;
 			}
 
 			set
 			{
-				rec.shift = value;
+				shift = value;
 			}
 		}
 
@@ -223,7 +248,7 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)rec.delta;
+				return (int) delta;
 			}
 
 			/*set
@@ -238,10 +263,31 @@ namespace SharpFont
 		{
 			get
 			{
-				return rec;
+				var r = new OutlineFuncsRec();
+				r.moveTo = Marshal.GetFunctionPointerForDelegate(moveToFunc);
+				r.lineTo = Marshal.GetFunctionPointerForDelegate(lineToFunc);
+				r.conicTo = Marshal.GetFunctionPointerForDelegate(conicToFunc);
+				r.cubicTo = Marshal.GetFunctionPointerForDelegate(cubicToFunc);
+				return r;
 			}
 		}
 
 		#endregion
+
+		public void Dispose() {
+			if (moveToPin.IsAllocated) {
+				moveToPin.Free();
+			}
+			if (lineToPin.IsAllocated) {
+				lineToPin.Free();
+			}
+			if (cubicToPin.IsAllocated) {
+				cubicToPin.Free();
+			}
+			if (conicToPin.IsAllocated) {
+				conicToPin.Free();
+			}
+		}
+
 	}
 }

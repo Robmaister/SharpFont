@@ -50,6 +50,13 @@ possible to rename the file by changing the filename constant in
 supported platform), you must also copy `SharpFont.dll.config` to the
 project's output directory.
 
+Two extensions for Visual Studio make it easy to follow the coding format in 
+this project and prevent lots of spurious whitespace changes.
+The [.editorconfig](http://editorconfig.org/) file in the project works with the
+[EditorConfig](https://visualstudiogallery.msdn.microsoft.com/c8bccfe2-650c-4b42-bc5c-845e21f96328) 
+extension and the [Format document on Save](https://visualstudiogallery.msdn.microsoft.com/3ea1c920-69c4-441f-9979-ccc2752dac56) 
+extension makes it basically automatic.
+
 ####Mono
 With the removal of the `WIN64` configurations, the included `Makefile` is
 effectively redundant. However, you can still build SharpFont by calling

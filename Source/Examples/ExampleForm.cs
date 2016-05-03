@@ -21,6 +21,8 @@ namespace Examples
 		private Library lib;
 		private Face fontFace;
 
+		#region Constructor
+
 		public ExampleForm()
 		{
 			InitializeComponent();
@@ -28,6 +30,26 @@ namespace Examples
 			fontFolder = "Fonts/";
 			sampleText = "SharpFont";
 		}
+
+		#endregion
+
+		#region Helper methods
+
+		private void RebuildFontList()
+		{
+			if (!Directory.Exists(fontFolder))
+				return;
+
+			//HACK only checking for ttf even though FreeType supports far more formats.
+			foreach (var file in Directory.GetFiles(fontFolder, "*.ttf"))
+				listBoxFont.Items.Add(Path.GetFileName(file));
+			foreach (var file in Directory.GetFiles(fontFolder, "*.otf"))
+				listBoxFont.Items.Add(Path.GetFileName(file));
+		}
+
+		#endregion // Helper methods
+
+		#region Handlers
 
 		private void ExampleForm_Load(object sender, EventArgs e)
 		{
@@ -62,21 +84,9 @@ namespace Examples
 			useSharpFont = false;
 		}
 
-		private void RebuildFontList()
-		{
-			if ( !Directory.Exists(fontFolder) )
-				return;
-
-			//HACK only checking for ttf even though FreeType supports far more formats.
-			foreach (var file in Directory.GetFiles(fontFolder, "*.ttf"))
-				listBoxFont.Items.Add(Path.GetFileName(file));
-			foreach (var file in Directory.GetFiles(fontFolder, "*.otf"))
-				listBoxFont.Items.Add(Path.GetFileName(file));
-		}
-
 		private void listViewFont_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
 		{
-			
+
 		}
 
 		private void listBoxFont_SelectedIndexChanged(object sender, EventArgs e)
@@ -89,10 +99,10 @@ namespace Examples
 
 		private void mainMenuFileOpen_Click(object sender, EventArgs e)
 		{
-			if(openFontDialog.ShowDialog() == DialogResult.OK)
-				{
-					listBoxFont.Items.Add(openFontDialog.FileName);
-				}
+			if (openFontDialog.ShowDialog() == DialogResult.OK)
+			{
+				listBoxFont.Items.Add(openFontDialog.FileName);
+			}
 		}
 
 		private void mainMenuFileExit_Click(object sender, EventArgs e)
@@ -104,5 +114,8 @@ namespace Examples
 		{
 
 		}
+
+		#endregion // Handlers
+
 	}
 }

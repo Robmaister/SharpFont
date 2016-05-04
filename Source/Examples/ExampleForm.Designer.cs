@@ -48,160 +48,163 @@
 			this.listBoxFont = new System.Windows.Forms.ListBox();
 			this.pictureBoxText = new System.Windows.Forms.PictureBox();
 			this.openFontDialog = new System.Windows.Forms.OpenFileDialog();
+			this.mainMenuFolderOpen = new System.Windows.Forms.ToolStripMenuItem();
 			this.mainMenu.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
 			this.splitContainer1.Panel1.SuspendLayout();
 			this.splitContainer1.Panel2.SuspendLayout();
 			this.splitContainer1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxText)).BeginInit();
 			this.SuspendLayout();
-			//
+			// 
 			// mainMenu
-			//
+			// 
 			this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mainMenuFile,
-			this.mainMenuEdit,
-			this.mainMenuView,
-			this.mainMenuHelp});
+            this.mainMenuFile,
+            this.mainMenuEdit,
+            this.mainMenuView,
+            this.mainMenuHelp});
 			this.mainMenu.Location = new System.Drawing.Point(0, 0);
 			this.mainMenu.Name = "mainMenu";
 			this.mainMenu.Size = new System.Drawing.Size(506, 24);
 			this.mainMenu.TabIndex = 1;
 			this.mainMenu.Text = "menuStrip1";
-			//
+			// 
 			// mainMenuFile
-			//
+			// 
 			this.mainMenuFile.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mainMenuFileOpen,
-			this.toolStripSeparator1,
-			this.mainMenuFileExit});
+            this.mainMenuFileOpen,
+            this.mainMenuFolderOpen,
+            this.toolStripSeparator1,
+            this.mainMenuFileExit});
 			this.mainMenuFile.Name = "mainMenuFile";
 			this.mainMenuFile.Size = new System.Drawing.Size(37, 20);
 			this.mainMenuFile.Text = "File";
-			//
+			// 
 			// mainMenuFileOpen
-			//
+			// 
 			this.mainMenuFileOpen.Name = "mainMenuFileOpen";
-			this.mainMenuFileOpen.Size = new System.Drawing.Size(112, 22);
-			this.mainMenuFileOpen.Text = "Open...";
+			this.mainMenuFileOpen.Size = new System.Drawing.Size(160, 22);
+			this.mainMenuFileOpen.Text = "Open Font File...";
 			this.mainMenuFileOpen.Click += new System.EventHandler(this.mainMenuFileOpen_Click);
-			//
+			// 
 			// toolStripSeparator1
-			//
+			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(109, 6);
-			//
+			this.toolStripSeparator1.Size = new System.Drawing.Size(157, 6);
+			// 
 			// mainMenuFileExit
-			//
+			// 
 			this.mainMenuFileExit.Name = "mainMenuFileExit";
-			this.mainMenuFileExit.Size = new System.Drawing.Size(112, 22);
+			this.mainMenuFileExit.Size = new System.Drawing.Size(160, 22);
 			this.mainMenuFileExit.Text = "Exit";
 			this.mainMenuFileExit.Click += new System.EventHandler(this.mainMenuFileExit_Click);
-			//
+			// 
 			// mainMenuEdit
-			//
+			// 
 			this.mainMenuEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mainMenuEditSharpFont,
-			this.mainMenuEditSystemDrawing,
-			this.toolStripSeparator2,
-			this.mainMenuFontSize,
-			this.foregroundColorToolStripMenuItem,
-			this.backgroundColorToolStripMenuItem});
+            this.mainMenuEditSharpFont,
+            this.mainMenuEditSystemDrawing,
+            this.toolStripSeparator2,
+            this.mainMenuFontSize,
+            this.foregroundColorToolStripMenuItem,
+            this.backgroundColorToolStripMenuItem});
 			this.mainMenuEdit.Name = "mainMenuEdit";
 			this.mainMenuEdit.Size = new System.Drawing.Size(39, 20);
 			this.mainMenuEdit.Text = "Edit";
-			//
+			// 
 			// mainMenuEditSharpFont
-			//
+			// 
 			this.mainMenuEditSharpFont.Checked = true;
 			this.mainMenuEditSharpFont.CheckState = System.Windows.Forms.CheckState.Checked;
 			this.mainMenuEditSharpFont.Name = "mainMenuEditSharpFont";
 			this.mainMenuEditSharpFont.Size = new System.Drawing.Size(181, 22);
 			this.mainMenuEditSharpFont.Text = "Use SharpFont";
 			this.mainMenuEditSharpFont.Click += new System.EventHandler(this.mainMenuEditSharpFont_Click);
-			//
+			// 
 			// mainMenuEditSystemDrawing
-			//
+			// 
 			this.mainMenuEditSystemDrawing.Enabled = false;
 			this.mainMenuEditSystemDrawing.Name = "mainMenuEditSystemDrawing";
 			this.mainMenuEditSystemDrawing.Size = new System.Drawing.Size(181, 22);
 			this.mainMenuEditSystemDrawing.Text = "Use System.Drawing";
 			this.mainMenuEditSystemDrawing.Click += new System.EventHandler(this.mainMenuEditSystemDrawing_Click);
-			//
+			// 
 			// toolStripSeparator2
-			//
+			// 
 			this.toolStripSeparator2.Name = "toolStripSeparator2";
 			this.toolStripSeparator2.Size = new System.Drawing.Size(178, 6);
-			//
+			// 
 			// mainMenuFontSize
-			//
+			// 
 			this.mainMenuFontSize.Name = "mainMenuFontSize";
 			this.mainMenuFontSize.Size = new System.Drawing.Size(121, 23);
 			this.mainMenuFontSize.Text = "Font Size";
 			this.mainMenuFontSize.TextUpdate += new System.EventHandler(this.mainMenuFontSize_TextUpdate);
-			//
+			// 
 			// foregroundColorToolStripMenuItem
-			//
+			// 
 			this.foregroundColorToolStripMenuItem.Name = "foregroundColorToolStripMenuItem";
 			this.foregroundColorToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
 			this.foregroundColorToolStripMenuItem.Text = "Foreground Color...";
 			this.foregroundColorToolStripMenuItem.Click += new System.EventHandler(this.foregroundColorToolStripMenuItem_Click);
-			//
+			// 
 			// backgroundColorToolStripMenuItem
-			//
+			// 
 			this.backgroundColorToolStripMenuItem.Name = "backgroundColorToolStripMenuItem";
 			this.backgroundColorToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
 			this.backgroundColorToolStripMenuItem.Text = "Background Color...";
 			this.backgroundColorToolStripMenuItem.Click += new System.EventHandler(this.backgroundColorToolStripMenuItem_Click);
-			//
+			// 
 			// mainMenuView
-			//
+			// 
 			this.mainMenuView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mainMenuViewDetails});
+            this.mainMenuViewDetails});
 			this.mainMenuView.Name = "mainMenuView";
 			this.mainMenuView.Size = new System.Drawing.Size(44, 20);
 			this.mainMenuView.Text = "View";
-			//
+			// 
 			// mainMenuViewDetails
-			//
+			// 
 			this.mainMenuViewDetails.Name = "mainMenuViewDetails";
 			this.mainMenuViewDetails.Size = new System.Drawing.Size(145, 22);
 			this.mainMenuViewDetails.Text = "Font Details...";
-			//
+			// 
 			// mainMenuHelp
-			//
+			// 
 			this.mainMenuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.mainMenuHelpAbout});
+            this.mainMenuHelpAbout});
 			this.mainMenuHelp.Name = "mainMenuHelp";
 			this.mainMenuHelp.Size = new System.Drawing.Size(44, 20);
 			this.mainMenuHelp.Text = "Help";
-			//
+			// 
 			// mainMenuHelpAbout
-			//
+			// 
 			this.mainMenuHelpAbout.Name = "mainMenuHelpAbout";
 			this.mainMenuHelpAbout.Size = new System.Drawing.Size(107, 22);
 			this.mainMenuHelpAbout.Text = "About";
-			//
+			// 
 			// splitContainer1
-			//
-			this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-			| System.Windows.Forms.AnchorStyles.Left)
-			| System.Windows.Forms.AnchorStyles.Right)));
+			// 
+			this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.splitContainer1.Location = new System.Drawing.Point(0, 24);
 			this.splitContainer1.Name = "splitContainer1";
-			//
+			// 
 			// splitContainer1.Panel1
-			//
+			// 
 			this.splitContainer1.Panel1.Controls.Add(this.listBoxFont);
-			//
+			// 
 			// splitContainer1.Panel2
-			//
+			// 
 			this.splitContainer1.Panel2.Controls.Add(this.pictureBoxText);
 			this.splitContainer1.Size = new System.Drawing.Size(506, 288);
 			this.splitContainer1.SplitterDistance = 176;
 			this.splitContainer1.TabIndex = 2;
-			//
+			// 
 			// listBoxFont
-			//
+			// 
 			this.listBoxFont.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.listBoxFont.FormattingEnabled = true;
 			this.listBoxFont.Location = new System.Drawing.Point(0, 0);
@@ -209,22 +212,29 @@
 			this.listBoxFont.Size = new System.Drawing.Size(176, 288);
 			this.listBoxFont.TabIndex = 0;
 			this.listBoxFont.SelectedIndexChanged += new System.EventHandler(this.listBoxFont_SelectedIndexChanged);
-			//
+			// 
 			// pictureBoxText
-			//
+			// 
 			this.pictureBoxText.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.pictureBoxText.Location = new System.Drawing.Point(0, 0);
 			this.pictureBoxText.Name = "pictureBoxText";
 			this.pictureBoxText.Size = new System.Drawing.Size(326, 288);
 			this.pictureBoxText.TabIndex = 0;
 			this.pictureBoxText.TabStop = false;
-			//
+			// 
 			// openFontDialog
-			//
+			// 
 			this.openFontDialog.Filter = "All Font Files|*.ttf;*.otf|TrueType Fonts|*.ttf|OpenType Fonts|*.otf";
-			//
+			// 
+			// mainMenuFolderOpen
+			// 
+			this.mainMenuFolderOpen.Name = "mainMenuFolderOpen";
+			this.mainMenuFolderOpen.Size = new System.Drawing.Size(160, 22);
+			this.mainMenuFolderOpen.Text = "Open Folder...";
+			this.mainMenuFolderOpen.Click += new System.EventHandler(this.mainMenuFolderOpen_Click);
+			// 
 			// ExampleForm
-			//
+			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(506, 312);
@@ -238,6 +248,7 @@
 			this.mainMenu.PerformLayout();
 			this.splitContainer1.Panel1.ResumeLayout(false);
 			this.splitContainer1.Panel2.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
 			this.splitContainer1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxText)).EndInit();
 			this.ResumeLayout(false);
@@ -267,5 +278,6 @@
 		private System.Windows.Forms.ToolStripMenuItem backgroundColorToolStripMenuItem;
 		private System.Windows.Forms.ListBox listBoxFont;
 		private System.Windows.Forms.OpenFileDialog openFontDialog;
+		private System.Windows.Forms.ToolStripMenuItem mainMenuFolderOpen;
 	}
 }

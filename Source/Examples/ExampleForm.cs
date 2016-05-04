@@ -42,16 +42,26 @@ namespace Examples
 
 		#region Helper methods
 
+		private void LoadFolder(string path)
+		{
+			fontFolder = path;
+			RebuildFontList();
+		}
+
 		private void RebuildFontList()
 		{
 			if (!Directory.Exists(fontFolder))
 				return;
+
+			listBoxFont.Items.Clear();
 
 			//HACK only checking for ttf even though FreeType supports far more formats.
 			foreach (var file in Directory.GetFiles(fontFolder, "*.ttf"))
 				listBoxFont.Items.Add(Path.GetFileName(file));
 			foreach (var file in Directory.GetFiles(fontFolder, "*.otf"))
 				listBoxFont.Items.Add(Path.GetFileName(file));
+
+			listBoxFont.SelectedIndex = 0;
 		}
 
 		private void DisplayFont(string filename)
@@ -127,6 +137,20 @@ namespace Examples
 					listBoxFont.Items.Add(filename);
 				}
 				listBoxFont.SelectedIndex = listBoxFont.FindString(filename);
+			}
+		}
+
+		private void mainMenuFolderOpen_Click(object sender, EventArgs e)
+		{
+			using (var dlg = new FolderBrowserDialog())
+			{
+				dlg.Description = "Select Font Folder";
+				dlg.RootFolder = Environment.SpecialFolder.MyComputer;
+				dlg.SelectedPath = @"C:\";
+				if (dlg.ShowDialog(this) == DialogResult.OK)
+				{
+					LoadFolder(dlg.SelectedPath);
+				}
 			}
 		}
 

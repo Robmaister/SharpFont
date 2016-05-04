@@ -17,6 +17,9 @@ namespace Examples
 
 		private string fontFolder;
 		private string sampleText;
+		private float fontSize;
+		private Color foreColor;
+		private Color backColor;
 
 		private Library lib;
 		private Face fontFace;
@@ -29,6 +32,10 @@ namespace Examples
 
 			fontFolder = "Fonts/";
 			sampleText = "SharpFont";
+			fontSize = 62f;
+			mainMenuFontSize.Text = fontSize.ToString("0.0");
+			foreColor = Color.Black;
+			backColor = Color.White;
 		}
 
 		#endregion
@@ -47,6 +54,34 @@ namespace Examples
 				listBoxFont.Items.Add(Path.GetFileName(file));
 		}
 
+		private void DisplayFont(string filename)
+		{
+			string fontFile = filename;
+			try
+			{
+				fontFace = new Face(lib, fontFile);
+				fontFace.SetCharSize(0, fontSize, 0, 96);
+			}
+			catch { }
+			RedrawFont();
+		}
+
+		private void RedrawFont()
+		{
+			if (lib == null || fontFace == null)
+				return;
+
+			pictureBoxText.BackColor = backColor;
+			try
+			{
+				pictureBoxText.Image = Program.RenderString(lib, fontFace, sampleText, foreColor, backColor);
+			}
+			catch
+			{
+				pictureBoxText.Image = null;
+			}
+		}
+
 		#endregion // Helper methods
 
 		#region Handlers
@@ -58,14 +93,6 @@ namespace Examples
 			RebuildFontList();
 			if (listBoxFont.Items.Count > 0)
 				listBoxFont.SelectedIndex = 0;
-		}
-
-		private void pictureBoxText_Paint(object sender, PaintEventArgs e)
-		{
-			if (lib == null || fontFace == null)
-				return;
-
-			pictureBoxText.Image = Program.RenderString(lib, fontFace, sampleText);
 		}
 
 		private void mainMenuEditSharpFont_Click(object sender, EventArgs e)
@@ -84,24 +111,22 @@ namespace Examples
 			useSharpFont = false;
 		}
 
-		private void listViewFont_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-		{
-
-		}
-
 		private void listBoxFont_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			fontFace = new Face(lib, Path.Combine(Path.GetFullPath(fontFolder), (string)listBoxFont.SelectedItem));
-			fontFace.SetCharSize(0, 62, 0, 96);
-			pictureBoxText.Invalidate();
-			pictureBoxText.Image = Program.RenderString(lib, fontFace, sampleText);
+			string filename = Path.Combine(Path.GetFullPath(fontFolder), (string)listBoxFont.SelectedItem);
+			DisplayFont(filename);
 		}
 
 		private void mainMenuFileOpen_Click(object sender, EventArgs e)
 		{
 			if (openFontDialog.ShowDialog() == DialogResult.OK)
 			{
-				listBoxFont.Items.Add(openFontDialog.FileName);
+				string filename = openFontDialog.FileName;
+				if (!listBoxFont.Items.Contains(filename))
+				{
+					listBoxFont.Items.Add(filename);
+				}
+				listBoxFont.SelectedIndex = listBoxFont.FindString(filename);
 			}
 		}
 
@@ -110,9 +135,41 @@ namespace Examples
 			Application.Exit();
 		}
 
-		private void toolStripComboBox1_TextUpdate(object sender, EventArgs e)
+		private void mainMenuFontSize_TextUpdate(object sender, EventArgs e)
 		{
+			float value = 62.0f;
+			if (float.TryParse(mainMenuFontSize.Text, out value))
+			{
+				fontSize = value;
+				fontFace.SetCharSize(0, fontSize, 0, 96);
+				RedrawFont();
+			}
+		}
 
+		private void foregroundColorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (var dlg = new ColorDialog())
+			{
+				dlg.Color = foreColor;
+				if (dlg.ShowDialog(this) == DialogResult.OK)
+				{
+					foreColor = dlg.Color;
+				}
+			}
+			RedrawFont();
+		}
+
+		private void backgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			using (var dlg = new ColorDialog())
+			{
+				dlg.Color = backColor;
+				if (dlg.ShowDialog(this) == DialogResult.OK)
+				{
+					backColor = dlg.Color;
+				}
+			}
+			RedrawFont();
 		}
 
 		#endregion // Handlers

@@ -57,7 +57,7 @@ namespace Examples
 			Application.Run(form);
 		}
 
-		public static Bitmap RenderString(Library library, Face face, string text)
+		public static Bitmap RenderString(Library library, Face face, string text, Color foreColor, Color backColor)
 		{
 			float penX = 0, penY = 0;
 			float width = 0;
@@ -99,7 +99,7 @@ namespace Examples
 			//create a new bitmap that fits the string.
 			Bitmap bmp = new Bitmap((int)Math.Ceiling(width), (int)Math.Ceiling(height));
 			Graphics g = Graphics.FromImage(bmp);
-			g.Clear(SystemColors.Control);
+			g.Clear(backColor);
 
 			//draw the string
 			for (int i = 0; i < text.Length; i++)
@@ -126,7 +126,7 @@ namespace Examples
 				{
 					//FTBitmap ftbmp = face.Glyph.Bitmap.Copy(library);
 					FTBitmap ftbmp = face.Glyph.Bitmap;
-					Bitmap cBmp = ftbmp.ToGdipBitmap(Color.Black);
+					Bitmap cBmp = ftbmp.ToGdipBitmap(foreColor);
 
 					//Not using g.DrawImage because some characters come out blurry/clipped.
 					g.DrawImageUnscaled(cBmp, (int)Math.Round(penX + face.Glyph.BitmapLeft), (int)Math.Round(penY + (top - (float)face.Glyph.Metrics.HorizontalBearingY)));

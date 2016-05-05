@@ -17,7 +17,6 @@ namespace Examples
 
 		private string fontFolder;
 		private string sampleText;
-		//private float fontSize;
 		private Color foreColor;
 		private Color backColor;
 
@@ -80,9 +79,11 @@ namespace Examples
 			try
 			{
 				pictureBoxText.Image = fontService.RenderString(sampleText, foreColor);
+				statusLabel.Text = "";
 			}
-			catch
+			catch (Exception ex)
 			{
+				statusLabel.Text = ex.Message;
 				pictureBoxText.Image = null;
 			}
 		}
@@ -93,6 +94,7 @@ namespace Examples
 
 		private void ExampleForm_Load(object sender, EventArgs e)
 		{
+			statusLabel.Text = "";
 			RebuildFontList();
 			if (listBoxFont.Items.Count > 0)
 				listBoxFont.SelectedIndex = 0;

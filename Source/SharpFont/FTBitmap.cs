@@ -102,7 +102,7 @@ namespace SharpFont
 		#endregion
 
 		#region Properties
-		
+
 		/// <summary>
 		/// Gets a value indicating whether the <see cref="FTBitmap"/> has been disposed.
 		/// </summary>
@@ -400,94 +400,94 @@ namespace SharpFont
 			switch (rec.pixel_mode)
 			{
 				case PixelMode.Mono:
-				{
-					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format1bppIndexed);
-					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format1bppIndexed);
+					{
+						Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format1bppIndexed);
+						var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format1bppIndexed);
 
-					for (int i = 0; i < rec.rows; i++)
-						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
+						for (int i = 0; i < rec.rows; i++)
+							PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
 
-					bmp.UnlockBits(locked);
+						bmp.UnlockBits(locked);
 
-					ColorPalette palette = bmp.Palette;
-					palette.Entries[0] = Color.FromArgb(0, color);
-					palette.Entries[1] = Color.FromArgb(255, color);
+						ColorPalette palette = bmp.Palette;
+						palette.Entries[0] = Color.FromArgb(0, color);
+						palette.Entries[1] = Color.FromArgb(255, color);
 
-					bmp.Palette = palette;
-					return bmp;
-				}
+						bmp.Palette = palette;
+						return bmp;
+					}
 
 				case PixelMode.Gray4:
-				{
-					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format4bppIndexed);
-					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format4bppIndexed);
-
-					for (int i = 0; i < rec.rows; i++)
-						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
-
-					bmp.UnlockBits(locked);
-
-					ColorPalette palette = bmp.Palette;
-					for (int i = 0; i < palette.Entries.Length; i++)
 					{
-						float a = (i * 17) / 255f;
-						palette.Entries[i] = Color.FromArgb(i * 17, (int)(color.R * a), (int)(color.G * a), (int)(color.B * a));
-					}
+						Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format4bppIndexed);
+						var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format4bppIndexed);
 
-					bmp.Palette = palette;
-					return bmp;
-				}
+						for (int i = 0; i < rec.rows; i++)
+							PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
+
+						bmp.UnlockBits(locked);
+
+						ColorPalette palette = bmp.Palette;
+						for (int i = 0; i < palette.Entries.Length; i++)
+						{
+							float a = (i * 17) / 255f;
+							palette.Entries[i] = Color.FromArgb(i * 17, (int)(color.R * a), (int)(color.G * a), (int)(color.B * a));
+						}
+
+						bmp.Palette = palette;
+						return bmp;
+					}
 
 				case PixelMode.Gray:
-				{
-					Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format8bppIndexed);
-					var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
-
-					for (int i = 0; i < rec.rows; i++)
-						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
-
-					bmp.UnlockBits(locked);
-
-					ColorPalette palette = bmp.Palette;
-					for (int i = 0; i < palette.Entries.Length; i++)
 					{
-						float a = i / 255f;
-						palette.Entries[i] = Color.FromArgb(i, (int)(color.R * a), (int)(color.G * a), (int)(color.B * a));
-					}
+						Bitmap bmp = new Bitmap(rec.width, rec.rows, PixelFormat.Format8bppIndexed);
+						var locked = bmp.LockBits(new Rectangle(0, 0, rec.width, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format8bppIndexed);
 
-					//HACK There's a bug in Mono's libgdiplus requiring the "PaletteHasAlpha" flag to be set for transparency to work properly
-					//See https://github.com/Robmaister/SharpFont/issues/62
-					if (!hasCheckedForMono)
-					{
-						hasCheckedForMono = true;
-						isRunningOnMono = Type.GetType("Mono.Runtime") != null;
-						if (isRunningOnMono)
+						for (int i = 0; i < rec.rows; i++)
+							PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
+
+						bmp.UnlockBits(locked);
+
+						ColorPalette palette = bmp.Palette;
+						for (int i = 0; i < palette.Entries.Length; i++)
 						{
-							monoPaletteFlagsField = typeof(ColorPalette).GetField("flags", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+							float a = i / 255f;
+							palette.Entries[i] = Color.FromArgb(i, (int)(color.R), (int)(color.G), (int)(color.B));
 						}
+
+						//HACK There's a bug in Mono's libgdiplus requiring the "PaletteHasAlpha" flag to be set for transparency to work properly
+						//See https://github.com/Robmaister/SharpFont/issues/62
+						if (!hasCheckedForMono)
+						{
+							hasCheckedForMono = true;
+							isRunningOnMono = Type.GetType("Mono.Runtime") != null;
+							if (isRunningOnMono)
+							{
+								monoPaletteFlagsField = typeof(ColorPalette).GetField("flags", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+							}
+						}
+
+						if (isRunningOnMono)
+							monoPaletteFlagsField.SetValue(palette, palette.Flags | 1);
+
+						bmp.Palette = palette;
+						return bmp;
 					}
-
-					if (isRunningOnMono)
-						monoPaletteFlagsField.SetValue(palette, palette.Flags | 1);
-
-					bmp.Palette = palette;
-					return bmp;
-				}
 
 				case PixelMode.Lcd:
-				{
-					//TODO apply color
-					int bmpWidth = rec.width / 3;
-					Bitmap bmp = new Bitmap(bmpWidth, rec.rows, PixelFormat.Format24bppRgb);
-					var locked = bmp.LockBits(new Rectangle(0, 0, bmpWidth, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
+					{
+						//TODO apply color
+						int bmpWidth = rec.width / 3;
+						Bitmap bmp = new Bitmap(bmpWidth, rec.rows, PixelFormat.Format24bppRgb);
+						var locked = bmp.LockBits(new Rectangle(0, 0, bmpWidth, rec.rows), ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb);
 
-					for (int i = 0; i < rec.rows; i++)
-						PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
+						for (int i = 0; i < rec.rows; i++)
+							PInvokeHelper.Copy(Buffer, i * rec.pitch, locked.Scan0, i * locked.Stride, locked.Stride);
 
-					bmp.UnlockBits(locked);
+						bmp.UnlockBits(locked);
 
-					return bmp;
-				}
+						return bmp;
+					}
 				/*case PixelMode.VerticalLcd:
 				{
 					int bmpHeight = rec.rows / 3;

@@ -17,12 +17,11 @@ namespace Examples
 
 		private string fontFolder;
 		private string sampleText;
-		private float fontSize;
+		//private float fontSize;
 		private Color foreColor;
 		private Color backColor;
 
-		private Library lib;
-		private Face fontFace;
+		private FontService fontService;
 
 		#region Constructor
 
@@ -30,10 +29,11 @@ namespace Examples
 		{
 			InitializeComponent();
 
+			fontService = new FontService();
 			fontFolder = "Fonts/";
 			sampleText = "SharpFont";
-			fontSize = 62f;
-			mainMenuFontSize.Text = fontSize.ToString("0.0");
+			fontService.Size = 62f;
+			mainMenuFontSize.Text = fontService.Size.ToString("0.0");
 			foreColor = Color.Black;
 			backColor = Color.White;
 		}
@@ -66,11 +66,9 @@ namespace Examples
 
 		private void DisplayFont(string filename)
 		{
-			string fontFile = filename;
 			try
 			{
-				fontFace = new Face(lib, fontFile);
-				fontFace.SetCharSize(0, fontSize, 0, 96);
+				fontService.SetFont(filename);
 			}
 			catch { }
 			RedrawFont();
@@ -78,13 +76,10 @@ namespace Examples
 
 		private void RedrawFont()
 		{
-			if (lib == null || fontFace == null)
-				return;
-
 			pictureBoxText.BackColor = backColor;
 			try
 			{
-				pictureBoxText.Image = Program.RenderString(lib, fontFace, sampleText, foreColor, backColor);
+				pictureBoxText.Image = fontService.RenderString(sampleText, foreColor);
 			}
 			catch
 			{
@@ -98,8 +93,6 @@ namespace Examples
 
 		private void ExampleForm_Load(object sender, EventArgs e)
 		{
-			lib = new Library();
-
 			RebuildFontList();
 			if (listBoxFont.Items.Count > 0)
 				listBoxFont.SelectedIndex = 0;
@@ -164,8 +157,7 @@ namespace Examples
 			float value = 62.0f;
 			if (float.TryParse(mainMenuFontSize.Text, out value))
 			{
-				fontSize = value;
-				fontFace.SetCharSize(0, fontSize, 0, 96);
+				fontService.Size = value;
 				RedrawFont();
 			}
 		}
@@ -193,7 +185,7 @@ namespace Examples
 					backColor = dlg.Color;
 				}
 			}
-			RedrawFont();
+			pictureBoxText.BackColor = backColor;
 		}
 
 		#endregion // Handlers

@@ -21,8 +21,6 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -57,94 +55,5 @@ namespace Examples
 			Application.Run(form);
 		}
 
-		public static Bitmap RenderString(Library library, Face face, string text, Color foreColor, Color backColor)
-		{
-			float penX = 0, penY = 0;
-			float width = 0;
-			float height = 0;
-
-			//both bottom and top are positive for simplicity
-			float top = 0, bottom = 0;
-
-			//measure the size of the string before rendering it, requirement of Bitmap.
-			for (int i = 0; i < text.Length; i++)
-			{
-				char c = text[i];
-
-				uint glyphIndex = face.GetCharIndex(c);
-				face.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
-
-				width += (float)face.Glyph.Advance.X;
-
-				if (face.HasKerning && i < text.Length - 1)
-				{
-					char cNext = text[i + 1];
-					width += (float)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X;
-				}
-
-				float glyphTop = (float)face.Glyph.Metrics.HorizontalBearingY;
-				float glyphBottom = (float)(face.Glyph.Metrics.Height - face.Glyph.Metrics.HorizontalBearingY);
-
-				if (glyphTop > top)
-					top = glyphTop;
-				if (glyphBottom > bottom)
-					bottom = glyphBottom;
-			}
-
-			height = top + bottom;
-
-			if (width == 0 || height == 0)
-				return null;
-
-			//create a new bitmap that fits the string.
-			Bitmap bmp = new Bitmap((int)Math.Ceiling(width), (int)Math.Ceiling(height));
-			Graphics g = Graphics.FromImage(bmp);
-			g.Clear(backColor);
-
-			//draw the string
-			for (int i = 0; i < text.Length; i++)
-			{
-				char c = text[i];
-
-				uint glyphIndex = face.GetCharIndex(c);
-				face.LoadGlyph(glyphIndex, LoadFlags.Default, LoadTarget.Normal);
-				face.Glyph.RenderGlyph(RenderMode.Normal);
-
-				if (c == ' ')
-				{
-					penX += (float)face.Glyph.Advance.X;
-
-					if (face.HasKerning && i < text.Length - 1)
-					{
-						char cNext = text[i + 1];
-						width += (float)face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default).X;
-					}
-
-					penY += (float)face.Glyph.Advance.Y;
-				}
-				else
-				{
-					//FTBitmap ftbmp = face.Glyph.Bitmap.Copy(library);
-					FTBitmap ftbmp = face.Glyph.Bitmap;
-					Bitmap cBmp = ftbmp.ToGdipBitmap(foreColor);
-
-					//Not using g.DrawImage because some characters come out blurry/clipped.
-					g.DrawImageUnscaled(cBmp, (int)Math.Round(penX + face.Glyph.BitmapLeft), (int)Math.Round(penY + (top - (float)face.Glyph.Metrics.HorizontalBearingY)));
-
-					penX += (float)face.Glyph.Metrics.HorizontalAdvance;
-					penY += (float)face.Glyph.Advance.Y;
-
-					if (face.HasKerning && i < text.Length - 1)
-					{
-						char cNext = text[i + 1];
-						var kern = face.GetKerning(glyphIndex, face.GetCharIndex(cNext), KerningMode.Default);
-						penX += (float)kern.X;
-					}
-				}
-			}
-
-			g.Dispose();
-			return bmp;
-		}
 	}
 }

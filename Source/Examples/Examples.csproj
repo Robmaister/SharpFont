@@ -49,6 +49,7 @@
     <Compile Include="ExampleForm.Designer.cs">
       <DependentUpon>ExampleForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="FontService.cs" />
     <Compile Include="Forms\LabeledToolStripComboBox.cs">
       <SubType>UserControl</SubType>
     </Compile>

@@ -95,11 +95,30 @@ namespace SharpFont
 	/// </code>
 	/// Set the values of ‘shift’ and ‘delta’ to 0 to get the original point coordinates.
 	/// </remarks>
-	public class OutlineFuncs
+	public class OutlineFuncs : IDisposable
 	{
 		#region Fields
 
-		private OutlineFuncsRec rec;
+		private bool isDisposed;
+
+		private MoveToFunc moveToFunc;
+		private LineToFunc lineToFunc;
+		private ConicToFunc conicToFunc;
+		private CubicToFunc cubicToFunc;
+
+		private GCHandle moveToPin;
+		private GCHandle lineToPin;
+		private GCHandle conicToPin;
+		private GCHandle cubicToPin;
+
+		private IntPtr moveToPtr;
+		private IntPtr lineToPtr;
+		private IntPtr conicToPtr;
+		private IntPtr cubicToPtr;
+
+		private int shift;
+		private IntPtr delta;
+
 
 		#endregion
 
@@ -121,14 +140,39 @@ namespace SharpFont
 		/// <param name="cubicTo">The cubic to delegate.</param>
 		/// <param name="shift">A value to shift by.</param>
 		/// <param name="delta">A delta to transform by.</param>
+		/// <exception cref="ArgumentNullException"><paramref name="moveTo"/>, <paramref name="lineTo"/>,
+		/// <paramref name="conicTo"/>, or <paramref name="cubicTo"/> is <see langword="null" />.</exception>
 		public OutlineFuncs(MoveToFunc moveTo, LineToFunc lineTo, ConicToFunc conicTo, CubicToFunc cubicTo, int shift, int delta)
 		{
-			rec.moveTo = Marshal.GetFunctionPointerForDelegate(moveTo);
-			rec.lineTo = Marshal.GetFunctionPointerForDelegate(lineTo);
-			rec.conicTo = Marshal.GetFunctionPointerForDelegate(conicTo);
-			rec.cubicTo = Marshal.GetFunctionPointerForDelegate(cubicTo);
-			rec.shift = shift;
-			rec.delta = (IntPtr)delta;
+			if (moveTo == null)
+			{
+				throw new ArgumentNullException(nameof(moveTo));
+			}
+			if (lineTo == null)
+			{
+				throw new ArgumentNullException(nameof(lineTo));
+			}
+			if (conicTo == null)
+			{
+				throw new ArgumentNullException(nameof(conicTo));
+			}
+			if (cubicTo == null)
+			{
+				throw new ArgumentNullException(nameof(cubicTo));
+			}
+
+			moveToFunc = moveTo;
+			lineToFunc = lineTo;
+			conicToFunc = conicTo;
+			cubicToFunc = cubicTo;
+
+			moveToPtr = Marshal.GetFunctionPointerForDelegate(moveToFunc);
+			lineToPtr = Marshal.GetFunctionPointerForDelegate(lineToFunc);
+			conicToPtr = Marshal.GetFunctionPointerForDelegate(conicToFunc);
+			cubicToPtr = Marshal.GetFunctionPointerForDelegate(cubicToFunc);
+
+			this.shift = shift;
+			this.delta = (IntPtr) delta;
 		}
 
 		#endregion
@@ -142,12 +186,19 @@ namespace SharpFont
 		{
 			get
 			{
-				return (MoveToFunc)Marshal.GetDelegateForFunctionPointer(rec.moveTo, typeof(MoveToFunc));
+				ThrowIfDisposed();
+				return moveToFunc;
 			}
-
 			set
 			{
-				rec.moveTo = Marshal.GetFunctionPointerForDelegate(value);
+				ThrowIfDisposed();
+				if (moveToPin.IsAllocated)
+				{
+					moveToPin.Free();
+				}
+				moveToFunc = value;
+				moveToPin = GCHandle.Alloc(moveToFunc);
+				moveToPtr = Marshal.GetFunctionPointerForDelegate(moveToFunc);
 			}
 		}
 
@@ -156,14 +207,22 @@ namespace SharpFont
 		/// </summary>
 		public LineToFunc LineFunction
 		{
+
 			get
 			{
-				return (LineToFunc)Marshal.GetDelegateForFunctionPointer(rec.lineTo, typeof(LineToFunc));
+				ThrowIfDisposed();
+				return lineToFunc;
 			}
-
 			set
 			{
-				rec.lineTo = Marshal.GetFunctionPointerForDelegate(value);
+				ThrowIfDisposed();
+				if (lineToPin.IsAllocated)
+				{
+					lineToPin.Free();
+				}
+				lineToFunc = value;
+				lineToPin = GCHandle.Alloc(lineToFunc);
+				lineToPtr = Marshal.GetFunctionPointerForDelegate(lineToFunc);
 			}
 		}
 
@@ -172,14 +231,22 @@ namespace SharpFont
 		/// </summary>
 		public ConicToFunc ConicFunction
 		{
+
 			get
 			{
-				return (ConicToFunc)Marshal.GetDelegateForFunctionPointer(rec.conicTo, typeof(ConicToFunc));
+				ThrowIfDisposed();
+				return conicToFunc;
 			}
-
 			set
 			{
-				rec.conicTo = Marshal.GetFunctionPointerForDelegate(value);
+				ThrowIfDisposed();
+				if (conicToPin.IsAllocated)
+				{
+					conicToPin.Free();
+				}
+				conicToFunc = value;
+				conicToPin = GCHandle.Alloc(conicToFunc);
+				conicToPtr = Marshal.GetFunctionPointerForDelegate(conicToFunc);
 			}
 		}
 
@@ -188,14 +255,22 @@ namespace SharpFont
 		/// </summary>
 		public CubicToFunc CubicFunction
 		{
+
 			get
 			{
-				return (CubicToFunc)Marshal.GetDelegateForFunctionPointer(rec.cubicTo, typeof(CubicToFunc));
+				ThrowIfDisposed();
+				return cubicToFunc;
 			}
-
 			set
 			{
-				rec.cubicTo = Marshal.GetFunctionPointerForDelegate(value);
+				ThrowIfDisposed();
+				if (cubicToPin.IsAllocated)
+				{
+					cubicToPin.Free();
+				}
+				cubicToFunc = value;
+				cubicToPin = GCHandle.Alloc(cubicToFunc);
+				cubicToPtr = Marshal.GetFunctionPointerForDelegate(cubicToFunc);
 			}
 		}
 
@@ -206,12 +281,14 @@ namespace SharpFont
 		{
 			get
 			{
-				return rec.shift;
+				ThrowIfDisposed();
+				return shift;
 			}
 
 			set
 			{
-				rec.shift = value;
+				ThrowIfDisposed();
+				shift = value;
 			}
 		}
 
@@ -223,7 +300,8 @@ namespace SharpFont
 		{
 			get
 			{
-				return (int)rec.delta;
+				ThrowIfDisposed();
+				return (int) delta;
 			}
 
 			/*set
@@ -238,10 +316,89 @@ namespace SharpFont
 		{
 			get
 			{
-				return rec;
+				ThrowIfDisposed();
+				var r = new OutlineFuncsRec();
+				r.moveTo = moveToPtr;
+				r.lineTo = lineToPtr;
+				r.conicTo = conicToPtr;
+				r.cubicTo = cubicToPtr;
+				return r;
 			}
 		}
 
 		#endregion
+
+
+		#region IDisposable
+
+		/// <summary>
+		/// Helper method to throw an exception if the object is disposed.
+		/// </summary>
+		/// <exception cref="ObjectDisposedException">If the object is already disposed</exception>
+		private void ThrowIfDisposed()
+		{
+			if (isDisposed)
+			{
+				throw new ObjectDisposedException("OutlineFuncs", "The outline funcs has already been disposed.");
+			}
+		}
+
+		/// <summary>
+		/// Finalizer which ensures that the pinned delegates are released.
+		/// </summary>
+		~OutlineFuncs()
+		{
+			Dispose(false);
+		}
+
+		/// <summary>
+		///		Disposes this outline funcs, releasing any of the resources held by it.
+		/// </summary>
+		/// <param name="disposing"></param>
+		protected virtual void Dispose(bool disposing)
+		{
+			if (isDisposed)
+			{
+				return;
+			}
+
+			if (disposing)
+			{
+				// If this class later needs any managed resources, they should be included here.
+			}
+			if (moveToPin.IsAllocated)
+			{
+				moveToPin.Free();
+			}
+			if (lineToPin.IsAllocated)
+			{
+				lineToPin.Free();
+			}
+			if (cubicToPin.IsAllocated)
+			{
+				cubicToPin.Free();
+			}
+			if (conicToPin.IsAllocated)
+			{
+				conicToPin.Free();
+			}
+			isDisposed = true;
+
+		}
+
+		/// <summary>
+		///  Releases the pinned memory on this object.
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+
+		#endregion
+
+
+
 	}
 }

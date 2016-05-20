@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using SharpFont;
+using System.Diagnostics;
 
 namespace Examples
 {
@@ -17,6 +18,7 @@ namespace Examples
 
 		private string fontFolder;
 		private string sampleText;
+		private float fontSize;
 		private Color foreColor;
 		private Color backColor;
 
@@ -31,13 +33,64 @@ namespace Examples
 			fontService = new FontService();
 			fontFolder = "Fonts/";
 			sampleText = "SharpFont";
+			// Some variations of the character set shown by the Windows Font Viewer
+			//sampleText = "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890.:,;'\"(!?)+-*//=";
+			//sampleText = "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890";
+			sampleText = "abcdefghijklmnopqrstuvwxyz";
 			fontService.Size = 62f;
+			fontSize = 62f;
 			mainMenuFontSize.Text = fontService.Size.ToString("0.0");
 			foreColor = Color.Black;
-			backColor = Color.White;
+			backColor = Color.Transparent;
+
+			decimal testValue = 12.1234567890123456M;
+			Debug.Print("testValue  : {0}", (double)testValue);
+			// none of these keep the precision I was expecting...
+			var f26 = new Fixed26Dot6(testValue);
+			Debug.Print("Fixed 26.6 : {0}", (double)f26);
+			Debug.Print("Fixed 26.6 : {0}", f26);
+			var f16 = new Fixed16Dot16(testValue);
+			Debug.Print("Fixed 16.16: {0}", (double)f16);
+			Debug.Print("Fixed 16.16: {0}", f16);
+			var f2 = new Fixed2Dot14((double)testValue); // decimal constructor crashes here
+			Debug.Print("Fixed  2.14: {0}", (double)f2);
+			Debug.Print("Fixed  2.14: {0}", f2);
 		}
 
 		#endregion
+
+		#region Status messages
+
+		private void ClearStatus()
+		{
+			statusLabel.Text = "";
+			statusLabel.Image = null;
+		}
+
+		private void ShowInfo(string msg, params object[] args)
+		{
+			statusLabel.Text = string.Format(msg, args);
+			statusLabel.Image = SystemIcons.Information.ToBitmap();
+		}
+
+		private void ShowError(string msg, params object[] args)
+		{
+			statusLabel.Text = string.Format(msg, args);
+			statusLabel.Image = SystemIcons.Warning.ToBitmap();
+		}
+
+		private void ShowException(Exception ex)
+		{
+			statusLabel.Text = ex.Message;
+			if (ex.GetType() == typeof(FreeTypeException))
+			{
+				fontService = new FontService();
+				fontService.Size = fontSize;
+			}
+			statusLabel.Image = SystemIcons.Error.ToBitmap();
+		}
+
+		#endregion // Status messages
 
 		#region Helper methods
 
@@ -49,16 +102,27 @@ namespace Examples
 
 		private void RebuildFontList()
 		{
-			if (!Directory.Exists(fontFolder))
+			ClearStatus();
+			var di = new DirectoryInfo(fontFolder);
+			if (!di.Exists)
+			{
+				ShowError("{0} doesn't exist.", di.FullName);
 				return;
+			}
 
 			listBoxFont.Items.Clear();
 
-			//HACK only checking for ttf even though FreeType supports far more formats.
-			foreach (var file in Directory.GetFiles(fontFolder, "*.ttf"))
-				listBoxFont.Items.Add(Path.GetFileName(file));
-			foreach (var file in Directory.GetFiles(fontFolder, "*.otf"))
-				listBoxFont.Items.Add(Path.GetFileName(file));
+			try
+			{
+				foreach (var file in fontService.GetFontFiles(di, false))
+				{
+					listBoxFont.Items.Add(Path.GetFileName(file.FullName));
+				}
+			}
+			catch (Exception ex)
+			{
+				ShowException(ex);
+			}
 
 			listBoxFont.SelectedIndex = 0;
 		}
@@ -69,23 +133,33 @@ namespace Examples
 			{
 				fontService.SetFont(filename);
 			}
-			catch { }
+			catch (Exception ex)
+			{
+				ShowException(ex);
+			}
 			RedrawFont();
 		}
 
 		private void RedrawFont()
 		{
+			ClearStatus();
 			pictureBoxText.BackColor = backColor;
+			panel1.BackColor = backColor;
 			try
 			{
-				pictureBoxText.Image = fontService.RenderString(sampleText, foreColor);
-				statusLabel.Text = "";
+				pictureBoxText.Image = fontService.RenderString(sampleText, foreColor, backColor);
+				ClearStatus();
+				if (pictureBoxText.Image == null)
+				{
+					ShowInfo("Nothing was rendered. Perhaps the selected font doesn't include the characters you need.");
+				}
 			}
 			catch (Exception ex)
 			{
-				statusLabel.Text = ex.Message;
+				ShowException(ex);
 				pictureBoxText.Image = null;
 			}
+			pictureBoxText.Visible = pictureBoxText.Image != null;
 		}
 
 		#endregion // Helper methods
@@ -141,7 +215,8 @@ namespace Examples
 			{
 				dlg.Description = "Select Font Folder";
 				dlg.RootFolder = Environment.SpecialFolder.MyComputer;
-				dlg.SelectedPath = @"C:\";
+				var di = new DirectoryInfo(fontFolder);
+				dlg.SelectedPath = di.FullName;
 				if (dlg.ShowDialog(this) == DialogResult.OK)
 				{
 					LoadFolder(dlg.SelectedPath);
@@ -160,6 +235,7 @@ namespace Examples
 			if (float.TryParse(mainMenuFontSize.Text, out value))
 			{
 				fontService.Size = value;
+				fontSize = value;
 				RedrawFont();
 			}
 		}
@@ -187,7 +263,7 @@ namespace Examples
 					backColor = dlg.Color;
 				}
 			}
-			pictureBoxText.BackColor = backColor;
+			RedrawFont();
 		}
 
 		#endregion // Handlers

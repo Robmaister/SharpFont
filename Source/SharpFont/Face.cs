@@ -48,6 +48,7 @@ namespace SharpFont
 		private FaceRec rec;
 
 		private bool disposed;
+		private bool validFace;
 
 		private GCHandle memoryFaceHandle;
 
@@ -84,6 +85,7 @@ namespace SharpFont
 				throw new FreeTypeException(err);
 
 			Reference = reference;
+			validFace = true;
 		}
 
 		//TODO make an overload with a FileStream instead of a byte[]
@@ -105,6 +107,7 @@ namespace SharpFont
 				throw new FreeTypeException(err);
 
 			Reference = reference;
+			validFace = true;
 		}
 
 		/// <summary>
@@ -123,6 +126,7 @@ namespace SharpFont
 				throw new FreeTypeException(err);
 
 			Reference = reference;
+			validFace = true;
 		}
 
 		/// <summary>
@@ -134,6 +138,7 @@ namespace SharpFont
 			: this(parent)
 		{
 			Reference = reference;
+			validFace = true;
 		}
 
 		private Face(Library parent)
@@ -2386,16 +2391,20 @@ namespace SharpFont
 
 				childSizes.Clear();
 
-				Error err = FT.FT_Done_Face(reference);
+				if (validFace)
+				{
+					Error err = FT.FT_Done_Face(reference);
+	
+					if (err != Error.Ok)
+						throw new FreeTypeException(err);
+	
+					// removes itself from the parent Library, with a check to prevent this from happening when Library is
+					// being disposed (Library disposes all it's children with a foreach loop, this causes an
+					// InvalidOperationException for modifying a collection during enumeration)
+					if (!parentLibrary.IsDisposed)
+						parentLibrary.RemoveChildFace(this);
 
-				if (err != Error.Ok)
-					throw new FreeTypeException(err);
-
-				// removes itself from the parent Library, with a check to prevent this from happening when Library is
-				// being disposed (Library disposes all it's children with a foreach loop, this causes an
-				// InvalidOperationException for modifying a collection during enumeration)
-				if (!parentLibrary.IsDisposed)
-					parentLibrary.RemoveChildFace(this);
+				}
 
 				reference = IntPtr.Zero;
 				rec = null;

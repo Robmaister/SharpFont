@@ -430,8 +430,9 @@ namespace SharpFont
 					ColorPalette palette = bmp.Palette;
 					for (int i = 0; i < palette.Entries.Length; i++)
 					{
+						// convert 8-bit range to 4-bit: (2^8-1) / (2^4-1) = 255 / 15 = 17, gives 16 values which are 0,17,34..255
 						float a = (i * 17) / 255f;
-						palette.Entries[i] = Color.FromArgb(i * 17, (int)(color.R * a), (int)(color.G * a), (int)(color.B * a));
+						palette.Entries[i] = Color.FromArgb(i * 17, (int)(color.R), (int)(color.G), (int)(color.B));
 					}
 
 					bmp.Palette = palette;
@@ -452,7 +453,7 @@ namespace SharpFont
 					for (int i = 0; i < palette.Entries.Length; i++)
 					{
 						float a = i / 255f;
-						palette.Entries[i] = Color.FromArgb(i, (int)(color.R * a), (int)(color.G * a), (int)(color.B * a));
+						palette.Entries[i] = Color.FromArgb(i, (int)(color.R), (int)(color.G), (int)(color.B));
 					}
 
 					//HACK There's a bug in Mono's libgdiplus requiring the "PaletteHasAlpha" flag to be set for transparency to work properly

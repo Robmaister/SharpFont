@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFont", "SharpFont\Shar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "Examples\Examples.csproj", "{81158C54-C830-4056-B5D6-AE9059741B20}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFont.iOS", "SharpFont\SharpFont.iOS.csproj", "{B457CD52-5112-4EB3-BC07-E834EB2B4613}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{81158C54-C830-4056-B5D6-AE9059741B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81158C54-C830-4056-B5D6-AE9059741B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81158C54-C830-4056-B5D6-AE9059741B20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B457CD52-5112-4EB3-BC07-E834EB2B4613}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B457CD52-5112-4EB3-BC07-E834EB2B4613}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B457CD52-5112-4EB3-BC07-E834EB2B4613}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B457CD52-5112-4EB3-BC07-E834EB2B4613}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

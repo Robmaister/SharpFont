@@ -23,6 +23,7 @@ SOFTWARE.*/
 #endregion
 
 using System;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 using SharpFont.TrueType.Internal;
@@ -106,7 +107,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return Array.ConvertAll<IntPtr, int>(rec.Created, new Converter<IntPtr, int>(delegate(IntPtr i) { return (int)i; }));
+                return rec.Created.Select(x => (int)x).ToArray();
 			}
 		}
 
@@ -114,7 +115,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return Array.ConvertAll<IntPtr, int>(rec.Created, new Converter<IntPtr, int>(delegate(IntPtr i) { return (int)i; }));
+                return rec.Modified.Select(x => (int)x).ToArray();
 			}
 		}
 

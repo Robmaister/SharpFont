@@ -40,11 +40,10 @@ namespace SharpFont
 	/// <remarks>
 	/// Fields may be changed after a call to <see cref="AttachFile"/> or <see cref="AttachStream"/>.
 	/// </remarks>
-	public sealed class Face : IDisposable
+	public sealed class Face : NativeObject, IDisposable
 	{
 		#region Fields
 
-		private IntPtr reference;
 		private FaceRec rec;
 
 		private bool disposed;
@@ -97,8 +96,8 @@ namespace SharpFont
 		public unsafe Face(Library library, byte[] file, int faceIndex)
 			: this(library)
 		{
-			memoryFaceHandle = GCHandle.Alloc(file, GCHandleType.Pinned);
 			IntPtr reference;
+			memoryFaceHandle = GCHandle.Alloc(file, GCHandleType.Pinned);
 			Error err = FT.FT_New_Memory_Face(library.Reference, memoryFaceHandle.AddrOfPinnedObject(), file.Length, faceIndex, out reference);
 
 			if (err != Error.Ok)
@@ -117,6 +116,7 @@ namespace SharpFont
 		public Face(Library library, IntPtr bufferPtr, int length, int faceIndex)
 			: this(library)
 		{
+			IntPtr reference;
 			Error err = FT.FT_New_Memory_Face(library.Reference, bufferPtr, length, faceIndex, out reference);
 
 			if (err != Error.Ok)
@@ -136,7 +136,7 @@ namespace SharpFont
 			Reference = reference;
 		}
 
-		private Face(Library parent)
+		private Face(Library parent): base(IntPtr.Zero)
 		{
 			childSizes = new List<FTSize>();
 
@@ -403,7 +403,8 @@ namespace SharpFont
 				if (disposed)
 					throw new ObjectDisposedException("Generic", "Cannot access a disposed object.");
 
-				value.WriteToUnmanagedMemory(PInvokeHelper.AbsoluteOffsetOf<FaceRec>(Reference, "generic"));
+				IntPtr reference = Reference;
+				value.WriteToUnmanagedMemory(PInvokeHelper.AbsoluteOffsetOf<FaceRec>(reference, "generic"));
 				Reference = reference;
 			}
 		}
@@ -680,7 +681,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Gets a value indicating whether a face object contains some glyph names that can be accessed through 
+		/// Gets a value indicating whether a face object contains some glyph names that can be accessed through
 		/// <see cref="GetGlyphName(uint, int)"/>.
 		/// </summary>
 		public bool HasGlyphNames
@@ -750,14 +751,14 @@ namespace SharpFont
 		/// </remarks>
 		public object Tag { get; set; }
 
-		internal IntPtr Reference
+		internal override IntPtr Reference
 		{
 			get
 			{
 				if (disposed)
 					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
 
-				return reference;
+				return base.Reference;
 			}
 
 			set
@@ -765,8 +766,8 @@ namespace SharpFont
 				if (disposed)
 					throw new ObjectDisposedException("Reference", "Cannot access a disposed object.");
 
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<FaceRec>(reference);
+				base.Reference = value;
+				rec = PInvokeHelper.PtrToStructure<FaceRec>(value);
 			}
 		}
 
@@ -1335,7 +1336,7 @@ namespace SharpFont
 			if (disposed)
 				throw new ObjectDisposedException("face", "Cannot access a disposed object.");
 
-			return FT.FT_Get_Name_Index(Reference, Marshal.StringToHGlobalAuto(name));
+			return FT.FT_Get_Name_Index(Reference, Marshal.StringToHGlobalAnsi(name));
 		}
 
 		/// <summary>
@@ -1686,14 +1687,14 @@ namespace SharpFont
 		/// in the following example:
 		/// <code>
 		/// FT_ULong  length = 0;
-		/// 
-		/// 
+		///
+		///
 		/// error = FT_Load_Sfnt_Table( face, tag, 0, NULL, &amp;length );
 		/// if ( error ) { ... table does not exist ... }
-		/// 
+		///
 		/// buffer = malloc( length );
 		/// if ( buffer == NULL ) { ... not enough memory ... }
-		/// 
+		///
 		/// error = FT_Load_Sfnt_Table( face, tag, 0, buffer, &amp;length );
 		/// if ( error ) { ... could not load table ... }
 		/// </code>
@@ -1975,7 +1976,7 @@ namespace SharpFont
 		}
 
 		/// <summary>
-		/// Retrieve the type of the input face, CID keyed or not. In constrast to the 
+		/// Retrieve the type of the input face, CID keyed or not. In constrast to the
 		/// <see cref="IsCidKeyed"/> macro this function returns successfully also for CID-keyed fonts in an
 		/// SNFT wrapper.
 		/// </summary>
@@ -2380,13 +2381,13 @@ namespace SharpFont
 			if (!disposed)
 			{
 				disposed = true;
-				
+
 				foreach (FTSize s in childSizes)
 					s.Dispose();
 
 				childSizes.Clear();
 
-				Error err = FT.FT_Done_Face(reference);
+				Error err = FT.FT_Done_Face(base.Reference);
 
 				if (err != Error.Ok)
 					throw new FreeTypeException(err);
@@ -2397,7 +2398,7 @@ namespace SharpFont
 				if (!parentLibrary.IsDisposed)
 					parentLibrary.RemoveChildFace(this);
 
-				reference = IntPtr.Zero;
+				base.Reference = IntPtr.Zero;
 				rec = new FaceRec();
 
 				if (memoryFaceHandle.IsAllocated)

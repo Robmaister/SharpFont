@@ -43,32 +43,30 @@ namespace SharpFont
 	/// <returns>The number of bytes effectively read by the stream.</returns>
 	[CLSCompliant(false)]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate uint StreamIOFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(StreamMarshaler))] FTStream stream, uint offset, IntPtr buffer, uint count);
+	public delegate uint StreamIOFunc(NativeReference<FTStream> stream, uint offset, IntPtr buffer, uint count);
 
 	/// <summary>
 	/// A function used to close a given input stream.
 	/// </summary>
 	/// <param name="stream">A handle to the target stream.</param>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void StreamCloseFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(StreamMarshaler))] FTStream stream);
+	public delegate void StreamCloseFunc(NativeReference<FTStream> stream);
 
 	/// <summary>
 	/// A handle to an input stream.
 	/// </summary>
-	public sealed class FTStream
+	public sealed class FTStream: NativeObject
 	{
 		#region Fields
 
-		private IntPtr reference;
 		private StreamRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal FTStream(IntPtr reference)
+		internal FTStream(IntPtr reference): base(reference)
 		{
-			Reference = reference;
 		}
 
 		#endregion
@@ -192,17 +190,17 @@ namespace SharpFont
 			}
 		}
 
-		internal IntPtr Reference
+		internal override IntPtr Reference
 		{
 			get
 			{
-				return reference;
+				return base.Reference;
 			}
 
 			set
 			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<StreamRec>(reference);
+				base.Reference = value;
+				rec = PInvokeHelper.PtrToStructure<StreamRec>(value);
 			}
 		}
 

@@ -5,35 +5,38 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B457CD52-5112-4EB3-BC07-E834EB2B4613}</ProjectGuid>
+    <ProjectGuid>{ECD55E3B-1139-4F0D-AF63-3F471AAF6E91}</ProjectGuid>
     <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SharpFont</RootNamespace>
-    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>SharpFont</AssemblyName>
     <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <BaseIntermediateOutputPath>obj\iOS\</BaseIntermediateOutputPath>
+    <FileAlignment>512</FileAlignment>
+    <BaseIntermediateOutputPath>obj\Portable\</BaseIntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Binaries\SharpFont\iOS\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;SHARPFONT_PLATFORM_IOS;SHARPFONT_PORTABLE</DefineConstants>
+    <OutputPath>..\..\Binaries\SharpFont\Portable\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SHARPFONT_PORTABLE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\iOS\Debug\SharpFont.xml</DocumentationFile>
+    <DocumentationFile>bin\Portable\Debug\SharpFont.xml</DocumentationFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
+    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Binaries\SharpFont\iOS\Release\</OutputPath>
-    <DefineConstants>TRACE;SHARPFONT_PLATFORM_IOS;SHARPFONT_PORTABLE</DefineConstants>
+    <OutputPath>..\..\Binaries\SharpFont\Portable\Release\</OutputPath>
+    <DefineConstants>TRACE;SHARPFONT_PORTABLE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\iOS\Release\SharpFont.xml</DocumentationFile>
+    <DocumentationFile>bin\Portable\Release\SharpFont.xml</DocumentationFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>

@@ -27,53 +27,32 @@ using System.Runtime.InteropServices;
 
 namespace SharpFont.Internal
 {
-	internal sealed class ListNodeMarshaler : ICustomMarshaler
-	{
-		private static readonly ListNodeMarshaler Instance = new ListNodeMarshaler();
+    /// <summary>
+    /// Struct NativeReference
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    [StructLayout(LayoutKind.Sequential)]
+    public struct NativeReference<T> where T : NativeObject
+    {
+        private readonly IntPtr memoryPtr;
 
-		private ListNodeMarshaler()
-		{
-		}
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NativeReference{T}"/> struct.
+        /// </summary>
+        /// <param name="memoryPtr">The memory PTR.</param>
+        public NativeReference(IntPtr memoryPtr)
+        {
+            this.memoryPtr = memoryPtr;
+        }
 
-		public static ICustomMarshaler GetInstance(string cookie)
-		{
-			return Instance;
-		}
-
-		public void CleanUpManagedData(object managedObj)
-		{
-			if (managedObj == null)
-				throw new ArgumentNullException("managedObj");
-
-			if (managedObj.GetType() != typeof(ListNode))
-				throw new ArgumentException("Managed object is not a ListNode.");
-		}
-
-		public void CleanUpNativeData(IntPtr pNativeData)
-		{
-			//Do nothing.
-		}
-
-		public int GetNativeDataSize()
-		{
-			return ListNodeRec.SizeInBytes;
-		}
-
-		public IntPtr MarshalManagedToNative(object managedObj)
-		{
-			if (managedObj == null)
-				throw new ArgumentNullException("managedObj");
-
-			if (managedObj.GetType() != typeof(ListNode))
-				throw new ArgumentException("Managed object is not a ListNode.");
-
-			//TODO if we have any setters in ListNode, marshal them.
-			return ((ListNode)managedObj).Reference;
-		}
-
-		public object MarshalNativeToManaged(IntPtr pNativeData)
-		{
-			return new ListNode(pNativeData);
-		}
-	}
+        /// <summary>
+        /// Performs an implicit conversion from <see cref="Memory"/> to <see cref="NativeReference{T}"/>.
+        /// </summary>
+        /// <param name="memory">The memory.</param>
+        /// <returns>The result of the conversion.</returns>
+        public static implicit operator NativeReference<T>(T memory)
+        {
+            return new NativeReference<T>(memory.Reference);
+        }
+    }
 }

@@ -36,7 +36,7 @@ namespace SharpFont
 	/// <param name="size">The size in bytes to allocate.</param>
 	/// <returns>Address of new memory block. 0 in case of failure.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr AllocFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(MemoryMarshaler))] Memory memory, IntPtr size);
+	public delegate IntPtr AllocFunc(NativeReference<Memory> memory, IntPtr size);
 
 	/// <summary>
 	/// A function used to release a given block of memory.
@@ -44,7 +44,7 @@ namespace SharpFont
 	/// <param name="memory">A handle to the source memory manager.</param>
 	/// <param name="block">The address of the target memory block.</param>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void FreeFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(MemoryMarshaler))] Memory memory, IntPtr block);
+	public delegate void FreeFunc(NativeReference<Memory> memory, IntPtr block);
 
 	/// <summary>
 	/// A function used to re-allocate a given block of memory.
@@ -58,25 +58,23 @@ namespace SharpFont
 	/// <param name="block">The block's current address.</param>
 	/// <returns>New block address. 0 in case of memory shortage.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr ReallocFunc([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(MemoryMarshaler))] Memory memory, IntPtr currentSize, IntPtr newSize, IntPtr block);
+	public delegate IntPtr ReallocFunc(NativeReference<Memory> memory, IntPtr currentSize, IntPtr newSize, IntPtr block);
 
 	/// <summary>
 	/// A structure used to describe a given memory manager to FreeType 2.
 	/// </summary>
-	public class Memory
+	public class Memory: NativeObject
 	{
 		#region Fields
 
-		private IntPtr reference;
 		private MemoryRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal Memory(IntPtr reference)
+		internal Memory(IntPtr reference): base(reference)
 		{
-			Reference = reference;
 		}
 
 		#endregion
@@ -127,17 +125,17 @@ namespace SharpFont
 			}
 		}
 
-		internal IntPtr Reference
+		internal override IntPtr Reference
 		{
 			get
 			{
-				return reference;
+				return base.Reference;
 			}
 
 			set
 			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<MemoryRec>(reference);
+				base.Reference = value;
+				rec = PInvokeHelper.PtrToStructure<MemoryRec>(value);
 			}
 		}
 

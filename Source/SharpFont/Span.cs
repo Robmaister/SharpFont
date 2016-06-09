@@ -40,20 +40,18 @@ namespace SharpFont
 	/// The coverage value is always between 0 and 255. If you want less gray values, the callback function has to
 	/// reduce them.
 	/// </para></remarks>
-	public class Span
+	public class Span : NativeObject
 	{
 		#region Fields
 
-		private IntPtr reference;
 		private SpanRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal Span(IntPtr reference)
+		internal Span(IntPtr reference) : base(reference)
 		{
-			Reference = reference;
 		}
 
 		#endregion
@@ -95,17 +93,17 @@ namespace SharpFont
 			}
 		}
 
-		internal IntPtr Reference
+		internal override IntPtr Reference
 		{
 			get
 			{
-				return reference;
+				return base.Reference;
 			}
 
 			set
 			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<SpanRec>(reference);
+				base.Reference = value;
+				rec = PInvokeHelper.PtrToStructure<SpanRec>(value);
 			}
 		}
 

@@ -30,7 +30,6 @@ namespace SharpFont
 	/// <summary>
 	/// Represents a fixed-point decimal value with 14 bits of decimal precision.
 	/// </summary>
-	[Serializable]
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	public struct Fixed2Dot14 : IEquatable<Fixed2Dot14>, IComparable<Fixed2Dot14>
 	{

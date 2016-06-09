@@ -38,7 +38,7 @@ namespace SharpFont
 	/// </param>
 	/// <returns>Error code.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate Error ListIterator([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ListNodeMarshaler))]ListNode node, IntPtr user);
+	public delegate Error ListIterator(NativeReference<ListNode> node, IntPtr user);
 
 	/// <summary>
 	/// An <see cref="FTList"/> iterator function which is called during a list finalization by
@@ -50,7 +50,7 @@ namespace SharpFont
 	/// A typeless pointer passed to <see cref="FTList.Iterate"/>. It can be used to point to the iteration's state.
 	/// </param>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void ListDestructor([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(MemoryMarshaler))]Memory memory, IntPtr data, IntPtr user);
+	public delegate void ListDestructor(NativeReference<Memory> memory, IntPtr data, IntPtr user);
 
 	/// <summary>
 	/// A structure used to hold a simple doubly-linked list. These are used in many parts of FreeType.

@@ -114,7 +114,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return Array.ConvertAll<IntPtr, int>(rec.Created, new Converter<IntPtr, int>(delegate(IntPtr i) { return (int)i; }));
+				return Array.ConvertAll<IntPtr, int>(rec.Modified, new Converter<IntPtr, int>(delegate(IntPtr i) { return (int)i; }));
 			}
 		}
 

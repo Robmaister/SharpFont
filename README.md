@@ -1,4 +1,4 @@
-SharpFont [![NuGet Version](http://img.shields.io/nuget/vpre/SharpFont.svg)](https://www.nuget.org/packages/SharpFont) [![NuGet Downloads](http://img.shields.io/nuget/dt/SharpFont.svg)](https://www.nuget.org/packages/SharpFont) [![Gratipay Tips](https://img.shields.io/gratipay/Robmaister.svg)](https://gratipay.com/Robmaister)
+SharpFont [![NuGet Version](http://img.shields.io/nuget/vpre/SharpFont.svg)](https://www.nuget.org/packages/SharpFont) [![Gratipay Tips](https://img.shields.io/gratipay/Robmaister.svg)](https://gratipay.com/Robmaister)
 =========
 ### Cross-platform FreeType bindings for .NET
 

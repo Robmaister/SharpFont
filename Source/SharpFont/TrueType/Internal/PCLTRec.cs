@@ -31,7 +31,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.TrueType.Internal
 {
 	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-	internal struct PCLTRec
+	internal unsafe struct PCLTRec
 	{
 		internal FT_Long Version;
 		internal FT_ULong FontNumber;
@@ -45,11 +45,37 @@ namespace SharpFont.TrueType.Internal
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
 		internal string TypeFace;
 
-		[MarshalAs(UnmanagedType.LPArray, SizeConst = 8)]
-		internal byte[] CharacterComplement;
+		private fixed byte characterComplement[8];
+		internal byte[] CharacterComplement
+		{
+			get
+			{
+				var array = new byte[8];
+				fixed (byte* p = characterComplement)
+				{
+					for (int i = 0; i < array.Length; i++)
+						array[i] = p[i];
+				}
+				return array;
+			}
+		}
 
-		[MarshalAs(UnmanagedType.LPArray, SizeConst = 6)]
-		internal byte[] FileName;
+		private fixed byte fileName[6];
+		internal byte[] FileName
+		{
+			get
+			{
+				var array = new byte[6];
+
+				fixed (byte* p = fileName)
+				{
+					for (int i = 0; i < array.Length; i++)
+						array[i] = p[i];
+				}
+
+				return array;
+			}
+		}
 
 		internal byte StrokeWeight;
 		internal byte WidthType;

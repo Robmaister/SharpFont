@@ -43,7 +43,7 @@ namespace SharpFont
 #if SHARPFONT_PLATFORM_IOS
 		private const string FreetypeDll = "__Internal";
 #else
-	    private const string FreetypeDll = "freetype6.dll";
+	    private const string FreetypeDll = "freetype6";
 #endif
 
 		/// <summary>

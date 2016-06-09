@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace SharpFont.MultipleMasters.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class MMVarRec
+	internal struct MMVarRec
 	{
 		internal uint num_axis;
 		internal uint num_designs;

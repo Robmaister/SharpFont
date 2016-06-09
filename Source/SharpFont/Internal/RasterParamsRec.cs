@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class RasterParamsRec
+	internal struct RasterParamsRec
 	{
 		internal IntPtr target;
 		internal IntPtr source;

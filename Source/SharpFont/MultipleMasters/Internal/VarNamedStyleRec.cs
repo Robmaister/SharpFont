@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace SharpFont.MultipleMasters.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class VarNamedStyleRec
+	internal struct VarNamedStyleRec
 	{
 		internal IntPtr coords;
 		internal uint strid;

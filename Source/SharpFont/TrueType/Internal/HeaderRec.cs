@@ -31,7 +31,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.TrueType.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class HeaderRec
+	internal struct HeaderRec
 	{
 		internal FT_Long Table_Version;
 		internal FT_Long Font_Revision;

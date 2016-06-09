@@ -37,7 +37,7 @@ namespace SharpFont.Internal
 	/// Refer to <see cref="GlyphSlot"/> for FreeType documentation.
 	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal class GlyphSlotRec
+	internal struct GlyphSlotRec
 	{
 		internal IntPtr library;
 		internal IntPtr face;

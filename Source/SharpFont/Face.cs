@@ -2398,7 +2398,7 @@ namespace SharpFont
 					parentLibrary.RemoveChildFace(this);
 
 				reference = IntPtr.Zero;
-				rec = null;
+				rec = new FaceRec();
 
 				if (memoryFaceHandle.IsAllocated)
 					memoryFaceHandle.Free();

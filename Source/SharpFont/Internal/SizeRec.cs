@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class SizeRec
+	internal struct SizeRec
 	{
 		internal IntPtr face;
 		internal GenericRec generic;

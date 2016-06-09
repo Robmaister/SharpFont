@@ -259,7 +259,7 @@ namespace SharpFont
 					parentFace.RemoveChildSize(this);
 
 				reference = IntPtr.Zero;
-				rec = null;
+				rec = new SizeRec();
 
 				EventHandler handler = Disposed;
 				if (handler != null)

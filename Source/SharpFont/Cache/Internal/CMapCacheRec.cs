@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace SharpFont.Cache.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class CMapCacheRec
+	internal struct CMapCacheRec
 	{
 	}
 }

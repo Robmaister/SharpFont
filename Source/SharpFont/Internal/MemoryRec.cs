@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class MemoryRec
+	internal struct MemoryRec
 	{
 		internal IntPtr user;
 		internal AllocFunc alloc;

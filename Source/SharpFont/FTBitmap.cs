@@ -103,6 +103,7 @@ namespace SharpFont
 
 		#region Properties
 		
++
 		/// <summary>
 		/// Gets a value indicating whether the <see cref="FTBitmap"/> has been disposed.
 		/// </summary>

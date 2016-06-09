@@ -31,7 +31,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.TrueType.Internal
 {
 	[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-	internal class PCLTRec
+	internal struct PCLTRec
 	{
 		internal FT_Long Version;
 		internal FT_ULong FontNumber;

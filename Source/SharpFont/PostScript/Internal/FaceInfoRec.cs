@@ -33,7 +33,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.PostScript.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class FaceInfoRec
+	internal struct FaceInfoRec
 	{
 		[MarshalAs(UnmanagedType.LPStr)]
 		internal string cid_font_name;

@@ -37,7 +37,7 @@ namespace SharpFont.Internal
 	/// Refer to <see cref="Face"/> for FreeType documentation.
 	/// </remarks>
 	[StructLayout(LayoutKind.Sequential)]
-	internal class FaceRec
+	internal struct FaceRec
 	{
 		internal FT_Long num_faces;
 		internal FT_Long face_index;

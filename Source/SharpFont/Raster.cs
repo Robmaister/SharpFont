@@ -31,36 +31,12 @@ namespace SharpFont
 	/// A handle (pointer) to a raster object. Each object can be used independently to convert an outline into a
 	/// bitmap or pixmap.
 	/// </summary>
-	public class Raster
+	public class Raster : NativeObject
 	{
-		#region Fields
-
-		private IntPtr reference;
-
-		#endregion
-
 		#region Constructors
 
-		internal Raster(IntPtr reference)
+		internal Raster(IntPtr reference) : base(reference)
 		{
-			Reference = reference;
-		}
-
-		#endregion
-
-		#region Properties
-
-		internal IntPtr Reference
-		{
-			get
-			{
-				return reference;
-			}
-
-			set
-			{
-				reference = value;
-			}
 		}
 
 		#endregion

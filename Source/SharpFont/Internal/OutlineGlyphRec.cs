@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class OutlineGlyphRec
+	internal struct OutlineGlyphRec
 	{
 		internal GlyphRec root;
 		internal OutlineRec outline;

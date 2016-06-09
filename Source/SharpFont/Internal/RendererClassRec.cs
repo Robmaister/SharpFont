@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class RendererClassRec
+	internal struct RendererClassRec
 	{
 		internal ModuleClassRec root;
 

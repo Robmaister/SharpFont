@@ -31,7 +31,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.TrueType.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class MaxProfileRec
+	internal struct MaxProfileRec
 	{
 		internal FT_Long version;
 		internal ushort numGlyphs;

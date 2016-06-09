@@ -33,7 +33,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.PostScript.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class FaceDictRec
+	internal struct FaceDictRec
 	{
 		internal PrivateRec private_dict;
 

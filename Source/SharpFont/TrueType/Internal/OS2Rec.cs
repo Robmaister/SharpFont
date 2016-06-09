@@ -31,7 +31,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.TrueType.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class OS2Rec
+	internal unsafe struct OS2Rec
 	{
 		internal ushort version;
 		internal short xAvgCharWidth;
@@ -50,16 +50,44 @@ namespace SharpFont.TrueType.Internal
 		internal short yStrikeoutPosition;
 		internal short sFamilyClass;
 
-		[MarshalAs(UnmanagedType.LPArray, SizeConst = 10)]
-		internal byte[] panose;
+		private fixed byte _panose[10];
+		internal byte[] panose
+		{
+			get
+			{
+				var array = new byte[10];
+
+				fixed (byte* p = _panose)
+				{
+					for (int i = 0; i < array.Length; i++)
+						array[i] = p[i];
+				}
+
+				return array;
+			}
+		}
 
 		internal FT_ULong ulUnicodeRange1;
 		internal FT_ULong ulUnicodeRange2;
 		internal FT_ULong ulUnicodeRange3;
 		internal FT_ULong ulUnicodeRange4;
 
-		[MarshalAs(UnmanagedType.LPArray, SizeConst = 4)]
-		internal byte[] achVendID;
+		private fixed byte _achVendID[4];
+		internal byte[] achVendID
+		{
+			get
+			{
+				var array = new byte[4];
+
+				fixed (byte* p = _achVendID)
+				{
+					for (int i = 0; i < array.Length; i++)
+						array[i] = p[i];
+				}
+
+				return array;
+			}
+		}
 
 		internal ushort fsSelection;
 		internal ushort usFirstCharIndex;

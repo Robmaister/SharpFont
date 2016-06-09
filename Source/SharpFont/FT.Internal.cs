@@ -40,7 +40,11 @@ namespace SharpFont
 		/// <summary>
 		/// Defines the location of the FreeType DLL. Update SharpFont.dll.config if you change this!
 		/// </summary>
-		private const string FreetypeDll = "freetype6.dll";
+#if SHARPFONT_PLATFORM_IOS
+		private const string FreetypeDll = "__Internal";
+#else
+	    private const string FreetypeDll = "freetype6";
+#endif
 
 		/// <summary>
 		/// Defines the calling convention for P/Invoking the native freetype methods.
@@ -199,6 +203,7 @@ namespace SharpFont
 
 		#endregion
 
+#if !SHARPFONT_PLATFORM_IOS
 		#region Mac Specific Interface
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
@@ -218,8 +223,8 @@ namespace SharpFont
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_New_Face_From_FSRef(IntPtr library, IntPtr @ref, int face_index, out IntPtr aface);
-
 		#endregion
+#endif
 
 		#region Size Management
 

@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace SharpFont.Cache.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class ScalerRec
+	internal struct ScalerRec
 	{
 		internal IntPtr face_id;
 		internal uint width;

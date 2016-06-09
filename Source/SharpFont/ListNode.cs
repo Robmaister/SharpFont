@@ -32,20 +32,18 @@ namespace SharpFont
 	/// <summary>
 	/// A structure used to hold a single list element.
 	/// </summary>
-	public class ListNode
+	public class ListNode: NativeObject
 	{
 		#region Fields
 
-		private IntPtr reference;
 		private ListNodeRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal ListNode(IntPtr reference)
+		internal ListNode(IntPtr reference): base(reference)
 		{
-			Reference = reference;
 		}
 
 		#endregion
@@ -91,17 +89,17 @@ namespace SharpFont
 			}
 		}
 
-		internal IntPtr Reference
+		internal override IntPtr Reference
 		{
 			get
 			{
-				return reference;
+				return base.Reference;
 			}
 
 			set
 			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<ListNodeRec>(reference);
+				base.Reference = value;
+				rec = PInvokeHelper.PtrToStructure<ListNodeRec>(value);
 			}
 		}
 

@@ -53,7 +53,7 @@ namespace SharpFont
 	/// <param name="spans">A table of ‘count’ spans to draw on the scanline.</param>
 	/// <param name="user">User-supplied data that is passed to the callback.</param>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void RasterSpanFunc(int y, int count, [MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(SpanMarshaler))] Span spans, IntPtr user);
+	public delegate void RasterSpanFunc(int y, int count, NativeReference<Span> spans, IntPtr user);
 
 	/// <summary><para>
 	/// THIS TYPE IS DEPRECATED. DO NOT USE IT.
@@ -97,20 +97,18 @@ namespace SharpFont
 	/// Note that the ‘bit_test’ and ‘bit_set’ callbacks are required when rendering a monochrome bitmap, as they are
 	/// crucial to implement correct drop-out control as defined in the TrueType specification.
 	/// </para></remarks>
-	public class RasterParams
+	public class RasterParams : NativeObject
 	{
 		#region Fields
 
-		private IntPtr reference;
 		private RasterParamsRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal RasterParams(IntPtr reference)
+		internal RasterParams(IntPtr reference) : base(reference)
 		{
-			Reference = reference;
 		}
 
 		#endregion
@@ -220,17 +218,17 @@ namespace SharpFont
 			}
 		}
 
-		internal IntPtr Reference
+		internal override IntPtr Reference
 		{
 			get
 			{
-				return reference;
+				return base.Reference;
 			}
 
 			set
 			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<RasterParamsRec>(reference);
+				base.Reference = value;
+				rec = PInvokeHelper.PtrToStructure<RasterParamsRec>(value);
 			}
 		}
 

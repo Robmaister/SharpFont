@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class ListNodeRec
+	internal struct ListNodeRec
 	{
 		internal IntPtr prev;
 		internal IntPtr next;

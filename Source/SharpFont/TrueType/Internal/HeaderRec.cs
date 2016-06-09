@@ -31,7 +31,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.TrueType.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class HeaderRec
+	internal struct HeaderRec
 	{
 		internal FT_Long Table_Version;
 		internal FT_Long Font_Revision;
@@ -42,11 +42,13 @@ namespace SharpFont.TrueType.Internal
 		internal ushort Flags;
 		internal ushort Units_Per_EM;
 
-		[MarshalAs(UnmanagedType.LPArray, SizeConst = 2)]
-		internal FT_Long[] Created;
+		private FT_Long created1;
+		private FT_Long created2;
+		internal FT_Long[] Created { get { return new[] {created1, created2}; } }
 
-		[MarshalAs(UnmanagedType.LPArray, SizeConst = 2)]
-		internal FT_Long[] Modified;
+		private FT_Long modified1;
+		private FT_Long modified2;
+		internal FT_Long[] Modified { get { return new[] { modified1, modified2 }; } }
 
 		internal short xMin;
 		internal short yMin;

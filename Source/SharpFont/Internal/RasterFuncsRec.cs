@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class RasterFuncsRec
+	internal struct RasterFuncsRec
 	{
 		internal GlyphFormat glyph_format;
 		internal RasterNewFunc raster_new;

@@ -35,14 +35,14 @@ namespace SharpFont
 	/// <param name="module">The module to initialize.</param>
 	/// <returns>FreeType error code.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate Error ModuleConstructor([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ModuleMarshaler))] Module module);
+	public delegate Error ModuleConstructor(NativeReference<Module> module);
 
 	/// <summary>
 	/// A function used to finalize (not destroy) a given module object.
 	/// </summary>
 	/// <param name="module">The module to finalize.</param>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void ModuleDestructor([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ModuleMarshaler))] Module module);
+	public delegate void ModuleDestructor(NativeReference<Module> module);
 
 	/// <summary>
 	/// A function used to query a given module for a specific interface.
@@ -51,25 +51,23 @@ namespace SharpFont
 	/// <param name="name">The name of the interface in the module.</param>
 	/// <returns>The interface.</returns>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate IntPtr ModuleRequester([MarshalAs(UnmanagedType.CustomMarshaler, MarshalTypeRef = typeof(ModuleMarshaler))] Module module, [MarshalAs(UnmanagedType.LPStr)] string name);
+	public delegate IntPtr ModuleRequester(NativeReference<Module> module, [MarshalAs(UnmanagedType.LPStr)] string name);
 
 	/// <summary>
 	/// The module class descriptor.
 	/// </summary>
-	public class ModuleClass
+	public class ModuleClass : NativeObject
 	{
 		#region Fields
 
-		private IntPtr reference;
 		private ModuleClassRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal ModuleClass(IntPtr reference)
+		internal ModuleClass(IntPtr reference) : base(reference)
 		{
-			Reference = reference;
 		}
 
 		#endregion
@@ -174,17 +172,17 @@ namespace SharpFont
 			}
 		}
 
-		internal IntPtr Reference
+		internal override IntPtr Reference
 		{
 			get
 			{
-				return reference;
+				return base.Reference;
 			}
 
 			set
 			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<ModuleClassRec>(reference);
+				base.Reference = value;
+				rec = PInvokeHelper.PtrToStructure<ModuleClassRec>(value);
 			}
 		}
 

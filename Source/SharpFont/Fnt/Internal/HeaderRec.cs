@@ -31,7 +31,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.Fnt.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class HeaderRec
+	internal struct HeaderRec
 	{
 		internal ushort version;
 		internal FT_ULong file_size;

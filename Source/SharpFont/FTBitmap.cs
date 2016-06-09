@@ -23,8 +23,10 @@ SOFTWARE.*/
 #endregion
 
 using System;
+#if !SHARPFONT_PORTABLE
 using System.Drawing;
 using System.Drawing.Imaging;
+#endif
 using System.Runtime.InteropServices;
 
 using SharpFont.Internal;
@@ -102,7 +104,7 @@ namespace SharpFont
 		#endregion
 
 		#region Properties
-		
+
 		/// <summary>
 		/// Gets a value indicating whether the <see cref="FTBitmap"/> has been disposed.
 		/// </summary>
@@ -374,6 +376,7 @@ namespace SharpFont
 			return newBitmap;
 		}
 
+#if !SHARPFONT_PORTABLE
 		/// <summary>
 		/// Copies the contents of the <see cref="FTBitmap"/> to a GDI+ <see cref="Bitmap"/>.
 		/// </summary>
@@ -504,6 +507,7 @@ namespace SharpFont
 					throw new InvalidOperationException("System.Drawing.Bitmap does not support this pixel mode.");
 			}
 		}
+#endif
 
 		#region IDisposable
 

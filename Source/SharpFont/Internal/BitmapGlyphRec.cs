@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class BitmapGlyphRec
+	internal struct BitmapGlyphRec
 	{
 		internal GlyphRec root;
 		internal int left;

@@ -31,7 +31,7 @@ using FT_ULong = System.UIntPtr;
 namespace SharpFont.Internal
 {
 	[StructLayout(LayoutKind.Sequential)]
-	internal class StreamRec
+	internal struct StreamRec
 	{
 		internal IntPtr @base;
 		internal FT_ULong size;

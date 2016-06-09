@@ -47,7 +47,7 @@ namespace SharpFont.TrueType.Internal
 		internal short caret_Slope_Run;
 		internal short caret_Offset;
 
-		[MarshalAs(UnmanagedType.LPArray, SizeConst = 4)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
 		internal short[] Reserved;
 
 		internal short metric_Data_Format;

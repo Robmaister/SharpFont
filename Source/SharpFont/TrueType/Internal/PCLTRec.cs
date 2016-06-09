@@ -45,10 +45,10 @@ namespace SharpFont.TrueType.Internal
 		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
 		internal string TypeFace;
 
-		[MarshalAs(UnmanagedType.LPArray, SizeConst = 8)]
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 8)]
 		internal byte[] CharacterComplement;
 
-		[MarshalAs(UnmanagedType.LPArray, SizeConst = 6)]
+		[MarshalAs(UnmanagedType.ByValTStr, SizeConst = 6)]
 		internal byte[] FileName;
 
 		internal byte StrokeWeight;

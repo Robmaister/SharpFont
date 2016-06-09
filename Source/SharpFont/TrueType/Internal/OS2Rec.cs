@@ -50,7 +50,7 @@ namespace SharpFont.TrueType.Internal
 		internal short yStrikeoutPosition;
 		internal short sFamilyClass;
 
-		[MarshalAs(UnmanagedType.LPArray, SizeConst = 10)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 10)]
 		internal byte[] panose;
 
 		internal FT_ULong ulUnicodeRange1;
@@ -58,7 +58,7 @@ namespace SharpFont.TrueType.Internal
 		internal FT_ULong ulUnicodeRange3;
 		internal FT_ULong ulUnicodeRange4;
 
-		[MarshalAs(UnmanagedType.LPArray, SizeConst = 4)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
 		internal byte[] achVendID;
 
 		internal ushort fsSelection;

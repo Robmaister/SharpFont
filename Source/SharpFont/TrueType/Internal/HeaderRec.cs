@@ -42,10 +42,10 @@ namespace SharpFont.TrueType.Internal
 		internal ushort Flags;
 		internal ushort Units_Per_EM;
 
-		[MarshalAs(UnmanagedType.LPArray, SizeConst = 2)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
 		internal FT_Long[] Created;
 
-		[MarshalAs(UnmanagedType.LPArray, SizeConst = 2)]
+		[MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
 		internal FT_Long[] Modified;
 
 		internal short xMin;

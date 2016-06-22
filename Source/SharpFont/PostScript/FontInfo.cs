@@ -53,6 +53,9 @@ namespace SharpFont.PostScript
 
 		#region Properties
 
+		/// <summary>
+		/// The version of the font.
+		/// </summary>
 		public string Version
 		{
 			get
@@ -61,6 +64,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// The copyright notice for the font.
+		/// </summary>
 		public string Notice
 		{
 			get
@@ -69,6 +75,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the font's full name.
+		/// </summary>
 		public string FullName
 		{
 			get
@@ -77,6 +86,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the font's family name.
+		/// </summary>
 		public string FamilyName
 		{
 			get
@@ -85,6 +97,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the weight description of the font
+		/// </summary>
 		public string Weight
 		{
 			get
@@ -93,6 +108,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets italic angle of the font.
+		/// </summary>
 		public int ItalicAngle
 		{
 			get
@@ -101,6 +119,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets whether the font is fixed pitch.
+		/// </summary>
 		public bool IsFixedPitch
 		{
 			get
@@ -109,6 +130,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the position of the  underline.
+		/// </summary>
 		public short UnderlinePosition
 		{
 			get
@@ -117,6 +141,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the thickness of the underline stroke.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort UnderlineThickness
 		{

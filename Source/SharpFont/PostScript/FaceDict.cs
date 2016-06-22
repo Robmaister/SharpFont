@@ -52,6 +52,9 @@ namespace SharpFont.PostScript
 
 		#region Properties
 
+		/// <summary>
+		/// Gets the Private structure containing more information.
+		/// </summary>
 		public Private PrivateDictionary
 		{
 			get
@@ -60,6 +63,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the length of the BuildChar entry.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint BuildCharLength
 		{
@@ -69,6 +75,10 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets whether to force bold characters when a regular character has
+		/// strokes drawn 1-pixel wide.
+		/// </summary>
 		public int ForceBoldThreshold
 		{
 			get
@@ -77,6 +87,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the width of stroke.
+		/// </summary>
 		public int StrokeWidth
 		{
 			get
@@ -85,6 +98,10 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets hinting useful for rendering glyphs such as barcodes and logos that
+		/// have many counters.
+		/// </summary>
 		public int ExpansionFactor
 		{
 			get
@@ -93,6 +110,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the method for painting strokes (fill or outline).
+		/// </summary>
 		public byte PaintType
 		{
 			get
@@ -101,6 +121,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the type of font. Must be set to 1 for all Type 1 fonts.
+		/// </summary>
 		public byte FontType
 		{
 			get
@@ -109,6 +132,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the matrix that indicates scaling of space units.
+		/// </summary>
 		public FTMatrix FontMatrix
 		{
 			get
@@ -117,6 +143,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the offset of the font.
+		/// </summary>
 		public FTVector FontOffset
 		{
 			get
@@ -125,6 +154,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the number of subroutines.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint SubrsCount
 		{
@@ -134,6 +166,10 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the offset in bytes, from the start of the
+		/// data section of the CIDFont to the beginning of the SubrMap.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint SubrmapOffset
 		{
@@ -143,6 +179,9 @@ namespace SharpFont.PostScript
 			}
 		}
 
+		/// <summary>
+		/// Gets the number of bytes needed to store the SD value.
+		/// </summary>
 		public int SDBytes
 		{
 			get

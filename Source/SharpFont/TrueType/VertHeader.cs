@@ -185,6 +185,10 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// Gets the amount of space needed to offset the caret for best appearance. Applies to slanted fonts.
+		/// For non-slanted fonts, set this to 0.
+		/// </summary>
 		public short CaretOffset
 		{
 			get

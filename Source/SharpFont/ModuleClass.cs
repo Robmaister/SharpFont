@@ -131,6 +131,9 @@ namespace SharpFont
 			}
 		}
 
+		/// <summary>
+		/// Get the module interface.
+		/// </summary>
 		public IntPtr Interface
 		{
 			get

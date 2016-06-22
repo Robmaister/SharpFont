@@ -2,25 +2,32 @@
 
 namespace SharpFont
 {
-    public abstract class NativeObject
-    {
-        private IntPtr reference;
+	/// <summary>
+	/// Provide a consistent means for using pointers as references.
+	/// </summary>
+	public abstract class NativeObject
+	{
+		private IntPtr reference;
 
-        protected NativeObject(IntPtr reference)
-        {
-            this.reference = reference;
-        }
+		/// <summary>
+		/// Construct a new NativeObject and assign the reference.
+		/// </summary>
+		/// <param name="reference"></param>
+		protected NativeObject(IntPtr reference)
+		{
+			this.reference = reference;
+		}
 
-        internal virtual IntPtr Reference
-        {
-            get
-            {
-                return reference;
-            }
-            set
-            {
-                reference = value;
-            }
-        }
-    }
+		internal virtual IntPtr Reference
+		{
+			get
+			{
+				return reference;
+			}
+			set
+			{
+				reference = value;
+			}
+		}
+	}
 }

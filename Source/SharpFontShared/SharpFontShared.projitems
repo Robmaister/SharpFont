@@ -150,7 +150,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)PixelMode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TrueType\Header.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TrueType\HoriHeader.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)TrueType\ISfntTable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TrueType\Internal\HeaderRec.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TrueType\Internal\HoriHeaderRec.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TrueType\Internal\MaxProfileRec.cs" />

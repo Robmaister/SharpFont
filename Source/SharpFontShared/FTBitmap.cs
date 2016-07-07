@@ -58,9 +58,11 @@ namespace SharpFont
 		//HACK these variables exist to reduce the cost of reflection at runtime.
 		//Meant to be a temporary fix to https://github.com/Robmaister/SharpFont/issues/62
 		//until libgdiplus gets patched.
+#if !SHARPFONT_PORTABLE
 		private bool hasCheckedForMono;
 		private bool isRunningOnMono;
 		private System.Reflection.FieldInfo monoPaletteFlagsField;
+#endif
 
 		#endregion
 

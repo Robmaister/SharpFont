@@ -30,8 +30,8 @@ using SharpFont.TrueType.Internal;
 namespace SharpFont.TrueType
 {
 	/// <summary>
-	/// A structure used to model a TrueType horizontal header, the ‘hhea’ table, as well as the corresponding
-	/// horizontal metrics table, i.e., the ‘hmtx’ table.
+	/// A structure used to model a TrueType vertical header, the ‘vhea’ table, as well as the corresponding vertical
+	/// metrics table, i.e., the ‘vmtx’ table.
 	/// </summary>
 	/// <remarks><para>
 	/// IMPORTANT: The <see cref="HoriHeader"/> and <see cref="VertHeader"/> structures should be identical except for
@@ -40,18 +40,18 @@ namespace SharpFont.TrueType
 	/// This ensures that a single function in the ‘ttload’ module is able to read both the horizontal and vertical
 	/// headers.
 	/// </para></remarks>
-	public class HoriHeader
+	public class VertHeader
 	{
 		#region Fields
 
 		private IntPtr reference;
-		private HoriHeaderRec rec;
+		private VertHeaderRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal HoriHeader(IntPtr reference)
+		internal VertHeader(IntPtr reference)
 		{
 			Reference = reference;
 		}
@@ -118,49 +118,48 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the maximum of all advance widths found in the font. It can be used to compute the maximum width of an
-		/// arbitrary string of text.
+		/// Gets the maximum of all advance heights found in the font. It can be used to compute the maximum height of
+		/// an arbitrary string of text.
 		/// </summary>
 		[CLSCompliant(false)]
-		public ushort AdvanceWidthMax
+		public ushort AdvanceHeightMax
 		{
 			get
 			{
-				return rec.advance_Width_Max;
+				return rec.advance_Height_Max;
 			}
 		}
 
 		/// <summary>
-		/// Gets the minimum left side bearing of all glyphs within the font.
+		/// Gets the minimum top side bearing of all glyphs within the font.
 		/// </summary>
-		public short MinimumLeftSideBearing
+		public short MinimumTopSideBearing
 		{
 			get
 			{
-				return rec.min_Left_Side_Bearing;
+				return rec.min_Top_Side_Bearing;
 			}
 		}
 
 		/// <summary>
-		/// Gets the minimum right side bearing of all glyphs within the font.
+		/// Gets the minimum bottom side bearing of all glyphs within the font.
 		/// </summary>
-		public short MinimumRightSideBearing
+		public short MinimumBottomSideBearing
 		{
 			get
 			{
-				return rec.min_Right_Side_Bearing;
+				return rec.min_Bottom_Side_Bearing;
 			}
 		}
 
 		/// <summary>
-		/// Gets the maximum horizontal extent (i.e., the ‘width’ of a glyph's bounding box) for all glyphs in the
-		/// font.
+		/// Gets the maximum vertical extent (i.e., the ‘height’ of a glyph's bounding box) for all glyphs in the font.
 		/// </summary>
-		public short MaximumExtentX
+		public short MaximumExtentY
 		{
 			get
 			{
-				return rec.xMax_Extent;
+				return rec.yMax_Extent;
 			}
 		}
 
@@ -186,6 +185,10 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// Gets the amount of space needed to offset the caret for best appearance. Applies to slanted fonts.
+		/// For non-slanted fonts, set this to 0.
+		/// </summary>
 		public short CaretOffset
 		{
 			get
@@ -217,20 +220,20 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets the number of HMetrics entries in the ‘hmtx’ table -- this value can be smaller than the total number
+		/// Gets the number of VMetrics entries in the ‘vmtx’ table -- this value can be smaller than the total number
 		/// of glyphs in the font.
 		/// </summary>
 		[CLSCompliant(false)]
-		public ushort HMetricsCount
+		public ushort VMetricsCount
 		{
 			get
 			{
-				return rec.number_Of_HMetrics;
+				return rec.number_Of_VMetrics;
 			}
 		}
 
 		/// <summary>
-		/// Gets a pointer into the ‘hmtx’ table.
+		/// Gets a pointer into the ‘vmtx’ table.
 		/// </summary>
 		public IntPtr LongMetrics
 		{
@@ -241,7 +244,7 @@ namespace SharpFont.TrueType
 		}
 
 		/// <summary>
-		/// Gets a pointer into the ‘hmtx’ table.
+		/// Gets a pointer into the ‘vmtx’ table.
 		/// </summary>
 		public IntPtr ShortMetrics
 		{
@@ -261,7 +264,7 @@ namespace SharpFont.TrueType
 			set
 			{
 				reference = value;
-				rec = PInvokeHelper.PtrToStructure<HoriHeaderRec>(reference);
+				rec = PInvokeHelper.PtrToStructure<VertHeaderRec>(reference);
 			}
 		}
 

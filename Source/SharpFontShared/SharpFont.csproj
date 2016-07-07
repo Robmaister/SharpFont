@@ -40,21 +40,21 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>..\SharpFont.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>SharpFont.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\SharpFont.dll.config">
+    <None Include="SharpFont.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
-    <None Include="..\SharpFont.snk" />
+    <None Include="SharpFont.snk" />
   </ItemGroup>
   <ItemGroup />
-  <Import Project="..\SharpFontShared\SharpFontShared.projitems" Label="Shared" />
+  <Import Project="SharpFontShared.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

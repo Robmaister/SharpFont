@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2014 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -23,28 +23,28 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Linq;
 using System.Runtime.InteropServices;
 
-using SharpFont.TrueType.Internal;
+using SharpFont.PostScript.Internal;
 
-namespace SharpFont.TrueType
+namespace SharpFont.PostScript
 {
 	/// <summary>
-	/// A structure used to model a TrueType font header table. All fields follow the TrueType specification.
+	/// A structure used to model a Type 1 or Type 2 FontInfo dictionary. Note that for Multiple Master fonts, each
+	/// instance has its own FontInfo dictionary.
 	/// </summary>
-	public class Header
+	public class FontInfo
 	{
 		#region Fields
 
 		private IntPtr reference;
-		private HeaderRec rec;
+		private FontInfoRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal Header(IntPtr reference)
+		internal FontInfo(IntPtr reference)
 		{
 			Reference = reference;
 		}
@@ -53,143 +53,103 @@ namespace SharpFont.TrueType
 
 		#region Properties
 
-		public int TableVersion
+		/// <summary>
+		/// The version of the font.
+		/// </summary>
+		public string Version
 		{
 			get
 			{
-				return (int)rec.Table_Version;
+				return rec.version;
 			}
 		}
 
-		public int FontRevision
+		/// <summary>
+		/// The copyright notice for the font.
+		/// </summary>
+		public string Notice
 		{
 			get
 			{
-				return (int)rec.Font_Revision;
+				return rec.notice;
 			}
 		}
 
-		public int ChecksumAdjust
+		/// <summary>
+		/// Gets the font's full name.
+		/// </summary>
+		public string FullName
 		{
 			get
 			{
-				return (int)rec.Checksum_Adjust;
+				return rec.full_name;
 			}
 		}
 
-		public int MagicNumber
+		/// <summary>
+		/// Gets the font's family name.
+		/// </summary>
+		public string FamilyName
 		{
 			get
 			{
-				return (int)rec.Magic_Number;
+				return rec.family_name;
 			}
 		}
 
+		/// <summary>
+		/// Gets the weight description of the font
+		/// </summary>
+		public string Weight
+		{
+			get
+			{
+				return rec.weight;
+			}
+		}
+
+		/// <summary>
+		/// Gets italic angle of the font.
+		/// </summary>
+		public int ItalicAngle
+		{
+			get
+			{
+				return (int)rec.italic_angle;
+			}
+		}
+
+		/// <summary>
+		/// Gets whether the font is fixed pitch.
+		/// </summary>
+		public bool IsFixedPitch
+		{
+			get
+			{
+				return rec.is_fixed_pitch == 1;
+			}
+		}
+
+		/// <summary>
+		/// Gets the position of the  underline.
+		/// </summary>
+		public short UnderlinePosition
+		{
+			get
+			{
+				return rec.underline_position;
+			}
+		}
+
+		/// <summary>
+		/// Gets the thickness of the underline stroke.
+		/// </summary>
 		[CLSCompliant(false)]
-		public ushort Flags
+		public ushort UnderlineThickness
 		{
 			get
 			{
-				return rec.Flags;
-			}
-		}
-
-		[CLSCompliant(false)]
-		public ushort UnitsPerEM
-		{
-			get
-			{
-				return rec.Units_Per_EM;
-			}
-		}
-
-		public int[] Created
-		{
-			get
-			{
-                return rec.Created.Select(x => (int)x).ToArray();
-			}
-		}
-
-		public int[] Modified
-		{
-			get
-			{
-                return rec.Modified.Select(x => (int)x).ToArray();
-			}
-		}
-
-		public short MinimumX
-		{
-			get
-			{
-				return rec.xMin;
-			}
-		}
-
-		public short MinimumY
-		{
-			get
-			{
-				return rec.yMin;
-			}
-		}
-
-		public short MaximumX
-		{
-			get
-			{
-				return rec.xMax;
-			}
-		}
-
-		public short MaximumY
-		{
-			get
-			{
-				return rec.yMax;
-			}
-		}
-
-		[CLSCompliant(false)]
-		public ushort MacStyle
-		{
-			get
-			{
-				return rec.Mac_Style;
-			}
-		}
-
-		[CLSCompliant(false)]
-		public ushort LowestRecPpem
-		{
-			get
-			{
-				return rec.Lowest_Rec_PPEM;
-			}
-		}
-
-		public short FontDirection
-		{
-			get
-			{
-				return rec.Font_Direction;
-			}
-		}
-
-		public short IndexToLocFormat
-		{
-			get
-			{
-				return rec.Index_To_Loc_Format;
-			}
-		}
-
-		public short GlyphDataFormat
-		{
-			get
-			{
-				return rec.Glyph_Data_Format;
+				return rec.underline_thickness;
 			}
 		}
 
@@ -203,7 +163,7 @@ namespace SharpFont.TrueType
 			set
 			{
 				reference = value;
-				rec = PInvokeHelper.PtrToStructure<HeaderRec>(reference);
+				rec = PInvokeHelper.PtrToStructure<FontInfoRec>(reference);
 			}
 		}
 

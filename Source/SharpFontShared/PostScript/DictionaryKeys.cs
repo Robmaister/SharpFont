@@ -47,7 +47,7 @@ namespace SharpFont.PostScript
 		/// The font's general bounding box.
 		/// </summary>
 		FontBBox,
-		
+
 		/// <summary>
 		/// The font's method of painting characters. Type 1 only supports fill (0) and outline (2).
 		/// </summary>
@@ -68,9 +68,24 @@ namespace SharpFont.PostScript
 		/// </summary>
 		NumCharStrings,
 
+		/// <summary>
+		/// The char string key.
+		/// </summary>
 		CharStringKey,
+
+		/// <summary>
+		/// The char string entry.
+		/// </summary>
 		CharString,
+
+		/// <summary>
+		/// The font's encoding type.
+		/// </summary>
 		EncodingType,
+
+		/// <summary>
+		/// The font's encoding entry.
+		/// </summary>
 		EncodingEntry,
 
 		/// <summary>
@@ -208,14 +223,49 @@ namespace SharpFont.PostScript
 		/// </summary>
 		LanguageGroup,
 
+		/// <summary>
+		/// The version identifier for this font.
+		/// </summary>
 		Version,
+
+		/// <summary>
+		/// The copyright notice of the font.
+		/// </summary>
 		Notice,
+
+		/// <summary>
+		/// The fullname of the font.
+		/// </summary>
 		FullName,
+
+		/// <summary>
+		/// The family name of the font.
+		/// </summary>
 		FamilyName,
+
+		/// <summary>
+		/// The name of the weight of the font.
+		/// </summary>
 		Weight,
+
+		/// <summary>
+		/// Whether the font is fixed pitch.
+		/// </summary>
 		IsFixedPitch,
+
+		/// <summary>
+		/// The position of the underline stroke.
+		/// </summary>
 		UnderlinePosition,
+
+		/// <summary>
+		/// What types of embedding and usages are allowed.
+		/// </summary>
 		FSType,
+
+		/// <summary>
+		/// The italic angle.
+		/// </summary>
 		ItalicAngle
 	}
 }

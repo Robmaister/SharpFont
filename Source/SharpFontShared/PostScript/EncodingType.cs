@@ -24,21 +24,32 @@ SOFTWARE.*/
 
 using System;
 
-namespace SharpFont
+namespace SharpFont.PostScript
 {
 	/// <summary>
-	/// A list of constants used to describe subglyphs. Please refer to the TrueType specification for the meaning of
-	/// the various flags.
+	/// An enumeration describing the ‘Encoding’ entry in a Type 1 dictionary.
 	/// </summary>
-	[Flags]
-	public enum SubGlyphFlags
+	public enum EncodingType
 	{
-		ArgsAreWords = 0x0001,
-		ArgsAreXYValues = 0x0002,
-		RoundXYToGrid = 0x0004,
-		Scale = 0x0008,
-		XYScale = 0x0040,
-		TwoByTwo = 0x0080,
-		UseMyMetrics = 0x0200
+		/// <summary>
+		/// Not encoded.
+		/// </summary>
+		None = 0,
+		/// <summary>
+		/// Array encoding.
+		/// </summary>
+		Array,
+		/// <summary>
+		/// Standard encoding.
+		/// </summary>
+		Standard,
+		/// <summary>
+		/// ISO Latin 1 encoding.
+		/// </summary>
+		IsoLatin1,
+		/// <summary>
+		/// Expert encoding.
+		/// </summary>
+		Expert
 	}
 }

@@ -56,6 +56,9 @@ namespace SharpFont.TrueType
 
 		#region Properties
 
+		/// <summary>
+		/// The version of this table.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort Version
 		{
@@ -65,6 +68,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The average glyph width, computed by averaging ALL non-zero width glyphs in the font, in pels/em.
+		/// </summary>
 		public short AverageCharWidth
 		{
 			get
@@ -73,6 +79,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The visual weight of the font.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort WeightClass
 		{
@@ -82,6 +91,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The relative change in width from the normal aspect ratio.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort WidthClass
 		{
@@ -91,6 +103,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// Font embedding and subsetting licensing rights as determined by the font author.
+		/// </summary>
 		[CLSCompliant(false)]
 		public EmbeddingTypes EmbeddingType
 		{
@@ -100,6 +115,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The font author's recommendation for sizing glyphs (em square) to create subscripts when a glyph doesn't exist for a subscript.
+		/// </summary>
 		public short SubscriptSizeX
 		{
 			get
@@ -108,6 +126,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The font author's recommendation for sizing glyphs (em height) to create subscripts when a glyph doesn't exist for a subscript.
+		/// </summary>
 		public short SubscriptSizeY
 		{
 			get
@@ -116,6 +137,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The font author's recommendation for vertically positioning subscripts that are created when a glyph doesn't exist for a subscript.
+		/// </summary>
 		public short SubscriptOffsetX
 		{
 			get
@@ -124,6 +148,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The font author's recommendation for horizontally positioning subscripts that are created when a glyph doesn't exist for a subscript.
+		/// </summary>
 		public short SubscriptOffsetY
 		{
 			get
@@ -132,6 +159,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The font author's recommendation for sizing glyphs (em square) to create superscripts when a glyph doesn't exist for a subscript.
+		/// </summary>
 		public short SuperscriptSizeX
 		{
 			get
@@ -140,6 +170,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The font author's recommendation for sizing glyphs (em height) to create superscripts when a glyph doesn't exist for a subscript.
+		/// </summary>
 		public short SuperscriptSizeY
 		{
 			get
@@ -148,6 +181,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The font author's recommendation for vertically positioning superscripts that are created when a glyph doesn't exist for a subscript.
+		/// </summary>
 		public short SuperscriptOffsetX
 		{
 			get
@@ -156,6 +192,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The font author's recommendation for horizontally positioning superscripts that are created when a glyph doesn't exist for a subscript.
+		/// </summary>
 		public short SuperscriptOffsetY
 		{
 			get
@@ -164,6 +203,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The thickness of the strikeout stroke.
+		/// </summary>
 		public short StrikeoutSize
 		{
 			get
@@ -172,6 +214,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The position of the top of the strikeout line relative to the baseline.
+		/// </summary>
 		public short StrikeoutPosition
 		{
 			get
@@ -180,6 +225,10 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The IBM font family class and subclass, useful for choosing visually similar fonts.
+		/// </summary>
+		/// <remarks>Refer to https://www.microsoft.com/typography/otspec160/ibmfc.htm. </remarks>
 		public short FamilyClass
 		{
 			get
@@ -189,6 +238,10 @@ namespace SharpFont.TrueType
 		}
 
 		//TODO write a PANOSE class from TrueType spec?
+		/// <summary>
+		/// The Panose values describe visual characteristics of the font.
+		/// Similar fonts can then be selected based on their Panose values.
+		/// </summary>
 		public byte[] Panose
 		{
 			get
@@ -197,6 +250,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// Unicode character range, bits 0-31.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint UnicodeRange1
 		{
@@ -206,6 +262,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// Unicode character range, bits 32-63.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint UnicodeRange2
 		{
@@ -215,6 +274,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// Unicode character range, bits 64-95.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint UnicodeRange3
 		{
@@ -224,6 +286,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// Unicode character range, bits 96-127.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint UnicodeRange4
 		{
@@ -233,6 +298,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The vendor's identifier.
+		/// </summary>
 		public byte[] VendorId
 		{
 			get
@@ -241,7 +309,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
-		//TODO make a flags enum
+		/// <summary>
+		/// Describes variations in the font.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort SelectionFlags
 		{
@@ -251,6 +321,10 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The minimum Unicode index (character code) in this font.
+		/// Since this value is limited to 0xFFFF, applications should not use this field.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort FirstCharIndex
 		{
@@ -260,6 +334,10 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The maximum Unicode index (character code) in this font.
+		/// Since this value is limited to 0xFFFF, applications should not use this field.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort LastCharIndex
 		{
@@ -269,6 +347,9 @@ namespace SharpFont.TrueType
 			}
 		}
 		
+		/// <summary>
+		/// The ascender value, useful for computing a default line spacing in conjunction with unitsPerEm.
+		/// </summary>
 		public short TypographicAscender
 		{
 			get
@@ -277,6 +358,9 @@ namespace SharpFont.TrueType
 			}
 		}
 		
+		/// <summary>
+		/// The descender value, useful for computing a default line spacing in conjunction with unitsPerEm.
+		/// </summary>
 		public short TypographicDescender
 		{
 			get
@@ -285,6 +369,9 @@ namespace SharpFont.TrueType
 			}
 		}
 		
+		/// <summary>
+		/// The line gap value, useful for computing a default line spacing in conjunction with unitsPerEm.
+		/// </summary>
 		public short TypographicLineGap
 		{
 			get
@@ -293,6 +380,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The ascender metric for Windows, usually set to yMax. Windows will clip glyphs that go above this value.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort WindowsAscent
 		{
@@ -302,6 +392,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The descender metric for Windows, usually set to yMin. Windows will clip glyphs that go below this value.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort WindowsDescent
 		{
@@ -311,6 +404,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// Specifies the code pages encompassed by this font.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint CodePageRange1
 		{
@@ -320,6 +416,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// Specifies the code pages encompassed by this font.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint CodePageRange2
 		{
@@ -329,6 +428,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The approximate height of non-ascending lowercase letters relative to the baseline.
+		/// </summary>
 		public short Height
 		{
 			get
@@ -337,6 +439,9 @@ namespace SharpFont.TrueType
 			}
 		}
 		
+		/// <summary>
+		/// The approximate height of uppercase letters relative to the baseline.
+		/// </summary>
 		public short CapHeight
 		{
 			get
@@ -345,6 +450,10 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The Unicode index (character code)  of the glyph to use when a glyph doesn't exist for the requested character.
+		/// Since this value is limited to 0xFFFF, applications should not use this field.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort DefaultChar
 		{
@@ -354,6 +463,11 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The Unicode index (character code)  of the glyph to use as the break character.
+		/// The 'space' character is normally the break character.
+		/// Since this value is limited to 0xFFFF, applications should not use this field.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort BreakChar
 		{
@@ -363,6 +477,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The maximum number of characters needed to determine glyph context when applying features such as ligatures.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort MaxContext
 		{
@@ -372,6 +489,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The lowest point size at which the font starts to be used, in twips.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort LowerOpticalPointSize
 		{
@@ -381,6 +501,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// The highest point size at which the font is no longer used, in twips.
+		/// </summary>
 		[CLSCompliant(false)]
 		public ushort UpperOpticalPointSize
 		{

@@ -54,6 +54,9 @@ namespace SharpFont.TrueType
 
 		#region Properties
 
+		/// <summary>
+		/// Gets the version of the table information.
+		/// </summary>
 		public int FormatType
 		{
 			get
@@ -62,6 +65,9 @@ namespace SharpFont.TrueType
 			}
 		}
 		
+		/// <summary>
+		/// Gets the angle of italics, in degrees, counter-clockwise from vertical.
+		/// </summary>
 		public int ItalicAngle
 		{
 			get
@@ -70,6 +76,9 @@ namespace SharpFont.TrueType
 			}
 		}
 		
+		/// <summary>
+		/// Gets the recommended position of the underline.
+		/// </summary>
 		public short UnderlinePosition
 		{
 			get
@@ -78,6 +87,9 @@ namespace SharpFont.TrueType
 			}
 		}
 		
+		/// <summary>
+		/// Gets the recommended thickness of the underline.
+		/// </summary>
 		public short UnderlineThickness
 		{
 			get
@@ -86,6 +98,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		///
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint IsFixedPitch
 		{
@@ -95,6 +110,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// Gets the minimum amount of memory used by the font when an OpenType font is loaded.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint MinimumMemoryType42
 		{
@@ -104,6 +122,9 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// Gets the maximum amount of memory used by the font when an OpenType font is loaded.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint MaximumMemoryType42
 		{
@@ -113,6 +134,10 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// Gets the minimum amount of memory used by the font when an OpenType font is loaded as
+		/// a Type 1 font.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint MinimumMemoryType1
 		{
@@ -122,6 +147,10 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// Gets the maximum amount of memory used by the font when an OpenType font is loaded as
+		/// a Type 1 font.
+		/// </summary>
 		[CLSCompliant(false)]
 		public uint MaximumMemoryType1
 		{

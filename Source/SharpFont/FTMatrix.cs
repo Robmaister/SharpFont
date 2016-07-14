@@ -197,7 +197,7 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="a">A pointer to matrix ‘a’.</param>
 		/// <param name="b">A pointer to matrix ‘b’.</param>
-		public static void Multiply(FTMatrix a, FTMatrix b)
+		public static void Multiply(ref FTMatrix a, ref FTMatrix b)
 		{
 			FT.FT_Matrix_Multiply(ref a, ref b);
 		}
@@ -209,7 +209,7 @@ namespace SharpFont
 		/// The result is undefined if either ‘a’ or ‘b’ is zero.
 		/// </remarks>
 		/// <param name="b">A pointer to matrix ‘b’.</param>
-		public void Multiply(FTMatrix b)
+		public void Multiply(ref FTMatrix b)
 		{
 			FT.FT_Matrix_Multiply(ref this, ref b);
 		}

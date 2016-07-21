@@ -871,10 +871,6 @@ namespace SharpFont
 				childManagers.Clear();
 
 				Error err = customMemory ? FT.FT_Done_Library(reference) : FT.FT_Done_FreeType(reference);
-
-				if (err != Error.Ok)
-					throw new FreeTypeException(err);
-
 				reference = IntPtr.Zero;
 			}
 		}

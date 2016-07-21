@@ -530,11 +530,7 @@ namespace SharpFont
 
 				if (user)
 				{
-					Error err = FT.FT_Bitmap_Done(library.Reference, reference);
-
-					if (err != Error.Ok)
-						throw new FreeTypeException(err);
-
+					FT.FT_Bitmap_Done(library.Reference, reference);
 					Marshal.FreeHGlobal(reference);
 				}
 

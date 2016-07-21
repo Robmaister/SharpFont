@@ -620,7 +620,7 @@ namespace SharpFont
 		}
 
 		/// <summary><para>
-		/// This function analyzes a glyph outline and tries to compute its fill orientation (see 
+		/// This function analyzes a glyph outline and tries to compute its fill orientation (see
 		/// <see cref="Orientation"/>). This is done by computing the direction of each global horizontal and/or
 		/// vertical extrema within the outline.
 		/// </para><para>
@@ -676,14 +676,10 @@ namespace SharpFont
 
 				if (!duplicate)
 				{
-					Error err;
 					if (parentLibrary != null)
-						err = FT.FT_Outline_Done(parentLibrary.Reference, reference);
+						FT.FT_Outline_Done(parentLibrary.Reference, reference);
 					else
-						err = FT.FT_Outline_Done_Internal(parentMemory.Reference, reference);
-
-					if (err != Error.Ok)
-						throw new FreeTypeException(err);
+						FT.FT_Outline_Done_Internal(parentMemory.Reference, reference);
 
 					// removes itself from the parent Library, with a check to prevent this from happening when Library is
 					// being disposed (Library disposes all it's children with a foreach loop, this causes an

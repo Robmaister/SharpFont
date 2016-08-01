@@ -246,10 +246,7 @@ namespace SharpFont
 				//only dispose the user allocated sizes that are not duplicates.
 				if (userAlloc && !duplicate)
 				{
-					Error err = FT.FT_Done_Size(reference);
-
-					if (err != Error.Ok)
-						throw new FreeTypeException(err);
+					FT.FT_Done_Size(reference);
 				}
 
 				// removes itself from the parent Face, with a check to prevent this from happening when Face is

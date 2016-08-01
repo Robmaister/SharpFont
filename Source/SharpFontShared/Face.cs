@@ -2387,10 +2387,7 @@ namespace SharpFont
 
 				childSizes.Clear();
 
-				Error err = FT.FT_Done_Face(base.Reference);
-
-				if (err != Error.Ok)
-					throw new FreeTypeException(err);
+				FT.FT_Done_Face(base.Reference);
 
 				// removes itself from the parent Library, with a check to prevent this from happening when Library is
 				// being disposed (Library disposes all it's children with a foreach loop, this causes an

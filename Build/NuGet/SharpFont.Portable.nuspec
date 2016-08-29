@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package>
   <metadata>
-    <id>SharpFont</id>
+    <id>SharpFont.Portable</id>
     <version>4.0.1</version>
-    <title>SharpFont</title>
+    <title>SharpFont.Portable</title>
     <authors>Robert Rouhani</authors>
     <owners>Robert Rouhani</owners>
     <licenseUrl>https://github.com/Robmaister/SharpFont/blob/master/LICENSE</licenseUrl>
@@ -27,9 +27,9 @@
   </metadata>
   <files>
     <file src="SharpFont.props" target="build" />
-    <file src="..\..\Binaries\SharpFont\Release\SharpFont.dll.config" target="config" />
-    <file src="..\..\Binaries\SharpFont\Release\SharpFont.dll.config" target="lib\net45" />
-    <file src="..\..\Binaries\SharpFont\Release\SharpFont.dll" target="lib\net45" />
-    <file src="..\..\Binaries\SharpFont\Release\SharpFont.xml" target="lib\net45" />
+    <file src="..\..\Binaries\SharpFont\Portable\Release\SharpFont.dll.config" target="config" />
+    <file src="..\..\Binaries\SharpFont\Portable\Release\SharpFont.dll.config" target="lib\portable-net45+win8+wpa81" />
+    <file src="..\..\Binaries\SharpFont\Portable\Release\SharpFont.dll" target="lib\portable-net45+win8+wpa81" />
+    <file src="..\..\Binaries\SharpFont\Portable\Release\SharpFont.xml" target="lib\portable-net45+win8+wpa81" />
   </files>
 </package>

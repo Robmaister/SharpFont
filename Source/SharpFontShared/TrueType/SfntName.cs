@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2013, 2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -44,16 +44,15 @@ namespace SharpFont.TrueType
 	{
 		#region Fields
 
-		private IntPtr reference;
 		private SfntNameRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal SfntName(IntPtr reference)
+		internal SfntName(SfntNameRec rec)
 		{
-			Reference = reference;
+			this.rec = rec;
 		}
 
 		#endregion
@@ -122,20 +121,6 @@ namespace SharpFont.TrueType
 				//TODO look at TrueType specs, interpret string based on platform, encoding pair.
 				//return string.Empty;
 				return Marshal.PtrToStringUni(rec.@string, (int)rec.string_len);
-			}
-		}
-
-		internal IntPtr Reference
-		{
-			get
-			{
-				return reference;
-			}
-
-			set
-			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<SfntNameRec>(reference);
 			}
 		}
 

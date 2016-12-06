@@ -1794,13 +1794,13 @@ namespace SharpFont
 		/// <returns>Output font info structure pointer.</returns>
 		public FontInfo GetPSFontInfo()
 		{
-			IntPtr fontInfoRef;
-			Error err = FT.FT_Get_PS_Font_Info(Reference, out fontInfoRef);
+			PostScript.Internal.FontInfoRec fontInfoRec;
+			Error err = FT.FT_Get_PS_Font_Info(Reference, out fontInfoRec);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new FontInfo(fontInfoRef);
+			return new FontInfo(fontInfoRec);
 		}
 
 		/// <summary>
@@ -1816,13 +1816,13 @@ namespace SharpFont
 		/// <returns>Output private dictionary structure pointer.</returns>
 		public Private GetPSFontPrivate()
 		{
-			IntPtr privateRef;
-			Error err = FT.FT_Get_PS_Font_Private(Reference, out privateRef);
+			PostScript.Internal.PrivateRec privateRec;
+			Error err = FT.FT_Get_PS_Font_Private(Reference, out privateRec);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new Private(privateRef);
+			return new Private(privateRec);
 		}
 
 		/// <summary>
@@ -1895,14 +1895,14 @@ namespace SharpFont
 		[CLSCompliant(false)]
 		public SfntName GetSfntName(uint idx)
 		{
-			IntPtr nameRef;
+			TrueType.Internal.SfntNameRec nameRec;
 
-			Error err = FT.FT_Get_Sfnt_Name(Reference, idx, out nameRef);
+			Error err = FT.FT_Get_Sfnt_Name(Reference, idx, out nameRec);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
 
-			return new SfntName(nameRef);
+			return new SfntName(nameRec);
 		}
 
 		#endregion

@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2015 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -292,10 +292,10 @@ namespace SharpFont
 		internal static extern bool FT_Has_PS_Glyph_Names(IntPtr face);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Get_PS_Font_Info(IntPtr face, out IntPtr afont_info);
+		internal static extern Error FT_Get_PS_Font_Info(IntPtr face, out PostScript.Internal.FontInfoRec afont_info);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Get_PS_Font_Private(IntPtr face, out IntPtr afont_private);
+		internal static extern Error FT_Get_PS_Font_Private(IntPtr face, out PostScript.Internal.PrivateRec afont_private);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern int FT_Get_PS_Font_Value(IntPtr face, DictionaryKeys key, uint idx, ref IntPtr value, int value_len);
@@ -308,7 +308,7 @@ namespace SharpFont
 		internal static extern uint FT_Get_Sfnt_Name_Count(IntPtr face);
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
-		internal static extern Error FT_Get_Sfnt_Name(IntPtr face, uint idx, out IntPtr aname);
+		internal static extern Error FT_Get_Sfnt_Name(IntPtr face, uint idx, out TrueType.Internal.SfntNameRec aname);
 
 		#endregion
 

@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2013 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2013, 2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -37,16 +37,15 @@ namespace SharpFont.PostScript
 	{
 		#region Fields
 
-		private IntPtr reference;
 		private PrivateRec rec;
 
 		#endregion
 
 		#region Constructors
 
-		internal Private(IntPtr reference)
+		internal Private(PrivateRec rec)
 		{
-			Reference = reference;
+			this.rec = rec;
 		}
 
 		#endregion
@@ -339,20 +338,6 @@ namespace SharpFont.PostScript
 			get
 			{
 				return rec.min_feature;
-			}
-		}
-
-		internal IntPtr Reference
-		{
-			get
-			{
-				return reference;
-			}
-
-			set
-			{
-				reference = value;
-				rec = PInvokeHelper.PtrToStructure<PrivateRec>(reference);
 			}
 		}
 

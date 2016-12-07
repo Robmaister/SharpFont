@@ -107,6 +107,31 @@ namespace SharpFont.TrueType
 			}
 		}
 
+		/// <summary>
+		/// This property returns <see cref="StringPtr"/> interpreted as UTF-16.
+		/// </summary>
+		public string String
+		{
+			get
+			{
+				//TODO it may be possible to consolidate all of these properties
+				//if the strings follow some sane structure. Otherwise, leave
+				//them or add more overloads for common encodings like UTF-8.
+				return Marshal.PtrToStringUni(rec.@string, (int)rec.string_len);
+			}
+		}
+
+		/// <summary>
+		/// This property returns <see cref="StringPtr"/> interpreted as ANSI.
+		/// </summary>
+		public string StringAnsi
+		{
+			get
+			{
+				return Marshal.PtrToStringAnsi(rec.@string, (int)rec.string_len);
+			}
+		}
+
 		/// <summary><para>
 		/// Gets the ‘name’ string. Note that its format differs depending on the (platform,encoding) pair. It can be a
 		/// Pascal String, a UTF-16 one, etc.
@@ -114,13 +139,11 @@ namespace SharpFont.TrueType
 		/// Generally speaking, the string is not zero-terminated. Please refer to the TrueType specification for
 		/// details.
 		/// </para></summary>
-		public string String
+		public IntPtr StringPtr
 		{
 			get
 			{
-				//TODO look at TrueType specs, interpret string based on platform, encoding pair.
-				//return string.Empty;
-				return Marshal.PtrToStringUni(rec.@string, (int)rec.string_len);
+				return rec.@string;
 			}
 		}
 

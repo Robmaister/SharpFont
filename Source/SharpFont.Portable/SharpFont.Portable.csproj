@@ -48,7 +48,6 @@
   <ItemGroup>
     <None Include="..\SharpFont.dll.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
     </None>
     <None Include="..\SharpFont.snk" />
   </ItemGroup>

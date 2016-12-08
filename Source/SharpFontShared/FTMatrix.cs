@@ -68,6 +68,22 @@ namespace SharpFont
 		/// <summary>
 		/// Initializes a new instance of the <see cref="FTMatrix"/> struct.
 		/// </summary>
+		/// <param name="xx">Matrix coefficient XX.</param>
+		/// <param name="xy">Matrix coefficient XY.</param>
+		/// <param name="yx">Matrix coefficient YX.</param>
+		/// <param name="yy">Matrix coefficient YY.</param>
+		public FTMatrix(Fixed16Dot16 xx, Fixed16Dot16 xy, Fixed16Dot16 yx, Fixed16Dot16 yy)
+			: this()
+		{
+			this.XX = xx;
+			this.XY = xy;
+			this.YX = yx;
+			this.YY = yy;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="FTMatrix"/> struct.
+		/// </summary>
 		/// <param name="row0">Matrix coefficients XX, XY.</param>
 		/// <param name="row1">Matrix coefficients YX, YY.</param>
 		public FTMatrix(FTVector row0, FTVector row1)
@@ -181,7 +197,7 @@ namespace SharpFont
 		/// </remarks>
 		/// <param name="a">A pointer to matrix ‘a’.</param>
 		/// <param name="b">A pointer to matrix ‘b’.</param>
-		public static void Multiply(FTMatrix a, FTMatrix b)
+		public static void Multiply(ref FTMatrix a, ref FTMatrix b)
 		{
 			FT.FT_Matrix_Multiply(ref a, ref b);
 		}
@@ -193,7 +209,7 @@ namespace SharpFont
 		/// The result is undefined if either ‘a’ or ‘b’ is zero.
 		/// </remarks>
 		/// <param name="b">A pointer to matrix ‘b’.</param>
-		public void Multiply(FTMatrix b)
+		public void Multiply(ref FTMatrix b)
 		{
 			FT.FT_Matrix_Multiply(ref this, ref b);
 		}

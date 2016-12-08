@@ -438,6 +438,28 @@ namespace SharpFont
 		/// <summary>
 		/// Set a property for a given module.
 		/// </summary>
+		/// <param name="moduleName">The module name.</param>
+		/// <param name="propertyName"><para>The property name. Properties are described in the ‘Synopsis’ subsection
+		/// of the module's documentation.
+		/// </para><para>
+		/// Note that only a few modules have properties.</para></param>
+		/// <param name="value">A generic pointer to a variable or structure which gives the new value of the property.
+		/// The exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
+		/// documentation.</param>
+		public unsafe void PropertySet(string moduleName, string propertyName, int value)
+		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
+			Error err = FT.FT_Property_Set(Reference, moduleName, propertyName, (IntPtr)(&value));
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Set a property for a given module.
+		/// </summary>
 		/// <typeparam name="T">The type of property to set.</typeparam>
 		/// <param name="moduleName">The module name.</param>
 		/// <param name="propertyName"><para>The property name. Properties are described in the ‘Synopsis’ subsection
@@ -522,6 +544,26 @@ namespace SharpFont
 				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
 			Error err = FT.FT_Property_Get(Reference, moduleName, propertyName, value);
+
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+		}
+
+		/// <summary>
+		/// Get a module's property value.
+		/// </summary>
+		/// <param name="moduleName">The module name.</param>
+		/// <param name="propertyName">The property name. Properties are described in the ‘Synopsis’ subsection of the
+		/// module's documentation.</param>
+		/// <param name="value">A generic pointer to a variable or structure which gives the value of the property. The
+		/// exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
+		/// documentation.</param>
+		public void PropertyGet(string moduleName, string propertyName, ref int value)
+		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
+			Error err = FT.FT_Property_Get(Reference, moduleName, propertyName, ref value);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);

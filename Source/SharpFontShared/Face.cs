@@ -93,7 +93,7 @@ namespace SharpFont
 		/// <param name="library">The parent library.</param>
 		/// <param name="file">The loaded file.</param>
 		/// <param name="faceIndex">The index of the face to take from the file.</param>
-		public unsafe Face(Library library, byte[] file, int faceIndex)
+		public Face(Library library, byte[] file, int faceIndex)
 			: this(library)
 		{
 			IntPtr reference;

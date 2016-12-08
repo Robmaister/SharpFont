@@ -1,5 +1,5 @@
 ﻿#region MIT License
-/*Copyright (c) 2012-2014 Robert Rouhani <robert.rouhani@gmail.com>
+/*Copyright (c) 2012-2014, 2016 Robert Rouhani <robert.rouhani@gmail.com>
 
 SharpFont based on Tao.FreeType, Copyright (c) 2003-2007 Tao Framework Team
 
@@ -447,16 +447,30 @@ namespace SharpFont
 		/// <param name="value">A generic pointer to a variable or structure which gives the new value of the property.
 		/// The exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
 		/// documentation.</param>
-		public unsafe void PropertySet<T>(string moduleName, string propertyName, T value)
+		public void PropertySet<T>(string moduleName, string propertyName, ref T value)
 			where T : struct
 		{
-			if (disposed)
-				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+			GCHandle gch = GCHandle.Alloc(value, GCHandleType.Pinned);
+			PropertySet(moduleName, propertyName, gch.AddrOfPinnedObject());
+			gch.Free();
+		}
 
-			IntPtr ptr = IntPtr.Zero;
-			Marshal.StructureToPtr((object)value, ptr, false); //Should that last value be false? Any other way to get a pointer?
-
-			Error err = FT.FT_Property_Set(Reference, moduleName, propertyName, ptr);
+		/// <summary>
+		/// Set a property for a given module.
+		/// </summary>
+		/// <typeparam name="T">The type of property to set.</typeparam>
+		/// <param name="moduleName">The module name.</param>
+		/// <param name="propertyName"><para>The property name. Properties are described in the ‘Synopsis’ subsection
+		/// of the module's documentation.
+		/// </para><para>
+		/// Note that only a few modules have properties.</para></param>
+		/// <param name="value">A generic pointer to a variable or structure which gives the new value of the property.
+		/// The exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
+		/// documentation.</param>
+		public void PropertySet<T>(string moduleName, string propertyName, T value)
+			where T : struct
+		{
+			PropertySet(moduleName, propertyName, ref value);
 		}
 
 		/// <summary>
@@ -470,16 +484,10 @@ namespace SharpFont
 		/// <param name="value">A generic pointer to a variable or structure which gives the new value of the property.
 		/// The exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
 		/// documentation.</param>
-		public unsafe void PropertySet(string moduleName, string propertyName, GlyphToScriptMapProperty value)
+		public void PropertySet(string moduleName, string propertyName, GlyphToScriptMapProperty value)
 		{
-			if (disposed)
-				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
-
-			GlyphToScriptMapPropertyRec rec = value.Rec;
-			Error err = FT.FT_Property_Set(Reference, moduleName, propertyName, (IntPtr)(&rec));
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
+			var rec = value.Rec;
+			PropertySet(moduleName, propertyName, ref rec);
 		}
 
 		/// <summary>
@@ -493,16 +501,10 @@ namespace SharpFont
 		/// <param name="value">A generic pointer to a variable or structure which gives the new value of the property.
 		/// The exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
 		/// documentation.</param>
-		public unsafe void PropertySet(string moduleName, string propertyName, IncreaseXHeightProperty value)
+		public void PropertySet(string moduleName, string propertyName, IncreaseXHeightProperty value)
 		{
-			if (disposed)
-				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
-
-			IncreaseXHeightPropertyRec rec = value.Rec;
-			Error err = FT.FT_Property_Set(Reference, moduleName, propertyName, (IntPtr)(&rec));
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
+			var rec = value.Rec;
+			PropertySet(moduleName, propertyName, ref rec);
 		}
 
 		/// <summary>
@@ -514,12 +516,12 @@ namespace SharpFont
 		/// <param name="value">A generic pointer to a variable or structure which gives the value of the property. The
 		/// exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
 		/// documentation.</param>
-		public void PropertyGet(string moduleName, string propertyName, out IntPtr value)
+		public void PropertyGet(string moduleName, string propertyName, IntPtr value)
 		{
 			if (disposed)
 				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
-			Error err = FT.FT_Property_Get(Reference, moduleName, propertyName, out value);
+			Error err = FT.FT_Property_Get(Reference, moduleName, propertyName, value);
 
 			if (err != Error.Ok)
 				throw new FreeTypeException(err);
@@ -532,21 +534,16 @@ namespace SharpFont
 		/// <param name="moduleName">The module name.</param>
 		/// <param name="propertyName">The property name. Properties are described in the ‘Synopsis’ subsection of the
 		/// module's documentation.</param>
-		/// <param name="value">A generic pointer to a variable or structure which gives the value of the property. The
-		/// exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
-		/// documentation.</param>
+		/// <param name="value">The value read from the module.</param>
 		public void PropertyGet<T>(string moduleName, string propertyName, out T value)
+			where T : struct
 		{
-			if (disposed)
-				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+			value = default(T);
 
-			IntPtr ptr;
-			Error err = FT.FT_Property_Get(Reference, moduleName, propertyName, out ptr);
-
-			if (err != Error.Ok)
-				throw new FreeTypeException(err);
-
-			value = PInvokeHelper.PtrToStructure<T>(ptr);
+			GCHandle gch = GCHandle.Alloc(value, GCHandleType.Pinned);
+			PropertyGet(moduleName, propertyName, gch.AddrOfPinnedObject());
+			value = PInvokeHelper.PtrToStructure<T>(gch.AddrOfPinnedObject());
+			gch.Free();
 		}
 
 		/// <summary>
@@ -555,20 +552,11 @@ namespace SharpFont
 		/// <param name="moduleName">The module name.</param>
 		/// <param name="propertyName">The property name. Properties are described in the ‘Synopsis’ subsection of the
 		/// module's documentation.</param>
-		/// <param name="value">A generic pointer to a variable or structure which gives the value of the property. The
-		/// exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
-		/// documentation.</param>
+		/// <param name="value">The value read from the module.</param>
+		[Obsolete("Use PropertyGetGlyphToScriptMap instead")]
 		public void PropertyGet(string moduleName, string propertyName, out GlyphToScriptMapProperty value)
 		{
-			if (disposed)
-				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
-
-			IntPtr ptr;
-			Error err = FT.FT_Property_Get(Reference, moduleName, propertyName, out ptr);
-
-			GlyphToScriptMapPropertyRec ptrRec = PInvokeHelper.PtrToStructure<GlyphToScriptMapPropertyRec>(ptr);
-			Face face = childFaces.Find(f => f.Reference == ptrRec.face);
-			value = new GlyphToScriptMapProperty(ptrRec, face);
+			value = PropertyGetGlyphToScriptMap(moduleName, propertyName);
 		}
 
 		/// <summary>
@@ -577,20 +565,49 @@ namespace SharpFont
 		/// <param name="moduleName">The module name.</param>
 		/// <param name="propertyName">The property name. Properties are described in the ‘Synopsis’ subsection of the
 		/// module's documentation.</param>
-		/// <param name="value">A generic pointer to a variable or structure which gives the value of the property. The
-		/// exact definition of ‘value’ is dependent on the property; see the ‘Synopsis’ subsection of the module's
-		/// documentation.</param>
+		/// <param name="value">The value read from the module.</param>
+		[Obsolete("Use PropertyGetIncreaseXHeight instead")]
 		public void PropertyGet(string moduleName, string propertyName, out IncreaseXHeightProperty value)
+		{
+			value = PropertyGetIncreaseXHeight(moduleName, propertyName);
+		}
+
+		/// <summary>
+		/// Gets a module's property value of the type <see cref="GlyphToScriptMapProperty"/>.
+		/// </summary>
+		/// <param name="moduleName">The module name.</param>
+		/// <param name="propertyName">The property name. Properties are described in the ‘Synopsis’ subsection of the
+		/// module's documentation.</param>
+		/// <returns>The value read from the module.</returns>
+		public GlyphToScriptMapProperty PropertyGetGlyphToScriptMap(string moduleName, string propertyName)
 		{
 			if (disposed)
 				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
-			IntPtr ptr;
-			Error err = FT.FT_Property_Get(Reference, moduleName, propertyName, out ptr);
+			GlyphToScriptMapPropertyRec rec;
+			PropertyGet(moduleName, propertyName, out rec);
 
-			IncreaseXHeightPropertyRec ptrRec = PInvokeHelper.PtrToStructure<IncreaseXHeightPropertyRec>(ptr);
-			Face face = childFaces.Find(f => f.Reference == ptrRec.face);
-			value = new IncreaseXHeightProperty(ptrRec, face);
+			Face face = childFaces.Find(f => f.Reference == rec.face);
+			return new GlyphToScriptMapProperty(rec, face);
+		}
+
+		/// <summary>
+		/// Gets a module's property value of the type <see cref="IncreaseXHeightProperty"/>.
+		/// </summary>
+		/// <param name="moduleName">The module name.</param>
+		/// <param name="propertyName">The property name. Properties are described in the ‘Synopsis’ subsection of the
+		/// module's documentation.</param>
+		/// <returns>The value read from the module.</returns>
+		public IncreaseXHeightProperty PropertyGetIncreaseXHeight(string moduleName, string propertyName)
+		{
+			if (disposed)
+				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
+
+			IncreaseXHeightPropertyRec rec;
+			PropertyGet(moduleName, propertyName, out rec);
+
+			Face face = childFaces.Find(f => f.Reference == rec.face);
+			return new IncreaseXHeightProperty(rec, face);
 		}
 
 		/// <summary>

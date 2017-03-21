@@ -99,9 +99,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SharpFont.Portable\SharpFont.Portable.csproj">
+    <ProjectReference Include="..\SharpFont.Portable\SharpFont.csproj">
       <Project>{ecd55e3b-1139-4f0d-af63-3f471aaf6e91}</Project>
-      <Name>SharpFont.Portable</Name>
+      <Name>SharpFont</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "Examples\Examples.csproj", "{81158C54-C830-4056-B5D6-AE9059741B20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFont.Portable", "SharpFont.Portable\SharpFont.Portable.csproj", "{ECD55E3B-1139-4F0D-AF63-3F471AAF6E91}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFont", "SharpFont.Portable\SharpFont.csproj", "{ECD55E3B-1139-4F0D-AF63-3F471AAF6E91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

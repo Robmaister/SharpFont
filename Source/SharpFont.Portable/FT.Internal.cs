@@ -55,6 +55,8 @@ namespace SharpFont
 					{
 						if (isMacOS == null) // repeat the test
 						{
+							isMacOS = false;
+
 							var os = typeof(Environment)
 								?.GetRuntimeProperty("OSVersion")
 								?.GetValue(null);

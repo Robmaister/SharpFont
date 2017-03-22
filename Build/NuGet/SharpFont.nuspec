@@ -31,5 +31,11 @@
     <file src="..\..\Binaries\SharpFont\Release\SharpFont.dll.config" target="lib\net45" />
     <file src="..\..\Binaries\SharpFont\Release\SharpFont.dll" target="lib\net45" />
     <file src="..\..\Binaries\SharpFont\Release\SharpFont.xml" target="lib\net45" />
+    <file src="..\..\Binaries\SharpFont\Release\SharpFont.dll.config" target="lib\xamarinios" />
+    <file src="..\..\Binaries\SharpFont\Release\SharpFont.dll" target="lib\xamarinios" />
+    <file src="..\..\Binaries\SharpFont\Release\SharpFont.xml" target="lib\xamarinios" />
+    <file src="..\..\Binaries\SharpFont\Release\SharpFont.dll.config" target="lib\portable-net45+win8+wpa81" />
+    <file src="..\..\Binaries\SharpFont\Release\SharpFont.dll" target="lib\portable-net45+win8+wpa81" />
+    <file src="..\..\Binaries\SharpFont\Release\SharpFont.xml" target="lib\portable-net45+win8+wpa81" />    
   </files>
 </package>

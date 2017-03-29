@@ -36,6 +36,12 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NET20|AnyCPU'">
+    <OutputPath>bin\NET20\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseNET20|AnyCPU'">
+    <OutputPath>bin\ReleaseNET20\</OutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -58,7 +64,6 @@
     <Compile Include="Forms\LabeledToolStripComboBox.Designer.cs">
       <DependentUpon>LabeledToolStripComboBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="FTBitmapEx.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -99,6 +104,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SharpFont.GDI\SharpFont.Gdi.csproj">
+      <Project>{544493f1-3a5c-4576-975b-06b63ce0175f}</Project>
+      <Name>SharpFont.Gdi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SharpFont\SharpFont.csproj">
       <Project>{ecd55e3b-1139-4f0d-af63-3f471aaf6e91}</Project>
       <Name>SharpFont</Name>

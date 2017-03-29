@@ -23,7 +23,6 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Linq;
 
 using SharpFont.Fnt.Internal;
 
@@ -571,7 +570,11 @@ namespace SharpFont.Fnt
 		{
 			get
 			{
-				return rec.reserved1.Select(x => (uint) x).ToArray();
+				uint[] reserved1 = new uint[rec.reserved1.Length];
+				for (int i = 0; i < reserved1.Length; i++)
+					reserved1[i] = (uint)rec.reserved1[i];
+
+				return reserved1;
 			}
 		}
 

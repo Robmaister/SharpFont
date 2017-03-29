@@ -42,13 +42,13 @@ namespace SharpFont.TrueType.Internal
 		internal ushort Flags;
 		internal ushort Units_Per_EM;
 
-		private FT_Long created1;
-		private FT_Long created2;
-		internal FT_Long[] Created { get { return new[] {created1, created2}; } }
+		internal FT_Long created1;
+		internal FT_Long created2;
+		//internal FT_Long[] Created { get { return new[] {created1, created2}; } }
 
-		private FT_Long modified1;
-		private FT_Long modified2;
-		internal FT_Long[] Modified { get { return new[] { modified1, modified2 }; } }
+		internal FT_Long modified1;
+		internal FT_Long modified2;
+		//internal FT_Long[] Modified { get { return new[] { modified1, modified2 }; } }
 
 		internal short xMin;
 		internal short yMin;

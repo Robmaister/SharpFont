@@ -30,6 +30,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 
 using SharpFont;
+using SharpFont.Gdi;
 
 namespace Examples
 {

@@ -23,7 +23,6 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Linq;
 using System.Runtime.InteropServices;
 
 using SharpFont.TrueType.Internal;
@@ -261,7 +260,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return rec.Created.Select(x => (int)x).ToArray();
+				return new[] { (int)rec.created1, (int)rec.created2 };
 			}
 		}
 
@@ -272,7 +271,7 @@ namespace SharpFont.TrueType
 		{
 			get
 			{
-				return rec.Modified.Select(x => (int)x).ToArray();
+				return new[] { (int)rec.modified1, (int)rec.modified2 };
 			}
 		}
 

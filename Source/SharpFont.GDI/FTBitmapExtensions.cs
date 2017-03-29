@@ -1,12 +1,11 @@
-﻿using SharpFont;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace Examples
+namespace SharpFont.Gdi
 {
-	public static class FTBitmapEx
-	{
+    public static class FTBitmapExtensions
+    {
 		//HACK these variables exist to reduce the cost of reflection at runtime.
 		//Meant to be a temporary fix to https://github.com/Robmaister/SharpFont/issues/62
 		//until libgdiplus gets patched.

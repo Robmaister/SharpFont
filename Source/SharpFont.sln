@@ -1,26 +1,39 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.9
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "Examples\Examples.csproj", "{81158C54-C830-4056-B5D6-AE9059741B20}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFont", "SharpFont\SharpFont.csproj", "{ECD55E3B-1139-4F0D-AF63-3F471AAF6E91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFont.Gdi", "SharpFont.GDI\SharpFont.Gdi.csproj", "{544493F1-3A5C-4576-975B-06B63CE0175F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		ReleaseNET20|Any CPU = ReleaseNET20|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{81158C54-C830-4056-B5D6-AE9059741B20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{81158C54-C830-4056-B5D6-AE9059741B20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81158C54-C830-4056-B5D6-AE9059741B20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81158C54-C830-4056-B5D6-AE9059741B20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81158C54-C830-4056-B5D6-AE9059741B20}.ReleaseNET20|Any CPU.ActiveCfg = ReleaseNET20|Any CPU
+		{81158C54-C830-4056-B5D6-AE9059741B20}.ReleaseNET20|Any CPU.Build.0 = ReleaseNET20|Any CPU
 		{ECD55E3B-1139-4F0D-AF63-3F471AAF6E91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ECD55E3B-1139-4F0D-AF63-3F471AAF6E91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ECD55E3B-1139-4F0D-AF63-3F471AAF6E91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ECD55E3B-1139-4F0D-AF63-3F471AAF6E91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ECD55E3B-1139-4F0D-AF63-3F471AAF6E91}.ReleaseNET20|Any CPU.ActiveCfg = ReleaseNET20|Any CPU
+		{ECD55E3B-1139-4F0D-AF63-3F471AAF6E91}.ReleaseNET20|Any CPU.Build.0 = ReleaseNET20|Any CPU
+		{544493F1-3A5C-4576-975B-06B63CE0175F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{544493F1-3A5C-4576-975B-06B63CE0175F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{544493F1-3A5C-4576-975B-06B63CE0175F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{544493F1-3A5C-4576-975B-06B63CE0175F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{544493F1-3A5C-4576-975B-06B63CE0175F}.ReleaseNET20|Any CPU.ActiveCfg = ReleaseNET20|Any CPU
+		{544493F1-3A5C-4576-975B-06B63CE0175F}.ReleaseNET20|Any CPU.Build.0 = ReleaseNET20|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

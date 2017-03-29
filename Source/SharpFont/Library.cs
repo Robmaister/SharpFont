@@ -23,7 +23,6 @@ SOFTWARE.*/
 #endregion
 
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
@@ -704,7 +703,10 @@ namespace SharpFont
 			if (parameters == null)
 				throw new ArgumentNullException("parameters");
 
-			ParameterRec[] paramRecs = parameters.Select(x => x.Record).ToArray();
+			ParameterRec[] paramRecs = new ParameterRec[parameters.Length];//parameters.Select(x => x.Record).ToArray();
+			for (int i = 0; i < paramRecs.Length; i++)
+				paramRecs[i] = parameters[i].Record;
+
 			fixed (void* ptr = paramRecs)
 			{
 				Error err = FT.FT_Set_Renderer(Reference, renderer.Reference, numParams, (IntPtr)ptr);

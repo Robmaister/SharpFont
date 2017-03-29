@@ -269,7 +269,6 @@ namespace SharpFont
 
 		#endregion
 
-#if !SHARPFONT_PLATFORM_IOS
 		#region Mac Specific Interface
 
 		/// <summary>
@@ -288,6 +287,10 @@ namespace SharpFont
 		/// <returns>A handle to a new face object.</returns>
 		public Face NewFaceFromFond(IntPtr fond, int faceIndex)
 		{
+			if (!FT.IsMacOS)
+				throw new InvalidOperationException(
+					$"{nameof(NewFaceFromFond)} can only be called on macOS.");
+
 			if (disposed)
 				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
@@ -313,6 +316,10 @@ namespace SharpFont
 		/// <returns>A handle to a new face object.</returns>
 		public Face NewFaceFromFSSpec(IntPtr spec, int faceIndex)
 		{
+			if (!FT.IsMacOS)
+				throw new InvalidOperationException(
+					$"{nameof(NewFaceFromFSSpec)} can only be called on macOS.");
+
 			if (disposed)
 				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
@@ -338,6 +345,10 @@ namespace SharpFont
 		/// <returns>A handle to a new face object.</returns>
 		public Face NewFaceFromFSRef(IntPtr @ref, int faceIndex)
 		{
+			if (!FT.IsMacOS)
+				throw new InvalidOperationException(
+					$"{nameof(NewFaceFromFSRef)} can only be called on macOS.");
+
 			if (disposed)
 				throw new ObjectDisposedException("Library", "Cannot access a disposed object.");
 
@@ -352,7 +363,6 @@ namespace SharpFont
 		}
 
 		#endregion
-#endif
 
 		#region Module Management
 

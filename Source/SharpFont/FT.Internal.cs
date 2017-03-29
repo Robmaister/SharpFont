@@ -29,6 +29,7 @@ using SharpFont.Cache;
 using SharpFont.Internal;
 using SharpFont.PostScript;
 using SharpFont.TrueType;
+using System.Reflection;
 
 namespace SharpFont
 {
@@ -37,14 +38,52 @@ namespace SharpFont
 	/// </content>
 	public static partial class FT
 	{
+		static bool? isMacOS;
+
+		/// <summary>
+		/// Returns true if the current .net platform is macOS.
+		/// </summary>
+		internal static bool IsMacOS
+		{
+			get
+			{
+				if (isMacOS != null)
+					return isMacOS.Value;
+				else
+				{
+					lock (typeof(FT))
+					{
+						if (isMacOS == null) // repeat the test
+						{
+							isMacOS = false;
+
+							var os = typeof(Environment)
+								?.GetRuntimeProperty("OSVersion")
+								?.GetValue(null);
+
+							var platformObj = os
+								?.GetType().GetRuntimeProperty("Platform")
+								?.GetValue(os);
+
+							if (platformObj != null)
+							{
+								var platform = (int)platformObj;
+								if (platform == 6)
+									isMacOS = true;
+							}
+						}
+					}
+				}
+
+				return isMacOS.Value;
+			}
+		}
+
 		/// <summary>
 		/// Defines the location of the FreeType DLL. Update SharpFont.dll.config if you change this!
 		/// </summary>
-#if SHARPFONT_PLATFORM_IOS
-		private const string FreetypeDll = "__Internal";
-#else
+		/// TODO: Use the same name for all platforms.
 	    private const string FreetypeDll = "freetype6";
-#endif
 
 		/// <summary>
 		/// Defines the calling convention for P/Invoking the native freetype methods.
@@ -203,8 +242,7 @@ namespace SharpFont
 
 		#endregion
 
-#if !SHARPFONT_PLATFORM_IOS
-		#region Mac Specific Interface
+		#region Mac Specific Interface - check for macOS before calling these methods.
 
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_New_Face_From_FOND(IntPtr library, IntPtr fond, int face_index, out IntPtr aface);
@@ -224,7 +262,6 @@ namespace SharpFont
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_New_Face_From_FSRef(IntPtr library, IntPtr @ref, int face_index, out IntPtr aface);
 		#endregion
-#endif
 
 		#region Size Management
 

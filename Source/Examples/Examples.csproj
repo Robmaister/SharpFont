@@ -24,6 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
     <OutputPath>..\..\Binaries\Examples\Release\</OutputPath>
@@ -57,14 +58,9 @@
     <Compile Include="Forms\LabeledToolStripComboBox.Designer.cs">
       <DependentUpon>LabeledToolStripComboBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="FTBitmapEx.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SharpFont\SharpFont.csproj">
-      <Project>{C293DB32-FA42-486D-B128-5A12522FAE4E}</Project>
-      <Name>SharpFont</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ExampleForm.resx">
@@ -101,6 +97,12 @@
     <None Include="Fonts\Cousine-Regular-Latin.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SharpFont\SharpFont.csproj">
+      <Project>{ecd55e3b-1139-4f0d-af63-3f471aaf6e91}</Project>
+      <Name>SharpFont</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

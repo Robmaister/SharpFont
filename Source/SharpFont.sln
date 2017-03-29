@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFont", "SharpFont\Shar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFont.Gdi", "SharpFont.GDI\SharpFont.Gdi.csproj", "{544493F1-3A5C-4576-975B-06B63CE0175F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFont.HarfBuzz", "SharpFont.HarfBuzz\SharpFont.HarfBuzz.csproj", "{31457A69-1EF3-4CDC-8741-6DE3DDB82D3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpFont.HarfBuzz.Example", "SharpFont.HarfBuzz.Example\SharpFont.HarfBuzz.Example.csproj", "{1D488727-E222-43A2-BBBD-095F17A488C8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HarfBuzz", "HarfBuzz", "{11A19A77-0E52-4BC0-A098-5FD64908EAFA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,9 +40,25 @@ Global
 		{544493F1-3A5C-4576-975B-06B63CE0175F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{544493F1-3A5C-4576-975B-06B63CE0175F}.ReleaseNET20|Any CPU.ActiveCfg = ReleaseNET20|Any CPU
 		{544493F1-3A5C-4576-975B-06B63CE0175F}.ReleaseNET20|Any CPU.Build.0 = ReleaseNET20|Any CPU
+		{31457A69-1EF3-4CDC-8741-6DE3DDB82D3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31457A69-1EF3-4CDC-8741-6DE3DDB82D3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31457A69-1EF3-4CDC-8741-6DE3DDB82D3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31457A69-1EF3-4CDC-8741-6DE3DDB82D3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31457A69-1EF3-4CDC-8741-6DE3DDB82D3B}.ReleaseNET20|Any CPU.ActiveCfg = Release|Any CPU
+		{31457A69-1EF3-4CDC-8741-6DE3DDB82D3B}.ReleaseNET20|Any CPU.Build.0 = Release|Any CPU
+		{1D488727-E222-43A2-BBBD-095F17A488C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D488727-E222-43A2-BBBD-095F17A488C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D488727-E222-43A2-BBBD-095F17A488C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D488727-E222-43A2-BBBD-095F17A488C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D488727-E222-43A2-BBBD-095F17A488C8}.ReleaseNET20|Any CPU.ActiveCfg = Release|Any CPU
+		{1D488727-E222-43A2-BBBD-095F17A488C8}.ReleaseNET20|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{31457A69-1EF3-4CDC-8741-6DE3DDB82D3B} = {11A19A77-0E52-4BC0-A098-5FD64908EAFA}
+		{1D488727-E222-43A2-BBBD-095F17A488C8} = {11A19A77-0E52-4BC0-A098-5FD64908EAFA}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Examples\Examples.csproj

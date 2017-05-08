@@ -24,6 +24,7 @@ SOFTWARE.*/
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 
 using SharpFont.Bdf;
@@ -53,6 +54,13 @@ namespace SharpFont
 		private Library parentLibrary;
 		private List<FTSize> childSizes;
 
+		private StreamIOFunc streamIOFunc;
+		private StreamCloseFunc streamCloseFunc;
+		private bool streamOwned;
+		private GCHandle streamHandle;
+		private IntPtr streamPtr;
+		private IntPtr openArgsPtr;
+
 		#endregion
 
 		#region Constructors
@@ -66,6 +74,8 @@ namespace SharpFont
 			: this(library, path, 0)
 		{
 		}
+
+
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Face"/> class.
@@ -85,7 +95,84 @@ namespace SharpFont
 			Reference = reference;
 		}
 
-		//TODO make an overload with a FileStream instead of a byte[]
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Face"/> class.
+		/// </summary>
+		/// <param name="library">The parent library.</param>
+		/// <param name="stream">The stream of the font file.</param>
+		/// <param name="faceIndex">The index of the face to take from the file.</param>
+		/// <param name="takeStreamOwnership">The stream is automatically disposed with the face.</param>
+		public Face(Library library, Stream stream, int faceIndex, bool takeStreamOwnership)
+			: this(library)
+		{
+			if (stream == null)
+				throw new ArgumentException("Stream cannot be null", "stream");
+
+			if (!stream.CanRead || !stream.CanSeek)
+				throw new ArgumentException("Stream must support reading and seeking", "stream");
+
+			IntPtr reference;
+
+			streamIOFunc = new StreamIOFunc(StreamIOFunc);
+			streamCloseFunc = new StreamCloseFunc(StreamCloseFunc);
+
+			streamOwned = takeStreamOwnership;
+			streamHandle = GCHandle.Alloc(stream);
+
+			StreamRec streamRec = new StreamRec();
+			streamRec.size = (UIntPtr)stream.Length;
+			streamRec.descriptor.pointer = GCHandle.ToIntPtr(streamHandle);
+			streamRec.read = streamIOFunc;
+			streamRec.close = streamCloseFunc;
+
+			streamPtr = Marshal.AllocHGlobal(Marshal.SizeOf(streamRec));
+			Marshal.StructureToPtr(streamRec, streamPtr, false);
+
+
+			OpenArgsRec openArgs = new OpenArgsRec();
+			openArgs.flags = OpenFlags.Stream;
+			openArgs.stream = streamPtr;
+
+			openArgsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(openArgs));
+			Marshal.StructureToPtr(openArgs, openArgsPtr, false);
+
+
+			Error err = FT.FT_Open_Face(library.Reference, openArgsPtr, faceIndex, out reference);
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			Reference = reference;
+		}
+
+		private uint StreamIOFunc(IntPtr streamPtr, uint offset, IntPtr buffer, uint count)
+		{
+			FTStream ftStream = new FTStream(streamPtr);
+			Stream stream = ((GCHandle)ftStream.Descriptor.Pointer).Target as Stream;
+			if (stream != null)
+			{
+				stream.Seek(offset, SeekOrigin.Begin);
+				if (count > 0)
+				{
+					byte[] readbuffer = new byte[count];
+					uint bytesread = (uint)stream.Read(readbuffer, 0, (int)count);
+					Marshal.Copy(readbuffer, 0, buffer, (int)count);
+					return bytesread;
+				}
+			}
+			return 0;
+		}
+
+		private void StreamCloseFunc(IntPtr streamPtr)
+		{
+			if (streamOwned)
+			{
+				FTStream ftStream = new FTStream(streamPtr);
+				Stream stream = ((GCHandle)ftStream.Descriptor.Pointer).Target as Stream;
+				if (stream != null) stream.Dispose();
+			}
+		}
+
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Face"/> class from a file that's already loaded into memory.
@@ -2400,6 +2487,10 @@ namespace SharpFont
 
 				if (memoryFaceHandle.IsAllocated)
 					memoryFaceHandle.Free();
+
+				if (openArgsPtr != IntPtr.Zero) Marshal.FreeHGlobal(openArgsPtr);
+				if (streamPtr != IntPtr.Zero) Marshal.FreeHGlobal(streamPtr);
+				if (streamHandle.IsAllocated) streamHandle.Free();
 
 				EventHandler handler = Disposed;
 				if (handler != null)

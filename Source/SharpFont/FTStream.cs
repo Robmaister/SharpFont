@@ -43,14 +43,14 @@ namespace SharpFont
 	/// <returns>The number of bytes effectively read by the stream.</returns>
 	[CLSCompliant(false)]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate uint StreamIOFunc(NativeReference<FTStream> stream, uint offset, IntPtr buffer, uint count);
+	public delegate uint StreamIOFunc(IntPtr stream, uint offset, IntPtr buffer, uint count);
 
 	/// <summary>
 	/// A function used to close a given input stream.
 	/// </summary>
 	/// <param name="stream">A handle to the target stream.</param>
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public delegate void StreamCloseFunc(NativeReference<FTStream> stream);
+	public delegate void StreamCloseFunc(IntPtr stream);
 
 	/// <summary>
 	/// A handle to an input stream.
@@ -84,7 +84,7 @@ namespace SharpFont
 				return rec.@base;
 			}
 		}
-		
+
 		/// <summary>
 		/// Gets the stream size in bytes.
 		/// </summary>

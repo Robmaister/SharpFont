@@ -119,6 +119,7 @@
     <Compile Include="GlyphMetrics.cs" />
     <Compile Include="GlyphSlot.cs" />
     <Compile Include="GlyphToScriptMapProperty.cs" />
+    <Compile Include="ICustomStreamAccessor.cs" />
     <Compile Include="IncreaseXHeightProperty.cs" />
     <Compile Include="Internal\BitmapGlyphRec.cs" />
     <Compile Include="Internal\BitmapRec.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="SizeRequest.cs" />
     <Compile Include="SizeRequestType.cs" />
     <Compile Include="Span.cs" />
+    <Compile Include="StreamAccessor.cs" />
     <Compile Include="StreamDesc.cs" />
     <Compile Include="Stroker.cs" />
     <Compile Include="StrokerBorder.cs" />

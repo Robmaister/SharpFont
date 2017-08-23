@@ -39,8 +39,8 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NET20|AnyCPU'">
     <OutputPath>bin\NET20\</OutputPath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseNET20|AnyCPU'">
-    <OutputPath>bin\ReleaseNET20\</OutputPath>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseNET45|AnyCPU' ">
+    <OutputPath>bin\ReleaseNET45</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />

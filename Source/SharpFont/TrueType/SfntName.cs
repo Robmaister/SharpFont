@@ -117,7 +117,7 @@ namespace SharpFont.TrueType
 				//TODO it may be possible to consolidate all of these properties
 				//if the strings follow some sane structure. Otherwise, leave
 				//them or add more overloads for common encodings like UTF-8.
-				return Marshal.PtrToStringUni(rec.@string, (int)rec.string_len);
+				return Marshal.PtrToStringUni(rec.@string, (int) Math.Ceiling(rec.string_len/2.0));
 			}
 		}
 

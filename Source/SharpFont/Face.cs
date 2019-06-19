@@ -24,6 +24,7 @@ SOFTWARE.*/
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 
 using SharpFont.Bdf;
@@ -53,6 +54,12 @@ namespace SharpFont
 		private Library parentLibrary;
 		private List<FTSize> childSizes;
 
+		GCHandle customStreamHandle;
+		IntPtr customStreamPtr;
+		private IntPtr openArgsPtr;
+		private StreamIOFunc streamIOFunc;
+		private StreamCloseFunc streamCloseFunc;
+
 		#endregion
 
 		#region Constructors
@@ -66,6 +73,8 @@ namespace SharpFont
 			: this(library, path, 0)
 		{
 		}
+
+
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Face"/> class.
@@ -85,7 +94,85 @@ namespace SharpFont
 			Reference = reference;
 		}
 
-		//TODO make an overload with a FileStream instead of a byte[]
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Face"/> class.
+		/// </summary>
+		/// <param name="library">The parent library.</param>
+		/// <param name="stream">The stream of the font file.</param>
+		/// <param name="faceIndex">The index of the face to take from the file.</param>
+		/// <param name="takeStreamOwnership">The stream is automatically disposed with the face.</param>
+		public Face(Library library, Stream stream, int faceIndex, bool takeStreamOwnership)
+			: this(library, new StreamAccessor(stream, takeStreamOwnership), faceIndex)
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Face"/> class.
+		/// </summary>
+		/// <param name="library">The parent library.</param>
+		/// <param name="streamAccessor">Custom object for handling stream access to the font file.</param>
+		/// <param name="faceIndex">The index of the face to take from the file.</param>
+		public Face(Library library, ICustomStreamAccessor streamAccessor, int faceIndex)
+			: this(library)
+		{
+			IntPtr reference;
+
+			streamIOFunc = new StreamIOFunc(StreamIOFunc);
+			streamCloseFunc = new StreamCloseFunc(StreamCloseFunc);
+
+			customStreamHandle = GCHandle.Alloc(streamAccessor);
+
+			StreamRec streamRec = new StreamRec();
+			streamRec.size = (UIntPtr)streamAccessor.Length;
+			streamRec.descriptor.pointer = GCHandle.ToIntPtr(customStreamHandle);
+			streamRec.read = streamIOFunc;
+			streamRec.close = streamCloseFunc;
+
+			customStreamPtr = Marshal.AllocHGlobal(Marshal.SizeOf(streamRec));
+			Marshal.StructureToPtr(streamRec, customStreamPtr, false);
+
+
+			OpenArgsRec openArgs = new OpenArgsRec();
+			openArgs.flags = OpenFlags.Stream;
+			openArgs.stream = customStreamPtr;
+
+			openArgsPtr = Marshal.AllocHGlobal(Marshal.SizeOf(openArgs));
+			Marshal.StructureToPtr(openArgs, openArgsPtr, false);
+
+
+			Error err = FT.FT_Open_Face(library.Reference, openArgsPtr, faceIndex, out reference);
+			if (err != Error.Ok)
+				throw new FreeTypeException(err);
+
+			Reference = reference;
+		}
+
+		private uint StreamIOFunc(IntPtr streamPtr, uint offset, IntPtr buffer, uint count)
+		{
+			FTStream ftStream = new FTStream(streamPtr);
+			ICustomStreamAccessor streamAccessor = ((GCHandle)ftStream.Descriptor.Pointer).Target as ICustomStreamAccessor;
+			if (streamAccessor != null)
+			{
+				streamAccessor.Seek((int)offset);
+				if (count > 0)
+				{
+					byte[] readbuffer = new byte[count];
+					int bytesread = streamAccessor.Read(readbuffer);
+					Marshal.Copy(readbuffer, 0, buffer, (int)count);
+					return (uint)bytesread;
+				}
+			}
+			return 0;
+		}
+
+		private void StreamCloseFunc(IntPtr streamPtr)
+		{
+			FTStream ftStream = new FTStream(streamPtr);
+			ICustomStreamAccessor streamAccessor = ((GCHandle)ftStream.Descriptor.Pointer).Target as ICustomStreamAccessor;
+			if (streamAccessor != null) streamAccessor.Close();
+		}
+
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Face"/> class from a file that's already loaded into memory.
@@ -2400,6 +2487,10 @@ namespace SharpFont
 
 				if (memoryFaceHandle.IsAllocated)
 					memoryFaceHandle.Free();
+
+				if (openArgsPtr != IntPtr.Zero) Marshal.FreeHGlobal(openArgsPtr);
+				if (customStreamPtr != IntPtr.Zero) Marshal.FreeHGlobal(customStreamPtr);
+				if (customStreamHandle.IsAllocated) customStreamHandle.Free();
 
 				EventHandler handler = Disposed;
 				if (handler != null)

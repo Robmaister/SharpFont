@@ -12,6 +12,37 @@ namespace SharpFont.HarfBuzz
 
 		private const CallingConvention CallConvention = CallingConvention.Cdecl;
 
+#if NETCOREAPP
+		static HB()
+		{
+			// Library names should be fine on Windows, so no need to set import resolver.
+			if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+			{
+				return;
+			}
+
+			NativeLibrary.SetDllImportResolver(typeof(HB).Assembly, (name, assembly, path) =>
+			{
+				if (name != HarfBuzzDll)
+				{
+					return IntPtr.Zero;
+				}
+
+				if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+				{
+					return NativeLibrary.Load("libharfbuzz.so.0", typeof(FT).Assembly, path);
+				}
+
+				if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+				{
+					return NativeLibrary.Load("libharfbuzz.0.dylib", typeof(FT).Assembly, path);
+				}
+
+				return IntPtr.Zero;
+			});
+		}
+#endif
+
 		#region hb-blob
 
 		#endregion

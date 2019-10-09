@@ -3,11 +3,7 @@
 
 using System;
 using System.Drawing;
-using System.Drawing.Imaging;
-
-using SharpFont;
 using SharpFont.Gdi;
-using SharpFont.HarfBuzz;
 
 namespace SharpFont.HarfBuzz.Example
 {
@@ -21,7 +17,7 @@ namespace SharpFont.HarfBuzz.Example
 			Console.WriteLine("VersionCheck: " + HB.VersionAtLeast(v));
 
 			var lib = new Library();
-			var face = new SharpFont.Face(lib, @"C:\Windows\Fonts\tahoma.ttf");
+			var face = new SharpFont.Face(lib, @"/usr/share/fonts/noto/NotoSans-Regular.ttf");
 			face.SetCharSize(0, 50, 72, 72);
 
 			var font = HarfBuzz.Font.FromFTFace(face);

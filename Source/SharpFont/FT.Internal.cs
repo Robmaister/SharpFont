@@ -38,46 +38,10 @@ namespace SharpFont
 	/// </content>
 	public static partial class FT
 	{
-		static bool? isMacOS;
-
 		/// <summary>
 		/// Returns true if the current .net platform is macOS.
 		/// </summary>
-		internal static bool IsMacOS
-		{
-			get
-			{
-				if (isMacOS != null)
-					return isMacOS.Value;
-				else
-				{
-					lock (typeof(FT))
-					{
-						if (isMacOS == null) // repeat the test
-						{
-							isMacOS = false;
-
-							var os = typeof(Environment)
-								?.GetRuntimeProperty("OSVersion")
-								?.GetValue(null);
-
-							var platformObj = os
-								?.GetType().GetRuntimeProperty("Platform")
-								?.GetValue(os);
-
-							if (platformObj != null)
-							{
-								var platform = (int)platformObj;
-								if (platform == 6)
-									isMacOS = true;
-							}
-						}
-					}
-				}
-
-				return isMacOS.Value;
-			}
-		}
+		internal static bool IsMacOS => RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
 
 		/// <summary>
 		/// Defines the location of the FreeType DLL. Update SharpFont.dll.config if you change this!
@@ -89,6 +53,37 @@ namespace SharpFont
 		/// Defines the calling convention for P/Invoking the native freetype methods.
 		/// </summary>
 		private const CallingConvention CallConvention = CallingConvention.Cdecl;
+
+#if NETCOREAPP
+		static FT()
+		{
+			// Library names should be fine on Windows, so no need to set import resolver.
+			if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+			{
+				return;
+			}
+
+			NativeLibrary.SetDllImportResolver(typeof(FT).Assembly, (name, assembly, path) =>
+			{
+				if (name != FreetypeDll)
+				{
+					return IntPtr.Zero;
+				}
+
+				if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+				{
+					return NativeLibrary.Load("libfreetype.so.6", typeof(FT).Assembly, path);
+				}
+
+				if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+				{
+					return NativeLibrary.Load("/usr/X11/lib/libfreetype.6.dylib", typeof(FT).Assembly, path);
+				}
+
+				return IntPtr.Zero;
+			});
+		}
+#endif
 
 		#region Core API
 
@@ -108,7 +103,7 @@ namespace SharpFont
 		#endregion
 
 		#region Base Interface
-		
+
 		[DllImport(FreetypeDll, CallingConvention = CallConvention)]
 		internal static extern Error FT_Init_FreeType(out IntPtr alibrary);
 

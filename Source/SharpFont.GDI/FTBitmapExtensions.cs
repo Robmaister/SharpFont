@@ -6,13 +6,6 @@ namespace SharpFont.Gdi
 {
     public static class FTBitmapExtensions
     {
-		//HACK these variables exist to reduce the cost of reflection at runtime.
-		//Meant to be a temporary fix to https://github.com/Robmaister/SharpFont/issues/62
-		//until libgdiplus gets patched.
-		private static bool hasCheckedForMono;
-		private static bool isRunningOnMono;
-		private static System.Reflection.FieldInfo monoPaletteFlagsField;
-
 		/// <summary>
 		/// Copies the contents of the <see cref="FTBitmap"/> to a GDI+ <see cref="Bitmap"/>.
 		/// </summary>
@@ -93,21 +86,6 @@ namespace SharpFont.Gdi
 							float a = i / 255f;
 							palette.Entries[i] = Color.FromArgb(i, (int)(color.R * a), (int)(color.G * a), (int)(color.B * a));
 						}
-
-						//HACK There's a bug in Mono's libgdiplus requiring the "PaletteHasAlpha" flag to be set for transparency to work properly
-						//See https://github.com/Robmaister/SharpFont/issues/62
-						if (!hasCheckedForMono)
-						{
-							hasCheckedForMono = true;
-							isRunningOnMono = Type.GetType("Mono.Runtime") != null;
-							if (isRunningOnMono)
-							{
-								monoPaletteFlagsField = typeof(ColorPalette).GetField("flags", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
-							}
-						}
-
-						if (isRunningOnMono)
-							monoPaletteFlagsField.SetValue(palette, palette.Flags | 1);
 
 						bmp.Palette = palette;
 						return bmp;

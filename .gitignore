@@ -50,3 +50,4 @@ _ReSharper*/
 
 #NuGet
 *.nupkg
+.idea/

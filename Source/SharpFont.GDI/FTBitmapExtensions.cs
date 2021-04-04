@@ -102,7 +102,17 @@ namespace SharpFont.Gdi
 							isRunningOnMono = Type.GetType("Mono.Runtime") != null;
 							if (isRunningOnMono)
 							{
-								monoPaletteFlagsField = typeof(ColorPalette).GetField("flags", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+								// The field needed may be named "flags" or "_flags", dependin on the version of Mono. To be thorough, check for the first Name that contains "lags".
+								var fields = typeof(ColorPalette).GetFields(System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+
+                                for (int i = 0; i < fields.Length; i++)
+                                {
+                                    if (fields[i].Name.Contains("lags"))
+                                    {
+                                        monoPaletteFlagsField = fields[i];
+                                        break;
+                                    }
+                                }							
 							}
 						}
 
